@@ -1,0 +1,9 @@
+
+#ifndef HGE_HYDROGEN_FRAMEWORK_LIBRARY_HEADER_INCLUDE
+#define HGE_HYDROGEN_FRAMEWORK_LIBRARY_HEADER_INCLUDE
+
+#include "MemoryUtil.h"
+#include "string.h"
+
+
+#endif

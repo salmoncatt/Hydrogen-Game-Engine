@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30225.117
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Hydrogen Game Engine", "Hydrogen Game Engine\Hydrogen Game Engine.vcxproj", "{086EFBD0-1CC4-48AF-B3D9-E095D947DB15}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Hydrogen Framework", "Hydrogen Framework\Hydrogen Framework.vcxproj", "{E76C914B-3119-47A0-A5B7-BF8B801372DE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{086EFBD0-1CC4-48AF-B3D9-E095D947DB15}.Debug|x64.ActiveCfg = Debug|x64
+		{086EFBD0-1CC4-48AF-B3D9-E095D947DB15}.Debug|x64.Build.0 = Debug|x64
+		{086EFBD0-1CC4-48AF-B3D9-E095D947DB15}.Debug|x86.ActiveCfg = Debug|Win32
+		{086EFBD0-1CC4-48AF-B3D9-E095D947DB15}.Debug|x86.Build.0 = Debug|Win32
+		{086EFBD0-1CC4-48AF-B3D9-E095D947DB15}.Release|x64.ActiveCfg = Release|x64
+		{086EFBD0-1CC4-48AF-B3D9-E095D947DB15}.Release|x64.Build.0 = Release|x64
+		{086EFBD0-1CC4-48AF-B3D9-E095D947DB15}.Release|x86.ActiveCfg = Release|Win32
+		{086EFBD0-1CC4-48AF-B3D9-E095D947DB15}.Release|x86.Build.0 = Release|Win32
+		{E76C914B-3119-47A0-A5B7-BF8B801372DE}.Debug|x64.ActiveCfg = Debug|x64
+		{E76C914B-3119-47A0-A5B7-BF8B801372DE}.Debug|x86.ActiveCfg = Debug|x64
+		{E76C914B-3119-47A0-A5B7-BF8B801372DE}.Release|x64.ActiveCfg = Debug|x64
+		{E76C914B-3119-47A0-A5B7-BF8B801372DE}.Release|x86.ActiveCfg = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E23FD757-9723-465F-8C3A-8C7A4163FC86}
+	EndGlobalSection
+EndGlobal

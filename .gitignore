@@ -1,0 +1,6 @@
+#folders
+.vs/
+bin/
+
+#files
+.ipch
