@@ -63,7 +63,6 @@ public:
 		float cpuUsage = 0;
 		float ramUsage = 0;
 
-
 		while (shouldUpdate() && !Input::getKey(HGE_KEY_ESCAPE)) {
 			
 			if (Input::getMouseButtonDown(HGE_MOUSE_BUTTON_2))
