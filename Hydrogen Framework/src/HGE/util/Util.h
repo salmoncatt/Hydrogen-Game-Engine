@@ -44,6 +44,8 @@ namespace HGE{
 		static long getFileSize(const std::string& filepath);
 		static std::string readAsString(const std::string& filepath, const int& readmode);
 		static std::vector<unsigned char> readAsUnsignedChar(const std::string& filepath, const int& readmode);
+
+		static void test(const std::string& filepath, const std::string& filename);
 		static std::vector<Mesh> loadMesh(const std::string& filepath, const std::string& objname);
 		static std::vector<Material> loadMaterial(const std::string& filepath, const std::string& filename);
 

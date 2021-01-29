@@ -47,8 +47,32 @@ public:
 		peter.getComponent<Transform>().scale = 2;
 
 		mesh = MeshComponent();
-		mesh.meshes = Util::loadMesh(HGE_RES + "models/warehouse/", "warehouse.obj");
+		
+		int iterations = 1;
+		double duration = 0;
+
+		for (int i = 0; i < iterations; i += 1) {
+			Profiler p("test");
+			Util::test(HGE_RES + "models/", "dragon.obj");
+			//mesh.meshes = Util::loadMesh(HGE_RES + "models/warehouse/", "warehouse.obj");
+			duration += p.getDuration();
+		}
+
+		std::string logmsg = "Loading time with " + std::to_string(iterations);
+		std::string durationmsg = std::to_string(duration / iterations);
+
+		Debug::newLine();
+		Debug::newLine();
+		Debug::newLine();
+		Debug::newLine();
+		Debug::newLine();
+
+		Debug::setTextColor(DebugColor::LightBlue);
+		Debug::log(logmsg + " iterations took an average of: " + durationmsg + " milliseconds");
+		Debug::resetTextColor();
+
 		warehouse.addComponent<MeshComponent>(mesh);
+
 
 		for (int i = 0; i < warehouse.getComponent<MeshComponent>().meshes.size(); i++) {
 			warehouse.getComponent<MeshComponent>().meshes[i].texturecoords.clear();

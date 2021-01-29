@@ -8,10 +8,9 @@
 #include <chrono> 
 #include <sstream>
 #include <vector>
-#include <stdlib.h>
+//#include <stdlib.h>
 #include <fstream>
 #include <assert.h>
-#include <memory.h>
 #include <algorithm>
 #include <array>
 #include <queue>
