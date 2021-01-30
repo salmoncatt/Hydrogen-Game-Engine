@@ -47,6 +47,10 @@ namespace HGE {
 		return (char*)memcpy(destination, source, strlen(source) + 1);
 	}
 
+	char* strcpy(char* destination, const char* source, const unsigned long& offset) {
+		return (char*)memcpy(destination, source + offset, strlen(source) + 1 - offset);
+	}
+
 
 
 }

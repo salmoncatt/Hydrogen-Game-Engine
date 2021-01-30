@@ -61,6 +61,28 @@ public:
 		std::string logmsg = "Loading time with " + std::to_string(iterations);
 		std::string durationmsg = std::to_string(duration / iterations);
 
+		logmsg = durationmsg;
+
+		HGE::string str = "test";
+
+		HGE::string str2 = str;
+
+		HGE::string str6 = str.substr(0, 3);
+
+		HGE::string str3 = str.at(2);
+
+		str2 = "asdf";
+
+		//str2 = str.substr(0, 3);
+
+		HGE::string str4 = "test";
+
+		str4 = str4.at(2);
+
+		str4 = str2;
+
+		HGE::string str5 = HGE::string();
+
 		Debug::newLine();
 		Debug::newLine();
 		Debug::newLine();
