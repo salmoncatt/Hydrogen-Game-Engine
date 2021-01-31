@@ -9,10 +9,16 @@ namespace HGE {
 	class string {
 	private:
 		//the length of the character string (useful later)
-		unsigned int length;
+		size_t length;
 
 		//the character data array
 		char* data;
+
+		void __cleanup__() {
+			if (data != nullptr)
+				delete[] data;
+			length = 0;
+		}
 
 	public:
 
@@ -38,37 +44,14 @@ namespace HGE {
 		* @author Salmoncatt
 		*/
 		string(const string& source) : length(0) {
+			//set length
+			length = source.length;
+			
+			//allocate string data into memory
+			data = new char[length + 1];
 
-			//have to check otherwise we copy data from null object
-			if (source.data) {
-				//copy length from source length
-				length = source.length;
-
-				//no memory leaks here
-			//	if (data != NULL)
-			//		delete[] data;
-
-				//stupid warnings
-				unsigned long sourceLength = strlen(source.data) + 1;
-
-				//create new list of data (+1 because of the \0 ending)
-				data = new char[sourceLength];
-
-				//copy the source data over using my own library :)
-				strcpy(data, source.data);
-			}
-			else {
-
-				//no memory leaks here
-			//	if (data != NULL)
-			//		delete[] data;
-
-				//create using basic constructor
-				data = new char[1];
-				data[0] = '\0';
-
-			}
-
+			//copy the source data over using my own library :)
+			strcpy(data, source.data);
 		}
 
 		/*
@@ -79,14 +62,45 @@ namespace HGE {
 		* @author Salmoncatt
 		*/
 		string& operator=(const string& source) {
-			
-			unsigned long sourceLength = strlen(source.data) + 1;
-			data = new char[sourceLength];
+			//cleanup if memory is allocated
+			__cleanup__();
+
+			//set length
 			length = source.length;
 
-			strcpy(data, source.data);
+			//allocate string data into memory
+			data = new char[length + 1];
 
+			//copy the source data over using my own library :)
+			strcpy(data, source.data);
 			return *this;
+		}
+
+		/*
+		* Adds a strings data to current one
+		*
+		* @param The source string to add from
+		*
+		* @author Salmoncatt
+		*/
+		string operator+(const string& source) {
+			//create the output string
+			string out = string();
+
+			//delete the allocated memory
+			//out.__cleanup__();
+
+			//set the length
+			out.length = length + source.length;
+
+			//allocate memory to the outputs data buffer
+			out.data = new char[out.length + 1];
+
+			//copy the source data over using my own library :)
+			strcpy(out.data, data); //copy first string
+			strcpy(out.data + length, source.data); //copy second string
+
+			return out;
 		}
 
 		/*
@@ -97,6 +111,17 @@ namespace HGE {
 		* @author Salmoncatt
 		*/
 		string(char* source) : length(0) {
+			//get length
+			length = strlen(source);
+			
+			//allocate data size
+			data = new char[length + 1];
+			
+			//copy the source data over using my own library :)
+			strcpy(data, source);
+
+			//add termination character in case data doesn't have it
+			data[length] = '\0';
 
 			//have to check otherwise we copy data from null object
 			if (source) {
@@ -106,7 +131,7 @@ namespace HGE {
 				//	delete[] data;
 
 				//do it here so we dont have to do it twice
-				unsigned long sourceLength = strlen(source) + 1;
+				size_t sourceLength = strlen(source) + 1;
 
 				//create new list of data (+1 because of the \0 ending)
 				data = new char[sourceLength];
@@ -140,6 +165,8 @@ namespace HGE {
 		*/
 		string& operator=(char* source) {
 
+			__cleanup__();
+
 			//have to check otherwise we copy data from null object
 			if (source) {
 
@@ -148,7 +175,7 @@ namespace HGE {
 				//	delete[] data;
 
 				//do it here so we dont have to do it twice
-				unsigned long sourceLength = strlen(source) + 1;
+				size_t sourceLength = strlen(source) + 1;
 
 				//create new list of data (+1 because of the \0 ending)
 				data = new char[sourceLength];
@@ -183,38 +210,14 @@ namespace HGE {
 		* @author Salmoncatt
 		*/
 		string(const char* source) : length(0) {
+			//set length
+			length = strlen(source);
 
-			//have to check otherwise we copy data from null object
-			if (source) {
+			//allocate string data into memory
+			data = new char[length + 1];
 
-				//no memory leaks here
-				//if (data != NULL)
-				//	delete[] data;
-
-				//do it here so we dont have to do it twice
-				unsigned long sourceLength = strlen(source) + 1;
-
-				//create new list of data (+1 because of the \0 ending)
-				data = new char[sourceLength];
-
-				//copy length from source length
-				length = sourceLength - 1;
-
-				//copy the source data over using my own library :)
-				strcpy(data, source);
-			}
-			else {
-
-				//no memory leaks here
-				//if (data != NULL)
-			//		delete[] data;
-
-				//create using basic constructor
-				data = new char[1];
-				data[0] = '\0';
-
-			}
-
+			//copy the source data over using my own library :)
+			strcpy(data, source);
 		}
 
 		/*
@@ -226,6 +229,8 @@ namespace HGE {
 		*/
 		string& operator=(const char* source) {
 
+			__cleanup__();
+
 			//have to check otherwise we copy data from null object
 			if (source) {
 
@@ -234,7 +239,7 @@ namespace HGE {
 				//	delete[] data;
 
 				//do it here so we dont have to do it twice
-				unsigned long sourceLength = strlen(source) + 1;
+				size_t sourceLength = strlen(source) + 1;
 
 				//create new list of data (+1 because of the \0 ending)
 				data = new char[sourceLength];
@@ -277,7 +282,7 @@ namespace HGE {
 				//	delete[] data;
 
 				//do it here so we dont have to do it twice
-				unsigned long size = 2;
+				size_t size = 2;
 
 				//create new list of data (+1 because of the \0 ending)
 				data = new char[size];
@@ -308,6 +313,8 @@ namespace HGE {
 		*/
 		string& operator=(const char& source) {
 
+			__cleanup__();
+
 			//have to check otherwise we copy data from null object
 			if (source != '\0') {
 
@@ -316,7 +323,7 @@ namespace HGE {
 				//	delete[] data;
 
 				//do it here so we dont have to do it twice
-				unsigned long size = 2;
+				size_t size = 2;
 
 				//create new list of data (+1 because of the \0 ending)
 				data = new char[size];
@@ -349,18 +356,20 @@ namespace HGE {
 
 		}
 
-		string substr(const unsigned long& index, const unsigned long& length) {
-			const unsigned long size = length + 1;
+		string substr(const size_t& index, const size_t& length) {
+			size_t size = length + 1;
 			string out = string();
 
-			//delete then resize
-			//if(out.data != NULL)
-			//	delete[] out.data;
+			delete[] out.data;
 
 			out.data = new char[size];
+			out.length = length;
 
-			for (unsigned long i = index; i < (index + length); i += 1) {
-				out.data[i] = data[i];
+			size_t j = 0;
+
+			//i keeps track of second string index, j is for the first string (i do this because there is an offset involved)
+			for (size_t i = index, j = 0; i < (index + length); i += 1, j += 1) {
+				out.data[j] = data[i];
 			}
 
 			out.data[length] = '\0';
@@ -378,8 +387,7 @@ namespace HGE {
 		//}
 
 		~string() {
-			if(data != nullptr && data[length] == '\0')
-				delete data;
+			__cleanup__();
 		}
 
 

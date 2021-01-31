@@ -14,7 +14,7 @@ namespace HGE {
 	* @param Source of data
 	* @param Length of the data
 	*/
-	void* memcpy(void* destination, const void* source, unsigned long length) {
+	void* memcpy(void* destination, const void* source, size_t length) {
 		//have references to the data we want to copy and the destination it goes to
 		char* destinationData = (char*)destination;
 		const char* sourceData = (char*)source;
@@ -27,19 +27,20 @@ namespace HGE {
 	}
 	
 	/**
-	* Returns the length of a string of characters
+	* Returns the length of a string of characters not including the termination character
 	* 
 	* @param the character data
 	* 
 	* @author Salmoncatt
 	*/
-	unsigned long strlen(const char* data) {
-		unsigned long length = 0;
+	size_t strlen(const char* data) {
+		size_t length = 0;
 
 		while (data[length])
 			length += 1;
 
-		return length;
+		//-1 because we dont include the termination character
+		return length - 1;
 	}
 
 
@@ -47,7 +48,7 @@ namespace HGE {
 		return (char*)memcpy(destination, source, strlen(source) + 1);
 	}
 
-	char* strcpy(char* destination, const char* source, const unsigned long& offset) {
+	char* strcpy(char* destination, const char* source, const size_t& offset) {
 		return (char*)memcpy(destination, source + offset, strlen(source) + 1 - offset);
 	}
 

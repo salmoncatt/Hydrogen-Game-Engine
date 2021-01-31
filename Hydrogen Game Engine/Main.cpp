@@ -63,7 +63,11 @@ public:
 
 		logmsg = durationmsg;
 
+		char* testtr = new char[5];
+
 		HGE::string str = "test";
+
+		delete testtr;
 
 		HGE::string str2 = str;
 
@@ -73,7 +77,7 @@ public:
 
 		str2 = "asdf";
 
-		//str2 = str.substr(0, 3);
+		//str2 = str2 + str;
 
 		HGE::string str4 = "test";
 
