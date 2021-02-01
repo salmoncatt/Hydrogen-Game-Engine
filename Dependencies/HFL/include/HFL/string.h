@@ -52,6 +52,10 @@ namespace HGE {
 
 			//copy the source data over using my own library :)
 			strcpy(data, source.data);
+
+			//in case the data isn't null terminated for some reason
+			if (data[length] != '\0')
+				data[length] = '\0';
 		}
 
 		/*
@@ -73,6 +77,11 @@ namespace HGE {
 
 			//copy the source data over using my own library :)
 			strcpy(data, source.data);
+
+			//in case the data isn't null terminated for some reason
+			if (data[length] != '\0')
+				data[length] = '\0';
+			
 			return *this;
 		}
 
@@ -88,7 +97,7 @@ namespace HGE {
 			string out = string();
 
 			//delete the allocated memory
-			//out.__cleanup__();
+			out.__cleanup__();
 
 			//set the length
 			out.length = length + source.length;
@@ -99,6 +108,104 @@ namespace HGE {
 			//copy the source data over using my own library :)
 			strcpy(out.data, data); //copy first string
 			strcpy(out.data + length, source.data); //copy second string
+
+			//in case the data isn't null terminated for some reason
+			if (out.data[length] != '\0')
+				out.data[length] = '\0';
+
+			return out;
+		}
+
+		/*
+		* Adds a string of characters to this string
+		*
+		* @param The characters to add from
+		*
+		* @author Salmoncatt
+		*/
+		string operator+(const char* source) {
+			//create the output string
+			string out = string();
+
+			//delete the allocated memory
+			out.__cleanup__();
+
+			//set the length
+			out.length = length + strlen(source);
+
+			//allocate memory to the outputs data buffer
+			out.data = new char[out.length + 1];
+
+			//copy the source data over using my own library :)
+			strcpy(out.data, data); //copy first string
+			strcpy(out.data + length, source); //copy second string
+
+			//in case the data isn't null terminated for some reason
+			if (out.data[out.length] != '\0')
+				out.data[out.length] = '\0';
+
+			return out;
+		}
+
+		/*
+		* Adds a string of characters to this string
+		*
+		* @param The characters to add from
+		*
+		* @author Salmoncatt
+		*/
+		string operator+(char* source) {
+			//create the output string
+			string out = string();
+
+			//delete the allocated memory
+			out.__cleanup__();
+
+			//set the length
+			out.length = length + strlen(source);
+
+			//allocate memory to the outputs data buffer
+			out.data = new char[out.length + 1];
+
+			//copy the source data over using my own library :)
+			strcpy(out.data, data); //copy first string
+			strcpy(out.data + length, source); //copy second string
+
+			//in case the data isn't null terminated for some reason
+			if (out.data[out.length] != '\0')
+				out.data[out.length] = '\0';
+
+			return out;
+		}
+
+		/*
+		* Adds a character to this string
+		*
+		* @param The character to add from
+		*
+		* @author Salmoncatt
+		*/
+		string operator+(char& source) {
+			//create the output string
+			string out = string();
+
+			//delete the allocated memory
+			out.__cleanup__();
+
+			//set the length
+			out.length = length + 1;
+
+			//allocate memory to the outputs data buffer
+			out.data = new char[out.length + 1];
+
+			//copy the source data over using my own library :)
+			strcpy(out.data, data); //copy first string
+
+			out.data[length - 1] = source;
+
+			//in case the data isn't null terminated for some reason
+			if (out.data[out.length] != '\0')
+				out.data[out.length] = '\0';
 
 			return out;
 		}
@@ -120,40 +227,9 @@ namespace HGE {
 			//copy the source data over using my own library :)
 			strcpy(data, source);
 
-			//add termination character in case data doesn't have it
-			data[length] = '\0';
-
-			//have to check otherwise we copy data from null object
-			if (source) {
-
-				//no memory leaks here
-			//	if (data != NULL)
-				//	delete[] data;
-
-				//do it here so we dont have to do it twice
-				size_t sourceLength = strlen(source) + 1;
-
-				//create new list of data (+1 because of the \0 ending)
-				data = new char[sourceLength];
-
-				//copy length from source length
-				length = sourceLength - 1;
-
-				//copy the source data over using my own library :)
-				strcpy(data, source);
-			}
-			else {
-
-				//no memory leaks here
-				//if (data != NULL)
-			//		delete[] data;
-
-				//create using basic constructor
-				data = new char[1];
-				data[0] = '\0';
-
-			}
-
+			//in case the data isn't null terminated for some reason
+			if (data[length] != '\0')
+				data[length] = '\0';
 		}
 
 		/*
@@ -167,37 +243,18 @@ namespace HGE {
 
 			__cleanup__();
 
-			//have to check otherwise we copy data from null object
-			if (source) {
+			//get length
+			length = strlen(source);
 
-				//no memory leaks here
-			//	if (data != NULL)
-				//	delete[] data;
+			//allocate data size
+			data = new char[length + 1];
 
-				//do it here so we dont have to do it twice
-				size_t sourceLength = strlen(source) + 1;
+			//copy the source data over using my own library :)
+			strcpy(data, source);
 
-				//create new list of data (+1 because of the \0 ending)
-				data = new char[sourceLength];
-
-				//copy length from source length
-				length = sourceLength - 1;
-
-				//copy the source data over using my own library :)
-				strcpy(data, source);
-			}
-			else {
-
-				//no memory leaks here
-				//if (data != NULL)
-			//		delete[] data;
-
-				//create using basic constructor
-				data = new char[1];
-				data[0] = '\0';
-				length = 0;
-
-			}
+			//in case the data isn't null terminated for some reason
+			if (data[length] != '\0')
+				data[length] = '\0';
 
 			return *this;
 		}
@@ -218,6 +275,10 @@ namespace HGE {
 
 			//copy the source data over using my own library :)
 			strcpy(data, source);
+
+			//in case the data isn't null terminated for some reason
+			if(data[length] != '\0')
+				data[length] = '\0';
 		}
 
 		/*
@@ -231,36 +292,18 @@ namespace HGE {
 
 			__cleanup__();
 
-			//have to check otherwise we copy data from null object
-			if (source) {
+			//set length
+			length = strlen(source);
 
-				//no memory leaks here
-				//if (data != NULL)
-				//	delete[] data;
+			//allocate string data into memory
+			data = new char[length + 1];
 
-				//do it here so we dont have to do it twice
-				size_t sourceLength = strlen(source) + 1;
+			//copy the source data over using my own library :)
+			strcpy(data, source);
 
-				//create new list of data (+1 because of the \0 ending)
-				data = new char[sourceLength];
-
-				//copy length from source length
-				length = sourceLength - 1;
-
-				//copy the source data over using my own library :)
-				strcpy(data, source);
-			}
-			else {
-
-				//no memory leaks here
-				//if (data != NULL)
-			//		delete[] data;
-
-				//create using basic constructor
-				data = new char[1];
-				data[0] = '\0';
-				length = 0;
-			}
+			//in case the data isn't null terminated for some reason
+			if (data[length] != '\0')
+				data[length] = '\0';
 
 			return *this;
 		}
@@ -274,32 +317,18 @@ namespace HGE {
 		*/
 		string(const char& source) : length(1) {
 
-			//have to check otherwise we copy data from null object
 			if (source != '\0') {
+				//allocate memory for data
+				data = new char[length + 1];
 
-				//no memory leaks here
-				//if (data != NULL)
-				//	delete[] data;
-
-				//do it here so we dont have to do it twice
-				size_t size = 2;
-
-				//create new list of data (+1 because of the \0 ending)
-				data = new char[size];
-
+				//put in the character and null terminator character
 				data[0] = source;
 				data[1] = '\0';
 			}
 			else {
-
-				//no memory leaks here
-			//	if (data != NULL)
-			//		delete[] data;
-
-				//create using basic constructor
-				data = new char[1];
+				//allocate memory for data
+				data = new char[length];
 				data[0] = '\0';
-
 			}
 
 		}
@@ -315,34 +344,21 @@ namespace HGE {
 
 			__cleanup__();
 
-			//have to check otherwise we copy data from null object
+			//set length to one character
+			length = 1;
+
 			if (source != '\0') {
+				//allocate memory for data
+				data = new char[length + 1];
 
-				//no memory leaks here
-				//if (data != NULL)
-				//	delete[] data;
-
-				//do it here so we dont have to do it twice
-				size_t size = 2;
-
-				//create new list of data (+1 because of the \0 ending)
-				data = new char[size];
-
+				//put in the character and null terminator character
 				data[0] = source;
 				data[1] = '\0';
 			}
 			else {
-
-				//no memory leaks here
-			//	if (data != NULL)
-			//		delete[] data;
-
-				//create using basic constructor
-				data = new char[1];
+				//allocate memory for data
+				data = new char[length];
 				data[0] = '\0';
-
-				length = 0;
-
 			}
 
 			return *this;

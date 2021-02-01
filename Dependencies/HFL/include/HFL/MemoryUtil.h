@@ -39,8 +39,7 @@ namespace HGE {
 		while (data[length])
 			length += 1;
 
-		//-1 because we dont include the termination character
-		return length - 1;
+		return length;
 	}
 
 
