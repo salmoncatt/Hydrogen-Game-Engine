@@ -71,8 +71,7 @@ public:
 
 		std::cout << str.c_str() << std::endl;
 		std::cout << str2.c_str() << std::endl;
-
-
+		std::cout << (str2.substr(1, 5)).c_str() << std::endl;
 
 		Debug::newLine();
 		Debug::newLine();

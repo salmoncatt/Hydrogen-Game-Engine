@@ -8,8 +8,8 @@ namespace HGE {
 
 	class string {
 	private:
-		//the length of the character string (useful later)
-		size_t length;
+		//the size of the character string (useful later)
+		size_t size;
 
 		//the character data array
 		char* data;
@@ -17,21 +17,19 @@ namespace HGE {
 		void __cleanup__() {
 			if (data != nullptr)
 				delete[] data;
-			length = 0;
+			size = 0;
 		}
 
 	public:
-
-		bool empty() {
-			return (data == NULL || data[0] == '\0');
-		}
+		
+		static const size_t npos = -1;
 
 		/*
 		* Creates a new empty string
 		* 
 		* @author Salmoncatt
 		*/
-		string() : length(0), data(nullptr) {
+		string() : size(0), data(nullptr) {
 			data = new char[1];
 			data[0] = '\0';
 		}
@@ -43,20 +41,90 @@ namespace HGE {
 		* 
 		* @author Salmoncatt
 		*/
-		string(const string& source) : length(0) {
-			//set length
-			length = source.length;
+		string(const string& source) : size(0) {
+			//set size
+			size = source.size;
 			
 			//allocate string data into memory
-			data = new char[length + 1];
+			data = new char[size + 1];
 
 			//copy the source data over using my own library :)
 			strcpy(data, source.data);
 
 			//in case the data isn't null terminated for some reason
-			if (data[length] != '\0')
-				data[length] = '\0';
+			if (data[size] != '\0')
+				data[size] = '\0';
 		}
+
+		/*
+		* Creates a string from character data
+		*
+		* @param Character array
+		*
+		* @author Salmoncatt
+		*/
+		string(char* source) : size(0) {
+			//get size
+			size = strlen(source);
+			
+			//allocate data size
+			data = new char[size + 1];
+			
+			//copy the source data over using my own library :)
+			strcpy(data, source);
+
+			//in case the data isn't null terminated for some reason
+			if (data[size] != '\0')
+				data[size] = '\0';
+		}
+
+		/*
+		* Creates a string from character data
+		*
+		* @param Character array
+		*
+		* @author Salmoncatt
+		*/
+		string(const char* source) : size(0) {
+			//set size
+			size = strlen(source);
+
+			//allocate string data into memory
+			data = new char[size + 1];
+
+			//copy the source data over using my own library :)
+			strcpy(data, source);
+
+			//in case the data isn't null terminated for some reason
+			if(data[size] != '\0')
+				data[size] = '\0';
+		}
+
+		/*
+		* Creates a string from a character
+		*
+		* @param Character array
+		*
+		* @author Salmoncatt
+		*/
+		string(const char& source) : size(1) {
+
+			if (source != '\0') {
+				//allocate memory for data
+				data = new char[size + 1];
+
+				//put in the character and null terminator character
+				data[0] = source;
+				data[1] = '\0';
+			}
+			else {
+				//allocate memory for data
+				data = new char[size];
+				data[0] = '\0';
+			}
+
+		}
+
 
 		/*
 		* Copies a string from another one
@@ -69,19 +137,104 @@ namespace HGE {
 			//cleanup if memory is allocated
 			__cleanup__();
 
-			//set length
-			length = source.length;
+			//set size
+			size = source.size;
 
 			//allocate string data into memory
-			data = new char[length + 1];
+			data = new char[size + 1];
 
 			//copy the source data over using my own library :)
 			strcpy(data, source.data);
 
 			//in case the data isn't null terminated for some reason
-			if (data[length] != '\0')
-				data[length] = '\0';
-			
+			if (data[size] != '\0')
+				data[size] = '\0';
+
+			return *this;
+		}
+
+		/*
+		* Creates a string from character data
+		*
+		* @param Character array
+		*
+		* @author Salmoncatt
+		*/
+		string& operator=(char* source) {
+
+			__cleanup__();
+
+			//get size
+			size = strlen(source);
+
+			//allocate data size
+			data = new char[size + 1];
+
+			//copy the source data over using my own library :)
+			strcpy(data, source);
+
+			//in case the data isn't null terminated for some reason
+			if (data[size] != '\0')
+				data[size] = '\0';
+
+			return *this;
+		}
+
+		/*
+		* Creates a string from a character
+		*
+		* @param Character array
+		*
+		* @author Salmoncatt
+		*/
+		string& operator=(const char& source) {
+
+			__cleanup__();
+
+			//set size to one character
+			size = 1;
+
+			if (source != '\0') {
+				//allocate memory for data
+				data = new char[size + 1];
+
+				//put in the character and null terminator character
+				data[0] = source;
+				data[1] = '\0';
+			}
+			else {
+				//allocate memory for data
+				data = new char[size];
+				data[0] = '\0';
+			}
+
+			return *this;
+		}
+
+		/*
+		* Creates a string from character data
+		*
+		* @param Character array
+		*
+		* @author Salmoncatt
+		*/
+		string& operator=(const char* source) {
+
+			__cleanup__();
+
+			//set size
+			size = strlen(source);
+
+			//allocate string data into memory
+			data = new char[size + 1];
+
+			//copy the source data over using my own library :)
+			strcpy(data, source);
+
+			//in case the data isn't null terminated for some reason
+			if (data[size] != '\0')
+				data[size] = '\0';
+
 			return *this;
 		}
 
@@ -99,19 +252,19 @@ namespace HGE {
 			//delete the allocated memory
 			out.__cleanup__();
 
-			//set the length
-			out.length = length + source.length;
+			//set the size
+			out.size = size + source.size;
 
 			//allocate memory to the outputs data buffer
-			out.data = new char[out.length + 1];
+			out.data = new char[out.size + 1];
 
 			//copy the source data over using my own library :)
 			strcpy(out.data, data); //copy first string
-			strcpy(out.data + length, source.data); //copy second string
+			strcpy(out.data + size, source.data); //copy second string
 
 			//in case the data isn't null terminated for some reason
-			if (out.data[length] != '\0')
-				out.data[length] = '\0';
+			if (out.data[size] != '\0')
+				out.data[size] = '\0';
 
 			return out;
 		}
@@ -130,19 +283,19 @@ namespace HGE {
 			//delete the allocated memory
 			out.__cleanup__();
 
-			//set the length
-			out.length = length + strlen(source);
+			//set the size
+			out.size = size + strlen(source);
 
 			//allocate memory to the outputs data buffer
-			out.data = new char[out.length + 1];
+			out.data = new char[out.size + 1];
 
 			//copy the source data over using my own library :)
 			strcpy(out.data, data); //copy first string
-			strcpy(out.data + length, source); //copy second string
+			strcpy(out.data + size, source); //copy second string
 
 			//in case the data isn't null terminated for some reason
-			if (out.data[out.length] != '\0')
-				out.data[out.length] = '\0';
+			if (out.data[out.size] != '\0')
+				out.data[out.size] = '\0';
 
 			return out;
 		}
@@ -161,19 +314,19 @@ namespace HGE {
 			//delete the allocated memory
 			out.__cleanup__();
 
-			//set the length
-			out.length = length + strlen(source);
+			//set the size
+			out.size = size + strlen(source);
 
 			//allocate memory to the outputs data buffer
-			out.data = new char[out.length + 1];
+			out.data = new char[out.size + 1];
 
 			//copy the source data over using my own library :)
 			strcpy(out.data, data); //copy first string
-			strcpy(out.data + length, source); //copy second string
+			strcpy(out.data + size, source); //copy second string
 
 			//in case the data isn't null terminated for some reason
-			if (out.data[out.length] != '\0')
-				out.data[out.length] = '\0';
+			if (out.data[out.size] != '\0')
+				out.data[out.size] = '\0';
 
 			return out;
 		}
@@ -192,204 +345,89 @@ namespace HGE {
 			//delete the allocated memory
 			out.__cleanup__();
 
-			//set the length
-			out.length = length + 1;
+			//set the size
+			out.size = size + 1;
 
 			//allocate memory to the outputs data buffer
-			out.data = new char[out.length + 1];
+			out.data = new char[out.size + 1];
 
 			//copy the source data over using my own library :)
 			strcpy(out.data, data); //copy first string
 
-			out.data[length - 1] = source;
+			out.data[size - 1] = source;
 
 			//in case the data isn't null terminated for some reason
-			if (out.data[out.length] != '\0')
-				out.data[out.length] = '\0';
+			if (out.data[out.size] != '\0')
+				out.data[out.size] = '\0';
 
 			return out;
 		}
 
 		/*
-		* Creates a string from character data
-		*
-		* @param Character array
+		* Returns the length of the string
 		*
 		* @author Salmoncatt
+		*
 		*/
-		string(char* source) : length(0) {
-			//get length
-			length = strlen(source);
-			
-			//allocate data size
-			data = new char[length + 1];
-			
-			//copy the source data over using my own library :)
-			strcpy(data, source);
-
-			//in case the data isn't null terminated for some reason
-			if (data[length] != '\0')
-				data[length] = '\0';
+		size_t length() {
+			return size;
 		}
 
 		/*
-		* Creates a string from character data
-		*
-		* @param Character array
-		*
+		* Returns whether or not the string is empty
+		* 
 		* @author Salmoncatt
+		* 
 		*/
-		string& operator=(char* source) {
-
-			__cleanup__();
-
-			//get length
-			length = strlen(source);
-
-			//allocate data size
-			data = new char[length + 1];
-
-			//copy the source data over using my own library :)
-			strcpy(data, source);
-
-			//in case the data isn't null terminated for some reason
-			if (data[length] != '\0')
-				data[length] = '\0';
-
-			return *this;
+		bool empty() {
+			return (data == NULL || data[0] == '\0');
 		}
 
 		/*
-		* Creates a string from character data
-		*
-		* @param Character array
-		*
+		* Returns the character at a the index specified.
+		* 
+		* @param The index for the character
+		* 
 		* @author Salmoncatt
 		*/
-		string(const char* source) : length(0) {
-			//set length
-			length = strlen(source);
-
-			//allocate string data into memory
-			data = new char[length + 1];
-
-			//copy the source data over using my own library :)
-			strcpy(data, source);
-
-			//in case the data isn't null terminated for some reason
-			if(data[length] != '\0')
-				data[length] = '\0';
-		}
-
-		/*
-		* Creates a string from character data
-		*
-		* @param Character array
-		*
-		* @author Salmoncatt
-		*/
-		string& operator=(const char* source) {
-
-			__cleanup__();
-
-			//set length
-			length = strlen(source);
-
-			//allocate string data into memory
-			data = new char[length + 1];
-
-			//copy the source data over using my own library :)
-			strcpy(data, source);
-
-			//in case the data isn't null terminated for some reason
-			if (data[length] != '\0')
-				data[length] = '\0';
-
-			return *this;
-		}
-
-		/*
-		* Creates a string from a character
-		*
-		* @param Character array
-		*
-		* @author Salmoncatt
-		*/
-		string(const char& source) : length(1) {
-
-			if (source != '\0') {
-				//allocate memory for data
-				data = new char[length + 1];
-
-				//put in the character and null terminator character
-				data[0] = source;
-				data[1] = '\0';
-			}
-			else {
-				//allocate memory for data
-				data = new char[length];
-				data[0] = '\0';
-			}
-
-		}
-
-		/*
-		* Creates a string from a character
-		*
-		* @param Character array
-		*
-		* @author Salmoncatt
-		*/
-		string& operator=(const char& source) {
-
-			__cleanup__();
-
-			//set length to one character
-			length = 1;
-
-			if (source != '\0') {
-				//allocate memory for data
-				data = new char[length + 1];
-
-				//put in the character and null terminator character
-				data[0] = source;
-				data[1] = '\0';
-			}
-			else {
-				//allocate memory for data
-				data = new char[length];
-				data[0] = '\0';
-			}
-
-			return *this;
-		}
-
 		char& at(const unsigned long& index) {
 			return data[index];
 		}
 
-		unsigned long find(const string& delimiter) {
 
+		size_t find(const string& delimiter) {
+			
+			for (size_t i = 0; i < size - delimiter.size; i += 1) {
+				
+				if (data[i] == delimiter.data[0]) {
+					size_t matches = 0;
+
+					for (size_t j = 0; j < delimiter.size; j += 1) {
+						if (data[i + j] == delimiter.data[j]) matches += 1;
+					}
+
+					if (matches == delimiter.size) return i;
+				}
+			}
+
+			return npos;
 		}
 
-		string substr(const size_t& index, const size_t& length) {
-			size_t size = length + 1;
+		string substr(const size_t& index, const size_t& size) {
 			string out = string();
 
 			delete[] out.data;
 
-			out.data = new char[size];
-			out.length = length;
-
-			size_t j = 0;
+			out.data = new char[size + 1];
+			out.size = size;
 
 			//i keeps track of second string index, j is for the first string (i do this because there is an offset involved)
-			for (size_t i = index, j = 0; i < (index + length); i += 1, j += 1) {
-				out.data[j] = data[i];
+			for (size_t i = index; i < (index + size); i += 1) {
+				out.data[i - index] = data[i];
 			}
 
-			out.data[length] = '\0';
-			out.length = length;
+			out.data[size] = '\0';
+			out.size = size;
 
 			return out;
 		}
