@@ -3,6 +3,7 @@
 #define HGE_MEMORY_UTIL_HEADER_INCLUDE
 
 #include <immintrin.h>
+#include <cstdint>
 
 namespace HGE {
 
@@ -23,8 +24,8 @@ namespace HGE {
 
 		size_t i = 0;
 
-		__m256i* destinationData = (__m256i*)destination;
-		const __m256i* sourceData = (__m256i*)source;
+		__m256i* destinationData = reinterpret_cast<__m256i*>(destination);
+		const __m256i* sourceData = reinterpret_cast<const __m256i*>(source);
 
 		for (i = 0; i < length; ++i) {
 			const __m256i loaded = _mm256_stream_load_si256(sourceData);
