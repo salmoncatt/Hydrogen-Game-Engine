@@ -61,13 +61,60 @@ public:
 		std::string logmsg = "Loading time with " + std::to_string(iterations);
 		std::string durationmsg = std::to_string(duration / iterations);
 
-		logmsg = durationmsg;
+		HGE::string str = "peepeepoopoo";
 
-		HGE::string str = "test";
+		std::string stdStr = "peepeepoopoo";
 
 		HGE::string str2 = str + "test2";
+		
+		std::vector<float> vector1 = { 1, 1, 1 };
+
+		Profiler p("vector reserve");
+
+		vector1.reserve(100);
+		p.stop();
 
 		Debug::log((float)HGE::strlen(str.c_str()));
+
+		double minems = 0;
+		double stdms = 0;
+
+		int i = 0;
+
+		double compareIterations = 9999999;
+
+		for (int i = 0; i < compareIterations; i++) {
+			char* text = new char[13];
+			Profiler p("mine", false);
+			HGE::memcpy(text, "peepeepoopoo", 13);
+			minems += p.getDuration();
+			delete[] text;
+		}
+
+		/*for (int i = 0; i < compareIterations; i++) {
+			Profiler p("mine", false);
+			str.substr(1, 10);
+			minems += p.getDuration();
+		}*/
+
+
+		Debug::log("Mine ms: " + std::to_string(minems / compareIterations));
+
+		/*for (int i = 0; i < compareIterations; i++) {
+			Profiler p("std", false);
+			stdStr.substr(1, 10);
+			stdms += p.getDuration();
+		}*/
+
+		for (int i = 0; i < compareIterations; i++) {
+			char* text = new char[13];
+			Profiler p("std", false);
+			std::memcpy(text, "peepeepoopoo", 13);
+			stdms += p.getDuration();
+			delete[] text;
+		}
+		
+		Debug::log("C++ STL ms: " + std::to_string(stdms / compareIterations));
 
 		std::cout << str.c_str() << std::endl;
 		std::cout << str2.c_str() << std::endl;

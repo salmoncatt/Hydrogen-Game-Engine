@@ -9,6 +9,12 @@ namespace HGE {
 		nameOfFunction = _nameOfFunction;
 		startTime = Time::getTime();
 	}
+	
+	Profiler::Profiler(const std::string& _nameOfFunction, const bool& logOnStop) {
+		nameOfFunction = _nameOfFunction;
+		shouldLogOnStop = logOnStop;
+		startTime = Time::getTime();
+	}
 
 	Profiler::~Profiler() {
 		if(!stopped)
@@ -20,9 +26,15 @@ namespace HGE {
 	}
 
 	void Profiler::stop() {
-		std::string Duration = std::to_string(getDuration());
-		Debug::log(nameOfFunction + " ms: " + Duration);
+		if (shouldLogOnStop) {
+			std::string Duration = std::to_string(getDuration());
+			Debug::log(nameOfFunction + " ms: " + Duration);
+		}
 		stopped = true;
+	}
+
+	void Profiler::dontLogOnStop() {
+		shouldLogOnStop = false;
 	}
 
 }
