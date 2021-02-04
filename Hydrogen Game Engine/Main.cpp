@@ -28,6 +28,45 @@ public:
 		window->resize(Vec2i(1000, 600));
 		window->setPosition(Vec2i(300, 100));
 
+		double minems = 0;
+		double stdms = 0;
+
+		int i = 0;
+
+		double compareIterations = 9999999;
+
+		for (int i = 0; i < compareIterations; i++) {
+			char* text = new char[13];
+			Profiler p("mine", false);
+			HGE::memcpy(text, "peepeepoopoo", 13);
+			minems += p.getDuration();
+			delete[] text;
+		}
+
+		/*for (int i = 0; i < compareIterations; i++) {
+			Profiler p("mine", false);
+			str.substr(1, 10);
+			minems += p.getDuration();
+		}*/
+
+
+		Debug::log("Mine ms: " + std::to_string(minems / compareIterations));
+
+		/*for (int i = 0; i < compareIterations; i++) {
+			Profiler p("std", false);
+			stdStr.substr(1, 10);
+			stdms += p.getDuration();
+		}*/
+
+		for (int i = 0; i < compareIterations; i++) {
+			char* text = new char[13];
+			Profiler p("std", false);
+			std::memcpy(text, "peepeepoopoo", 13);
+			stdms += p.getDuration();
+			delete[] text;
+		}
+
+		Debug::log("C++ STL ms: " + std::to_string(stdms / compareIterations));
 
 		Renderer::setCullingMode(true);
 		Renderer::setLightMode(HGE_PER_PIXEL_LIGHT);
@@ -75,46 +114,6 @@ public:
 		p.stop();
 
 		Debug::log((float)HGE::strlen(str.c_str()));
-
-		double minems = 0;
-		double stdms = 0;
-
-		int i = 0;
-
-		double compareIterations = 9999999;
-
-		for (int i = 0; i < compareIterations; i++) {
-			char* text = new char[13];
-			Profiler p("mine", false);
-			HGE::memcpy(text, "peepeepoopoo", 13);
-			minems += p.getDuration();
-			delete[] text;
-		}
-
-		/*for (int i = 0; i < compareIterations; i++) {
-			Profiler p("mine", false);
-			str.substr(1, 10);
-			minems += p.getDuration();
-		}*/
-
-
-		Debug::log("Mine ms: " + std::to_string(minems / compareIterations));
-
-		/*for (int i = 0; i < compareIterations; i++) {
-			Profiler p("std", false);
-			stdStr.substr(1, 10);
-			stdms += p.getDuration();
-		}*/
-
-		for (int i = 0; i < compareIterations; i++) {
-			char* text = new char[13];
-			Profiler p("std", false);
-			std::memcpy(text, "peepeepoopoo", 13);
-			stdms += p.getDuration();
-			delete[] text;
-		}
-		
-		Debug::log("C++ STL ms: " + std::to_string(stdms / compareIterations));
 
 		std::cout << str.c_str() << std::endl;
 		std::cout << str2.c_str() << std::endl;

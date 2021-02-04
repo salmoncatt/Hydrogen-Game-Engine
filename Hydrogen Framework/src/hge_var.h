@@ -10,7 +10,12 @@ namespace HGE {
 	//big stoof
 	const int HGE_NULL = 0;
 
+#ifdef _DEBUG
 	const std::string HGE_RES = "../Hydrogen Framework/res/";
+#else
+	const std::string HGE_RES = "res/";
+#endif
+
 
 	//for read as string and other things
 	const int HGE_NORMAL_READ = 1;

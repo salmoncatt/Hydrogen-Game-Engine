@@ -14,9 +14,9 @@
 #endif
 
 //size_t
-//#ifndef size_t
-//#define size_t unsigned long long
-//#endif
+#ifndef size_t
+#define size_t unsigned long long
+#endif
 
 
 #endif

@@ -2,9 +2,6 @@
 #ifndef HGE_MEMORY_UTIL_HEADER_INCLUDE
 #define HGE_MEMORY_UTIL_HEADER_INCLUDE
 
-#include <immintrin.h>
-#include <cstdint>
-
 namespace HGE {
 
 
@@ -17,30 +14,19 @@ namespace HGE {
 	* @param Source of data
 	* @param Length of the data
 	*/
-	inline void* memcpy(void* destination, const void* source, size_t length) {
+	void* memcpy(void* destination, const void* source, const size_t& length) {
 		//have references to the data we want to copy and the destination it goes to
-		//char* destinationData = (char*)destination;
-		//const char* sourceData = (char*)source;
-
-		size_t i = 0;
-
-		__m256i* destinationData = reinterpret_cast<__m256i*>(destination);
-		const __m256i* sourceData = reinterpret_cast<const __m256i*>(source);
-
-		for (i = 0; i < length; ++i) {
-			const __m256i loaded = _mm256_stream_load_si256(sourceData);
-			_mm256_stream_si256(destinationData, loaded);
-		}
-
-		_mm_sfence();
+		char* destinationData = (char*)destination;
+		const char* sourceData = (char*)source;
 
 		//loop through all the data and copy it, reverse while loop is the fastest so we use that (which is why we copied that length data and didnt make a reference to it)
-		//while (length--)
-		//	*destinationData++ = *sourceData++; //weird shit
+
+		for(size_t i = 0; i < length; i++)
+			destinationData[i] = sourceData[i];
 
 		return destination;
 	}
-	
+
 	/**
 	* Returns the length of a string of characters not including the termination character
 	* 
