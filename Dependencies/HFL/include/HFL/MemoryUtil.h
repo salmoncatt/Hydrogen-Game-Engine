@@ -14,15 +14,71 @@ namespace HGE {
 	* @param Source of data
 	* @param Length of the data
 	*/
-	void* memcpy(void* destination, const void* source, const size_t& length) {
-		//have references to the data we want to copy and the destination it goes to
-		char* destinationData = (char*)destination;
-		const char* sourceData = (char*)source;
+	static void* memcpy(void* destination, const void* source, size_t length) {
+		char* dest = (char*)destination;
+		const char* src = (const char*)source;
 
-		//loop through all the data and copy it, reverse while loop is the fastest so we use that (which is why we copied that length data and didnt make a reference to it)
+		//check if length is greater than 16 bytes
+		if ((length - 16) < 33) {
+			while (length > 15) {
+				//wtf even is this, assembly in c++? am i a assembly developer too now?
+				auto val = _mm_loadu_si128((__m128i*)(src));
+				_mm_storeu_si128((__m128i*)dest, val);
+				dest += 16;
+				src += 16;
+				length -= 16;
+			}
+		}
+#ifdef __AVX512__
+		else if((length - 32) < 65){
+			while (length > 31) {
+				//wtf even is this, assembly in c++? am i a assembly developer too now?
+				auto val = _mm256_loadu_si256((__m256i*)(src));
+				_mm256_storeu_si256((__m256i*)dest, val);
+				dest += 32;
+				src += 32;
+				length -= 32;
+			}
+		}
+		else if(length > 65 ) {
+			while (length > 31) {
+				//wtf even is this, assembly in c++? am i a assembly developer too now?
+				auto val = _mm512_loadu_si512((__m512i*)(src));
+				_mm512_storeu_si512((__m512i*)dest, val);
+				dest += 32;
+				src += 32;
+				length -= 32;
+			}
+		}
+#else
+		else if (length > 32) {
+			while (length > 31) {
+				//wtf even is this, assembly in c++? am i a assembly developer too now?
+				auto val = _mm256_loadu_si256((__m256i*)(src));
+				_mm256_storeu_si256((__m256i*)dest, val);
+				dest += 32;
+				src += 32;
+				length -= 32;
+			}
+		}
 
-		for(size_t i = 0; i < length; i++)
-			destinationData[i] = sourceData[i];
+#endif
+
+		while (length--) {
+			*dest++ = *src++;
+		}
+
+		/*if (length > 16) {
+			src += length - 16;
+			dest += length - 16;
+			auto val = _mm_loadu_si128((__m128i*)(src));
+			_mm_storeu_si128((__m128i*)(dest), val);
+		}
+		else {
+			for (; index < length; ++index) {
+				*dest++ = *src++;
+			}
+		}*/
 
 		return destination;
 	}

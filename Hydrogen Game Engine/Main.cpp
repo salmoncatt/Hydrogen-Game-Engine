@@ -35,13 +35,11 @@ public:
 
 		double compareIterations = 9999999;
 
-		for (int i = 0; i < compareIterations; i++) {
-			char* text = new char[13];
-			Profiler p("mine", false);
-			HGE::memcpy(text, "peepeepoopoo", 13);
-			minems += p.getDuration();
-			delete[] text;
-		}
+		//std::this_thread::sleep_for(std::chrono::milliseconds(500));
+
+		//char* peepeepoopoo = new char[32];
+		//HGE::memcpy(peepeepoopoo, "peepeepoopooooooooooooooooooooo", 32);
+		//delete[] peepeepoopoo;
 
 		/*for (int i = 0; i < compareIterations; i++) {
 			Profiler p("mine", false);
@@ -49,24 +47,37 @@ public:
 			minems += p.getDuration();
 		}*/
 
+		//for (int i = 0; i < compareIterations; i++) {
+		//	char* text = new char[461];
+		//	Profiler p("std", false);
+		//	std::memcpy(text, "hiugroijhgerojierhgojierhoijhreoijhoijehrsoijhersojihersojihesroijhresjiohersjoihersjiohresjioheroijhersojihreojierhsiojhjioehrsijohejioherjoiphersojiphesrjoiehsrojiphejoiphersjoiphersjiophejiophersjiopsheriojpsheriojphesroijphesroijphseiojphserojiphesrjiophseriojphseriojpehrsojiphesrjiophesrojipsheojiphesrjiophserojipsheriojpsehrjiopsherjiophseriojphsijopsherijophseriojpsherijopsherjiopshreijophsreiojphrsejoiphsjiopsherjioshrejiohresjiohrsejiorhesjioprhes", 461);
+		//	//stdms += p.getDuration();
+		//	delete[] text;
+		//}
 
+		for (int i = 0; i < compareIterations; i++) {
+			char* strdata = new char[461];
+			Profiler p("std", false);
+			HGE::memcpy(strdata, "hiugroijhgerojierhgojierhoijhreoijhoijehrsoijhersojihersojihesroijhresjiohersjoihersjiohresjioheroijhersojihreojierhsiojhjioehrsijohejioherjoiphersojiphesrjoiehsrojiphejoiphersjoiphersjiophejiophersjiopsheriojpsheriojphesroijphesroijphseiojphserojiphesrjiophseriojphseriojpehrsojiphesrjiophesrojipsheojiphesrjiophserojipsheriojpsehrjiopsherjiophseriojphsijopsherijophseriojpsherijopsherjiopshreijophsreiojphrsejoiphsjiopsherjioshrejiohresjiohrsejiorhesjioprhes", 461);
+			minems += p.getDuration();
+			delete[] strdata;
+		}
 		Debug::log("Mine ms: " + std::to_string(minems / compareIterations));
+
+		for (int i = 0; i < compareIterations; i++) {
+			char* strdata = new char[461];
+			Profiler p("std", false);
+			std::memcpy(strdata, "hiugroijhgerojierhgojierhoijhreoijhoijehrsoijhersojihersojihesroijhresjiohersjoihersjiohresjioheroijhersojihreojierhsiojhjioehrsijohejioherjoiphersojiphesrjoiehsrojiphejoiphersjoiphersjiophejiophersjiopsheriojpsheriojphesroijphesroijphseiojphserojiphesrjiophseriojphseriojpehrsojiphesrjiophesrojipsheojiphesrjiophserojipsheriojpsehrjiopsherjiophseriojphsijopsherijophseriojpsherijopsherjiopshreijophsreiojphrsejoiphsjiopsherjioshrejiohresjiohrsejiorhesjioprhes", 461);
+			stdms += p.getDuration();
+			delete[] strdata;
+		}
+		Debug::log("C++ STL ms: " + std::to_string(stdms / compareIterations));
 
 		/*for (int i = 0; i < compareIterations; i++) {
 			Profiler p("std", false);
 			stdStr.substr(1, 10);
 			stdms += p.getDuration();
 		}*/
-
-		for (int i = 0; i < compareIterations; i++) {
-			char* text = new char[13];
-			Profiler p("std", false);
-			std::memcpy(text, "peepeepoopoo", 13);
-			stdms += p.getDuration();
-			delete[] text;
-		}
-
-		Debug::log("C++ STL ms: " + std::to_string(stdms / compareIterations));
 
 		Renderer::setCullingMode(true);
 		Renderer::setLightMode(HGE_PER_PIXEL_LIGHT);
