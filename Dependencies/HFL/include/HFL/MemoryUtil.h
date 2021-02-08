@@ -12,73 +12,53 @@ namespace HGE {
 	* 
 	* @param Destination of data
 	* @param Source of data
-	* @param Length of the data
+	* @param Size of the data in bytes
 	*/
-	static void* memcpy(void* destination, const void* source, size_t length) {
+	static void* memcpy(void* destination, const void* source, size_t size) {
 		char* dest = (char*)destination;
 		const char* src = (const char*)source;
 
-		//check if length is greater than 16 bytes
-		if ((length - 16) < 33) {
-			while (length > 15) {
-				//wtf even is this, assembly in c++? am i a assembly developer too now?
-				auto val = _mm_loadu_si128((__m128i*)(src));
-				_mm_storeu_si128((__m128i*)dest, val);
-				dest += 16;
-				src += 16;
-				length -= 16;
-			}
-		}
-#ifdef __AVX512__
-		else if((length - 32) < 65){
-			while (length > 31) {
-				//wtf even is this, assembly in c++? am i a assembly developer too now?
-				auto val = _mm256_loadu_si256((__m256i*)(src));
-				_mm256_storeu_si256((__m256i*)dest, val);
-				dest += 32;
-				src += 32;
-				length -= 32;
-			}
-		}
-		else if(length > 65 ) {
-			while (length > 31) {
-				//wtf even is this, assembly in c++? am i a assembly developer too now?
-				auto val = _mm512_loadu_si512((__m512i*)(src));
-				_mm512_storeu_si512((__m512i*)dest, val);
-				dest += 32;
-				src += 32;
-				length -= 32;
-			}
-		}
-#else
-		else if (length > 32) {
-			while (length > 31) {
-				//wtf even is this, assembly in c++? am i a assembly developer too now?
-				auto val = _mm256_loadu_si256((__m256i*)(src));
-				_mm256_storeu_si256((__m256i*)dest, val);
-				dest += 32;
-				src += 32;
-				length -= 32;
-			}
-		}
+		size_t length = size;
 
+#ifdef __AVX512__
+		while (size >= 64) {
+			//wtf even is this, assembly in c++? am i a assembly developer too now?
+			auto val = _mm512_loadu_si512((__m512i*)(src));
+			_mm512_storeu_si512((__m512i*)dest, val);
+			dest += 64;
+			src += 64;
+			size -= 64;
+		}
 #endif
 
-		while (length--) {
-			*dest++ = *src++;
+		while (size >= 32) {
+			//wtf even is this, assembly in c++? am i a assembly developer too now?
+			auto val = _mm256_loadu_si256((__m256i*)(src));
+			_mm256_storeu_si256((__m256i*)dest, val);
+			dest += 32;
+			src += 32;
+			size -= 32;
+		}
+		
+		while (size >= 16) {
+			//wtf even is this, assembly in c++? am i a assembly developer too now?
+			auto val = _mm_loadu_si128((__m128i*)(src));
+			_mm_storeu_si128((__m128i*)dest, val);
+			dest += 16;
+			src += 16;
+			size -= 16;
 		}
 
-		/*if (length > 16) {
-			src += length - 16;
-			dest += length - 16;
+		if (length > 16) {
+			src += size - 16;
+			dest += size - 16;
 			auto val = _mm_loadu_si128((__m128i*)(src));
 			_mm_storeu_si128((__m128i*)(dest), val);
 		}
-		else {
-			for (; index < length; ++index) {
-				*dest++ = *src++;
-			}
-		}*/
+
+		while (size--) {
+			*dest++ = *src++;
+		}
 
 		return destination;
 	}

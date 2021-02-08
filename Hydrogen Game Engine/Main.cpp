@@ -55,23 +55,23 @@ public:
 		//	delete[] text;
 		//}
 
-		for (int i = 0; i < compareIterations; i++) {
-			char* strdata = new char[461];
-			Profiler p("std", false);
-			HGE::memcpy(strdata, "hiugroijhgerojierhgojierhoijhreoijhoijehrsoijhersojihersojihesroijhresjiohersjoihersjiohresjioheroijhersojihreojierhsiojhjioehrsijohejioherjoiphersojiphesrjoiehsrojiphejoiphersjoiphersjiophejiophersjiopsheriojpsheriojphesroijphesroijphseiojphserojiphesrjiophseriojphseriojpehrsojiphesrjiophesrojipsheojiphesrjiophserojipsheriojpsehrjiopsherjiophseriojphsijopsherijophseriojpsherijopsherjiopshreijophsreiojphrsejoiphsjiopsherjioshrejiohresjiohrsejiorhesjioprhes", 461);
-			minems += p.getDuration();
-			delete[] strdata;
-		}
-		Debug::log("Mine ms: " + std::to_string(minems / compareIterations));
+		//for (int i = 0; i < compareIterations; i++) {
+		//	char* strdata = new char[1361];
+		//	Profiler p("std", false);
+		//	HGE::memcpy(strdata, "hiugroijhgerojierhgojierhoijhreoijhoijehrsoijhersojihersojihesroijhresjiohersjoihersjiohresjioheroijhersojihreojierhsiojhjioehrsijohejioherjoiphersojiphesrjoiehsrojiphejoiphersjoiphersjiophejiophersjiopsheriojpsheriojphesroijphesroijphseiojphserojiphesrjiophseriojphseriojpehrsojiphesrjiophesrojipsheojiphesrjiophserojipsheriojpsehrjiopsherjiophseriojphsijopsherijophseriojpsherijopsherjiopshreijophsreiojphrsejoiphsjiopsherjioshrejiohresjiohrsejiorhesjioprheshiugroijhgerojierhgojierhoijhreoijhoijehrsoijhersojihersojihesroijhresjiohersjoihersjiohresjioheroijhersojihreojierhsiojhjioehrsijohejioherjoiphersojiphesrjoiehsrojiphejoiphersjoiphersjiophejiophersjiopsheriojpsheriojphesroijphesroijphseiojphserojiphesrjiophseriojphseriojpehrsojiphesrjiophesrojipsheojiphesrjiophserojipsheriojpsehrjiopsherjiophseriojphsijopsherijophseriojpsherijopsherjiopshreijophsreiojphrsejoiphsjiopsherjioshrejiohresjiohrsejiorhesjioprheshiugroijhgerojierhgojierhoijhreoijhoijehrsoijhersojihersojihesroijhresjiohersjoihersjiohresjioheroijhersojihreojierhsiojhjioehrsijohejioherjoiphersojiphesrjoiehsrojiphejoiphersjoiphersjiophejiophersjiopsheriojpsheriojphesroijphesroijphseiojphserojiphesrjiophseriojphseriojpehrsojiphesrjiophesrojipsheojiphesrjiophserojipsheriojpsehrjiopsherjiophseriojphsijopsherijophseriojpsherijopsherjiopshreijophsreiojphrsejoiphsjiopsherjioshrejiohresjiohrsejiorhesjioprhes", 1361);
+		//	minems += p.getDuration();
+		//	delete[] strdata;
+		//}
+		//Debug::log("Mine ms: " + std::to_string(minems / compareIterations));
 
-		for (int i = 0; i < compareIterations; i++) {
-			char* strdata = new char[461];
-			Profiler p("std", false);
-			std::memcpy(strdata, "hiugroijhgerojierhgojierhoijhreoijhoijehrsoijhersojihersojihesroijhresjiohersjoihersjiohresjioheroijhersojihreojierhsiojhjioehrsijohejioherjoiphersojiphesrjoiehsrojiphejoiphersjoiphersjiophejiophersjiopsheriojpsheriojphesroijphesroijphseiojphserojiphesrjiophseriojphseriojpehrsojiphesrjiophesrojipsheojiphesrjiophserojipsheriojpsehrjiopsherjiophseriojphsijopsherijophseriojpsherijopsherjiopshreijophsreiojphrsejoiphsjiopsherjioshrejiohresjiohrsejiorhesjioprhes", 461);
-			stdms += p.getDuration();
-			delete[] strdata;
-		}
-		Debug::log("C++ STL ms: " + std::to_string(stdms / compareIterations));
+		//for (int i = 0; i < compareIterations; i++) {
+		//	char* strdata = new char[1361];
+		//	Profiler p("std", false);
+		//	std::memcpy(strdata, "hiugroijhgerojierhgojierhoijhreoijhoijehrsoijhersojihersojihesroijhresjiohersjoihersjiohresjioheroijhersojihreojierhsiojhjioehrsijohejioherjoiphersojiphesrjoiehsrojiphejoiphersjoiphersjiophejiophersjiopsheriojpsheriojphesroijphesroijphseiojphserojiphesrjiophseriojphseriojpehrsojiphesrjiophesrojipsheojiphesrjiophserojipsheriojpsehrjiopsherjiophseriojphsijopsherijophseriojpsherijopsherjiopshreijophsreiojphrsejoiphsjiopsherjioshrejiohresjiohrsejiorhesjioprheshiugroijhgerojierhgojierhoijhreoijhoijehrsoijhersojihersojihesroijhresjiohersjoihersjiohresjioheroijhersojihreojierhsiojhjioehrsijohejioherjoiphersojiphesrjoiehsrojiphejoiphersjoiphersjiophejiophersjiopsheriojpsheriojphesroijphesroijphseiojphserojiphesrjiophseriojphseriojpehrsojiphesrjiophesrojipsheojiphesrjiophserojipsheriojpsehrjiopsherjiophseriojphsijopsherijophseriojpsherijopsherjiopshreijophsreiojphrsejoiphsjiopsherjioshrejiohresjiohrsejiorhesjioprheshiugroijhgerojierhgojierhoijhreoijhoijehrsoijhersojihersojihesroijhresjiohersjoihersjiohresjioheroijhersojihreojierhsiojhjioehrsijohejioherjoiphersojiphesrjoiehsrojiphejoiphersjoiphersjiophejiophersjiopsheriojpsheriojphesroijphesroijphseiojphserojiphesrjiophseriojphseriojpehrsojiphesrjiophesrojipsheojiphesrjiophserojipsheriojpsehrjiopsherjiophseriojphsijopsherijophseriojpsherijopsherjiopshreijophsreiojphrsejoiphsjiopsherjioshrejiohresjiohrsejiorhesjioprhes", 1361);
+		//	stdms += p.getDuration();
+		//	delete[] strdata;
+		//}
+		//Debug::log("C++ STL ms: " + std::to_string(stdms / compareIterations));
 
 		/*for (int i = 0; i < compareIterations; i++) {
 			Profiler p("std", false);
@@ -98,6 +98,8 @@ public:
 
 		mesh = MeshComponent();
 		
+		mesh.meshes = Util::loadMesh(HGE_RES + "models/warehouse/", "warehouse.obj");
+
 		int iterations = 1;
 		double duration = 0;
 
@@ -110,25 +112,20 @@ public:
 
 		std::string logmsg = "Loading time with " + std::to_string(iterations);
 		std::string durationmsg = std::to_string(duration / iterations);
-
-		HGE::string str = "peepeepoopoo";
-
-		std::string stdStr = "peepeepoopoo";
-
-		HGE::string str2 = str + "test2";
 		
-		std::vector<float> vector1 = { 1, 1, 1 };
+		HGE::vector<string> vector1 = HGE::vector<string>();
 
-		Profiler p("vector reserve");
+		HGE::string vectortest = "1234567890_11_12_13";
 
-		vector1.reserve(100);
-		p.stop();
+		vectortest.erase(5, 1);
 
-		Debug::log((float)HGE::strlen(str.c_str()));
+		std::cout << vectortest.c_str() << std::endl;
 
-		std::cout << str.c_str() << std::endl;
-		std::cout << str2.c_str() << std::endl;
-		std::cout << (str2.substr(1, 5)).c_str() << std::endl;
+		//vectortest.split(" ");
+
+		/*for (size_t i = 0; i < vector1.size(); ++i) {
+			std::cout << vector1[i].c_str() << std::endl;
+		}*/
 
 		Debug::newLine();
 		Debug::newLine();
@@ -142,9 +139,11 @@ public:
 
 		warehouse.addComponent<MeshComponent>(mesh);
 
-
 		for (int i = 0; i < warehouse.getComponent<MeshComponent>().meshes.size(); i++) {
-			warehouse.getComponent<MeshComponent>().meshes[i].texturecoords.clear();
+			auto& component = warehouse.getComponent<MeshComponent>().meshes[i];
+
+			component.texturecoords.clear();
+			component.calculateNormals(1);
 		}
 
 		Texture text = Texture(HGE_RES + "textures/radial bar half.bmp");

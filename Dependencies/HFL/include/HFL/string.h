@@ -3,6 +3,7 @@
 #define HGE_STRING_HEADER_INCLUDE
 
 #include "MemoryUtil.h"
+#include "vector.h"
 
 namespace HGE {
 
@@ -364,6 +365,37 @@ namespace HGE {
 		}
 
 		/*
+		* Returns the character at a the index specified.
+		*
+		* @param The index for the character
+		*
+		* @author Salmoncatt
+		*/
+		char& operator[](size_t& index) {
+			return data[index];
+		}
+
+		void erase(const size_t start, const size_t length) {
+			if (start + length <= size) {
+				size_t tempsize = start + length;
+				char* temp = new char[size + 1 - length];
+				
+				//copy before start
+				if(start > 0)
+					memcpy(temp, data, start);
+
+				//copy after start (including null terminator character)
+				memcpy(temp + start, data + start + length, size + 1 - length - start);
+
+				delete[] data;
+
+				data = temp;
+				data[size] = '\0';
+				size = tempsize;	
+			}
+		}
+
+		/*
 		* Returns the length of the string
 		*
 		* @author Salmoncatt
@@ -390,7 +422,7 @@ namespace HGE {
 		* 
 		* @author Salmoncatt
 		*/
-		char& at(const unsigned long& index) {
+		char& at(size_t& index) {
 			return data[index];
 		}
 
@@ -436,9 +468,24 @@ namespace HGE {
 			return data;
 		}
 
-		//string[] split(const string& stringToSplit) {
-		//
-		//}
+		vector<string> split(const string& delimiter) {
+			vector<string> out = vector<string>();
+
+			out.reserve(10);
+
+			size_t end = find(delimiter);
+
+			size_t start = 0;
+
+			while (end != string::npos) {
+				out.push_back(substr(start, end));
+
+				start += end + delimiter.size;
+				end = find(delimiter);
+			}
+
+			return out;
+		}
 
 		~string() {
 			__cleanup__();

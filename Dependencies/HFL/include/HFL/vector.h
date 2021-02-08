@@ -29,10 +29,45 @@ namespace HGE {
 			currentSize = 0;
 		}
 
-		void reserve(size_t size) {
+		void reserve(const size_t& size) {
 			if (size > capacity) {
+				//create temp array with new size
+				T* temp = new T[size];
 
+				//copy over data
+				memcpy(temp, data, sizeof(T) * currentSize);
+
+				//delete current data
+				delete[] data;
+
+				//set the data with the new memory adress
+				data = temp;
+				capacity = size;
 			}
+		}
+
+		void resize(const size_t& size) {
+			if (size > capacity)
+				reserve(size);
+			
+			if (size > currentSize) {
+				for (size_t i = currentSize; i < size; ++i) {
+					data[i] = T();
+				}
+			}
+			currentSize = size;
+		}
+
+		void push_back(const T& value) {
+			if (currentSize + 1 > capacity)
+				reserve(capacity * 2);
+
+			data[currentSize] = value;
+			currentSize += 1;
+		}
+
+		T& operator[](const size_t& index) {
+			return data[index];
 		}
 
 		size_t size() {

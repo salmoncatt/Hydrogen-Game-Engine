@@ -31,6 +31,18 @@ namespace HGE {
 
 		void create();
 
+		/*
+		* Calulates normals using the current vertex data. Will delete any current normals
+		* 
+		* @param A multiplier for boosting light values
+		* 
+		* @author Salmoncatt
+		* 
+		*/
+		void calculateNormals(const float& boost);
+
+		void smoothNormals(const float& smoothingValue, const size_t& passes);
+
 	};
 }
 

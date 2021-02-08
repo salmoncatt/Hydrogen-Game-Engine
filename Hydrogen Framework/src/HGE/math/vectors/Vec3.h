@@ -29,6 +29,16 @@ namespace HGE {
 
 		Vec3f operator-=(const Vec3f& other);
 
+		Vec3f operator*(const Vec3f& other);
+
+		Vec3f operator*=(const Vec3f& other);
+
+		Vec3f operator*(const float& other);
+
+		Vec3f operator*=(const float& other);
+
+		static Vec3f cross(const Vec3f& left, const Vec3f& right);
+
 	};
 }
 
