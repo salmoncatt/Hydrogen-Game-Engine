@@ -39,8 +39,8 @@ namespace HGE {
 	void Util::test(const std::string& filepath, const std::string& filename) {
 		std::ifstream file(filepath + filename, std::ios::in);
 
-		const unsigned int length = 8192;
-		char buffer[length];
+		//const unsigned int length = 8192;
+		//char buffer[length];
 
 		//file.rdbuf()->pubsetbuf(buffer, length);
 		//file.open(filepath + filename, std::ios::binary);
@@ -52,7 +52,9 @@ namespace HGE {
 		std::vector<Vec3f> vertexBuffer;
 		std::vector<Vec3f> normalBuffer;
 
-		std::string line;
+		std::string buffer;
+
+		HGE::string line;
 
 		unsigned int meshIndex = 0;
 
@@ -64,12 +66,13 @@ namespace HGE {
 		normalBuffer.reserve(reserveSize);
 
 		if (file.is_open()) {
-			while (file.read(buffer, length)) {
-				line = buffer;
-				line = line.substr(0, line.find("\n", 0));
-				std::string header = line.substr(0, 2);
+			//file.read(buffer, length);
+			while (std::getline(file, buffer)) {
+				//line = buffer;
+				//line = line.substr(0, line.find("\n"));
+				HGE::string header = line.substr(0, 2);
 
-				if (line.substr(0, 7) == "mtllib ") {
+				/*if (line.substr(0, 7) == "mtllib ") {
 					std::vector<Material> loadedMaterials = loadMaterial(filepath, line.substr(7));
 
 					materials.insert(materials.end(), loadedMaterials.begin(), loadedMaterials.end());
@@ -77,26 +80,32 @@ namespace HGE {
 					out = std::vector<Mesh>(materials.size(), Mesh());
 					out.reserve(materials.size());
 				}
-				else if (header == "v ") {
-					std::istringstream v(line.substr(2));
+				else*/ if (header == "v ") {
+					string vertex = line.substr(2);
 
-					float x, y, z;
-					v >> x >> y >> z;
-					vertexBuffer.push_back(Vec3f(x, y, z));
+					vector<string> vertices = vector<string>();
+
+					vertices = vertex.split(' ');
+					
+					vertexBuffer.push_back(Vec3f(toFloat(vertices[0]), toFloat(vertices[1]), toFloat(vertices[2])));
 				}
 				else if (header == "vt") {
-					std::istringstream vt(line.substr(3));
+					string textureCoord = line.substr(3);
 
-					float x, y;
-					vt >> x >> y;
-					textureCoordBuffer.push_back(Vec2f(x, y));
+					vector<string> textureCoords = vector<string>();
+
+					textureCoords = textureCoord.split(' ');
+
+					textureCoordBuffer.push_back(Vec2f(toFloat(textureCoords[0]), toFloat(textureCoords[1])));
 				}
 				else if (header == "vn") {
-					std::istringstream vn(line.substr(3));
+					string normal = line.substr(2);
 
-					float x, y, z;
-					vn >> x >> y >> z;
-					normalBuffer.push_back(Vec3f(x, y, z));
+					vector<string> normals = vector<string>();
+
+					normals = normal.split(' ');
+
+					normalBuffer.push_back(Vec3f(toFloat(normals[0]), toFloat(normals[1]), toFloat(normals[2])));
 				}
 				else if (header == "f ") {
 					//TODO: add more than just: f i/i/i i/i/i i/i/i
@@ -190,7 +199,7 @@ namespace HGE {
 				else if (line.substr(0, 7) == "usemtl ") {
 					bool found = false;
 					for (int i = 0; i < materials.size(); i++) {
-						if (line.substr(7) == materials[i].name) {
+						if (line.substr(7) == materials[i].name.c_str()) {
 							meshIndex = i;
 							out[meshIndex].material = materials[i];
 							found = true;
@@ -200,7 +209,7 @@ namespace HGE {
 
 					//just a little helper for materials
 					if (!found)
-						Debug::systemErr("Couldn't find material: " + line.substr(7));
+						Debug::systemErr(("Couldn't find material: " + line.substr(7)).c_str());
 
 				}
 			}

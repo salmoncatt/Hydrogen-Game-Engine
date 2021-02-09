@@ -1,6 +1,6 @@
 
-#ifndef HGE_STRING_HEADER_INCLUDE
-#define HGE_STRING_HEADER_INCLUDE
+#ifndef HFL_STRING_HEADER_INCLUDE
+#define HFL_STRING_HEADER_INCLUDE
 
 #include "MemoryUtil.h"
 #include "vector.h"
@@ -270,6 +270,10 @@ namespace HGE {
 			return out;
 		}
 
+		friend string operator+(const char* left, const string& right) {
+			return string(left) + right;
+		}
+
 		/*
 		* Adds a string of characters to this string
 		*
@@ -375,24 +379,69 @@ namespace HGE {
 			return data[index];
 		}
 
-		void erase(const size_t start, const size_t length) {
-			if (start + length <= size) {
-				size_t tempsize = start + length;
-				char* temp = new char[size + 1 - length];
-				
-				//copy before start
-				if(start > 0)
-					memcpy(temp, data, start);
-
-				//copy after start (including null terminator character)
-				memcpy(temp + start, data + start + length, size + 1 - length - start);
-
-				delete[] data;
-
-				data = temp;
-				data[size] = '\0';
-				size = tempsize;	
+		bool operator==(const string& other) {
+			if (size == other.size) {
+				for (size_t i = 0; i < size; ++i) {
+					if (data[i] != other.data[i])
+						return false;
+				}
+				return true;
 			}
+			return false;
+		}
+
+		bool operator==(const char* other) {
+			if (size == strlen(other)) {
+				for (size_t i = 0; i < size; ++i) {
+					if (data[i] != other[i])
+						return false;
+				}
+				return true;
+			}
+			return false;
+		}
+
+		bool operator==(char* other) {
+			if (size == strlen(other)) {
+				for (size_t i = 0; i < size; ++i) {
+					if (data[i] != other[i])
+						return false;
+				}
+				return true;
+			}
+			return false;
+		}
+
+		bool operator==(char& other) {
+			if (size == 1) {
+				return data[0] == other;
+			}
+			return false;
+		}
+
+		void erase(const size_t& start, size_t length) {
+			if (start >= size) {
+				return;
+			}
+
+			if (start + length > size) {
+				length = size - start;
+			}
+
+			char* temp = new char[size + 1 - length];
+
+			//copy before start
+			if (start > 0)
+				memcpy(temp, data, start);
+
+			//copy after start (including null terminator character)
+			memcpy(temp + start, data + start + length, size + 1 - length - start);
+
+			delete[] data;
+
+			data = temp;
+			size = size - length;
+
 		}
 
 		/*
@@ -401,7 +450,7 @@ namespace HGE {
 		* @author Salmoncatt
 		*
 		*/
-		size_t length() {
+		size_t length() const{
 			return size;
 		}
 
@@ -411,7 +460,7 @@ namespace HGE {
 		* @author Salmoncatt
 		* 
 		*/
-		bool empty() {
+		bool empty() const{
 			return (data == NULL || data[0] == '\0');
 		}
 
@@ -427,25 +476,27 @@ namespace HGE {
 		}
 
 
-		size_t find(const string& delimiter) {
+		size_t find(const string& delimiter) const{
 			
-			for (size_t i = 0; i < size - delimiter.size; i += 1) {
-				
-				if (data[i] == delimiter.data[0]) {
-					size_t matches = 0;
+			if (size > delimiter.size) {
+				for (size_t i = 0; i < size - delimiter.size; i += 1) {
 
-					for (size_t j = 0; j < delimiter.size; j += 1) {
-						if (data[i + j] == delimiter.data[j]) matches += 1;
+					if (data[i] == delimiter.data[0]) {
+						size_t matches = 0;
+
+						for (size_t j = 0; j < delimiter.size; j += 1) {
+							if (data[i + j] == delimiter.data[j]) matches += 1;
+						}
+
+						if (matches == delimiter.size) return i;
 					}
-
-					if (matches == delimiter.size) return i;
 				}
 			}
 
-			return npos;
+			return string::npos;
 		}
 
-		string substr(const size_t& index, const size_t& size) {
+		string substr(const size_t& index, const size_t& size) const {
 			string out = string();
 
 			delete[] out.data;
@@ -464,25 +515,31 @@ namespace HGE {
 			return out;
 		}
 
-		const char* c_str() {
+		string substr(const size_t& index) const {
+			return substr(index, size - index);
+		}
+
+		const char* c_str() const{
 			return data;
 		}
 
 		vector<string> split(const string& delimiter) {
 			vector<string> out = vector<string>();
 
+			string temp = *this;
+
 			out.reserve(10);
 
-			size_t end = find(delimiter);
+			size_t index = 0;
 
-			size_t start = 0;
+			while ((index = temp.find(delimiter)) != string::npos) {
+				out.push_back(temp.substr(0, index));
 
-			while (end != string::npos) {
-				out.push_back(substr(start, end));
-
-				start += end + delimiter.size;
-				end = find(delimiter);
+				temp.erase(0, index + delimiter.size);
 			}
+
+			//find doesnt count the last one so i add the rest of the data
+			out.push_back(temp.substr(0, temp.size));
 
 			return out;
 		}
@@ -494,6 +551,84 @@ namespace HGE {
 
 	};
 
+
+	static float toFloat(const string& value) {
+		const char* data = value.c_str();
+
+		if (!*data || *data == '?')
+			return __builtin_nanf("");
+
+		int signed_digit = 1;
+
+		while (*data == ' ') data++;
+
+		if (*data == '-') {
+			signed_digit = -1;
+			data++;
+		}
+
+
+		float accumulator = 0;
+
+
+		while (*data >= '0' && *data <= '9')
+			accumulator = accumulator * 10 + *data++ - '0';
+
+		if (*data == '.') {
+			float decimalAccumulator = 0.1f;
+
+			data++;
+
+			while (*data >= '0' && *data <= '9') {
+				accumulator += (*data++ - '0') * decimalAccumulator;
+				decimalAccumulator *= 0.1f;
+			}
+
+		}
+
+		if (*data != '\0')
+			return __builtin_nanf("");
+
+		return signed_digit * accumulator;
+	}
+
+	static double toDouble(const string& value) {
+		const char* data = value.c_str();
+
+		if (!*data || *data == '?')
+			return __builtin_nans("");
+
+		int signed_digit = 1;
+
+		while (*data == ' ') data++;
+
+		if (*data == '-')
+			signed_digit = -1;
+
+
+		double accumulator = 0;
+
+
+		while (*data >= '0' && *data <= '9')
+			accumulator = accumulator * 10 + *data++ - '0';
+
+		if (*data == '.') {
+			double decimalAccumulator = 0.1;
+
+			data++;
+
+			while (*data >= '0' && *data <= '9') {
+				accumulator += (*data++ - '0') * decimalAccumulator;
+				decimalAccumulator *= 0.1;
+			}
+
+		}
+
+		if (*data != '\0')
+			return __builtin_nans("");
+
+		return signed_digit * accumulator;
+	}
 
 
 }

@@ -1,6 +1,6 @@
 
-#ifndef HGE_FILE_IO_HEADER_INCLUDE
-#define HGE_FILE_IO_HEADER_INCLUDE
+#ifndef HFL_FILE_IO_HEADER_INCLUDE
+#define HFL_FILE_IO_HEADER_INCLUDE
 
 #include <fcntl.h>
 #include <sys/stat.h>

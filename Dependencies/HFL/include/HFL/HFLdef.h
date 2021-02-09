@@ -1,6 +1,6 @@
 
-#ifndef HGE_DEFINE_HEADER_INCLUDE
-#define HGE_DEFINE_HEADER_INCLUDE
+#ifndef HFL_DEFINE_HEADER_INCLUDE
+#define HFL_DEFINE_HEADER_INCLUDE
 
 //i use my own defines here so i dont have to use the std library
 

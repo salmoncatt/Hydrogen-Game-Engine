@@ -1,6 +1,6 @@
 
-#ifndef HGE_VECTOR_HEADER_INCLUDE
-#define HGE_VECTOR_HEADER_INCLUDE
+#ifndef HFL_VECTOR_HEADER_INCLUDE
+#define HFL_VECTOR_HEADER_INCLUDE
 
 
 
@@ -29,13 +29,42 @@ namespace HGE {
 			currentSize = 0;
 		}
 
+		vector(const vector& source) {
+			data = new T[source.capacity];
+			capacity = source.capacity;
+			currentSize = source.currentSize;
+
+			//copy over data
+			for (size_t i = 0; i < capacity; ++i) {
+				data[i] = source.data[i];
+			}
+
+		}
+
+		vector& operator=(const vector& source) {
+			__cleanup__();
+
+			data = new T[source.capacity];
+			capacity = source.capacity;
+			currentSize = source.currentSize;
+
+			//copy over data
+			for (size_t i = 0; i < capacity; ++i) {
+				data[i] = source.data[i];
+			}
+
+			return *this;
+		}
+
 		void reserve(const size_t& size) {
 			if (size > capacity) {
 				//create temp array with new size
 				T* temp = new T[size];
 
 				//copy over data
-				memcpy(temp, data, sizeof(T) * currentSize);
+				for (size_t i = 0; i < capacity; ++i) {
+					temp[i] = data[i];
+				}
 
 				//delete current data
 				delete[] data;
