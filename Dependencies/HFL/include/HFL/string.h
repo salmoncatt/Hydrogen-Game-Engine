@@ -270,6 +270,14 @@ namespace HGE {
 			return out;
 		}
 
+		/*
+		* Adds a string to a character array
+		*
+		* @param Character array
+		* @param The string to add
+		*
+		* @author Salmoncatt
+		*/
 		friend string operator+(const char* left, const string& right) {
 			return string(left) + right;
 		}
@@ -379,6 +387,13 @@ namespace HGE {
 			return data[index];
 		}
 
+		/*
+		* Checks if two strings are equal
+		*
+		* @param The string to add from
+		*
+		* @author Salmoncatt
+		*/
 		bool operator==(const string& other) {
 			if (size == other.size) {
 				for (size_t i = 0; i < size; ++i) {
@@ -390,6 +405,13 @@ namespace HGE {
 			return false;
 		}
 
+		/*
+		* Checks if a string and a character array are equal
+		*
+		* @param The character array to check
+		*
+		* @author Salmoncatt
+		*/
 		bool operator==(const char* other) {
 			if (size == strlen(other)) {
 				for (size_t i = 0; i < size; ++i) {
@@ -401,6 +423,13 @@ namespace HGE {
 			return false;
 		}
 
+		/*
+		* Checks if a string and a character array are equal
+		*
+		* @param The character array to check
+		*
+		* @author Salmoncatt
+		*/
 		bool operator==(char* other) {
 			if (size == strlen(other)) {
 				for (size_t i = 0; i < size; ++i) {
@@ -411,7 +440,14 @@ namespace HGE {
 			}
 			return false;
 		}
-
+		
+		/*
+		* Checks if a string and a character
+		*
+		* @param The character to check
+		*
+		* @author Salmoncatt
+		*/
 		bool operator==(char& other) {
 			if (size == 1) {
 				return data[0] == other;
@@ -419,6 +455,17 @@ namespace HGE {
 			return false;
 		}
 
+		/*
+		* Erases part of a string and moves the rest of the string back
+		*
+		* (If the length is longer than the string size it just erases as much as it can)
+		* (If the start index is bigger than the string size it returns)
+		* 
+		* @param The index to start erasing from
+		* @param The length of characters to erase
+		*
+		* @author Salmoncatt
+		*/
 		void erase(const size_t& start, size_t length) {
 			if (start >= size) {
 				return;
@@ -475,9 +522,17 @@ namespace HGE {
 			return data[index];
 		}
 
+		/*
+		* Returns the index of the start of the delimiter if found
+		*
+		* (returns string::npos if not found)
+		*
+		* @param The delimiter
+		*
+		* @author Salmoncatt
+		*/
+		size_t find(const string& delimiter) const {
 
-		size_t find(const string& delimiter) const{
-			
 			if (size > delimiter.size) {
 				for (size_t i = 0; i < size - delimiter.size; i += 1) {
 
@@ -496,33 +551,93 @@ namespace HGE {
 			return string::npos;
 		}
 
-		string substr(const size_t& index, const size_t& size) const {
+		/*
+		* Returns the index of the start of the delimiter if found
+		*
+		* (returns string::npos if not found)
+		*
+		* @param The delimiter
+		* @param The starting point
+		*
+		* @author Salmoncatt
+		*/
+		size_t find(const size_t& start, const string& delimiter) const {
+
+			if (size > delimiter.size + start) {
+				for (size_t i = start; i < size - delimiter.size; i += 1) {
+
+					if (data[i] == delimiter.data[0]) {
+						size_t matches = 0;
+
+						for (size_t j = 0; j < delimiter.size; j += 1) {
+							if (data[i + j] == delimiter.data[j]) matches += 1;
+						}
+
+						if (matches == delimiter.size) return i;
+					}
+				}
+			}
+
+			return string::npos;
+		}
+
+		/*
+		* Returns a part of this string from index to size
+		*
+		* (Returns blank string if invalid values are used)
+		* 
+		* @param The starting index
+		* @param The length of the sub string
+		*
+		* @author Salmoncatt
+		*/
+		string substr(const size_t& index, const size_t& length) const {
+			if (length + index < size)
+				return string();
+
 			string out = string();
 
 			delete[] out.data;
 
 			out.data = new char[size + 1];
-			out.size = size;
+			out.size = length;
 
-			//i keeps track of second string index, j is for the first string (i do this because there is an offset involved)
-			for (size_t i = index; i < (index + size); i += 1) {
-				out.data[i - index] = data[i];
-			}
-
-			out.data[size] = '\0';
-			out.size = size;
+			memcpy(out.data, data + index, length + 1);
 
 			return out;
 		}
 
+		/*
+		* Returns a string consisting of this string after the specified index
+		*
+		* (Returns blank string if invalid values are used)
+		*
+		* @param The starting index
+		*
+		* @author Salmoncatt
+		*/
 		string substr(const size_t& index) const {
 			return substr(index, size - index);
 		}
 
+		/*
+		* Returns the character array of this string
+		*
+		* @author Salmoncatt
+		*/
 		const char* c_str() const{
 			return data;
 		}
 
+		/*
+		* Returns a vector consisting of strings spilt between the delimiter
+		* 
+		* (returns a blank vector if invalid values are used)
+		*
+		* @param The delimiter string
+		* 
+		* @author Salmoncatt
+		*/
 		vector<string> split(const string& delimiter) {
 			vector<string> out = vector<string>();
 
@@ -551,7 +666,15 @@ namespace HGE {
 
 	};
 
-
+	/*
+	* Returns a float made from a string
+	* 
+	* (returns nan if invalid values are used)
+	* 
+	* @param The string to convert
+	*
+	* @author Salmoncatt
+	*/
 	static float toFloat(const string& value) {
 		const char* data = value.c_str();
 
@@ -592,6 +715,15 @@ namespace HGE {
 		return signed_digit * accumulator;
 	}
 
+	/*
+	* Returns a double made from a string
+	*
+	* (returns nan if invalid values are used)
+	*
+	* @param The string to convert
+	*
+	* @author Salmoncatt
+	*/
 	static double toDouble(const string& value) {
 		const char* data = value.c_str();
 
