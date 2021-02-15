@@ -47,31 +47,31 @@ public:
 			minems += p.getDuration();
 		}*/
 
-		//for (int i = 0; i < compareIterations; i++) {
-		//	char* text = new char[461];
-		//	Profiler p("std", false);
-		//	std::memcpy(text, "hiugroijhgerojierhgojierhoijhreoijhoijehrsoijhersojihersojihesroijhresjiohersjoihersjiohresjioheroijhersojihreojierhsiojhjioehrsijohejioherjoiphersojiphesrjoiehsrojiphejoiphersjoiphersjiophejiophersjiopsheriojpsheriojphesroijphesroijphseiojphserojiphesrjiophseriojphseriojpehrsojiphesrjiophesrojipsheojiphesrjiophserojipsheriojpsehrjiopsherjiophseriojphsijopsherijophseriojpsherijopsherjiopshreijophsreiojphrsejoiphsjiopsherjioshrejiohresjiohrsejiorhesjioprhes", 461);
-		//	//stdms += p.getDuration();
-		//	delete[] text;
-		//}
+		for (int i = 0; i < compareIterations; i++) {
+			char* text = new char[461];
+			Profiler p("std", false);
+			std::memcpy(text, "hiugroijhgerojierhgojierhoijhreoijhoijehrsoijhersojihersojihesroijhresjiohersjoihersjiohresjioheroijhersojihreojierhsiojhjioehrsijohejioherjoiphersojiphesrjoiehsrojiphejoiphersjoiphersjiophejiophersjiopsheriojpsheriojphesroijphesroijphseiojphserojiphesrjiophseriojphseriojpehrsojiphesrjiophesrojipsheojiphesrjiophserojipsheriojpsehrjiopsherjiophseriojphsijopsherijophseriojpsherijopsherjiopshreijophsreiojphrsejoiphsjiopsherjioshrejiohresjiohrsejiorhesjioprhes", 461);
+			//stdms += p.getDuration();
+			delete[] text;
+		}
 
-		//for (int i = 0; i < compareIterations; i++) {
-		//	char* strdata = new char[1361];
-		//	Profiler p("std", false);
-		//	HGE::memcpy(strdata, "hiugroijhgerojierhgojierhoijhreoijhoijehrsoijhersojihersojihesroijhresjiohersjoihersjiohresjioheroijhersojihreojierhsiojhjioehrsijohejioherjoiphersojiphesrjoiehsrojiphejoiphersjoiphersjiophejiophersjiopsheriojpsheriojphesroijphesroijphseiojphserojiphesrjiophseriojphseriojpehrsojiphesrjiophesrojipsheojiphesrjiophserojipsheriojpsehrjiopsherjiophseriojphsijopsherijophseriojpsherijopsherjiopshreijophsreiojphrsejoiphsjiopsherjioshrejiohresjiohrsejiorhesjioprheshiugroijhgerojierhgojierhoijhreoijhoijehrsoijhersojihersojihesroijhresjiohersjoihersjiohresjioheroijhersojihreojierhsiojhjioehrsijohejioherjoiphersojiphesrjoiehsrojiphejoiphersjoiphersjiophejiophersjiopsheriojpsheriojphesroijphesroijphseiojphserojiphesrjiophseriojphseriojpehrsojiphesrjiophesrojipsheojiphesrjiophserojipsheriojpsehrjiopsherjiophseriojphsijopsherijophseriojpsherijopsherjiopshreijophsreiojphrsejoiphsjiopsherjioshrejiohresjiohrsejiorhesjioprheshiugroijhgerojierhgojierhoijhreoijhoijehrsoijhersojihersojihesroijhresjiohersjoihersjiohresjioheroijhersojihreojierhsiojhjioehrsijohejioherjoiphersojiphesrjoiehsrojiphejoiphersjoiphersjiophejiophersjiopsheriojpsheriojphesroijphesroijphseiojphserojiphesrjiophseriojphseriojpehrsojiphesrjiophesrojipsheojiphesrjiophserojipsheriojpsehrjiopsherjiophseriojphsijopsherijophseriojpsherijopsherjiopshreijophsreiojphrsejoiphsjiopsherjioshrejiohresjiohrsejiorhesjioprhes", 1361);
-		//	minems += p.getDuration();
-		//	delete[] strdata;
-		//}
-		//Debug::log("Mine ms: " + std::to_string(minems / compareIterations));
+		for (int i = 0; i < compareIterations; i++) {
+			char* strdata = new char[1361];
+			Profiler p("std", false);
+			HGE::memcpy(strdata, "hiugroijhgerojierhgojierhoijhreoijhoijehrsoijhersojihersojihesroijhresjiohersjoihersjiohresjioheroijhersojihreojierhsiojhjioehrsijohejioherjoiphersojiphesrjoiehsrojiphejoiphersjoiphersjiophejiophersjiopsheriojpsheriojphesroijphesroijphseiojphserojiphesrjiophseriojphseriojpehrsojiphesrjiophesrojipsheojiphesrjiophserojipsheriojpsehrjiopsherjiophseriojphsijopsherijophseriojpsherijopsherjiopshreijophsreiojphrsejoiphsjiopsherjioshrejiohresjiohrsejiorhesjioprheshiugroijhgerojierhgojierhoijhreoijhoijehrsoijhersojihersojihesroijhresjiohersjoihersjiohresjioheroijhersojihreojierhsiojhjioehrsijohejioherjoiphersojiphesrjoiehsrojiphejoiphersjoiphersjiophejiophersjiopsheriojpsheriojphesroijphesroijphseiojphserojiphesrjiophseriojphseriojpehrsojiphesrjiophesrojipsheojiphesrjiophserojipsheriojpsehrjiopsherjiophseriojphsijopsherijophseriojpsherijopsherjiopshreijophsreiojphrsejoiphsjiopsherjioshrejiohresjiohrsejiorhesjioprheshiugroijhgerojierhgojierhoijhreoijhoijehrsoijhersojihersojihesroijhresjiohersjoihersjiohresjioheroijhersojihreojierhsiojhjioehrsijohejioherjoiphersojiphesrjoiehsrojiphejoiphersjoiphersjiophejiophersjiopsheriojpsheriojphesroijphesroijphseiojphserojiphesrjiophseriojphseriojpehrsojiphesrjiophesrojipsheojiphesrjiophserojipsheriojpsehrjiopsherjiophseriojphsijopsherijophseriojpsherijopsherjiopshreijophsreiojphrsejoiphsjiopsherjioshrejiohresjiohrsejiorhesjioprhes", 1361);
+			minems += p.getDuration();
+			delete[] strdata;
+		}
+		Debug::log("Mine ms: " + std::to_string(minems / compareIterations));
 
-		//for (int i = 0; i < compareIterations; i++) {
-		//	char* strdata = new char[1361];
-		//	Profiler p("std", false);
-		//	std::memcpy(strdata, "hiugroijhgerojierhgojierhoijhreoijhoijehrsoijhersojihersojihesroijhresjiohersjoihersjiohresjioheroijhersojihreojierhsiojhjioehrsijohejioherjoiphersojiphesrjoiehsrojiphejoiphersjoiphersjiophejiophersjiopsheriojpsheriojphesroijphesroijphseiojphserojiphesrjiophseriojphseriojpehrsojiphesrjiophesrojipsheojiphesrjiophserojipsheriojpsehrjiopsherjiophseriojphsijopsherijophseriojpsherijopsherjiopshreijophsreiojphrsejoiphsjiopsherjioshrejiohresjiohrsejiorhesjioprheshiugroijhgerojierhgojierhoijhreoijhoijehrsoijhersojihersojihesroijhresjiohersjoihersjiohresjioheroijhersojihreojierhsiojhjioehrsijohejioherjoiphersojiphesrjoiehsrojiphejoiphersjoiphersjiophejiophersjiopsheriojpsheriojphesroijphesroijphseiojphserojiphesrjiophseriojphseriojpehrsojiphesrjiophesrojipsheojiphesrjiophserojipsheriojpsehrjiopsherjiophseriojphsijopsherijophseriojpsherijopsherjiopshreijophsreiojphrsejoiphsjiopsherjioshrejiohresjiohrsejiorhesjioprheshiugroijhgerojierhgojierhoijhreoijhoijehrsoijhersojihersojihesroijhresjiohersjoihersjiohresjioheroijhersojihreojierhsiojhjioehrsijohejioherjoiphersojiphesrjoiehsrojiphejoiphersjoiphersjiophejiophersjiopsheriojpsheriojphesroijphesroijphseiojphserojiphesrjiophseriojphseriojpehrsojiphesrjiophesrojipsheojiphesrjiophserojipsheriojpsehrjiopsherjiophseriojphsijopsherijophseriojpsherijopsherjiopshreijophsreiojphrsejoiphsjiopsherjioshrejiohresjiohrsejiorhesjioprhes", 1361);
-		//	stdms += p.getDuration();
-		//	delete[] strdata;
-		//}
-		//Debug::log("C++ STL ms: " + std::to_string(stdms / compareIterations));
+		for (int i = 0; i < compareIterations; i++) {
+			char* strdata = new char[1361];
+			Profiler p("std", false);
+			std::memcpy(strdata, "hiugroijhgerojierhgojierhoijhreoijhoijehrsoijhersojihersojihesroijhresjiohersjoihersjiohresjioheroijhersojihreojierhsiojhjioehrsijohejioherjoiphersojiphesrjoiehsrojiphejoiphersjoiphersjiophejiophersjiopsheriojpsheriojphesroijphesroijphseiojphserojiphesrjiophseriojphseriojpehrsojiphesrjiophesrojipsheojiphesrjiophserojipsheriojpsehrjiopsherjiophseriojphsijopsherijophseriojpsherijopsherjiopshreijophsreiojphrsejoiphsjiopsherjioshrejiohresjiohrsejiorhesjioprheshiugroijhgerojierhgojierhoijhreoijhoijehrsoijhersojihersojihesroijhresjiohersjoihersjiohresjioheroijhersojihreojierhsiojhjioehrsijohejioherjoiphersojiphesrjoiehsrojiphejoiphersjoiphersjiophejiophersjiopsheriojpsheriojphesroijphesroijphseiojphserojiphesrjiophseriojphseriojpehrsojiphesrjiophesrojipsheojiphesrjiophserojipsheriojpsehrjiopsherjiophseriojphsijopsherijophseriojpsherijopsherjiopshreijophsreiojphrsejoiphsjiopsherjioshrejiohresjiohrsejiorhesjioprheshiugroijhgerojierhgojierhoijhreoijhoijehrsoijhersojihersojihesroijhresjiohersjoihersjiohresjioheroijhersojihreojierhsiojhjioehrsijohejioherjoiphersojiphesrjoiehsrojiphejoiphersjoiphersjiophejiophersjiopsheriojpsheriojphesroijphesroijphseiojphserojiphesrjiophseriojphseriojpehrsojiphesrjiophesrojipsheojiphesrjiophserojipsheriojpsehrjiopsherjiophseriojphsijopsherijophseriojpsherijopsherjiopshreijophsreiojphrsejoiphsjiopsherjioshrejiohresjiohrsejiorhesjioprhes", 1361);
+			stdms += p.getDuration();
+			delete[] strdata;
+		}
+		Debug::log("C++ STL ms: " + std::to_string(stdms / compareIterations));
 
 		/*for (int i = 0; i < compareIterations; i++) {
 			Profiler p("std", false);
@@ -115,7 +115,7 @@ public:
 		
 		HGE::vector<string> vector1 = HGE::vector<string>();
 
-		HGE::string vectortest = "1.23892374 4.56320948 7.89234689";
+		HGE::string vectortest = "4.567568 7.89234689";
 
 		//vectortest.erase(5, 6);
 
@@ -123,8 +123,17 @@ public:
 
 		vector1 = vectortest.split(" ");
 
+		HGE::string subtest = vectortest.substr(0, 4);
+
+		Debug::log("o");
+		Debug::log(subtest.c_str());
+		Debug::log("o");
+
+		vector1.size();
+
 		for (size_t i = 0; i < vector1.size(); ++i) {
 			Debug::log(toFloat(vector1[i]));
+			Debug::log(vector1[i].c_str());
 		}
 
 		Debug::newLine();

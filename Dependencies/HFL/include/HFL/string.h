@@ -592,17 +592,19 @@ namespace HGE {
 		* @author Salmoncatt
 		*/
 		string substr(const size_t& index, const size_t& length) const {
-			if (length + index < size)
+			if (length + index > size)
 				return string();
 
 			string out = string();
 
 			delete[] out.data;
 
-			out.data = new char[size + 1];
+			out.data = new char[length + 1];
 			out.size = length;
 
 			memcpy(out.data, data + index, length + 1);
+
+			out.data[length] = '\0';
 
 			return out;
 		}
