@@ -13,6 +13,10 @@ namespace HGE {
 		MeshComponent();
 		~MeshComponent();
 
+		void clearAllVertices();
+		void clearAllNormals();
+		void clearAllTextureCoordinates();
+
 	};
 
 

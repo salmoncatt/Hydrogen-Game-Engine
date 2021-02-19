@@ -5,13 +5,12 @@
 #include HGE_API
 #include "HGE/ECS/components/Transform.h"
 #include "HGE/math/vectors/Vec3.h"
+#include "GuiElement.h"
 
 namespace HGE {
 
-	class DLL_API GuiWindow {
+	struct DLL_API GuiWindow : public GuiElement{
 	public:
-		Transform2D transform;
-
 
 		GuiWindow();
 		~GuiWindow();
