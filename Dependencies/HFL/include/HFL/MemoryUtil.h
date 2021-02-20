@@ -13,7 +13,7 @@ namespace HGE {
 	* @param Source of data
 	* @param Size of the data in bytes
 	*/
-	void* memcpy(void* destination, const void* source, size_t size) {
+	inline void* memcpy(void* destination, const void* source, size_t size) {
 		char* dest = (char*)destination;
 		const char* src = (const char*)source;
 
@@ -67,28 +67,23 @@ namespace HGE {
 	* @author Salmoncatt
 	*/
 	inline size_t strlen(const char* data) {
-		const __m128i terminationCharacters = _mm_setzero_si128();
-		const __m128i* pointer = (const __m128i*)data;
+		const __m256i terminationCharacters = _mm256_setzero_si256();
+		const size_t shiftAmount = ((size_t)&data) & 31;
+		const __m256i* pointer = (const __m256i*) (data - shiftAmount);
 
 		size_t length = 0;
 
 		//const int compareMode = _SIDD_UBYTE_OPS | _SIDD_LEAST_SIGNIFICANT | _SIDD_CMP_EQUAL_EACH;
 
-		for (;; length += 16, ++pointer) {
-			const __m128i comparingData = _mm_loadu_si128(pointer);
-			const __m128i comparison = _mm_cmpeq_epi8(comparingData, terminationCharacters);
+		for (;; length += 32, ++pointer) {
+			const __m256i comparingData = _mm256_load_si256(pointer);
+			const __m256i comparison = _mm256_cmpeq_epi8(comparingData, terminationCharacters);
 
-			if (!_mm_testc_si128(terminationCharacters, comparison)) {
-				const auto mask = _mm_movemask_epi8(comparison);
+			if (!_mm256_testc_si256(terminationCharacters, comparison)) {
+				const auto mask = _mm256_movemask_epi8(comparison);
 
-				//return length + _mm_lzcnt_epi32(mask);
+				return length + _tzcnt_u32(mask >> shiftAmount);
 			}
-
-			//this ones returns the index at which there is one
-			//size_t index = _mm_cmpistri(terminationCharacters, comparingData, compareMode);
-
-			//if (index < 16)
-			//	return length + index;
 		}
 	}
 

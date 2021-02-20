@@ -6,7 +6,7 @@
 
 #include "ECS.h"
 #include "HGE/camera/EditorCamera.h"
-//#include "GameObject.h"
+#include "HGE/gui/GuiWindow.h"
 
 namespace HGE {
 
@@ -16,6 +16,12 @@ namespace HGE {
 	class DLL_API Scene {
 	private:
 		System system;
+
+		GuiWindow performanceStats;
+		GuiWindow gameObjectList;
+		GuiWindow gameObjectComponentsList;
+
+
 	public:
 		EditorCamera editorCamera;
 

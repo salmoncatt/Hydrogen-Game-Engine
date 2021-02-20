@@ -50,7 +50,7 @@ namespace HGE {
 			data = new char[size + 1];
 
 			//copy the source data over using my own library :)
-			strcpy(data, source.data);
+			memcpy(data, source.data, size + 1);
 
 			//in case the data isn't null terminated for some reason
 			if (data[size] != '\0')
@@ -72,7 +72,7 @@ namespace HGE {
 			data = new char[size + 1];
 			
 			//copy the source data over using my own library :)
-			strcpy(data, source);
+			memcpy(data, source, size + 1);
 
 			//in case the data isn't null terminated for some reason
 			if (data[size] != '\0')
@@ -94,7 +94,7 @@ namespace HGE {
 			data = new char[size + 1];
 
 			//copy the source data over using my own library :)
-			strcpy(data, source);
+			memcpy(data, source, size + 1);
 
 			//in case the data isn't null terminated for some reason
 			if(data[size] != '\0')
@@ -145,7 +145,7 @@ namespace HGE {
 			data = new char[size + 1];
 
 			//copy the source data over using my own library :)
-			strcpy(data, source.data);
+			memcpy(data, source.data, size + 1);
 
 			//in case the data isn't null terminated for some reason
 			if (data[size] != '\0')
@@ -172,7 +172,7 @@ namespace HGE {
 			data = new char[size + 1];
 
 			//copy the source data over using my own library :)
-			strcpy(data, source);
+			memcpy(data, source, size + 1);
 
 			//in case the data isn't null terminated for some reason
 			if (data[size] != '\0')
@@ -230,7 +230,7 @@ namespace HGE {
 			data = new char[size + 1];
 
 			//copy the source data over using my own library :)
-			strcpy(data, source);
+			memcpy(data, source, size + 1);
 
 			//in case the data isn't null terminated for some reason
 			if (data[size] != '\0')
@@ -260,8 +260,8 @@ namespace HGE {
 			out.data = new char[out.size + 1];
 
 			//copy the source data over using my own library :)
-			strcpy(out.data, data); //copy first string
-			strcpy(out.data + size, source.data); //copy second string
+			memcpy(out.data, data, size + 1); //copy first string
+			memcpy(out.data + size, source.data, source.size + 1); //copy second string
 
 			//in case the data isn't null terminated for some reason
 			if (out.data[size] != '\0')
@@ -296,15 +296,17 @@ namespace HGE {
 			//delete the allocated memory
 			out.__cleanup__();
 
+			size_t sourceSize = strlen(source);
+
 			//set the size
-			out.size = size + strlen(source);
+			out.size = size + sourceSize;
 
 			//allocate memory to the outputs data buffer
 			out.data = new char[out.size + 1];
 
 			//copy the source data over using my own library :)
-			strcpy(out.data, data); //copy first string
-			strcpy(out.data + size, source); //copy second string
+			memcpy(out.data, data, size + 1); //copy first string
+			memcpy(out.data + size, source, sourceSize + 1); //copy second string
 
 			//in case the data isn't null terminated for some reason
 			if (out.data[out.size] != '\0')
@@ -327,15 +329,17 @@ namespace HGE {
 			//delete the allocated memory
 			out.__cleanup__();
 
+			size_t sourceSize = strlen(source);
+
 			//set the size
-			out.size = size + strlen(source);
+			out.size = size + sourceSize;
 
 			//allocate memory to the outputs data buffer
 			out.data = new char[out.size + 1];
 
 			//copy the source data over using my own library :)
-			strcpy(out.data, data); //copy first string
-			strcpy(out.data + size, source); //copy second string
+			memcpy(out.data, data, size + 1); //copy first string
+			memcpy(out.data + size, source, sourceSize); //copy second string
 
 			//in case the data isn't null terminated for some reason
 			if (out.data[out.size] != '\0')
@@ -365,7 +369,7 @@ namespace HGE {
 			out.data = new char[out.size + 1];
 
 			//copy the source data over using my own library :)
-			strcpy(out.data, data); //copy first string
+			memcpy(out.data, data, out.size + 1); //copy first string
 
 			out.data[size - 1] = source;
 

@@ -7,6 +7,7 @@
 #include "HGE/ECS/components/Transform.h"
 #include "HGE/math/HMath.h"
 #include "HGE/util/time/Profiler.h"
+#include "HGE/gui/GuiWindow.h"
 
 namespace HGE {
 
@@ -165,10 +166,11 @@ namespace HGE {
 		//matrix stuff
 		Mat4f transform = Mat4f::createTransformationMatrix(
 			Vec2f((((position.x + (size.x / 2)) / currentWindowSize.x) * 2) - 1, (((currentWindowSize.y - position.y - (size.y / 2)) / currentWindowSize.y) * 2) - 1),
-			Vec2f(),
+			Vec3f(),
 			Vec2f(size.x / currentWindowSize.x, size.y / currentWindowSize.y));
 
 		guiShader.setUniform("transform", transform);
+		guiShader.setUniform("ortho", orthoMatrix);
 		guiShader.setUniform("hasTexture", true);
 		guiShader.setUniform("uiPosition", position);
 		guiShader.setUniform("uiWidth", size.x / currentWindowSize.x);
@@ -198,10 +200,11 @@ namespace HGE {
 		//matrix stuff
 		Mat4f transform = Mat4f::createTransformationMatrix(
 			Vec2f((((position.x + (size.x / 2)) / currentWindowSize.x) * 2) - 1, (((currentWindowSize.y - position.y - (size.y / 2)) / currentWindowSize.y) * 2) - 1),
-			Vec2f(), 
+			Vec3f(), 
 			Vec2f(size.x / currentWindowSize.x, size.y / currentWindowSize.y));
 
 		guiShader.setUniform("transform", transform);
+		guiShader.setUniform("ortho", orthoMatrix);
 		guiShader.setUniform("hasTexture", false);
 		guiShader.setUniform("color", color);
 		guiShader.setUniform("uiPosition", position);
@@ -238,10 +241,11 @@ namespace HGE {
 		//matrix stuff
 		Mat4f transform = Mat4f::createTransformationMatrix(
 			uiposition,
-			Vec2f(),
+			Vec3f(),
 			uiSize);
 
 		guiShader.setUniform("transform", transform);
+		guiShader.setUniform("ortho", orthoMatrix);
 		guiShader.setUniform("uiSize", size);
 		guiShader.setUniform("hasTexture", false);
 		guiShader.setUniform("color", color);
@@ -280,13 +284,13 @@ namespace HGE {
 		//matrix stuff
 		Mat4f transform = Mat4f::createTransformationMatrix(
 			Vec2f((((position.x + (size.x / 2)) / currentWindowSize.x) * 2) - 1, (((currentWindowSize.y - position.y - (size.y / 2)) / currentWindowSize.y) * 2) - 1),
-			Vec2f(),
+			Vec3f(0, 0, offset),
 			Vec2f(size.x / currentWindowSize.x, size.y / currentWindowSize.y));
-
+		
 		guiShader.setUniform("transform", transform);
+		guiShader.setUniform("ortho", orthoMatrix);
 		guiShader.setUniform("hasTexture", true);
 		guiShader.setUniform("angle", (float)HMath::toRadians(angle));
-		guiShader.setUniform("offset", (float)HMath::toRadians(offset));
 		guiShader.setUniform("flipped", flipped);
 		guiShader.setUniform("drawmode", HGE_RADIAL_REVEAL_RENDER);
 
@@ -339,6 +343,13 @@ namespace HGE {
 		glDisableVertexAttribArray(1);
 		glDisableVertexAttribArray(2);
 		glBindVertexArray(0);
+	}
+
+	void Renderer::render(const GuiWindow& window) {
+
+		renderRoundedRectangle(window.transform.position, window.transform.scale, window.cornerSmoothingRadius, window.backgroundColor);
+		renderRoundedRectangle(window.transform.position, Vec2f(window.transform.scale.x, window.titleBarHeight), window.cornerSmoothingRadius, window.foregroundColor);
+
 	}
 
 }

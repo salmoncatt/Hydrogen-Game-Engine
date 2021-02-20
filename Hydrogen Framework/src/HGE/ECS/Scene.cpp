@@ -18,6 +18,16 @@ namespace HGE {
 
 	Scene::Scene() {
 		editorCamera = EditorCamera();
+		performanceStats = GuiWindow();
+		gameObjectList = GuiWindow();
+		gameObjectComponentsList = GuiWindow();
+
+		//performance status elements
+
+
+
+
+
 	}
 
 	Scene::~Scene() {

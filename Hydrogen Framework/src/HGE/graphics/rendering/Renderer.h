@@ -17,6 +17,7 @@ namespace HGE {
 	struct Transform;
 	struct GameObject;
 	struct GuiButton;
+	struct GuiWindow;
 
 	class DLL_API Renderer {
 	private:
@@ -70,6 +71,9 @@ namespace HGE {
 
 		static void radialRevealRectangle(const Vec2f& position, const Vec2f& size, const float& angle, const float& offset, const bool& flipped, const Texture& texture);
 		static void radialRevealRectangle(const Vec2f& position, const Vec2f& size, const float& angle, const float& offset, const bool& flipped, const Vec3f& color);
+
+		static void render(const GuiWindow& window);
+
 	};
 
 }

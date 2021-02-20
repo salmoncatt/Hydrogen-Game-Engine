@@ -37,7 +37,7 @@ namespace HGE {
 		//create important matrixes
 		static Mat4f createTransformationMatrix(const Vec3f& translation, const Vec3f& rotation, const Vec3f& scale);
 
-		static Mat4f createTransformationMatrix(const Vec2f& translation, const Vec2f& rotation, const Vec2f& scale);
+		static Mat4f createTransformationMatrix(const Vec2f& translation, const Vec3f& rotation, const Vec2f& scale);
 
 		static Mat4f createPerspectiveMatrix(const float& screenWidth, const float& screenHeight, const float& fov, const float& nearPlane, const float& farPlane);
 

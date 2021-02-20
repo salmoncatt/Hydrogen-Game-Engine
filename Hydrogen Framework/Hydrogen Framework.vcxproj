@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\HGE\gui\GuiRadialProgressBar.h" />
     <ClInclude Include="src\HGE\util\memory\MemoryUtil.h" />
     <ClInclude Include="src\HGE\util\time\AutoProfiler.h" />
     <ClInclude Include="src\HGE\ECS\components\Material.h" />
@@ -55,6 +56,7 @@
     <ClInclude Include="src\HGE\util\memory\string.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\HGE\gui\GuiRadialProgressBar.cpp" />
     <ClCompile Include="src\HGE\util\time\AutoProfiler.cpp" />
     <ClCompile Include="src\HGE\ECS\components\MeshComponent.cpp" />
     <ClCompile Include="src\HGE\camera\EditorCamera.cpp" />

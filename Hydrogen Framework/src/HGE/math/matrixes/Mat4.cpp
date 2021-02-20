@@ -238,12 +238,13 @@ namespace HGE {
 		return transformation;
 	}
 
-	Mat4f Mat4f::createTransformationMatrix(const Vec2f& translation, const Vec2f& rotation, const Vec2f& scale) {
+	Mat4f Mat4f::createTransformationMatrix(const Vec2f& translation, const Vec3f& rotation, const Vec2f& scale) {
 		Mat4f transformation = Mat4f();
 		transformation.setIdentity();
 		transformation.translate(translation);
 		transformation.rotate((float)HMath::toRadians(rotation.x), Vec3f(1, 0, 0));
 		transformation.rotate((float)HMath::toRadians(rotation.y), Vec3f(0, 1, 0));
+		transformation.rotate((float)HMath::toRadians(rotation.z), Vec3f(0, 0, 1));
 		transformation.scale(Vec3f(scale.x, scale.y, 1));
 		return transformation;
 	}

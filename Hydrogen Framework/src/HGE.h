@@ -23,6 +23,7 @@
 #include "HGE/gui/GuiElement.h"
 #include "HGE/gui/GuiButton.h"
 #include "HGE/gui/GuiWindow.h"
+#include "HGE/gui/GuiRadialProgressBar.h"
 
 #include "HGE/core/API.h"
 #include "HGE/core/Program.h"

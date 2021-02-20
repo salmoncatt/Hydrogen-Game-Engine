@@ -12,12 +12,20 @@ namespace HGE {
 	struct DLL_API GuiWindow : public GuiElement{
 	public:
 
+		std::vector<GuiElement> elements = std::vector<GuiElement>();
+
+		Vec3f backgroundColor;
+		Vec3f foregroundColor;
+		
+		float titleBarHeight = 20;
+		float cornerSmoothingRadius = 10;
+		
+		string title;
+
+		bool resizable = true;
+
 		GuiWindow();
 		~GuiWindow();
-
-
-		const static Vec3f backgroundColor;
-		const static Vec3f foregroundColor;
 
 	};
 

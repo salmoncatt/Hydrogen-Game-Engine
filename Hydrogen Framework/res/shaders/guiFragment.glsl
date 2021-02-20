@@ -20,7 +20,6 @@ uniform float angle;
 const float PI = 3.1415926;
 const float TWO_PI = 6.2831852;
 uniform bool flipped;
-uniform float offset;
 
 float getAngle(vec2 v1, vec2 v2) {
 
@@ -86,14 +85,14 @@ void main() {
 
 		if(flipped){
 
-		if (pixelAngle > getTargetAngle(angle + offset))
+		if (pixelAngle > getTargetAngle(angle))
 			alpha = 1;
 		else
 			alpha = 0;
 
 		}else{
 
-		if (pixelAngle < getTargetAngle(angle + offset))
+		if (pixelAngle < getTargetAngle(angle))
 			alpha = 1;
 		else
 			alpha = 0;
