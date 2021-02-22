@@ -5,6 +5,7 @@
 #include "components/Mesh.h"
 #include "components/MeshComponent.h"
 #include "components/Texture.h"
+#include "components/NativeScript.h"
 
 namespace HGE {
 
@@ -23,14 +24,14 @@ namespace HGE {
 	}
 
 	//templates for transform component
-	template void GameObject::addComponent<Transform>();
-	template void GameObject::addComponent<Transform>(Transform&);
+	template Transform& GameObject::addComponent<Transform>();
+	template Transform& GameObject::addComponent<Transform>(Transform&);
 	template Transform& GameObject::getComponent<Transform>();
 	template void GameObject::removeComponent<Transform>();
 
 	//templates for tag component
-	template void GameObject::addComponent<Tag>();
-	template void GameObject::addComponent<Tag>(Tag&);
+	template Tag& GameObject::addComponent<Tag>();
+	template Tag& GameObject::addComponent<Tag>(Tag&);
 	template Tag& GameObject::getComponent<Tag>();
 	template void GameObject::removeComponent<Tag>();
 
@@ -41,15 +42,21 @@ namespace HGE {
 	//template void GameObject::removeComponent<Mesh>();
 
 	//templates for MeshComponent component
-	template void GameObject::addComponent<MeshComponent>();
-	template void GameObject::addComponent<MeshComponent>(MeshComponent&);
+	template MeshComponent& GameObject::addComponent<MeshComponent>();
+	template MeshComponent& GameObject::addComponent<MeshComponent>(MeshComponent&);
 	template MeshComponent& GameObject::getComponent<MeshComponent>();
 	template void GameObject::removeComponent<MeshComponent>();
 
 	//templates for Texture component
-	template void GameObject::addComponent<Texture>();
-	template void GameObject::addComponent<Texture>(Texture&);
+	template Texture& GameObject::addComponent<Texture>();
+	template Texture& GameObject::addComponent<Texture>(Texture&);
 	template Texture& GameObject::getComponent<Texture>();
 	template void GameObject::removeComponent<Texture>();
+
+	//templates for NativeScript component
+	template NativeScript& GameObject::addComponent<NativeScript>();
+	template NativeScript& GameObject::addComponent<NativeScript>(NativeScript&);
+	template NativeScript& GameObject::getComponent<NativeScript>();
+	template void GameObject::removeComponent<NativeScript>();
 
 }

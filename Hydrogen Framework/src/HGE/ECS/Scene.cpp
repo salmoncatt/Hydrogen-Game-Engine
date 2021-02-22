@@ -54,6 +54,11 @@ namespace HGE {
 		for (unsigned int i = 0; i < system.getEntityAmount(); i++) {
 			Entity entity = (*system.getEntities())[i];
 
+			//update scripts (NEED TO PUSH TO UPDATE GAME NOT EDITOR)
+
+
+
+
 			auto& meshcomponent = system.getComponentManager()->getComponent<MeshComponent>(entity);
 			auto& transform = system.getComponentManager()->getComponent<Transform>(entity);
 

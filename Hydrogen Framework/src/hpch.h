@@ -17,6 +17,7 @@
 #include <stdio.h>
 #include <unordered_map>
 #include <intrin.h>
+#include <functional>
 
 
 #if _WIN64

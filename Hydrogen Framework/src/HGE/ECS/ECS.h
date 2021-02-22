@@ -38,19 +38,24 @@ namespace HGE {
 
 		using type = T;
 
-		void addComponent(const Entity& entity, T& component) {
+		T& addComponent(const Entity& entity, T& component) {
 			if (entity.id < HGE_MAX_ENTITIES) {
 				if (componentIndex[entity.id] == 0) {
 					componentIndex[entity.id] = currentSize;
 					components[currentSize] = component;
 					currentSize += 1;
+
+					return components[componentIndex[entity.id]];
 				}
 				else {
 					Debug::systemErr("Couldn't add component of type: " + std::string(typeid(T).name()) + ", because the entity has that component");
+					return components[componentIndex[entity.id]];
 				}
 			}
-			else
+			else {
 				Debug::systemErr("Couldn't add component of type: " + std::string(typeid(T).name()) + ", because the entity id was out of range");
+				return *static_cast<T*>(nullptr);
+			}
 		}
 
 		T& getComponent(const Entity& entity) {
@@ -145,9 +150,9 @@ namespace HGE {
 		}
 
 		template <typename T>
-		void addComponent(Entity& entity, T& component) {
+		T& addComponent(Entity& entity, T& component) {
 			registerComponent<T>(component);
-			getArray<T>(HGE_ECS_ADD_COMPONENT)->addComponent(entity, component);
+			return getArray<T>(HGE_ECS_ADD_COMPONENT)->addComponent(entity, component);
 		}
 
 		template <typename T>

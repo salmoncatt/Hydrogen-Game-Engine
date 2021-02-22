@@ -284,7 +284,7 @@ namespace HGE {
 		//matrix stuff
 		Mat4f transform = Mat4f::createTransformationMatrix(
 			Vec2f((((position.x + (size.x / 2)) / currentWindowSize.x) * 2) - 1, (((currentWindowSize.y - position.y - (size.y / 2)) / currentWindowSize.y) * 2) - 1),
-			Vec3f(0, 0, offset),
+			Vec3f(),
 			Vec2f(size.x / currentWindowSize.x, size.y / currentWindowSize.y));
 		
 		guiShader.setUniform("transform", transform);
@@ -348,7 +348,7 @@ namespace HGE {
 	void Renderer::render(const GuiWindow& window) {
 
 		renderRoundedRectangle(window.transform.position, window.transform.scale, window.cornerSmoothingRadius, window.backgroundColor);
-		renderRoundedRectangle(window.transform.position, Vec2f(window.transform.scale.x, window.titleBarHeight), window.cornerSmoothingRadius, window.foregroundColor);
+		renderRoundedRectangle(window.transform.position, Vec2f(window.transform.scale.x, window.titleBarTransform.scale.y), window.cornerSmoothingRadius, window.foregroundColor);
 
 	}
 

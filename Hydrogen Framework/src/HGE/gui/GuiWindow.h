@@ -11,13 +11,13 @@ namespace HGE {
 
 	struct DLL_API GuiWindow : public GuiElement{
 	public:
+		Transform2D titleBarTransform;
 
 		std::vector<GuiElement> elements = std::vector<GuiElement>();
 
 		Vec3f backgroundColor;
 		Vec3f foregroundColor;
-		
-		float titleBarHeight = 20;
+
 		float cornerSmoothingRadius = 10;
 		
 		string title;
@@ -26,6 +26,18 @@ namespace HGE {
 
 		GuiWindow();
 		~GuiWindow();
+
+		void setPosition(const Vec2f& position);
+		void setScale(const Vec2f& scale);
+
+		Vec2f getPosition();
+		Vec2f getScale();
+
+		void setTitleBarPosition(const Vec2f& position);
+		void setTitleBarScale(const Vec2f& scale);
+
+		Vec2f getTitleBarPosition();
+		Vec2f getTitleBarScale();
 
 	};
 

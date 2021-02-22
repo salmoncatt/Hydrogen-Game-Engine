@@ -44,6 +44,7 @@
     <ClInclude Include="src\HGE\util\memory\string.h" />
     <ClInclude Include="src\HGE\util\memory\MemoryUtil.h" />
     <ClInclude Include="src\HGE\gui\GuiRadialProgressBar.h" />
+    <ClInclude Include="src\HGE\ECS\components\NativeScript.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\hpch.cpp" />

@@ -17,14 +17,14 @@ namespace HGE {
 		~GameObject();
 
 		template <typename T>
-		void addComponent() {
+		T& addComponent() {
 			T component = T();
-			scene->getSystem()->getComponentManager()->addComponent<T>(entity, component);
+			return scene->getSystem()->getComponentManager()->addComponent<T>(entity, component);
 		};
 
 		template <typename T>
-		void addComponent(T& component) {
-			scene->getSystem()->getComponentManager()->addComponent<T>(entity, component);
+		T& addComponent(T& component) {
+			return scene->getSystem()->getComponentManager()->addComponent<T>(entity, component);
 		};
 			
 		template <typename T>

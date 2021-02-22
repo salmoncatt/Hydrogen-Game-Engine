@@ -156,6 +156,8 @@ public:
 
 		warehouse.addComponent<MeshComponent>(mesh);
 
+		warehouse.getComponent<Transform>().scale = (2);
+
 		for (int i = 0; i < warehouse.getComponent<MeshComponent>().meshes.size(); i++) {
 			auto& component = warehouse.getComponent<MeshComponent>().meshes[i];
 
@@ -175,6 +177,32 @@ public:
 		GuiWindow gui = GuiWindow();
 		gui.transform.position = Vec2f(400, 200);
 		gui.transform.scale = Vec2f(200, 300);
+
+
+		//test script
+		class TestScript : public GameObject{
+		public:
+
+			void start() {
+				getComponent<Transform>();
+
+			}
+
+			void update() {
+
+			}
+
+			void fixedUpdate() {
+
+			}
+
+			void stop() {
+
+			}
+
+		};
+
+		peter.addComponent<NativeScript>().addScript<TestScript>();
 
 		while (shouldUpdate() && !Input::getKey(HGE_KEY_ESCAPE)) {
 			
@@ -203,8 +231,8 @@ public:
 			//second ram usage
 			Renderer::radialRevealRectangle(Vec2f(142, (float)window->size.y - 70), Vec2f(122, 122), (float)(ramUsage / 2000) * 180, 0, false, text);
 			//third is gpu usage (usage as in how much of the 60 fps frame budget are we using)
-			//Renderer::radialRevealRectangle(Vec2f(874, (float)window->size.y - 70 - 200), Vec2f(122, 122), (1 / (Time::getFPS() / 60)) * 180, angle, false, text);
-			Renderer::radialRevealRectangle(Vec2f(874, (float)window->size.y - 70 - 200), Vec2f(122, 122), 360, angle, false, Renderer::nullTexture);
+			Renderer::radialRevealRectangle(Vec2f(274, (float)window->size.y - 70), Vec2f(122, 122), (1 / (Time::getFPS() / 60)) * 180, angle, false, text);
+			//Renderer::radialRevealRectangle(Vec2f(874, (float)window->size.y - 70 - 200), Vec2f(122, 122), 360, angle, false, Renderer::nullTexture);
 
 			Renderer::render(gui);
 
