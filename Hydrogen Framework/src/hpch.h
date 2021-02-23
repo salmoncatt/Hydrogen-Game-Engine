@@ -18,6 +18,7 @@
 #include <unordered_map>
 #include <intrin.h>
 #include <functional>
+#include <cstring>
 
 
 #if _WIN64

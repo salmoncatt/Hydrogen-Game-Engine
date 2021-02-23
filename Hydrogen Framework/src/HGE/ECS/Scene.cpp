@@ -6,6 +6,7 @@
 #include "components/Tag.h"
 #include "HGE/ECS/components/Mesh.h"
 #include "HGE/ECS/components/MeshComponent.h"
+#include "HGE/ECS/components/NativeScript.h"
 
 #include "HGE/graphics/rendering/Renderer.h"
 #include "HGE/util/Debug.h"
@@ -40,7 +41,7 @@ namespace HGE {
 		Transform transform = Transform();
 		out.addComponent<Transform>(transform);
 
-		Tag tag = Tag(name.c_str());
+		Tag tag = Tag(name);
 		out.addComponent<Tag>(tag);
 
 		return out;
@@ -55,7 +56,26 @@ namespace HGE {
 			Entity entity = (*system.getEntities())[i];
 
 			//update scripts (NEED TO PUSH TO UPDATE GAME NOT EDITOR)
+			if (system.getComponentManager()->hasComponent<NativeScript>(entity)) {
+				auto& script = system.getComponentManager()->getComponent<NativeScript>(entity);
 
+				if (!script.gameObject) {
+					//create the script
+					script.instantiateFunction();
+
+					//add the entity reference to the script (to call things like getComponent<>())
+					script.gameObject->entity = entity;
+					script.gameObject->scene = this;
+
+					//startup the script
+					if(script.startFunction)
+						script.startFunction(script.gameObject);
+				}
+
+				if(script.updateFunction)
+					script.updateFunction(script.gameObject);
+
+			}
 
 
 

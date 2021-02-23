@@ -52,9 +52,6 @@ namespace HGE {
 			//copy the source data over using my own library :)
 			memcpy(data, source.data, size + 1);
 
-			//in case the data isn't null terminated for some reason
-			if (data[size] != '\0')
-				data[size] = '\0';
 		}
 
 		/*
@@ -74,9 +71,6 @@ namespace HGE {
 			//copy the source data over using my own library :)
 			memcpy(data, source, size + 1);
 
-			//in case the data isn't null terminated for some reason
-			if (data[size] != '\0')
-				data[size] = '\0';
 		}
 
 		/*
@@ -96,9 +90,6 @@ namespace HGE {
 			//copy the source data over using my own library :)
 			memcpy(data, source, size + 1);
 
-			//in case the data isn't null terminated for some reason
-			if(data[size] != '\0')
-				data[size] = '\0';
 		}
 
 		/*
@@ -147,9 +138,6 @@ namespace HGE {
 			//copy the source data over using my own library :)
 			memcpy(data, source.data, size + 1);
 
-			//in case the data isn't null terminated for some reason
-			if (data[size] != '\0')
-				data[size] = '\0';
 
 			return *this;
 		}
@@ -174,9 +162,6 @@ namespace HGE {
 			//copy the source data over using my own library :)
 			memcpy(data, source, size + 1);
 
-			//in case the data isn't null terminated for some reason
-			if (data[size] != '\0')
-				data[size] = '\0';
 
 			return *this;
 		}
@@ -232,9 +217,6 @@ namespace HGE {
 			//copy the source data over using my own library :)
 			memcpy(data, source, size + 1);
 
-			//in case the data isn't null terminated for some reason
-			if (data[size] != '\0')
-				data[size] = '\0';
 
 			return *this;
 		}
@@ -246,7 +228,7 @@ namespace HGE {
 		*
 		* @author Salmoncatt
 		*/
-		string operator+(const string& source) {
+		string operator+(const string& source) const{
 			//create the output string
 			string out = string();
 
@@ -263,9 +245,6 @@ namespace HGE {
 			memcpy(out.data, data, size + 1); //copy first string
 			memcpy(out.data + size, source.data, source.size + 1); //copy second string
 
-			//in case the data isn't null terminated for some reason
-			if (out.data[size] != '\0')
-				out.data[size] = '\0';
 
 			return out;
 		}
@@ -289,7 +268,7 @@ namespace HGE {
 		*
 		* @author Salmoncatt
 		*/
-		string operator+(const char* source) {
+		string operator+(const char* source) const{
 			//create the output string
 			string out = string();
 
@@ -308,9 +287,6 @@ namespace HGE {
 			memcpy(out.data, data, size + 1); //copy first string
 			memcpy(out.data + size, source, sourceSize + 1); //copy second string
 
-			//in case the data isn't null terminated for some reason
-			if (out.data[out.size] != '\0')
-				out.data[out.size] = '\0';
 
 			return out;
 		}
@@ -322,7 +298,7 @@ namespace HGE {
 		*
 		* @author Salmoncatt
 		*/
-		string operator+(char* source) {
+		string operator+(char* source)  const {
 			//create the output string
 			string out = string();
 
@@ -341,9 +317,6 @@ namespace HGE {
 			memcpy(out.data, data, size + 1); //copy first string
 			memcpy(out.data + size, source, sourceSize); //copy second string
 
-			//in case the data isn't null terminated for some reason
-			if (out.data[out.size] != '\0')
-				out.data[out.size] = '\0';
 
 			return out;
 		}
@@ -355,7 +328,7 @@ namespace HGE {
 		*
 		* @author Salmoncatt
 		*/
-		string operator+(char& source) {
+		string operator+(char& source)  const {
 			//create the output string
 			string out = string();
 
@@ -373,9 +346,6 @@ namespace HGE {
 
 			out.data[size - 1] = source;
 
-			//in case the data isn't null terminated for some reason
-			if (out.data[out.size] != '\0')
-				out.data[out.size] = '\0';
 
 			return out;
 		}
@@ -387,7 +357,7 @@ namespace HGE {
 		*
 		* @author Salmoncatt
 		*/
-		char& operator[](size_t& index) {
+		char& operator[](const size_t& index)  const {
 			return data[index];
 		}
 
@@ -398,7 +368,7 @@ namespace HGE {
 		*
 		* @author Salmoncatt
 		*/
-		bool operator==(const string& other) {
+		bool operator==(const string& other)  const {
 			if (size == other.size) {
 				for (size_t i = 0; i < size; ++i) {
 					if (data[i] != other.data[i])
@@ -416,7 +386,7 @@ namespace HGE {
 		*
 		* @author Salmoncatt
 		*/
-		bool operator==(const char* other) {
+		bool operator==(const char* other)  const {
 			if (size == strlen(other)) {
 				for (size_t i = 0; i < size; ++i) {
 					if (data[i] != other[i])
@@ -434,7 +404,7 @@ namespace HGE {
 		*
 		* @author Salmoncatt
 		*/
-		bool operator==(char* other) {
+		bool operator==(char* other)  const {
 			if (size == strlen(other)) {
 				for (size_t i = 0; i < size; ++i) {
 					if (data[i] != other[i])
@@ -452,7 +422,7 @@ namespace HGE {
 		*
 		* @author Salmoncatt
 		*/
-		bool operator==(char& other) {
+		bool operator==(char& other)  const {
 			if (size == 1) {
 				return data[0] == other;
 			}
@@ -596,19 +566,30 @@ namespace HGE {
 		* @author Salmoncatt
 		*/
 		string substr(const size_t& index, const size_t& length) const {
-			if (length + index > size)
+			if (index > size)
 				return string();
 
 			string out = string();
 
 			delete[] out.data;
 
-			out.data = new char[length + 1];
-			out.size = length;
+			if (index + length > size) {
+				size_t newLength = size - index;
+				out.data = new char[newLength + 1];
+				out.size = newLength;
 
-			memcpy(out.data, data + index, length + 1);
+				memcpy(out.data, data + index, newLength + 1);
 
-			out.data[length] = '\0';
+				out.data[length] = '\0';
+			}
+			else {
+				out.data = new char[length + 1];
+				out.size = length;
+
+				memcpy(out.data, data + index, length + 1);
+
+				out.data[length] = '\0';
+			}
 
 			return out;
 		}
@@ -631,7 +612,16 @@ namespace HGE {
 		*
 		* @author Salmoncatt
 		*/
-		const char* c_str() const{
+		const char* c_str() const {
+			return data;
+		}
+
+		/*
+		* Returns the character array of this string
+		*
+		* @author Salmoncatt
+		*/
+		char* raw_str() const {
 			return data;
 		}
 
@@ -644,7 +634,7 @@ namespace HGE {
 		* 
 		* @author Salmoncatt
 		*/
-		vector<string> split(const string& delimiter) {
+		vector<string> split(const string& delimiter)  const {
 			vector<string> out = vector<string>();
 
 			string temp = *this;
@@ -660,6 +650,7 @@ namespace HGE {
 			}
 
 			//find doesnt count the last one so i add the rest of the data
+			if(temp.size > 0)
 			out.push_back(temp.substr(0, temp.size));
 
 			return out;

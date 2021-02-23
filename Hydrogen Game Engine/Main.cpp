@@ -28,12 +28,12 @@ public:
 		window->resize(Vec2i(1000, 600));
 		window->setPosition(Vec2i(300, 100));
 
-		double minems = 0;
-		double stdms = 0;
+		//double minems = 0;
+		//double stdms = 0;
 
 		int i = 0;
 
-		double compareIterations = 9999999;
+		//double compareIterations = 9999999;
 
 
 		//warmup cpu
@@ -105,10 +105,12 @@ public:
 		peter.getComponent<Transform>().scale = 2;
 
 		mesh = MeshComponent();
-		
-		mesh.meshes = Util::loadMesh(HGE_RES + "models/warehouse/", "warehouse.obj");
 
-		int iterations = 1;
+		Profiler p("loading mesh time with load mesh");
+		mesh.meshes = Util::loadMesh(HGE_RES + "models/", "dragon.obj");
+		p.stop();
+
+		int iterations = 10;
 		double duration = 0;
 
 		for (int i = 0; i < iterations; i += 1) {
@@ -137,11 +139,13 @@ public:
 		Debug::log(subtest.c_str());
 		Debug::log("o");
 
-		vector1.size();
+		Debug::log((double)vector1.size());
+
+		if(vector1.size() == 3)
+			Debug::log(vector1[3].c_str()[0] == '\0');
 
 		for (size_t i = 0; i < vector1.size(); ++i) {
 			Debug::log(toFloat(vector1[i]));
-			//Debug::log(vector1[i].c_str());
 		}
 
 		Debug::newLine();
@@ -162,7 +166,7 @@ public:
 			auto& component = warehouse.getComponent<MeshComponent>().meshes[i];
 
 			component.texturecoords.clear();
-			component.calculateNormals(1);
+			//component.calculateNormals(1);
 		}
 
 		Texture text = Texture(HGE_RES + "textures/radial bar half.bmp");
@@ -177,19 +181,21 @@ public:
 		GuiWindow gui = GuiWindow();
 		gui.transform.position = Vec2f(400, 200);
 		gui.transform.scale = Vec2f(200, 300);
-
+		gui.cornerSmoothingRadius = 5;
 
 		//test script
-		class TestScript : public GameObject{
+		class TestScript : public GameObject {
 		public:
 
 			void start() {
-				getComponent<Transform>();
+				//Debug::log("I started lets fucking gooooo");
 
 			}
 
 			void update() {
-
+				getComponent<Transform>().rotation += Vec3f(100 * Time::getDeltaTime());
+				getComponent<Transform>().position.y += Input::getScrollMovement().y;
+				//Debug::log("I updated lets fucking gooooo");
 			}
 
 			void fixedUpdate() {
@@ -212,7 +218,7 @@ public:
 			if (Input::getKeyDown(HGE_KEY_BACKSLASH))
 				Renderer::toggleWireFrameMode();
 
-			peter.getComponent<Transform>().rotation += Vec3f(100 * Time::getDeltaTime());
+			//peter.getComponent<Transform>().rotation += Vec3f(100 * Time::getDeltaTime());
 
 			//gui.transform.position = Input::getMousePosition();
 

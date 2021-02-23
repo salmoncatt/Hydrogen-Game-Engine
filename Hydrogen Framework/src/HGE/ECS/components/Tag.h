@@ -7,13 +7,13 @@
 namespace HGE {
 
 	struct DLL_API Tag {
-		const char* name;
+		std::string name;
 
 		Tag() {
 			name = "";
 		}
 
-		Tag(const char* _name) {
+		Tag(const std::string& _name) {
 			name = _name;
 		}
 

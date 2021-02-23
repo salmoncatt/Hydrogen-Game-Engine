@@ -326,7 +326,7 @@ namespace HGE {
 		Mat4f projectionTransform = perspectiveMatrix * transform;
 
 		shader.setUniform("projectionViewTransform", projectionViewTransform);
-		shader.setUniform("projectionTransform", projectionTransform);
+		shader.setUniform("projectionTransform", transform);
 		shader.setUniform("color", mesh.material.albedoColor);
 		shader.setUniform("hasTextureCoords", !mesh.texturecoords.empty());
 		shader.setUniform("lightMode", lightMode);

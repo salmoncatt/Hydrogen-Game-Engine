@@ -66,8 +66,17 @@ namespace HGE {
 				Debug::systemErr("Couldn't get component of type: " + name + ", because the entity id was out of range");
 
 				return *static_cast<T*>(nullptr);
-			}else
+			}
+			else
 				return components[componentIndex[entity.id]];
+		}
+
+		bool hasComponent(const Entity& entity) {
+			if (entity.id >= HGE_MAX_ENTITIES) {
+				return false;
+			}
+			else
+				return componentIndex[entity.id] > 0;
 		}
 
 		void removeComponent(const Entity& entity) {
@@ -111,7 +120,7 @@ namespace HGE {
 		~ComponentManager() = default;
 
 		template<typename T>
-		void registerComponent(T& component) {
+		void registerComponent() {
 			const char* type = typeid(T).name();
 
 			if (componentTypes.find(type) == componentTypes.end()) {
@@ -131,7 +140,7 @@ namespace HGE {
 		}
 
 		template<typename T>
-		std::shared_ptr<ComponentArray<T>> getArray(int code) {
+		std::shared_ptr<ComponentArray<T>> getArray(const int& code) {
 			const char* type = typeid(T).name();
 
 			if (componentTypes.find(type) == componentTypes.end()) {
@@ -144,6 +153,10 @@ namespace HGE {
 
 				else if (code == HGE_ECS_REMOVE_COMPONENT)
 					Debug::systemErr("Uhhh no component was registed but is trying to be removed of type: " + std::string(type));
+
+				Debug::systemLog("Creating component of type: " + std::string(type) + " so there wont be errors calling this one again");
+				registerComponent<T>();
+
 			}
 
 			return std::static_pointer_cast<ComponentArray<T>>(componentArrays[componentTypes[std::string(type)]]);
@@ -151,13 +164,18 @@ namespace HGE {
 
 		template <typename T>
 		T& addComponent(Entity& entity, T& component) {
-			registerComponent<T>(component);
+			registerComponent<T>();
 			return getArray<T>(HGE_ECS_ADD_COMPONENT)->addComponent(entity, component);
 		}
 
 		template <typename T>
 		T& getComponent(Entity& entity) {
 			return getArray<T>(HGE_ECS_GET_COMPONENT)->getComponent(entity);
+		}
+
+		template <typename T>
+		bool hasComponent(Entity& entity) {
+			return getArray<T>(HGE_ECS_GET_COMPONENT)->hasComponent(entity);
 		}
 
 		template <typename T>

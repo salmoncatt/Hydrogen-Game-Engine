@@ -12,7 +12,7 @@ namespace HGE {
 		Entity entity;
 		Scene* scene = nullptr;
 
-		GameObject(Entity entity, Scene* scene);
+		GameObject(const Entity& entity, Scene* scene);
 		GameObject();
 		~GameObject();
 

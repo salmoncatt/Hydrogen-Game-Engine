@@ -9,7 +9,7 @@
 
 namespace HGE {
 
-	GameObject::GameObject(Entity _entity, Scene* _scene) {
+	GameObject::GameObject(const Entity& _entity, Scene* _scene) {
 		entity = _entity;
 		scene = _scene;
 	}

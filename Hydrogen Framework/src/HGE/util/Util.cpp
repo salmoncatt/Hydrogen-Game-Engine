@@ -37,13 +37,7 @@ namespace HGE {
 
 
 	void Util::test(const std::string& filepath, const std::string& filename) {
-		std::ifstream file(filepath + filename, std::ios::in);
-
-		//const unsigned int length = 8192;
-		//char buffer[length];
-
-		//file.rdbuf()->pubsetbuf(buffer, length);
-		//file.open(filepath + filename, std::ios::binary);
+		FILE* file = fopen((filepath + filename).c_str(), "r");
 
 		std::vector<Mesh> out;
 		std::vector<Material> materials;
@@ -52,7 +46,9 @@ namespace HGE {
 		std::vector<Vec3f> vertexBuffer;
 		std::vector<Vec3f> normalBuffer;
 
-		std::string buffer;
+		//std::string buffer;
+
+		char buffer[512];
 
 		HGE::string line;
 
@@ -65,50 +61,36 @@ namespace HGE {
 		textureCoordBuffer.reserve(reserveSize);
 		normalBuffer.reserve(reserveSize);
 
-		if (file.is_open()) {
+		if (file) {
 			//file.read(buffer, length);
-			while (std::getline(file, buffer)) {
-				//line = buffer;
-				//line = line.substr(0, line.find("\n"));
+			while (fgets(buffer, 512, file) != NULL) {
+				line = buffer;
 				HGE::string header = line.substr(0, 2);
 
-				/*if (line.substr(0, 7) == "mtllib ") {
-					std::vector<Material> loadedMaterials = loadMaterial(filepath, line.substr(7));
+				float data[3];
 
-					materials.insert(materials.end(), loadedMaterials.begin(), loadedMaterials.end());
+				if (line[0] != '#' && line[0] != 'o') {
+					char* currentPointer = strchr(line.substr(line.find(' ')).raw_str(), ' ');
 
-					out = std::vector<Mesh>(materials.size(), Mesh());
-					out.reserve(materials.size());
+					data[0] = strtof(++currentPointer, &currentPointer);
+					data[1] = strtof(++currentPointer, &currentPointer);
+					data[2] = strtof(++currentPointer, &currentPointer);
 				}
-				else*/ if (header == "v ") {
-					string vertex = line.substr(2);
 
-					vector<string> vertices = vector<string>();
+				//int matches = sscanf(line.substr(2).c_str(), "%f %f %f", &data[0], &data[1], &data[2]);
 
-					vertices = vertex.split(' ');
-					
-					vertexBuffer.push_back(Vec3f(toFloat(vertices[0]), toFloat(vertices[1]), toFloat(vertices[2])));
+				////vector<string> data = line.split(" ");
+
+				if (header == "v ") {
+					vertexBuffer.push_back(Vec3f(data[0], data[1], data[2]));
 				}
-				else if (header == "vt") {
-					string textureCoord = line.substr(3);
-
-					vector<string> textureCoords = vector<string>();
-
-					textureCoords = textureCoord.split(' ');
-
-					textureCoordBuffer.push_back(Vec2f(toFloat(textureCoords[0]), toFloat(textureCoords[1])));
+				else if (header == "vt ") {
+					textureCoordBuffer.push_back(Vec2f(data[0], data[1]));
 				}
 				else if (header == "vn") {
-					string normal = line.substr(2);
-
-					vector<string> normals = vector<string>();
-
-					normals = normal.split(' ');
-
-					normalBuffer.push_back(Vec3f(toFloat(normals[0]), toFloat(normals[1]), toFloat(normals[2])));
+					normalBuffer.push_back(Vec3f(data[0], data[1], data[2]));
 				}
 				else if (header == "f ") {
-					//TODO: add more than just: f i/i/i i/i/i i/i/i
 					unsigned int vertexIndex[3], uvIndex[3], normalIndex[3];
 
 					//vertices, uvs, normals
@@ -123,19 +105,19 @@ namespace HGE {
 							//add data to current mesh
 
 							//vertex data
-							Vec3f vertex = vertexBuffer[0];
+							Vec3f vertex = vertexBuffer[vertexIndex[i] - 1];
 							out[meshIndex].vertices.push_back(vertex.x);
 							out[meshIndex].vertices.push_back(vertex.y);
 							out[meshIndex].vertices.push_back(vertex.z);
 
 							//texture coords
-							Vec2f uv = Vec2f();
+							Vec2f uv = textureCoordBuffer[uvIndex[i] - 1];
 
 							out[meshIndex].texturecoords.push_back(uv.x);
 							out[meshIndex].texturecoords.push_back(1 - uv.y);
 
 							//normals
-							Vec3f normal = Vec3f();
+							Vec3f normal = normalBuffer[normalIndex[i] - 1];
 
 							out[meshIndex].normals.push_back(normal.x);
 							out[meshIndex].normals.push_back(normal.y);
@@ -196,6 +178,10 @@ namespace HGE {
 					}
 
 				}
+				else if (header == "s ") {
+					//smooth shading or something here
+					bool smoothshading = true;
+				}
 				else if (line.substr(0, 7) == "usemtl ") {
 					bool found = false;
 					for (int i = 0; i < materials.size(); i++) {
@@ -210,10 +196,17 @@ namespace HGE {
 					//just a little helper for materials
 					if (!found)
 						Debug::systemErr(("Couldn't find material: " + line.substr(7)).c_str());
+				}/*else if (line.substr(0, 7) == "mtllib ") {
+					std::vector<Material> loadedMaterials = loadMaterial(filepath, line.substr(7));
 
+					materials.insert(materials.end(), loadedMaterials.begin(), loadedMaterials.end());
+
+					out = std::vector<Mesh>(materials.size(), Mesh());
+					out.reserve(materials.size());
 				}
+				else*/
 			}
-			file.close();
+			fclose(file);
 		}
 		else
 			Debug::systemErr("Could not read file: " + filepath + filename);
@@ -452,8 +445,8 @@ namespace HGE {
 
 	}
 
-	std::vector<Mesh> Util::loadMesh(const std::string& filepath, const std::string& objname) {
-		std::ifstream file(filepath + objname, std::ios::in);
+	std::vector<Mesh> Util::loadMesh(const std::string& filepath, const std::string& filename) {
+		FILE* file = fopen((filepath + filename).c_str(), "r");
 
 		std::vector<Mesh> out;
 		std::vector<Material> materials;
@@ -462,52 +455,55 @@ namespace HGE {
 		std::vector<Vec3f> vertexBuffer;
 		std::vector<Vec3f> normalBuffer;
 
+		//std::string buffer;
+
+		char buffer[512];
+
 		std::string line;
 
 		unsigned int meshIndex = 0;
 
-		long reserveSize = getFileSize(filepath + objname) / 100;
-		
+		long reserveSize = getFileSize(filepath + filename) / 100;
+
 		//reserve size, makes loading a tiny bit faster
 		vertexBuffer.reserve(reserveSize);
 		textureCoordBuffer.reserve(reserveSize);
 		normalBuffer.reserve(reserveSize);
-		
-		if (file.is_open()) {
-			while (std::getline(file, line)) {
+
+
+		if (file) {
+			//file.read(buffer, length);
+			while (fgets(buffer, 512, file) != NULL) {
+				line = buffer;
+				line.erase(line.end() - 1, line.end());
 				std::string header = line.substr(0, 2);
 
-				if (line.substr(0, 7) == "mtllib ") {
-					std::vector<Material> loadedMaterials = loadMaterial(filepath, line.substr(7));
-					
-					materials.insert(materials.end(), loadedMaterials.begin(), loadedMaterials.end());
-					
-					out = std::vector<Mesh>(materials.size(), Mesh());
-					out.reserve(materials.size());
-				}
-				else if (header == "v ") {
-					std::istringstream v(line.substr(2));
+				
 
-					float x, y, z;
-					v >> x >> y >> z;
-					vertexBuffer.push_back(Vec3f(x, y, z));
+				float data[3];
+
+				if (line[0] != '#' && line[0] != 'o' && header != "f ") {
+					char* currentPointer = strchr(_strdup(line.substr(line.find(' ')).data()), ' ');
+
+					data[0] = strtof(++currentPointer, &currentPointer);
+					data[1] = strtof(++currentPointer, &currentPointer);
+					data[2] = strtof(++currentPointer, &currentPointer);
+				}
+
+				//int matches = sscanf(line.substr(2).c_str(), "%f %f %f", &data[0], &data[1], &data[2]);
+
+				////vector<string> data = line.split(" ");
+
+				if (header == "v ") {
+					vertexBuffer.push_back(Vec3f(data[0], data[1], data[2]));
 				}
 				else if (header == "vt") {
-					std::istringstream vt(line.substr(3));
-
-					float x, y;
-					vt >> x >> y;
-					textureCoordBuffer.push_back(Vec2f(x, y));
+					textureCoordBuffer.push_back(Vec2f(data[0], data[1]));
 				}
 				else if (header == "vn") {
-					std::istringstream vn(line.substr(3));
-
-					float x, y, z;
-					vn >> x >> y >> z;
-					normalBuffer.push_back(Vec3f(x, y, z));
+					normalBuffer.push_back(Vec3f(data[0], data[1], data[2]));
 				}
 				else if (header == "f ") {
-					//TODO: add more than just: f i/i/i i/i/i i/i/i
 					unsigned int vertexIndex[3], uvIndex[3], normalIndex[3];
 
 					//vertices, uvs, normals
@@ -595,10 +591,14 @@ namespace HGE {
 					}
 
 				}
+				else if (header == "s ") {
+					//smooth shading or something here
+					bool smoothshading = true;
+				}
 				else if (line.substr(0, 7) == "usemtl ") {
 					bool found = false;
 					for (int i = 0; i < materials.size(); i++) {
-						if (line.substr(7) == materials[i].name) {
+						if (line.substr(7) == materials[i].name.c_str()) {
 							meshIndex = i;
 							out[meshIndex].material = materials[i];
 							found = true;
@@ -607,23 +607,204 @@ namespace HGE {
 					}
 
 					//just a little helper for materials
-					if(!found)
-					Debug::systemErr("Couldn't find material: " + line.substr(7));
+					if (!found) {
+						Debug::systemErr("Couldn't find material: " + line.substr(7));
+					}
 
+				}else if (line.substr(0, 7) == "mtllib ") {
+					std::vector<Material> loadedMaterials = loadMaterial(filepath, line.substr(7));
+
+					materials.insert(materials.end(), loadedMaterials.begin(), loadedMaterials.end());
+
+					out = std::vector<Mesh>(materials.size(), Mesh());
+					out.reserve(materials.size());
 				}
 			}
-			file.close();
+
+			fclose(file);
 		}
 		else
-			Debug::systemErr("Could not read file: " + filepath + objname);
+			Debug::systemErr("Could not read file: " + filepath + filename);
 
 		if (!(materials.size() > 0))
-			Debug::systemErr("Warning object file: " + objname + ", has no materials. Meaning it will have null textures and stuff");
+			Debug::systemErr("Warning object file: " + filename + ", has no materials. Meaning it will have null textures and stuff");
 
-		Debug::systemSuccess("Loaded object: " + objname);
+		Debug::systemSuccess("Loaded object: " + filename);
 		Debug::newLine();
 
 		return out;
+
+		//std::ifstream file(filepath + objname, std::ios::in);
+
+		//std::vector<Mesh> out;
+		//std::vector<Material> materials;
+
+		//std::vector<Vec2f> textureCoordBuffer;
+		//std::vector<Vec3f> vertexBuffer;
+		//std::vector<Vec3f> normalBuffer;
+
+		//std::string line;
+
+		//unsigned int meshIndex = 0;
+
+		//long reserveSize = getFileSize(filepath + objname) / 100;
+		//
+		////reserve size, makes loading a tiny bit faster
+		//vertexBuffer.reserve(reserveSize);
+		//textureCoordBuffer.reserve(reserveSize);
+		//normalBuffer.reserve(reserveSize);
+		//
+		//if (file.is_open()) {
+		//	while (std::getline(file, line)) {
+		//		std::string header = line.substr(0, 2);
+
+		//		if (line.substr(0, 7) == "mtllib ") {
+		//			std::vector<Material> loadedMaterials = loadMaterial(filepath, line.substr(7));
+		//			
+		//			materials.insert(materials.end(), loadedMaterials.begin(), loadedMaterials.end());
+		//			
+		//			out = std::vector<Mesh>(materials.size(), Mesh());
+		//			out.reserve(materials.size());
+		//		}
+		//		else if (header == "v ") {
+		//			std::istringstream v(line.substr(2));
+
+		//			float x, y, z;
+		//			v >> x >> y >> z;
+		//			vertexBuffer.push_back(Vec3f(x, y, z));
+		//		}
+		//		else if (header == "vt") {
+		//			std::istringstream vt(line.substr(3));
+
+		//			float x, y;
+		//			vt >> x >> y;
+		//			textureCoordBuffer.push_back(Vec2f(x, y));
+		//		}
+		//		else if (header == "vn") {
+		//			std::istringstream vn(line.substr(3));
+
+		//			float x, y, z;
+		//			vn >> x >> y >> z;
+		//			normalBuffer.push_back(Vec3f(x, y, z));
+		//		}
+		//		else if (header == "f ") {
+		//			//TODO: add more than just: f i/i/i i/i/i i/i/i
+		//			unsigned int vertexIndex[3], uvIndex[3], normalIndex[3];
+
+		//			//vertices, uvs, normals
+		//			int matches = sscanf(line.c_str(), "f %d/%d/%d %d/%d/%d %d/%d/%d", &vertexIndex[0], &uvIndex[0], &normalIndex[0], &vertexIndex[1], &uvIndex[1], &normalIndex[1], &vertexIndex[2], &uvIndex[2], &normalIndex[2]);
+
+		//			//in case of no mtl, i have to make the meshes as i go
+		//			if (out.size() <= meshIndex)
+		//				out.push_back(Mesh());
+
+		//			if (matches == 9) {
+		//				for (int i = 0; i < 3; i++) {
+		//					//add data to current mesh
+
+		//					//vertex data
+		//					Vec3f vertex = vertexBuffer[vertexIndex[i] - 1];
+		//					out[meshIndex].vertices.push_back(vertex.x);
+		//					out[meshIndex].vertices.push_back(vertex.y);
+		//					out[meshIndex].vertices.push_back(vertex.z);
+
+		//					//texture coords
+		//					Vec2f uv = textureCoordBuffer[uvIndex[i] - 1];
+
+		//					out[meshIndex].texturecoords.push_back(uv.x);
+		//					out[meshIndex].texturecoords.push_back(1 - uv.y);
+
+		//					//normals
+		//					Vec3f normal = normalBuffer[normalIndex[i] - 1];
+
+		//					out[meshIndex].normals.push_back(normal.x);
+		//					out[meshIndex].normals.push_back(normal.y);
+		//					out[meshIndex].normals.push_back(normal.z);
+		//				}
+
+		//			}
+		//			else {
+
+		//				//vertices uvs
+		//				matches = sscanf(line.c_str(), "f %d/%d %d/%d %d/%d", &vertexIndex[0], &uvIndex[0], &vertexIndex[1], &uvIndex[1], &vertexIndex[2], &uvIndex[2]);
+
+		//				if (matches == 6) {
+		//					for (int i = 0; i < 3; i++) {
+		//						//add data to current mesh
+
+		//						//vertex data
+		//						Vec3f vertex = vertexBuffer[vertexIndex[i] - 1];
+		//						out[meshIndex].vertices.push_back(vertex.x);
+		//						out[meshIndex].vertices.push_back(vertex.y);
+		//						out[meshIndex].vertices.push_back(vertex.z);
+
+		//						//texture coords
+		//						Vec2f uv = textureCoordBuffer[uvIndex[i] - 1];
+
+		//						out[meshIndex].texturecoords.push_back(uv.x);
+		//						out[meshIndex].texturecoords.push_back(1 - uv.y);
+		//					}
+		//				}
+		//				else {
+
+		//					//vertices normals
+		//					matches = sscanf(line.c_str(), "f %d//%d %d//%d %d//%d", &vertexIndex[0], &normalIndex[0], &vertexIndex[1], &normalIndex[1], &vertexIndex[2], &normalIndex[2]);
+
+		//					if (matches == 6) {
+		//						for (int i = 0; i < 3; i++) {
+		//							//add data to current mesh
+
+		//							//vertex data
+		//							Vec3f vertex = vertexBuffer[vertexIndex[i] - 1];
+		//							out[meshIndex].vertices.push_back(vertex.x);
+		//							out[meshIndex].vertices.push_back(vertex.y);
+		//							out[meshIndex].vertices.push_back(vertex.z);
+
+		//							//normals
+		//							Vec3f normal = normalBuffer[normalIndex[i] - 1];
+
+		//							out[meshIndex].normals.push_back(normal.x);
+		//							out[meshIndex].normals.push_back(normal.y);
+		//							out[meshIndex].normals.push_back(normal.z);
+		//						}
+		//					}
+		//					else {
+		//						Debug::systemErr("Model: " + filepath + " has incorrect formatting, try different exporting options");
+		//						return std::vector<Mesh>();
+		//					}
+		//				}
+		//			}
+
+		//		}
+		//		else if (line.substr(0, 7) == "usemtl ") {
+		//			bool found = false;
+		//			for (int i = 0; i < materials.size(); i++) {
+		//				if (line.substr(7) == materials[i].name) {
+		//					meshIndex = i;
+		//					out[meshIndex].material = materials[i];
+		//					found = true;
+		//					break;
+		//				}
+		//			}
+
+		//			//just a little helper for materials
+		//			if(!found)
+		//			Debug::systemErr("Couldn't find material: " + line.substr(7));
+
+		//		}
+		//	}
+		//	file.close();
+		//}
+		//else
+		//	Debug::systemErr("Could not read file: " + filepath + objname);
+
+		//if (!(materials.size() > 0))
+		//	Debug::systemErr("Warning object file: " + objname + ", has no materials. Meaning it will have null textures and stuff");
+
+		//Debug::systemSuccess("Loaded object: " + objname);
+		//Debug::newLine();
+
+		//return out;
 	}
 
 
