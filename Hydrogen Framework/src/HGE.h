@@ -28,6 +28,7 @@
 
 #include "HGE/core/API.h"
 #include "HGE/core/Program.h"
+#include "HGE/core/Engine.h"
 #include "HGE/core/Start.h"
 
 #include "HGE/graphics/image/Image.h"
@@ -45,6 +46,7 @@
 #include "HGE/math/vectors/Vec3.h"
 #include "HGE/math/vectors/Vec4.h"
 #include "HGE/math/HMath.h"
+#include "HGE/math/Random.h"
 
 #include "HGE/util/memory/FloatBuffer.h"
 

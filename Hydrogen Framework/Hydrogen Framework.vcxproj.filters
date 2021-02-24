@@ -45,6 +45,8 @@
     <ClInclude Include="src\HGE\util\memory\MemoryUtil.h" />
     <ClInclude Include="src\HGE\gui\GuiRadialProgressBar.h" />
     <ClInclude Include="src\HGE\ECS\components\NativeScript.h" />
+    <ClInclude Include="src\HGE\core\Engine.h" />
+    <ClInclude Include="src\HGE\math\Random.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\hpch.cpp" />
@@ -77,5 +79,7 @@
     <ClCompile Include="src\HGE\ECS\components\MeshComponent.cpp" />
     <ClCompile Include="src\HGE\util\time\AutoProfiler.cpp" />
     <ClCompile Include="src\HGE\gui\GuiRadialProgressBar.cpp" />
+    <ClCompile Include="src\HGE\core\Engine.cpp" />
+    <ClCompile Include="src\HGE\math\Random.cpp" />
   </ItemGroup>
 </Project>

@@ -285,12 +285,12 @@ namespace HGE {
 
 		guiShader.bind();
 
-		float lerpAmount = (cos(HMath::toRadians(rotation)) + 1) / 2;
-		float x = HMath::lerp(currentWindowSize.x, currentWindowSize.y, lerpAmount);
-		float y = HMath::lerp(currentWindowSize.y, currentWindowSize.x, lerpAmount);
+		float lerpAmount = abs(cos(HMath::toRadians(rotation)));
+		float x = HMath::lerp(currentWindowSize.y, currentWindowSize.x, lerpAmount);
+		float y = HMath::lerp(currentWindowSize.x, currentWindowSize.y, lerpAmount);
 
 		Vec2f uiposition = Vec2f((((position.x + (size.x / 2)) / currentWindowSize.x) * 2) - 1, (((currentWindowSize.y - position.y - (size.y / 2)) / currentWindowSize.y) * 2) - 1);
-		Vec2f uiSize = Vec2f(size.x / currentWindowSize.x, size.y / currentWindowSize.y);
+		Vec2f uiSize = Vec2f(size.x / x, size.y / y);
 
 		//matrix stuff
 		Mat4f transform = Mat4f::createTransformationMatrix(

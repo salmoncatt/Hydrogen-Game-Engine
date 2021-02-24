@@ -49,9 +49,6 @@ namespace HGE{
 		static std::vector<Mesh> loadMesh(const std::string& filepath, const std::string& objname);
 		static std::vector<Material> loadMaterial(const std::string& filepath, const std::string& filename);
 
-		//other
-		static double random(const int& smallest, const int& largest);
-
 		static std::string getCPU();
 		static double getCPUusage();
 		static double getRAMusage();

@@ -169,10 +169,6 @@ namespace HGE {
 		}
 	}
 
-	double Util::random(const int& smallest, const int& largest) {
-		return ((rand() % largest) - (double)smallest);
-	}
-
 	std::vector<Material> Util::loadMaterial(const std::string& filepath, const std::string& filename) {
 		std::ifstream file(filepath + filename, std::ios::in);
 
@@ -280,6 +276,9 @@ namespace HGE {
 
 		long reserveSize = getFileSize(filepath + filename) / 100;
 
+		//0 = i/i/i, 1 = i/i 2 = i//i
+		unsigned short faceIndexType = 0;
+
 		//reserve size, makes loading a tiny bit faster
 		vertexBuffer.reserve(reserveSize);
 		textureCoordBuffer.reserve(reserveSize);
@@ -314,14 +313,93 @@ namespace HGE {
 				else if (header == "f ") {
 					unsigned int vertexIndex[3], uvIndex[3], normalIndex[3];
 
-					//vertices, uvs, normals
-					int matches = sscanf(line.c_str(), "f %d/%d/%d %d/%d/%d %d/%d/%d", &vertexIndex[0], &uvIndex[0], &normalIndex[0], &vertexIndex[1], &uvIndex[1], &normalIndex[1], &vertexIndex[2], &uvIndex[2], &normalIndex[2]);
+					int matches = 0;
+
+					switch(faceIndexType) {
+
+					case(0):
+						//vertices, uvs, normals
+						matches = sscanf(line.c_str(), "f %d/%d/%d %d/%d/%d %d/%d/%d", &vertexIndex[0], &uvIndex[0], &normalIndex[0], &vertexIndex[1], &uvIndex[1], &normalIndex[1], &vertexIndex[2], &uvIndex[2], &normalIndex[2]);
+
+						if (matches != 9) {
+							//vertices uvs
+							matches = sscanf(line.c_str(), "f %d/%d %d/%d %d/%d", &vertexIndex[0], &uvIndex[0], &vertexIndex[1], &uvIndex[1], &vertexIndex[2], &uvIndex[2]);
+
+							if (matches != 6) {
+								//vertices normals
+								matches = sscanf(line.c_str(), "f %d//%d %d//%d %d//%d", &vertexIndex[0], &normalIndex[0], &vertexIndex[1], &normalIndex[1], &vertexIndex[2], &normalIndex[2]);
+
+								if (matches != 6) {
+									Debug::systemErr("Model: " + filepath + " has incorrect formatting, try different exporting options");
+									return out;
+								}
+								else
+									faceIndexType = 2;
+							}
+							else
+								faceIndexType = 1;
+						}
+								
+					break;
+
+					case(1):
+						//vertices uvs
+						matches = sscanf(line.c_str(), "f %d/%d %d/%d %d/%d", &vertexIndex[0], &uvIndex[0], &vertexIndex[1], &uvIndex[1], &vertexIndex[2], &uvIndex[2]);
+
+						if (matches != 6) {
+							//vertices, uvs, normals
+							matches = sscanf(line.c_str(), "f %d/%d/%d %d/%d/%d %d/%d/%d", &vertexIndex[0], &uvIndex[0], &normalIndex[0], &vertexIndex[1], &uvIndex[1], &normalIndex[1], &vertexIndex[2], &uvIndex[2], &normalIndex[2]);
+
+							if (matches != 9) {
+								//vertices normals
+								matches = sscanf(line.c_str(), "f %d//%d %d//%d %d//%d", &vertexIndex[0], &normalIndex[0], &vertexIndex[1], &normalIndex[1], &vertexIndex[2], &normalIndex[2]);
+
+								if (matches != 6) {
+									Debug::systemErr("Model: " + filepath + " has incorrect formatting, try different exporting options");
+									return out;
+								}
+								else
+									faceIndexType = 2;
+							}
+							else
+								faceIndexType = 0;
+						}
+
+						break;
+
+					case(2):
+						//vertices normals
+						matches = sscanf(line.c_str(), "f %d//%d %d//%d %d//%d", &vertexIndex[0], &normalIndex[0], &vertexIndex[1], &normalIndex[1], &vertexIndex[2], &normalIndex[2]);
+						
+						if (matches != 6) {
+							//vertices, uvs, normals
+							matches = sscanf(line.c_str(), "f %d/%d/%d %d/%d/%d %d/%d/%d", &vertexIndex[0], &uvIndex[0], &normalIndex[0], &vertexIndex[1], &uvIndex[1], &normalIndex[1], &vertexIndex[2], &uvIndex[2], &normalIndex[2]);
+
+							if (matches != 9) {
+								//vertices uvs
+								matches = sscanf(line.c_str(), "f %d/%d %d/%d %d/%d", &vertexIndex[0], &uvIndex[0], &vertexIndex[1], &uvIndex[1], &vertexIndex[2], &uvIndex[2]);
+
+								if (matches != 6) {
+									Debug::systemErr("Model: " + filepath + " has incorrect formatting, try different exporting options");
+									return out;
+								}
+								else
+									faceIndexType = 1;
+							}
+							else
+								faceIndexType = 0;
+						}
+
+						break;
+					}
 
 					//in case of no mtl, i have to make the meshes as i go
 					if (out.size() <= meshIndex)
 						out.push_back(Mesh());
 
-					if (matches == 9) {
+					switch (faceIndexType) {
+
+					case(0):
 						for (int i = 0; i < 3; i++) {
 							//add data to current mesh
 
@@ -344,59 +422,54 @@ namespace HGE {
 							out[meshIndex].normals.push_back(normal.y);
 							out[meshIndex].normals.push_back(normal.z);
 						}
+					
+						break;
+
+					case(1):
+
+						for (int i = 0; i < 3; i++) {
+							//add data to current mesh
+
+							//vertex data
+							Vec3f vertex = vertexBuffer[vertexIndex[i] - 1];
+							out[meshIndex].vertices.push_back(vertex.x);
+							out[meshIndex].vertices.push_back(vertex.y);
+							out[meshIndex].vertices.push_back(vertex.z);
+
+							//texture coords
+							Vec2f uv = textureCoordBuffer[uvIndex[i] - 1];
+
+							out[meshIndex].texturecoords.push_back(uv.x);
+							out[meshIndex].texturecoords.push_back(1 - uv.y);
+						}
+
+						break;
+
+					case(2):
+
+						for (int i = 0; i < 3; i++) {
+							//add data to current mesh
+
+							//vertex data
+							Vec3f vertex = vertexBuffer[vertexIndex[i] - 1];
+							out[meshIndex].vertices.push_back(vertex.x);
+							out[meshIndex].vertices.push_back(vertex.y);
+							out[meshIndex].vertices.push_back(vertex.z);
+
+							//normals
+							Vec3f normal = normalBuffer[normalIndex[i] - 1];
+
+							out[meshIndex].normals.push_back(normal.x);
+							out[meshIndex].normals.push_back(normal.y);
+							out[meshIndex].normals.push_back(normal.z);
+						}
+
+						break;
+
 
 					}
-					else {
 
-						//vertices uvs
-						matches = sscanf(line.c_str(), "f %d/%d %d/%d %d/%d", &vertexIndex[0], &uvIndex[0], &vertexIndex[1], &uvIndex[1], &vertexIndex[2], &uvIndex[2]);
-
-						if (matches == 6) {
-							for (int i = 0; i < 3; i++) {
-								//add data to current mesh
-
-								//vertex data
-								Vec3f vertex = vertexBuffer[vertexIndex[i] - 1];
-								out[meshIndex].vertices.push_back(vertex.x);
-								out[meshIndex].vertices.push_back(vertex.y);
-								out[meshIndex].vertices.push_back(vertex.z);
-
-								//texture coords
-								Vec2f uv = textureCoordBuffer[uvIndex[i] - 1];
-
-								out[meshIndex].texturecoords.push_back(uv.x);
-								out[meshIndex].texturecoords.push_back(1 - uv.y);
-							}
-						}
-						else {
-
-							//vertices normals
-							matches = sscanf(line.c_str(), "f %d//%d %d//%d %d//%d", &vertexIndex[0], &normalIndex[0], &vertexIndex[1], &normalIndex[1], &vertexIndex[2], &normalIndex[2]);
-
-							if (matches == 6) {
-								for (int i = 0; i < 3; i++) {
-									//add data to current mesh
-
-									//vertex data
-									Vec3f vertex = vertexBuffer[vertexIndex[i] - 1];
-									out[meshIndex].vertices.push_back(vertex.x);
-									out[meshIndex].vertices.push_back(vertex.y);
-									out[meshIndex].vertices.push_back(vertex.z);
-
-									//normals
-									Vec3f normal = normalBuffer[normalIndex[i] - 1];
-
-									out[meshIndex].normals.push_back(normal.x);
-									out[meshIndex].normals.push_back(normal.y);
-									out[meshIndex].normals.push_back(normal.z);
-								}
-							}
-							else {
-								Debug::systemErr("Model: " + filepath + " has incorrect formatting, try different exporting options");
-								return std::vector<Mesh>();
-							}
-						}
-					}
+				
 
 				}
 				else if (header == "s ") {

@@ -7,10 +7,10 @@
 int main(int argc, char** argv) {
 	auto program = HGE::createProgram();
 
-	program->startEngine();
+	HGE::Engine::startEngine();
 	program->create();
 	program->start();
-	program->closeEngine();
+	HGE::Engine::stopEngine();
 
 	delete program;
 }

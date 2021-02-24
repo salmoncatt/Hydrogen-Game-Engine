@@ -12,14 +12,13 @@ namespace HGE {
 	protected:
 		Window* window;
 	public:
-		static Window* mainWindow;
 
 		Program();
 		virtual ~Program();
 
-		void startEngine();
-		void updateEngine();
-		void closeEngine();
+		//void startEngine();
+		//void updateEngine();
+		//void closeEngine();
 		
 		virtual void create();
 		virtual void start();
