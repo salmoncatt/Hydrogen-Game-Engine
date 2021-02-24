@@ -40,6 +40,8 @@ namespace HGE {
 		static void close();
 		static void setCamera(const Camera& camera);
 
+		static float getAspectRatio();
+
 		static void setWireFrameMode(const bool& wireframe);
 		static void toggleWireFrameMode();
 		static bool getWireFrameMode();
@@ -65,6 +67,7 @@ namespace HGE {
 
 		static void renderRectangle(const Vec2f& position, const Vec2f& size, const Texture& texture);
 		static void renderRectangle(const Vec2f& position, const Vec2f& size, const Vec3f& color);
+		static void renderRectangle(const Vec2f& position, const Vec2f& size, const float& rotation, const Vec3f& color);
 		
 		static void renderRoundedRectangle(const Vec2f& position, const Vec2f& size, const float& radius, const Texture& texture);
 		static void renderRoundedRectangle(const Vec2f& position, const Vec2f& size, const float& radius, const Vec3f& color);

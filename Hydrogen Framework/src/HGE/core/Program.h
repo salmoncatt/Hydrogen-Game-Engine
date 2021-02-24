@@ -9,8 +9,11 @@
 namespace HGE {
 
 	class DLL_API Program {
-	public:
+	protected:
 		Window* window;
+	public:
+		static Window* mainWindow;
+
 		Program();
 		virtual ~Program();
 

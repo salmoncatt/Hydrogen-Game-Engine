@@ -20,6 +20,14 @@
 #include <functional>
 #include <cstring>
 
+//for windows notification toasts n stuff
+//#include "DesktopNotificationManagerCompat.h"
+//#include <NotificationActivationCallback.h>
+//#include <windows.ui.notifications.h>
+//
+//using namespace ABI::Windows::Data::Xml::Dom;
+//using namespace ABI::Windows::UI::Notifications;
+//using namespace Microsoft::WRL;
 
 #if _WIN64
 #include <Windows.h>
@@ -44,6 +52,7 @@
 #include "hge_var.h"
 
 //oh yea my own standard library leeeetsss goooooo
+//its nowhere near finished for now
 #include "HFL/HFL.h"
 
 #endif

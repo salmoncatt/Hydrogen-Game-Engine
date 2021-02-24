@@ -7,6 +7,7 @@
 #include "ECS.h"
 #include "HGE/camera/EditorCamera.h"
 #include "HGE/gui/GuiWindow.h"
+#include "HGE/ECS/components/Texture.h"
 
 namespace HGE {
 
@@ -21,9 +22,14 @@ namespace HGE {
 		GuiWindow gameObjectList;
 		GuiWindow gameObjectComponentsList;
 
+		Texture radialBarTexture;
+		float lerpedCpuUsage;
+		float lerpedRamUsage;
 
 	public:
 		EditorCamera editorCamera;
+
+		void initialize();
 
 		Scene();
 		~Scene();

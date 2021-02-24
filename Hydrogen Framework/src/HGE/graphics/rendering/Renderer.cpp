@@ -8,6 +8,7 @@
 #include "HGE/math/HMath.h"
 #include "HGE/util/time/Profiler.h"
 #include "HGE/gui/GuiWindow.h"
+#include "HGE/math/vectors/Vec4.h"
 
 namespace HGE {
 
@@ -64,13 +65,22 @@ namespace HGE {
 
 	void Renderer::createProjectionMatrix(const float& screenWidth, const float& screenHeight) {
 		perspectiveMatrix = Mat4f::createPerspectiveMatrix(screenWidth, screenHeight, 90, 0.1f, 1000);
+
 		currentWindowSize.x = screenWidth;
 		currentWindowSize.y = screenHeight;
+		
+		float aspectRatio = getAspectRatio();
+		
+		orthoMatrix = Mat4f::createOrthoMatrix(-aspectRatio, aspectRatio, -aspectRatio, aspectRatio, -1, 1);
 	}
 
 	void Renderer::close() {
 		mainShader.close();
 		guiShader.close();
+	}
+
+	float Renderer::getAspectRatio() {
+		return currentWindowSize.x / currentWindowSize.y;
 	}
 
 	void Renderer::setCamera(const Camera& camera) {
@@ -238,13 +248,16 @@ namespace HGE {
 		Vec2f uiposition = Vec2f((((position.x + (size.x / 2)) / currentWindowSize.x) * 2) - 1, (((currentWindowSize.y - position.y - (size.y / 2)) / currentWindowSize.y) * 2) - 1);
 		Vec2f uiSize = Vec2f(size.x / currentWindowSize.x, size.y / currentWindowSize.y);
 
+		Mat4f rotationMat = Mat4f::createTransformationMatrix(Vec2f(), Vec3f(0, 0, 0), Vec2f());
+
 		//matrix stuff
 		Mat4f transform = Mat4f::createTransformationMatrix(
 			uiposition,
-			Vec3f(),
+			Vec3f(0, 0, 0),
 			uiSize);
 
 		guiShader.setUniform("transform", transform);
+		guiShader.setUniform("rotationMat", rotationMat);
 		guiShader.setUniform("ortho", orthoMatrix);
 		guiShader.setUniform("uiSize", size);
 		guiShader.setUniform("hasTexture", false);
@@ -252,6 +265,47 @@ namespace HGE {
 		guiShader.setUniform("radius", radius);
 		guiShader.setUniform("smoothness", 0.7f);
 		guiShader.setUniform("drawmode", HGE_RECTANGLE_ROUNDED);
+
+
+		glDrawArrays(GL_TRIANGLE_STRIP, 0, (int)quad.vertices.size());
+
+		guiShader.unbind();
+
+		glDisableVertexAttribArray(0);
+		glBindVertexArray(0);
+
+		enableDepthTest();
+	}
+
+	void Renderer::renderRectangle(const Vec2f& position, const Vec2f& size, const float& rotation, const Vec3f& color) {
+		disableDepthTest();
+
+		glBindVertexArray(quad.VAO);
+		glEnableVertexAttribArray(0);
+
+		guiShader.bind();
+
+		float lerpAmount = (cos(HMath::toRadians(rotation)) + 1) / 2;
+		float x = HMath::lerp(currentWindowSize.x, currentWindowSize.y, lerpAmount);
+		float y = HMath::lerp(currentWindowSize.y, currentWindowSize.x, lerpAmount);
+
+		Vec2f uiposition = Vec2f((((position.x + (size.x / 2)) / currentWindowSize.x) * 2) - 1, (((currentWindowSize.y - position.y - (size.y / 2)) / currentWindowSize.y) * 2) - 1);
+		Vec2f uiSize = Vec2f(size.x / currentWindowSize.x, size.y / currentWindowSize.y);
+
+		//matrix stuff
+		Mat4f transform = Mat4f::createTransformationMatrix(
+			uiposition,
+			Vec3f(0, 0, rotation),
+			uiSize);
+
+		guiShader.setUniform("transform", transform);
+		guiShader.setUniform("ortho", orthoMatrix);
+		guiShader.setUniform("uiSize", size);
+		guiShader.setUniform("hasTexture", false);
+		guiShader.setUniform("color", color);
+		//guiShader.setUniform("radius", radius);
+		guiShader.setUniform("smoothness", 0.7f);
+		guiShader.setUniform("drawmode", HGE_RECTANGLE);
 
 
 		glDrawArrays(GL_TRIANGLE_STRIP, 0, (int)quad.vertices.size());
@@ -280,14 +334,16 @@ namespace HGE {
 		else
 			glBindTexture(GL_TEXTURE_2D, nullTexture.textureID);
 
+		Mat4f rotationMat = Mat4f::createTransformationMatrix(Vec2f(), Vec3f(0, 0, 0), Vec2f());
 
 		//matrix stuff
 		Mat4f transform = Mat4f::createTransformationMatrix(
 			Vec2f((((position.x + (size.x / 2)) / currentWindowSize.x) * 2) - 1, (((currentWindowSize.y - position.y - (size.y / 2)) / currentWindowSize.y) * 2) - 1),
-			Vec3f(),
+			Vec3f(0, 0, 0),
 			Vec2f(size.x / currentWindowSize.x, size.y / currentWindowSize.y));
 		
 		guiShader.setUniform("transform", transform);
+		guiShader.setUniform("rotationMat", rotationMat);
 		guiShader.setUniform("ortho", orthoMatrix);
 		guiShader.setUniform("hasTexture", true);
 		guiShader.setUniform("angle", (float)HMath::toRadians(angle));

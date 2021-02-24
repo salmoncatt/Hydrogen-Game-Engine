@@ -9,6 +9,7 @@ namespace HGE {
 
 	struct Vec2f;
 	struct Vec3f;
+	struct Vec4f;
 	class FloatBuffer;
 
 	struct DLL_API Mat4f {
@@ -46,6 +47,10 @@ namespace HGE {
 		static Mat4f createViewMatrix(const Vec3f& position, const Vec3f& rotation);
 
 		Mat4f operator*(const Mat4f& other);
+
+		Mat4f operator*(const Vec4f& other);
+
+		friend Vec4f operator*(const Vec4f& other, const Mat4f& matrix);
 
 		Mat4f operator*=(const Mat4f& other);
 

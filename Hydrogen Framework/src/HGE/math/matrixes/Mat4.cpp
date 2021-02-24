@@ -2,6 +2,7 @@
 #include "Mat4.h"
 #include "HGE/math/HMath.h"
 #include "HGE/util/memory/FloatBuffer.h"
+#include "HGE/math/vectors/Vec4.h"
 #include "HGE/math/vectors/Vec3.h"
 #include "HGE/math/vectors/Vec2.h"
 
@@ -65,6 +66,29 @@ namespace HGE {
 		out.m31 = m01 * other.m30 + m11 * other.m31 + m21 * other.m32 + m31 * other.m33;
 		out.m32 = m02 * other.m30 + m12 * other.m31 + m22 * other.m32 + m32 * other.m33;
 		out.m33 = m03 * other.m30 + m13 * other.m31 + m23 * other.m32 + m33 * other.m33;
+
+		return out;
+	}
+
+	Mat4f Mat4f::operator*(const Vec4f& other) {
+		Mat4f out = Mat4f();
+		out.setIdentity();
+
+		out.m00 = m00 * other.x + m10 * other.y + m20 * other.z + m30 * other.w;
+		out.m01 = m01 * other.x + m11 * other.y + m21 * other.z + m31 * other.w;
+		out.m02 = m02 * other.x + m12 * other.y + m22 * other.z + m32 * other.w;
+		out.m03 = m03 * other.x + m13 * other.y + m23 * other.z + m33 * other.w;
+
+		return out;
+	}
+
+	Vec4f operator*(const Vec4f& other, const Mat4f& matrix) {
+		Vec4f out = Vec4f();
+
+		out.x = matrix.m00 * other.x + matrix.m10 * other.y + matrix.m20 * other.z + matrix.m30 * other.w;
+		out.y = matrix.m01 * other.x + matrix.m11 * other.y + matrix.m21 * other.z + matrix.m31 * other.w;
+		out.z = matrix.m02 * other.x + matrix.m12 * other.y + matrix.m22 * other.z + matrix.m32 * other.w;
+		out.w = matrix.m03 * other.x + matrix.m13 * other.y + matrix.m23 * other.z + matrix.m33 * other.w;
 
 		return out;
 	}

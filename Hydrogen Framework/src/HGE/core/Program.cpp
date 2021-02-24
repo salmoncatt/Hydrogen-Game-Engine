@@ -10,8 +10,11 @@
 
 namespace HGE {
 
+	Window* Program::mainWindow = nullptr;
+
 	Program::Program() {
 		window = new HGE::Window(Vec2i(1880, 1080), "Hydrogen Game Engine");
+		mainWindow = window;
 	}
 
 	Program::~Program() {

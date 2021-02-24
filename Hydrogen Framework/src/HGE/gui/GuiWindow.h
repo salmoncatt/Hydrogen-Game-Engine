@@ -20,7 +20,7 @@ namespace HGE {
 
 		float cornerSmoothingRadius = 10;
 		
-		string title;
+		std::string title;
 
 		bool resizable = true;
 

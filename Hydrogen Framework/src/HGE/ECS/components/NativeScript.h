@@ -6,6 +6,8 @@
 #include "HGE/ECS/ECS.h"
 #include "HGE/ECS/GameObject.h"
 
+using Script = HGE::GameObject;
+
 namespace HGE {
 
 	struct DLL_API NativeScript {

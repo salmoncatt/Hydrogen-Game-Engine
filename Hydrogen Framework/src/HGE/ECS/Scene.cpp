@@ -14,6 +14,8 @@
 #include "HGE/io/Input.h"
 #include "HGE/math/HMath.h"
 #include "HGE/util/time/Profiler.h"
+#include "HGE/util/Util.h"
+#include "HGE/core/Program.h"
 
 namespace HGE {
 
@@ -25,14 +27,17 @@ namespace HGE {
 
 		//performance status elements
 
-
-
-
-
+		lerpedCpuUsage = 0;
+		lerpedRamUsage = 0;
 	}
 
 	Scene::~Scene() {
 
+	}
+
+	void Scene::initialize() {
+		radialBarTexture = Texture(HGE_RES + "textures/radial bar half.bmp");
+		radialBarTexture.create();
 	}
 
 	GameObject Scene::createGameObject(const std::string& name) {
@@ -118,6 +123,24 @@ namespace HGE {
 			}*/
 
 		}
+
+
+
+
+		lerpedCpuUsage = HMath::lerp(lerpedCpuUsage, (float)Util::getCPUusage(), 0.01f);
+		lerpedRamUsage = HMath::lerp(lerpedRamUsage, (float)Util::getRAMusage(), 0.01f);
+
+		//background
+		Renderer::renderRoundedRectangle(Vec2f(0, (float)Program::mainWindow->size.y - 256), Vec2f(600, 256), 10, Vec3f(0.2f));
+		//starting left first cpu usage
+		Renderer::radialRevealRectangle(Vec2f(10, (float)Program::mainWindow->size.y - 70), Vec2f(122, 122), lerpedCpuUsage * 180, 10, false, radialBarTexture);
+		//second ram usage
+		Renderer::radialRevealRectangle(Vec2f(142, (float)Program::mainWindow->size.y - 70), Vec2f(122, 122), (float)(lerpedRamUsage / 2000) * 180, 0, false, radialBarTexture);
+		//third is gpu usage (usage as in how much of the 60 fps frame budget are we using)
+		Renderer::radialRevealRectangle(Vec2f(274, (float)Program::mainWindow->size.y - 70), Vec2f(122, 122), (1 / (Time::getFPS() / 60)) * 180, 0, false, radialBarTexture);
+
+
+
 	}
 
 	System* Scene::getSystem() {
