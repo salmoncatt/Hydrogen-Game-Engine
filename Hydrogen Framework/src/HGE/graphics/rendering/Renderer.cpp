@@ -285,7 +285,7 @@ namespace HGE {
 
 		guiShader.bind();
 
-		float lerpAmount = abs(cos(HMath::toRadians(rotation)));
+		float lerpAmount = (float)abs(cos(HMath::toRadians(rotation)));
 		float x = HMath::lerp(currentWindowSize.y, currentWindowSize.x, lerpAmount);
 		float y = HMath::lerp(currentWindowSize.x, currentWindowSize.y, lerpAmount);
 

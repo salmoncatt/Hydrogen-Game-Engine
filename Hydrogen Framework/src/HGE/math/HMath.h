@@ -25,6 +25,7 @@ namespace HGE{
 		static float sqrt(const float& in);
 		static float isqrt(const float& in);
 		static float lerp(const float& a, const float& b, const float& percentage);
+		static float coslerp(const float& a, const float& b, const float& percentage);
 
 		static void keepRotationInTermsOf360(Vec3f& rotation);
 	};

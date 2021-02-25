@@ -135,6 +135,12 @@ namespace HGE {
 		return a + percentage * (b - a);
 	}
 
+	float HMath::coslerp(const float& a, const float& b, const float& percentage)
+	{
+		float cosPercentage = (1 - (float)cos(percentage * PI)) / 2;
+		return (a * (1 - cosPercentage) + b * cosPercentage);
+	}
+
 	void HMath::keepRotationInTermsOf360(Vec3f& rotation) {
 
 		if (rotation.x > 360)
