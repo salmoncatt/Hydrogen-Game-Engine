@@ -16,21 +16,21 @@ namespace HGE {
 
 		Vec2i();
 
-		Vec2i operator-(const Vec2i& other);
+		Vec2i operator-(const Vec2i& other) const;
 
 		Vec2i operator-();
 
-		Vec2i operator*(const Vec2i& other);
+		Vec2i operator*(const Vec2i& other) const;
 
-		Vec2i operator*(const int& other);
+		Vec2i operator*(const int& other) const;
 
-		Vec2i operator*(const float& other);
+		Vec2i operator*(const float& other) const;
 
-		Vec2i operator/(const Vec2i& other);
+		Vec2i operator/(const Vec2i& other) const;
 
-		Vec2i operator/(const int& other);
+		Vec2i operator/(const int& other) const;
 
-		Vec2i operator/(const float& other);
+		Vec2i operator/(const float& other) const;
 
 	};
 
@@ -43,23 +43,23 @@ namespace HGE {
 
 		Vec2f();
 
-		Vec2f operator-(const Vec2f& other);
+		Vec2f operator-(const Vec2f& other) const;
 
-		Vec2f operator+(const Vec2f& other);
+		Vec2f operator+(const Vec2f& other) const;
 
 		Vec2f operator-();
 
-		Vec2f operator*(const Vec2f& other);
+		Vec2f operator*(const Vec2f& other) const;
 
-		Vec2f operator*(const int& other);
+		Vec2f operator*(const int& other) const;
 
-		Vec2f operator*(const float& other);
+		Vec2f operator*(const float& other) const;
 
-		Vec2f operator/(const Vec2f& other);
+		Vec2f operator/(const Vec2f& other) const;
 
-		Vec2f operator/(const int& other);
+		Vec2f operator/(const int& other) const;
 
-		Vec2f operator/(const float& other);
+		Vec2f operator/(const float& other) const;
 
 	};
 }

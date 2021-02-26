@@ -12,7 +12,7 @@ namespace HGE {
 
 	Vec2i::Vec2i() : x(0), y(0) {}
 
-	Vec2i Vec2i::operator-(const Vec2i& other) {
+	Vec2i Vec2i::operator-(const Vec2i& other) const {
 		Vec2i out = Vec2i();
 		out.x = x - other.x;
 		out.y = y - other.y;
@@ -26,21 +26,21 @@ namespace HGE {
 		return out;
 	}
 
-	Vec2i Vec2i::operator*(const Vec2i& other) {
+	Vec2i Vec2i::operator*(const Vec2i& other) const {
 		Vec2i out = Vec2i();
 		out.x = x * other.x;
 		out.y = y * other.y;
 		return out;
 	}
 
-	Vec2i Vec2i::operator*(const int& other) {
+	Vec2i Vec2i::operator*(const int& other) const {
 		Vec2i out = Vec2i();
 		out.x = x * other;
 		out.y = y * other;
 		return out;
 	}
 
-	Vec2i Vec2i::operator*(const float& other) {
+	Vec2i Vec2i::operator*(const float& other) const {
 		Vec2i out = Vec2i();
 		int outx = (int)((float)x * other);
 		int outy = (int)((float)y * other);
@@ -49,21 +49,21 @@ namespace HGE {
 		return out;
 	}
 
-	Vec2i Vec2i::operator/(const Vec2i& other) {
+	Vec2i Vec2i::operator/(const Vec2i& other) const {
 		Vec2i out = Vec2i();
 		out.x = x / other.x;
 		out.y = y / other.y;
 		return out;
 	}
 
-	Vec2i Vec2i::operator/(const int& other) {
+	Vec2i Vec2i::operator/(const int& other) const {
 		Vec2i out = Vec2i();
 		out.x = x / other;
 		out.y = y / other;
 		return out;
 	}
 
-	Vec2i Vec2i::operator/(const float& other) {
+	Vec2i Vec2i::operator/(const float& other) const {
 		Vec2i out = Vec2i();
 		int outx = (int)((float)x / other);
 		int outy = (int)((float)y / other);
@@ -84,14 +84,14 @@ namespace HGE {
 
 	Vec2f::Vec2f() : x(0), y(0) {}
 
-	Vec2f Vec2f::operator-(const Vec2f& other) {
+	Vec2f Vec2f::operator-(const Vec2f& other) const {
 		Vec2f out = Vec2f();
 		out.x = x - other.x;
 		out.y = y - other.y;
 		return out;
 	}
 
-	Vec2f Vec2f::operator+(const Vec2f& other) {
+	Vec2f Vec2f::operator+(const Vec2f& other) const {
 		Vec2f out = Vec2f();
 		out.x = x + other.x;
 		out.y = y + other.y;
@@ -105,42 +105,42 @@ namespace HGE {
 		return out;
 	}
 
-	Vec2f Vec2f::operator*(const Vec2f& other) {
+	Vec2f Vec2f::operator*(const Vec2f& other) const {
 		Vec2f out = Vec2f();
 		out.x = x * other.x;
 		out.y = y * other.y;
 		return out;
 	}
 
-	Vec2f Vec2f::operator*(const int& other) {
+	Vec2f Vec2f::operator*(const int& other) const {
 		Vec2f out = Vec2f();
 		float outx = (float)((int)x * other);
 		float outy = (float)((int)y * other);
 		return out;
 	}
 
-	Vec2f Vec2f::operator*(const float& other) {
+	Vec2f Vec2f::operator*(const float& other) const {
 		Vec2f out = Vec2f();
 		out.x = x * other;
 		out.y = y * other;
 		return out;
 	}
 
-	Vec2f Vec2f::operator/(const Vec2f& other) {
+	Vec2f Vec2f::operator/(const Vec2f& other) const {
 		Vec2f out = Vec2f();
 		out.x = x / other.x;
 		out.y = y / other.y;
 		return out;
 	}
 
-	Vec2f Vec2f::operator/(const int& other) {
+	Vec2f Vec2f::operator/(const int& other) const {
 		Vec2f out = Vec2f();
 		float outx = (float)((int)x / other);
 		float outy = (float)((int)y / other);
 		return out;
 	}
 
-	Vec2f Vec2f::operator/(const float& other) {
+	Vec2f Vec2f::operator/(const float& other) const {
 		Vec2f out = Vec2f();
 		out.x = x / other;
 		out.y = y / other;
