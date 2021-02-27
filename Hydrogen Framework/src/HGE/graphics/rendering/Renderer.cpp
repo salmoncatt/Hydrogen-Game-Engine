@@ -69,9 +69,9 @@ namespace HGE {
 		currentWindowSize.x = screenWidth;
 		currentWindowSize.y = screenHeight;
 		
-		float aspectRatio = getAspectRatio();
+		glViewport(0, 0, (GLsizei)screenWidth, (GLsizei)screenHeight);
 
-		orthoMatrix = Mat4f::createOrthoMatrix(-aspectRatio, aspectRatio, -1, 1, -1, 1);
+		orthoMatrix = Mat4f::createOrthoMatrix(-getAspectRatio(), getAspectRatio(), -1 / getAspectRatio(), 1 / getAspectRatio(), -1, 1);
 	}
 
 	void Renderer::close() {
@@ -290,7 +290,7 @@ namespace HGE {
 		//Vec2f uiSize = Vec2f(size.x / x, size.y / y);
 
 		//matrix stuff
-		Mat4f transform = Mat4f::createTransformationMatrix(
+		Mat4f transform = orthoMatrix * Mat4f::createTransformationMatrix(
 			position,
 			Vec3f(0, 0, rotation),
 			size);

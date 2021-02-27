@@ -19,6 +19,7 @@
 #include <intrin.h>
 #include <functional>
 #include <cstring>
+#include <numeric>
 
 //for windows notification toasts n stuff
 //#include "DesktopNotificationManagerCompat.h"

@@ -116,7 +116,6 @@ namespace HGE {
 
 	void Input::windowSizeCallBack(GLFWwindow* _window, int width, int height) {
 		window->size = Vec2i(width, height);
-		glViewport(0, 0, width, height);
 		Renderer::createProjectionMatrix((float)width, (float)height);
 	}
 

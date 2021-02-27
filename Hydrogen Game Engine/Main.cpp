@@ -102,9 +102,10 @@ public:
 			if (Input::getKeyDown(HGE_KEY_BACKSLASH))
 				Renderer::toggleWireFrameMode();
 
-			angle += Input::getScrollMovement().y / 10;
+			angle += Input::getScrollMovement().y * 2;
 
-			Renderer::renderRectangle(Vec2f(angle), Vec2f(0.5f, 0.5f), angle, Vec3f(0.4f, 0.2f, 0.8f));
+			//Vec2f(-1 * Renderer::getAspectRatio() + 0.5f, 1 - 0.5f)
+			Renderer::renderRectangle(Vec2f(), Vec2f(0.5f, 1), angle, Vec3f(0.4f, 0.2f, 0.8f));
 
 			window->limitFps(200);
 		}
