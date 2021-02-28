@@ -41,6 +41,7 @@ namespace HGE {
 		static void setCamera(const Camera& camera);
 
 		static float getAspectRatio();
+		static Vec2f getCurrentWindowSize();
 
 		static void setWireFrameMode(const bool& wireframe);
 		static void toggleWireFrameMode();

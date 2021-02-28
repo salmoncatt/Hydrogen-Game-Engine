@@ -104,8 +104,10 @@ public:
 
 			angle += Input::getScrollMovement().y * 2;
 
+			Vec2f scale = Vec2f(1);
+
 			//Vec2f(-1 * Renderer::getAspectRatio() + 0.5f, 1 - 0.5f)
-			Renderer::renderRectangle(Vec2f(), Vec2f(0.5f, 1), angle, Vec3f(0.4f, 0.2f, 0.8f));
+			Renderer::renderRectangle(Vec2f(), scale, angle, Vec3f(0.4f, 0.2f, 0.8f));
 
 			window->limitFps(200);
 		}

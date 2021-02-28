@@ -71,7 +71,10 @@ namespace HGE {
 		
 		glViewport(0, 0, (GLsizei)screenWidth, (GLsizei)screenHeight);
 
-		orthoMatrix = Mat4f::createOrthoMatrix(-getAspectRatio(), getAspectRatio(), -1 / getAspectRatio(), 1 / getAspectRatio(), -1, 1);
+		if(screenWidth < screenHeight)
+			orthoMatrix = Mat4f::createOrthoMatrix(-1, 1, -1 / getAspectRatio(), 1 / getAspectRatio(), -1, 1);
+		else
+			orthoMatrix = Mat4f::createOrthoMatrix(-getAspectRatio(), getAspectRatio(), -1, 1, -1, 1);
 	}
 
 	void Renderer::close() {
@@ -81,6 +84,10 @@ namespace HGE {
 
 	float Renderer::getAspectRatio() {
 		return currentWindowSize.x / currentWindowSize.y;
+	}
+	
+	Vec2f Renderer::getCurrentWindowSize() {
+		return currentWindowSize;
 	}
 
 	void Renderer::setCamera(const Camera& camera) {
