@@ -7,7 +7,6 @@
 #include "HGE/ECS/components/Transform.h"
 #include "HGE/math/HMath.h"
 #include "HGE/util/time/Profiler.h"
-#include "HGE/gui/GuiWindow.h"
 #include "HGE/math/vectors/Vec4.h"
 
 namespace HGE {
@@ -405,11 +404,11 @@ namespace HGE {
 		glBindVertexArray(0);
 	}
 
-	void Renderer::render(const GuiWindow& window) {
+	/*void Renderer::render(const GuiWindow& window) {
 
 		renderRoundedRectangle(window.transform.position, window.transform.scale, window.cornerSmoothingRadius, window.backgroundColor);
 		renderRoundedRectangle(window.transform.position, Vec2f(window.transform.scale.x, window.titleBarTransform.scale.y), window.cornerSmoothingRadius, window.foregroundColor);
 
-	}
+	}*/
 
 }

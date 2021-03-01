@@ -36,17 +36,15 @@
     <ClInclude Include="src\HGE\ECS\components\Texture.h" />
     <ClInclude Include="src\HGE\camera\EditorCamera.h" />
     <ClInclude Include="src\HGE\gui\GuiElement.h" />
-    <ClInclude Include="src\HGE\gui\GuiButton.h" />
-    <ClInclude Include="src\HGE\gui\GuiWindow.h" />
     <ClInclude Include="src\HGE\ECS\components\MeshComponent.h" />
     <ClInclude Include="src\HGE\ECS\components\Material.h" />
     <ClInclude Include="src\HGE\util\time\AutoProfiler.h" />
     <ClInclude Include="src\HGE\util\memory\string.h" />
     <ClInclude Include="src\HGE\util\memory\MemoryUtil.h" />
-    <ClInclude Include="src\HGE\gui\GuiRadialProgressBar.h" />
     <ClInclude Include="src\HGE\ECS\components\NativeScript.h" />
     <ClInclude Include="src\HGE\core\Engine.h" />
     <ClInclude Include="src\HGE\math\Random.h" />
+    <ClInclude Include="src\HGE\gui\GuiFrame.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\hpch.cpp" />
@@ -75,11 +73,14 @@
     <ClCompile Include="src\HGE\util\time\Time.cpp" />
     <ClCompile Include="src\HGE\ECS\components\Texture.cpp" />
     <ClCompile Include="src\HGE\camera\EditorCamera.cpp" />
-    <ClCompile Include="src\HGE\gui\GuiWindow.cpp" />
     <ClCompile Include="src\HGE\ECS\components\MeshComponent.cpp" />
     <ClCompile Include="src\HGE\util\time\AutoProfiler.cpp" />
-    <ClCompile Include="src\HGE\gui\GuiRadialProgressBar.cpp" />
     <ClCompile Include="src\HGE\core\Engine.cpp" />
     <ClCompile Include="src\HGE\math\Random.cpp" />
+    <ClCompile Include="src\HGE\gui\GuiElement.cpp" />
+    <ClCompile Include="src\HGE\gui\GuiFrame.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\shaders\guiFrame.glsl" />
   </ItemGroup>
 </Project>

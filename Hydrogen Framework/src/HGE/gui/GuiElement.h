@@ -7,9 +7,13 @@
 
 namespace HGE {
 
-	struct DLL_API GuiElement {
+	class DLL_API GuiElement {
 	public:
 		Transform2D transform;
+		GuiElement* parent;
+
+		GuiElement();
+
 	};
 
 }

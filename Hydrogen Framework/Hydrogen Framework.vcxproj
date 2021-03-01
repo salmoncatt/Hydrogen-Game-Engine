@@ -11,10 +11,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\HGE\gui\GuiFrame.h" />
     <ClInclude Include="src\HGE\math\Random.h" />
     <ClInclude Include="src\HGE\core\Engine.h" />
     <ClInclude Include="src\HGE\ECS\components\NativeScript.h" />
-    <ClInclude Include="src\HGE\gui\GuiRadialProgressBar.h" />
     <ClInclude Include="src\HGE\util\memory\MemoryUtil.h" />
     <ClInclude Include="src\HGE\util\time\AutoProfiler.h" />
     <ClInclude Include="src\HGE\ECS\components\Material.h" />
@@ -26,7 +26,6 @@
     <ClInclude Include="src\HGE\core\API.h" />
     <ClInclude Include="src\HGE\core\Program.h" />
     <ClInclude Include="src\HGE\core\Start.h" />
-    <ClInclude Include="src\HGE\gui\GuiButton.h" />
     <ClInclude Include="src\HGE\gui\GuiElement.h" />
     <ClInclude Include="src\HGE\ECS\components\Mesh.h" />
     <ClInclude Include="src\HGE\ECS\components\Tag.h" />
@@ -39,7 +38,6 @@
     <ClInclude Include="src\HGE\ECS\components\Texture.h" />
     <ClInclude Include="src\HGE\graphics\rendering\Renderer.h" />
     <ClInclude Include="src\HGE\graphics\rendering\Shader.h" />
-    <ClInclude Include="src\HGE\gui\GuiWindow.h" />
     <ClInclude Include="src\HGE\io\Cursor.h" />
     <ClInclude Include="src\HGE\io\Input.h" />
     <ClInclude Include="src\HGE\io\Window.h" />
@@ -59,9 +57,10 @@
     <ClInclude Include="src\HGE\util\memory\string.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\HGE\gui\GuiFrame.cpp" />
+    <ClCompile Include="src\HGE\gui\GuiElement.cpp" />
     <ClCompile Include="src\HGE\math\Random.cpp" />
     <ClCompile Include="src\HGE\core\Engine.cpp" />
-    <ClCompile Include="src\HGE\gui\GuiRadialProgressBar.cpp" />
     <ClCompile Include="src\HGE\util\time\AutoProfiler.cpp" />
     <ClCompile Include="src\HGE\ECS\components\MeshComponent.cpp" />
     <ClCompile Include="src\HGE\camera\EditorCamera.cpp" />
@@ -76,7 +75,6 @@
     <ClCompile Include="src\HGE\ECS\components\Texture.cpp" />
     <ClCompile Include="src\HGE\graphics\rendering\Renderer.cpp" />
     <ClCompile Include="src\HGE\graphics\rendering\Shader.cpp" />
-    <ClCompile Include="src\HGE\gui\GuiWindow.cpp" />
     <ClCompile Include="src\HGE\io\Cursor.cpp" />
     <ClCompile Include="src\HGE\io\Input.cpp" />
     <ClCompile Include="src\HGE\io\Window.cpp" />
@@ -94,6 +92,9 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="src\test\HWindow.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\shaders\guiFrame.glsl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

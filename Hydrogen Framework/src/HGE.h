@@ -22,9 +22,7 @@
 #include "HGE/ECS/components/NativeScript.h"
 
 #include "HGE/gui/GuiElement.h"
-#include "HGE/gui/GuiButton.h"
-#include "HGE/gui/GuiWindow.h"
-#include "HGE/gui/GuiRadialProgressBar.h"
+#include "HGE/gui/GuiFrame.h"
 
 #include "HGE/core/API.h"
 #include "HGE/core/Program.h"
