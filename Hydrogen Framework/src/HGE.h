@@ -49,7 +49,6 @@
 #include "HGE/util/memory/FloatBuffer.h"
 
 #include "HGE/util/time/Profiler.h"
-#include "HGE/util/time/AutoProfiler.h"
 #include "HGE/util/time/Time.h"
 
 #include "HGE/util/Debug.h"

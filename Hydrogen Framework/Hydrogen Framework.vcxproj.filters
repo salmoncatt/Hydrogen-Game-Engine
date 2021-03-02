@@ -38,13 +38,13 @@
     <ClInclude Include="src\HGE\gui\GuiElement.h" />
     <ClInclude Include="src\HGE\ECS\components\MeshComponent.h" />
     <ClInclude Include="src\HGE\ECS\components\Material.h" />
-    <ClInclude Include="src\HGE\util\time\AutoProfiler.h" />
     <ClInclude Include="src\HGE\util\memory\string.h" />
     <ClInclude Include="src\HGE\util\memory\MemoryUtil.h" />
     <ClInclude Include="src\HGE\ECS\components\NativeScript.h" />
     <ClInclude Include="src\HGE\core\Engine.h" />
     <ClInclude Include="src\HGE\math\Random.h" />
     <ClInclude Include="src\HGE\gui\GuiFrame.h" />
+    <ClInclude Include="src\HGE\util\time\Profile.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\hpch.cpp" />
@@ -74,11 +74,11 @@
     <ClCompile Include="src\HGE\ECS\components\Texture.cpp" />
     <ClCompile Include="src\HGE\camera\EditorCamera.cpp" />
     <ClCompile Include="src\HGE\ECS\components\MeshComponent.cpp" />
-    <ClCompile Include="src\HGE\util\time\AutoProfiler.cpp" />
     <ClCompile Include="src\HGE\core\Engine.cpp" />
     <ClCompile Include="src\HGE\math\Random.cpp" />
     <ClCompile Include="src\HGE\gui\GuiElement.cpp" />
     <ClCompile Include="src\HGE\gui\GuiFrame.cpp" />
+    <ClCompile Include="src\HGE\util\time\Profile.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\guiFrame.glsl" />

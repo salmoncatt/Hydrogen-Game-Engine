@@ -4,6 +4,9 @@
 
 #include HGE_API
 
+#define HGE_MAX_PROFILES 100
+#include "time/Profile.h"
+
 namespace HGE {
 
 	class Pixel;
@@ -11,6 +14,7 @@ namespace HGE {
 	struct Vec2f;
 	struct Vec2i;
 	struct Transform;
+	class Profiler;
 
 	const enum class DLL_API DebugColor
 	{
@@ -33,6 +37,11 @@ namespace HGE {
 	};
 
 	class DLL_API Debug {
+	private:
+		static std::array<Profile, HGE_MAX_PROFILES> profiles;
+		static unsigned long profilerIndex;
+		static std::unordered_map<std::string, unsigned long> profilerNames;
+
 	public:
 		static void log(const std::string& message);
 		static void log(const char& in);
@@ -47,6 +56,7 @@ namespace HGE {
 		static void log(const std::vector<float>& in);
 		static void log(const std::vector<unsigned char>& in);
 		static void log(const Transform& in);
+
 		static void logScientific(const double& in);
 		static void logScientific(const int& in);
 
@@ -63,6 +73,9 @@ namespace HGE {
 		static void setTextColor(const HGE::DebugColor& color);
 		static void resetTextColor();
 		
+		static void storeProfile(const Profile& profile);
+		static Profile getProfile(const std::string& name);
+
 	};
 
 }

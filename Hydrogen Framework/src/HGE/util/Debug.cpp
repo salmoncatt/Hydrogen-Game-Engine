@@ -8,6 +8,10 @@
 
 namespace HGE {
 
+	std::array<Profile, HGE_MAX_PROFILES> Debug::profiles{};
+	unsigned long Debug::profilerIndex = 0;
+	std::unordered_map<std::string, unsigned long> Debug::profilerNames{};
+
 	void Debug::log(const std::string& message) {
 		std::string out = message + "\n";
 		std::cout << out;
@@ -172,6 +176,25 @@ namespace HGE {
 
 	void Debug::resetTextColor() {
 		Debug::setTextColor(DebugColor::White);
+	}
+
+	void Debug::storeProfile(const Profile& profile) {
+		if (profilerNames.find(profile.name) == profilerNames.end()) {
+			profilerNames[profile.name] = profilerIndex;
+
+			profiles[profilerIndex] = profile;
+			profilerIndex += 1;
+		}
+		else {
+			profiles[profilerNames[profile.name]] += profile;
+		}
+	}
+	
+	Profile Debug::getProfile(const std::string& name) {
+		if (profilerNames.find(name) != profilerNames.end())
+			return profiles[profilerNames[name]];
+		else
+			return Profile();
 	}
 
 }

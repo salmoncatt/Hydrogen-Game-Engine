@@ -4,21 +4,39 @@
 
 #include HGE_API
 
+#define ProfileMethod(name) Profiler profiler(name, false, true)
+
 namespace HGE {
 
 	class DLL_API Profiler {
-	private:
+	protected:
 		double startTime;
+
 		std::string nameOfFunction;
+		
 		bool stopped = false;
 		bool shouldLogOnStop = true;
+		bool storeInDebug = true;
+		bool shouldProfile = true;
+
+		friend class Debug;
 	public:
+
+		Profiler();
+		Profiler(const bool& shouldProfile);
 		Profiler(const std::string& nameOfFunction);
 		Profiler(const std::string& nameOfFunction, const bool& logOnStop);
+		Profiler(const std::string& nameOfFunction, const bool& logOnStop, const bool& storeInDebug);
+		
+		/*Profiler operator+(const Profiler& other);
+		Profiler operator+=(const Profiler& other);*/
+
 		~Profiler();
+		
 		void stop();
 		void dontLogOnStop();
-		float getDuration();
+		
+		double getDuration() const;
 	};
 
 }

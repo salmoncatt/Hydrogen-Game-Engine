@@ -94,6 +94,7 @@ public:
 		float angle = 0;
 
 		while (shouldUpdate() && !Input::getKey(HGE_KEY_ESCAPE)) {
+			ProfileMethod("test");
 			test->updateEditor();
 
 			if (Input::getMouseButtonDown(HGE_MOUSE_BUTTON_2))
@@ -104,7 +105,9 @@ public:
 
 			angle += Input::getScrollMovement().y * 2;
 
-			Vec2f scale = Vec2f(1);
+			Vec2f scale = Vec2f();
+
+			Debug::log((double)Debug::getProfile("test").getCalls());
 
 			//Vec2f(-1 * Renderer::getAspectRatio() + 0.5f, 1 - 0.5f)
 			Renderer::renderRectangle(Vec2f(), scale, angle, Vec3f(0.4f, 0.2f, 0.8f));
