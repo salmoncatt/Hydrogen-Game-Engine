@@ -41,4 +41,10 @@ namespace HGE {
 	double Profile::getDuration() {
 		return duration;
 	}
+
+	void Profile::reset() {
+		duration = 0;
+		calls = 0;
+	}
+
 }

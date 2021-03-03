@@ -4,8 +4,6 @@
 
 #include HGE_API
 
-#define ProfileMethod(name) Profiler profiler(name, false, true)
-
 namespace HGE {
 
 	class DLL_API Profiler {

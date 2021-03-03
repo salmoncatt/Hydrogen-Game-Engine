@@ -70,7 +70,7 @@ public:
 		GameObject warehouse = test->createGameObject("warehouse");
 
 		MeshComponent mesh = MeshComponent();
-		mesh.meshes = Util::loadMesh(HGE_RES + "models/peter/", "peter.obj");
+		mesh.meshes = Util::loadMesh(HGE_RES + "models/zip gun/", "zip gun.obj");
 		peter.addComponent<MeshComponent>(mesh);
 		peter.getComponent<Transform>().scale = 2;
 
@@ -94,7 +94,7 @@ public:
 		float angle = 0;
 
 		while (shouldUpdate() && !Input::getKey(HGE_KEY_ESCAPE)) {
-			ProfileMethod("test");
+			ProfileMethod("Main loop");
 			test->updateEditor();
 
 			if (Input::getMouseButtonDown(HGE_MOUSE_BUTTON_2))
@@ -107,7 +107,7 @@ public:
 
 			Vec2f scale = Vec2f();
 
-			Debug::log((double)Debug::getProfile("test").getCalls());
+			//Debug::logProfile(Debug::getProfile("Main loop"));
 
 			//Vec2f(-1 * Renderer::getAspectRatio() + 0.5f, 1 - 0.5f)
 			Renderer::renderRectangle(Vec2f(), scale, angle, Vec3f(0.4f, 0.2f, 0.8f));

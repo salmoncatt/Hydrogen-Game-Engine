@@ -28,6 +28,9 @@ namespace HGE {
 		size_t getCalls();
 		double getDuration();
 
+		//resets calls and duration but not name
+		void reset();
+
 	};
 
 

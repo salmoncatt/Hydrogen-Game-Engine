@@ -83,4 +83,7 @@
   <ItemGroup>
     <None Include="res\shaders\guiFrame.glsl" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="res\profiled methods.txt" />
+  </ItemGroup>
 </Project>

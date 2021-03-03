@@ -74,6 +74,7 @@ namespace HGE {
 	void Engine::updateEngine() {
 		Time::update();
 		Input::update();
+		Debug::update();
 	}
 
 	void Engine::stopEngine() {

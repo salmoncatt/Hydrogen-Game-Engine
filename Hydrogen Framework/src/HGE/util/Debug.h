@@ -4,7 +4,7 @@
 
 #include HGE_API
 
-#define HGE_MAX_PROFILES 100
+#define HGE_MAX_PROFILES 5000
 #include "time/Profile.h"
 
 namespace HGE {
@@ -39,7 +39,8 @@ namespace HGE {
 	class DLL_API Debug {
 	private:
 		static std::array<Profile, HGE_MAX_PROFILES> profiles;
-		static unsigned long profilerIndex;
+		static std::array<Profile, HGE_MAX_PROFILES> lastFrameProfiles;
+		static unsigned long profiledAmount;
 		static std::unordered_map<std::string, unsigned long> profilerNames;
 
 	public:
@@ -75,6 +76,13 @@ namespace HGE {
 		
 		static void storeProfile(const Profile& profile);
 		static Profile getProfile(const std::string& name);
+		static void resetProfiles();
+		static void logProfile(const Profile& profile);
+
+		//returns that amount of different functions that were profiled ever
+		static unsigned long getAmountOfProfiles();
+
+		static void update();
 
 	};
 

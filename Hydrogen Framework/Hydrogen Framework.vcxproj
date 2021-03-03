@@ -96,6 +96,9 @@
   <ItemGroup>
     <None Include="res\shaders\guiFrame.glsl" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="res\profiled methods.txt" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>

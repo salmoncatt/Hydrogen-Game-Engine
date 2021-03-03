@@ -5,6 +5,7 @@
 #include "Cursor.h"
 #include "HGE/util/time/Time.h"
 
+
 namespace HGE {
 
 	std::vector<int> Input::keys = std::vector<int>(GLFW_KEY_LAST);
@@ -55,7 +56,7 @@ namespace HGE {
 	}
 
 	void Input::update() {
-
+		ProfileMethod("Input update");
 		mouseMovement = mousePosition - oldMousePosition;
 
 		if (!Cursor::oldState&& Cursor::state) {

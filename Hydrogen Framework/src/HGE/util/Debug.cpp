@@ -9,7 +9,8 @@
 namespace HGE {
 
 	std::array<Profile, HGE_MAX_PROFILES> Debug::profiles{};
-	unsigned long Debug::profilerIndex = 0;
+	std::array<Profile, HGE_MAX_PROFILES> Debug::lastFrameProfiles{};
+	unsigned long Debug::profiledAmount = 0;
 	std::unordered_map<std::string, unsigned long> Debug::profilerNames{};
 
 	void Debug::log(const std::string& message) {
@@ -180,10 +181,10 @@ namespace HGE {
 
 	void Debug::storeProfile(const Profile& profile) {
 		if (profilerNames.find(profile.name) == profilerNames.end()) {
-			profilerNames[profile.name] = profilerIndex;
+			profilerNames[profile.name] = profiledAmount;
 
-			profiles[profilerIndex] = profile;
-			profilerIndex += 1;
+			profiles[profiledAmount] = profile;
+			profiledAmount += 1;
 		}
 		else {
 			profiles[profilerNames[profile.name]] += profile;
@@ -192,9 +193,28 @@ namespace HGE {
 	
 	Profile Debug::getProfile(const std::string& name) {
 		if (profilerNames.find(name) != profilerNames.end())
-			return profiles[profilerNames[name]];
+			return lastFrameProfiles[profilerNames[name]];
 		else
 			return Profile();
+	}
+
+	void Debug::resetProfiles() {
+		for (unsigned long i = 0; i < profiledAmount; ++i) {
+			profiles[i].reset();
+		}
+	}
+
+	void Debug::logProfile(const Profile& profile) {
+		log("Profiling of method: " + profile.name + ", took: " + std::to_string(profile.duration) + " ms, and had " + std::to_string(profile.calls) + " calls");
+	}
+
+	void Debug::update() {
+		lastFrameProfiles = profiles;
+		resetProfiles();
+	}
+
+	unsigned long Debug::getAmountOfProfiles() {
+		return profiledAmount;
 	}
 
 }

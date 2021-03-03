@@ -56,4 +56,11 @@
 //its nowhere near finished for now
 #include "HFL/HFL.h"
 
+
+
+//for profiling of any class
+#include "HGE/util/time/Profiler.h"
+#define ProfileMethod(name) HGE::Profiler HGE_AUTO_PROFILER(name, false, true)
+
+
 #endif
