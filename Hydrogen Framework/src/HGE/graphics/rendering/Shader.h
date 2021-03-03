@@ -7,6 +7,7 @@
 namespace HGE {
 
 	struct Mat4f;
+	struct Vec4f;
 	struct Vec3f;
 	struct Vec2f;
 
@@ -25,6 +26,7 @@ namespace HGE {
 
 		unsigned int getLocation(const std::string& name);
 		void setUniform(const std::string& name, Mat4f& data);
+		void setUniform(const std::string& name, const Vec4f& data);
 		void setUniform(const std::string& name, const Vec3f& data);
 		void setUniform(const std::string& name, const Vec2f& data);
 		void setUniform(const std::string& name, const bool& data);

@@ -123,6 +123,8 @@ namespace HGE {
 				}
 			}*/
 
+			Renderer::renderGuis();
+
 		}
 
 

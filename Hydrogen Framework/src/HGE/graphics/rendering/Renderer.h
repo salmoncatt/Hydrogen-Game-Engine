@@ -16,6 +16,7 @@ namespace HGE {
 	struct Vec3f;
 	struct Transform;
 	struct GameObject;
+	class GuiFrame;
 
 	class DLL_API Renderer {
 	private:
@@ -25,9 +26,11 @@ namespace HGE {
 		static Mesh quad;
 		const static std::vector<float> quadVertices;
 		static Vec2f currentWindowSize;
+
 	public:
 		static Shader mainShader;
 		static Shader guiShader;
+		static Shader guiFrameShader;
 		static Texture nullTexture;
 		static Mat4f perspectiveMatrix;
 		static Mat4f orthoMatrix;
@@ -73,6 +76,10 @@ namespace HGE {
 
 		static void radialRevealRectangle(const Vec2f& position, const Vec2f& size, const float& angle, const float& offset, const bool& flipped, const Texture& texture);
 		static void radialRevealRectangle(const Vec2f& position, const Vec2f& size, const float& angle, const float& offset, const bool& flipped, const Vec3f& color);
+
+		static void render(const GuiFrame& frame);
+
+		static void renderGuis();
 
 		//static void render(const GuiWindow& window);
 

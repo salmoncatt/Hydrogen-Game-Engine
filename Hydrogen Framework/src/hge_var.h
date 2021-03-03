@@ -16,6 +16,9 @@ namespace HGE {
 	const std::string HGE_RES = "res/";
 #endif
 
+	//for GUI
+	const int HGE_PIXEL_SIZE = 0;
+	const int HGE_SCREEN_SPACE_SIZE = 1;
 
 	//for read as string and other things
 	const int HGE_NORMAL_READ = 1;

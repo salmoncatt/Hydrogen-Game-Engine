@@ -94,7 +94,8 @@
     <ClCompile Include="src\test\HWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\shaders\guiFrame.glsl" />
+    <None Include="res\shaders\guiFrameFragment.glsl" />
+    <None Include="res\shaders\guiFrameVertex.glsl" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="res\profiled methods.txt" />

@@ -3,6 +3,7 @@
 #include "HGE/util/Util.h"
 #include "HGE/util/memory/FloatBuffer.h"
 #include "HGE/math/matrixes/Mat4.h"
+#include "HGE/math/vectors/Vec4.h"
 #include "HGE/math/vectors/Vec3.h"
 #include "HGE/math/vectors/Vec2.h"
 
@@ -62,6 +63,10 @@ namespace HGE {
 
 	void Shader::setUniform(const std::string& name, const Vec3f& data) {
 		glUniform3f(getLocation(name), data.x, data.y, data.z);
+	}
+
+	void Shader::setUniform(const std::string& name, const Vec4f& data) {
+		glUniform4f(getLocation(name), data.x, data.y, data.z, data.w);
 	}
 
 	void Shader::setUniform(const std::string& name, const bool& data) {

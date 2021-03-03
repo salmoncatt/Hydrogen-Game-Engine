@@ -273,6 +273,17 @@ namespace HGE {
 		return transformation;
 	}
 
+	Mat4f Mat4f::createTransformationMatrix_ScaleBeforeRotation(const Vec2f& translation, const Vec3f& rotation, const Vec2f& scale) {
+		Mat4f transformation = Mat4f();
+		transformation.setIdentity();
+		transformation.translate(translation);
+		transformation.scale(Vec3f(scale.x, scale.y, 1));
+		transformation.rotate((float)HMath::toRadians(rotation.x), Vec3f(1, 0, 0));
+		transformation.rotate((float)HMath::toRadians(rotation.y), Vec3f(0, 1, 0));
+		transformation.rotate((float)HMath::toRadians(rotation.z), Vec3f(0, 0, 1));
+		return transformation;
+	}
+
 	Mat4f Mat4f::createPerspectiveMatrix(const float& screenWidth, const float& screenHeight, const float& fov, const float& nearPlane, const float& farPlane) {
 		Mat4f projectionMatrix = Mat4f();
 		float aspectRatio = screenWidth / screenHeight;

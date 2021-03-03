@@ -4,10 +4,36 @@
 
 #include HGE_API
 #include "GuiElement.h"
+#include "HGE/math/vectors/Vec2.h"
+#include "HGE/math/vectors/Vec3.h"
+#include "HGE/math/vectors/Vec4.h"
 
 namespace HGE {
 
 	class DLL_API GuiFrame : public GuiElement {
+	public:
+		std::string name;
+		
+		Vec2f position;
+		Vec2f size;
+		float rotation;
+		Vec2f anchorPoint;
+
+		Vec4f backgroundColor;
+		Vec4f borderColor;
+		
+		unsigned int borderSize;
+
+		int sizeType;
+
+		bool visible = true;
+
+		GuiFrame();
+		~GuiFrame();
+
+
+
+
 
 	};
 

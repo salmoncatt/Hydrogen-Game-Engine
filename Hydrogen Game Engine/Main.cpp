@@ -9,15 +9,33 @@ class Main : public HGE::Program {
 	class TestScript : public Script {
 	public:
 
-		void start() {
-			//Debug::log("I started lets fucking gooooo");
+		GuiFrame frame;
 
+		void start() {
+			frame = GuiFrame();
+			frame.sizeType = HGE_SCREEN_SPACE_SIZE;
+			frame.size = Vec2f(0.3f);
+			frame.position = Vec2f();
+			frame.name = "test";
+			frame.anchorPoint = Vec2f();
+			frame.borderSize = 10;
+
+			Engine::registerGuiFrame(&frame);
 		}
 
 		void update() {
-			//getComponent<Transform>().rotation += Vec3f(100 * Time::getDeltaTime());
-			//getComponent<Transform>().position.y += Input::getScrollMovement().y;
-			//Debug::log("I updated lets fucking gooooo");
+			//frame.position = Input::getMousePosition();
+			frame.rotation += Input::getScrollMovement().y * 10;
+
+			if (Input::getKeyDown(HGE_KEY_B)) {
+				Engine::removeGuiFrame(&frame);
+			}
+			else if (Input::getKeyDown(HGE_KEY_N)) {
+				Engine::registerGuiFrame(&frame);
+			}
+
+			//Renderer::render(frame);
+			//Renderer::renderRectangle(Vec2f(), Vec2f(0.5f), 0, Vec3f(0.4f, 0.2f, 0.8f));
 		}
 
 		void fixedUpdate() {
@@ -90,8 +108,16 @@ public:
 		}
 
 		peter.addComponent<NativeScript>().addScript<TestScript>();
+		//peter.addComponent<NativeScript>().addScript<TestScript>();
 
 		float angle = 0;
+
+		GuiFrame frame;
+		frame = GuiFrame();
+		frame.sizeType = HGE_SCREEN_SPACE_SIZE;
+		frame.size = Vec2f(0.5f);
+		frame.position = Vec2f();
+		frame.name = "test";
 
 		while (shouldUpdate() && !Input::getKey(HGE_KEY_ESCAPE)) {
 			ProfileMethod("Main loop");
@@ -105,12 +131,14 @@ public:
 
 			angle += Input::getScrollMovement().y * 2;
 
-			Vec2f scale = Vec2f();
+			//Renderer::renderRectangle(frame.position, frame.size, 0, Vec3f(frame.backgroundColor.x, frame.backgroundColor.y, frame.backgroundColor.z));
 
-			//Debug::logProfile(Debug::getProfile("Main loop"));
+			//Vec2f scale = Vec2f(100 / Renderer::getCurrentWindowSize().x, 100 / Renderer::getCurrentWindowSize().y);
+
+			//Debug::logProfile(Debug::getProfile("Render mesh"));
 
 			//Vec2f(-1 * Renderer::getAspectRatio() + 0.5f, 1 - 0.5f)
-			Renderer::renderRectangle(Vec2f(), scale, angle, Vec3f(0.4f, 0.2f, 0.8f));
+			//Renderer::renderRectangle(Vec2f(), scale, angle, Vec3f(0.4f, 0.2f, 0.8f));
 
 			window->limitFps(200);
 		}

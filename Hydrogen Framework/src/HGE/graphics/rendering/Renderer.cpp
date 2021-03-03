@@ -8,6 +8,8 @@
 #include "HGE/math/HMath.h"
 #include "HGE/util/time/Profiler.h"
 #include "HGE/math/vectors/Vec4.h"
+#include "HGE/gui/GuiFrame.h"
+#include "HGE/core/Engine.h"
 
 namespace HGE {
 
@@ -17,6 +19,7 @@ namespace HGE {
 	
 	Shader Renderer::mainShader = HGE::Shader(HGE_RES + "shaders/", "MainVertex.glsl", "MainFragment.glsl");
 	Shader Renderer::guiShader = HGE::Shader(HGE_RES + "shaders/", "guiVertex.glsl", "guiFragment.glsl");
+	Shader Renderer::guiFrameShader = HGE::Shader(HGE_RES + "shaders/", "guiFrameVertex.glsl", "guiFrameFragment.glsl");
 
 	Texture Renderer::nullTexture = Texture(HGE_RES + "textures/null.bmp");
 
@@ -56,6 +59,7 @@ namespace HGE {
 
 		mainShader.create();
 		guiShader.create();
+		guiFrameShader.create();
 		nullTexture.create();
 		createProjectionMatrix(screenWidth, screenHeight);
 
@@ -70,15 +74,18 @@ namespace HGE {
 		
 		glViewport(0, 0, (GLsizei)screenWidth, (GLsizei)screenHeight);
 
+
+		//its weird for top left based coords
 		if(screenWidth < screenHeight)
-			orthoMatrix = Mat4f::createOrthoMatrix(-1, 1, -1 / getAspectRatio(), 1 / getAspectRatio(), -1, 1);
+			orthoMatrix = Mat4f::createOrthoMatrix(0, 2, -2 / getAspectRatio(), 0, -1, 1);
 		else
-			orthoMatrix = Mat4f::createOrthoMatrix(-getAspectRatio(), getAspectRatio(), -1, 1, -1, 1);
+			orthoMatrix = Mat4f::createOrthoMatrix(0, 2 * getAspectRatio(), -2, 0, -1, 1);
 	}
 
 	void Renderer::close() {
 		mainShader.close();
 		guiShader.close();
+		guiFrameShader.close();
 	}
 
 	float Renderer::getAspectRatio() {
@@ -302,7 +309,6 @@ namespace HGE {
 			size);
 
 		guiShader.setUniform("transform", transform);
-		guiShader.setUniform("ortho", orthoMatrix);
 		guiShader.setUniform("uiSize", Vec2f(size.x * currentWindowSize.x, size.y * currentWindowSize.y));
 		guiShader.setUniform("hasTexture", false);
 		guiShader.setUniform("color", color);
@@ -402,6 +408,68 @@ namespace HGE {
 		glDisableVertexAttribArray(1);
 		glDisableVertexAttribArray(2);
 		glBindVertexArray(0);
+	}
+
+	void Renderer::render(const GuiFrame& frame) {
+		disableDepthTest();
+
+		glBindVertexArray(quad.VAO);
+		glEnableVertexAttribArray(0);
+
+		guiFrameShader.bind();
+
+		Vec2f uiPosition;
+
+		Mat4f transform;
+		Mat4f outlineTransform;
+
+		//matrix stuff
+		if (frame.sizeType == HGE_SCREEN_SPACE_SIZE) {
+			//uiPosition = Vec2f(-1 * Renderer::getAspectRatio() + (frame.size.x / 2) + (frame.size.x * frame.anchorPoint.x), 1 - frame.position.y + (frame.size.x * frame.anchorPoint.y));
+
+			uiPosition = Vec2f(frame.position.x, -frame.position.y) + Vec2f(frame.size.x - frame.size.x * frame.anchorPoint.x * 2, -frame.size.y + frame.size.y * frame.anchorPoint.y * 2);
+
+			transform = orthoMatrix * Mat4f::createTransformationMatrix(uiPosition, Vec3f(0, 0, frame.rotation), frame.size);
+			outlineTransform = orthoMatrix * Mat4f::createTransformationMatrix(uiPosition, Vec3f(0, 0, frame.rotation), Vec2f(1));
+
+			//because dank aspect ratio madness fuck me
+			if (currentWindowSize.x < currentWindowSize.y)
+				guiFrameShader.setUniform("uiSize", Vec2f(frame.size.x * currentWindowSize.x, frame.size.y * currentWindowSize.x));
+			else
+				guiFrameShader.setUniform("uiSize", Vec2f(frame.size.x * currentWindowSize.y, frame.size.y * currentWindowSize.y));
+
+		}
+		else if (frame.sizeType == HGE_PIXEL_SIZE) {
+			uiPosition = Vec2f(frame.position.x - (frame.size.x / 2) + frame.anchorPoint.x, -frame.position.y + frame.anchorPoint.y);
+
+			transform = Mat4f::createTransformationMatrix_ScaleBeforeRotation(Vec2f((((frame.position.x + (frame.size.x / 2)) / currentWindowSize.x) * 2) - 1, (((currentWindowSize.y - frame.position.y - (frame.size.y / 2)) / currentWindowSize.y) * 2) - 1), Vec3f(0, 0, frame.rotation), frame.size / currentWindowSize);
+			guiFrameShader.setUniform("uiSize", frame.size);
+		}
+
+		guiFrameShader.setUniform("transform", transform);
+		guiFrameShader.setUniform("outlineTransform", outlineTransform);
+		guiFrameShader.setUniform("color", frame.backgroundColor);
+		guiFrameShader.setUniform("borderColor", frame.borderColor);
+		guiFrameShader.setUniform("borderSize", (float)frame.borderSize);
+		guiFrameShader.setUniform("aspectRatio", getAspectRatio());
+
+
+		glDrawArrays(GL_TRIANGLE_STRIP, 0, (int)quad.vertices.size());
+
+		guiFrameShader.unbind();
+
+		glDisableVertexAttribArray(0);
+		glBindVertexArray(0);
+
+		enableDepthTest();
+	}
+
+	void Renderer::renderGuis() {
+		for (size_t i = 0; i < Engine::guiFrames.size(); ++i) {
+			if (Engine::guiFrames[i]->visible) {
+				render(*Engine::guiFrames[i]);
+			}
+		}
 	}
 
 	/*void Renderer::render(const GuiWindow& window) {

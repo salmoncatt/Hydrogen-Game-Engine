@@ -11,6 +11,7 @@
 namespace HGE {
 
 	Window* Engine::window = nullptr;
+	std::vector<GuiFrame*> Engine::guiFrames = std::vector<GuiFrame*>();
 
 	void Engine::startEngine() {
 		Debug::waterMark();
@@ -96,6 +97,26 @@ namespace HGE {
 		Util::deleteVBOs();
 		Debug::systemSuccess("Closed Utilities");
 		Debug::newLine();
+	}
+
+	void Engine::registerGuiFrame(GuiFrame* frame) {
+		if (std::find(guiFrames.begin(), guiFrames.end(), frame) == guiFrames.end()) {
+			guiFrames.push_back(frame);
+		}
+	}
+
+	void Engine::removeGuiFrame(GuiFrame* frame) {
+		for (size_t i = 0; i < guiFrames.size(); ++i) {
+			if (frame == guiFrames[i])
+				guiFrames.erase(guiFrames.begin() + i, guiFrames.begin() + i + 1);
+		}
+	}
+
+	void Engine::removeGuiFrame(const std::string& frame) {
+		for (size_t i = 0; i < guiFrames.size(); ++i) {
+			if (frame == guiFrames[i]->name)
+				guiFrames.erase(guiFrames.begin() + i, guiFrames.begin() + i + 1);
+		}
 	}
 
 }

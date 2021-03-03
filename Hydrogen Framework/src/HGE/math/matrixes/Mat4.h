@@ -40,6 +40,8 @@ namespace HGE {
 
 		static Mat4f createTransformationMatrix(const Vec2f& translation, const Vec3f& rotation, const Vec2f& scale);
 
+		static Mat4f createTransformationMatrix_ScaleBeforeRotation(const Vec2f& translation, const Vec3f& rotation, const Vec2f& scale);
+
 		static Mat4f createPerspectiveMatrix(const float& screenWidth, const float& screenHeight, const float& fov, const float& nearPlane, const float& farPlane);
 
 		static Mat4f createOrthoMatrix(const float& left, const float& right, const float& bottom, const float& top, const float& nearPlane, const float& farPlane);
