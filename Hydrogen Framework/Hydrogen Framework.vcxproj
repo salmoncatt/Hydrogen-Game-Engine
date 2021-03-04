@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\HGE\graphics\image\stb_image.h" />
     <ClInclude Include="src\HGE\util\time\Profile.h" />
     <ClInclude Include="src\HGE\gui\GuiFrame.h" />
     <ClInclude Include="src\HGE\math\Random.h" />

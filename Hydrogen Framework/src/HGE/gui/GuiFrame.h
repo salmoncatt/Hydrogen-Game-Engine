@@ -11,6 +11,8 @@
 namespace HGE {
 
 	class DLL_API GuiFrame : public GuiElement {
+	private:
+		bool selected = false;
 	public:
 		std::string name;
 		
@@ -35,8 +37,7 @@ namespace HGE {
 		~GuiFrame();
 
 		bool isHovered();
-
-		//bool isSelected();
+		bool isSelected();
 	};
 
 

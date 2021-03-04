@@ -14,10 +14,10 @@ class Main : public HGE::Program {
 		void start() {
 			frame = GuiFrame();
 			frame.sizeType = HGE_PIXEL_SIZE;
-			frame.size = Vec2f(400, 100);
+			frame.size = Vec2f(100, 100);
 			frame.position = Vec2f(0, 0);
 			frame.name = "test";
-			frame.anchorPoint = Vec2f();
+			frame.anchorPoint = Vec2f(0, 0);
 			frame.backgroundColor = Vec4f(0.9f, 0.6f, 0, 0.5f);
 			frame.borderColor = Vec4f(0, 0, 0, 0.6f);
 			
@@ -29,22 +29,16 @@ class Main : public HGE::Program {
 		}
 
 		void update() {
-			//frame.position = Input::getMousePosition();
 			frame.rotation += Input::getScrollMovement().y;
 
 			if (Input::getKeyDown(HGE_KEY_B)) {
-				Engine::removeGuiFrame(&frame);
+				frame.visible = false;
+				//Engine::removeGuiFrame(&frame);
 			}
 			else if (Input::getKeyDown(HGE_KEY_N)) {
-				Engine::registerGuiFrame(&frame);
+				frame.visible = true;
+				//Engine::registerGuiFrame(&frame);
 			}
-
-			//frame.position += Input::getMouseMovement() * Renderer::getAspectRatio();
-
-			//Debug::log(frame.isSelected());
-
-			//Renderer::render(frame);
-			//Renderer::renderRectangle(Vec2f(), Vec2f(0.5f), 0, Vec3f(0.4f, 0.2f, 0.8f));
 		}
 
 		void fixedUpdate() {

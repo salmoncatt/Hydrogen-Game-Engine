@@ -30,4 +30,19 @@ namespace HGE {
 		(Input::getMousePosition().y > position.y && Input::getMousePosition().y < position.y + size.y));
 	}
 
+	bool GuiFrame::isSelected() {
+		if (selectable) {
+			if (!selected) {
+				selected = (isHovered() && Input::getMouseButtonDown(HGE_MOUSE_BUTTON_0));
+				return selected;
+			}
+			else {
+				selected = !Input::getMouseButtonUp(HGE_MOUSE_BUTTON_0);
+				return selected;
+			}
+		}
+		else
+			return false;
+	}
+
 }

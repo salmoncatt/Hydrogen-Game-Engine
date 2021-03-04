@@ -81,9 +81,9 @@ namespace HGE {
 
 		//its weird for top left based coords
 		if(screenWidth < screenHeight)
-			orthoMatrix = Mat4f::createOrthoMatrix(0, 1, -1 / getAspectRatio(), 0, -1, 1);
+			orthoMatrix = Mat4f::createOrthoMatrix(0, 2, -2 / getAspectRatio(), 0, -1, 1);
 		else
-			orthoMatrix = Mat4f::createOrthoMatrix(0, 1 * getAspectRatio(), -1, 0, -1, 1);
+			orthoMatrix = Mat4f::createOrthoMatrix(0, 2 * getAspectRatio(), -2, 0, -1, 1);
 	}
 
 	void Renderer::close() {
@@ -430,7 +430,7 @@ namespace HGE {
 		//matrix stuff
 		if (frame.sizeType == HGE_SCREEN_SPACE_SIZE) {
 
-			uiPosition = Vec2f(frame.position.x, -frame.position.y) + Vec2f(frame.size.x - frame.size.x * frame.anchorPoint.x * 2, -frame.size.y + frame.size.y * frame.anchorPoint.y * 2);
+			uiPosition = Vec2f(frame.position.x * 2, -frame.position.y * 2) + Vec2f(frame.size.x - frame.size.x * frame.anchorPoint.x * 2, -frame.size.y + frame.size.y * frame.anchorPoint.y * 2);
 
 			transform = orthoMatrix * Mat4f::createTransformationMatrix(uiPosition, Vec3f(0, 0, frame.rotation), frame.size);
 
@@ -468,7 +468,7 @@ namespace HGE {
 	void Renderer::renderGuis() {
 		for (size_t i = 0; i < Engine::guiFrames.size(); ++i) {
 			auto& frame = Engine::guiFrames[i];
-			if (frame->active && frame->draggable) {
+			if (frame->active && frame->draggable && frame->isSelected()) {
 				frame->position += Vec2f(Input::getMouseMovement().x / 2, Input::getMouseMovement().y / 2);
 			}
 
