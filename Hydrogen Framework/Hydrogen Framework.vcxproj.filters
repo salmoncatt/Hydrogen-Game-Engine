@@ -80,6 +80,7 @@
     <ClCompile Include="src\HGE\gui\GuiElement.cpp" />
     <ClCompile Include="src\HGE\gui\GuiFrame.cpp" />
     <ClCompile Include="src\HGE\util\time\Profile.cpp" />
+    <ClCompile Include="src\HGE\graphics\image\stb_image.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\guiFrameVertex.glsl" />

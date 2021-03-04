@@ -58,6 +58,7 @@
     <ClInclude Include="src\HGE\util\memory\string.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\HGE\graphics\image\stb_image.cpp" />
     <ClCompile Include="src\HGE\util\time\Profile.cpp" />
     <ClCompile Include="src\HGE\gui\GuiFrame.cpp" />
     <ClCompile Include="src\HGE\gui\GuiElement.cpp" />

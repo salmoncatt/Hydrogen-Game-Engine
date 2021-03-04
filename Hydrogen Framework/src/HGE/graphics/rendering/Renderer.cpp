@@ -23,7 +23,7 @@ namespace HGE {
 	Shader Renderer::guiShader = HGE::Shader(HGE_RES + "shaders/", "guiVertex.glsl", "guiFragment.glsl");
 	Shader Renderer::guiFrameShader = HGE::Shader(HGE_RES + "shaders/", "guiFrameVertex.glsl", "guiFrameFragment.glsl");
 
-	Texture Renderer::nullTexture = Texture(HGE_RES + "textures/null.bmp");
+	Texture Renderer::nullTexture = Texture(HGE_RES + "textures/null.png");
 
 	const std::vector<float> Renderer::quadVertices = {-1, 1,  -1, -1,  1, 1, 1, -1};
 	Mesh Renderer::quad = Mesh(quadVertices, std::vector<unsigned int>(), std::vector<float>(), std::vector<float>());
@@ -185,7 +185,7 @@ namespace HGE {
 		guiShader.bind();
 		glActiveTexture(GL_TEXTURE0);
 
-		if (!texture.image.data.empty())
+		if (texture.image.hasData())
 			glBindTexture(GL_TEXTURE_2D, texture.textureID);
 		else
 			glBindTexture(GL_TEXTURE_2D, nullTexture.textureID);
@@ -342,7 +342,7 @@ namespace HGE {
 
 		glActiveTexture(GL_TEXTURE0);
 
-		if (!texture.image.data.empty())
+		if (texture.image.hasData())
 			glBindTexture(GL_TEXTURE_2D, texture.textureID);
 		else
 			glBindTexture(GL_TEXTURE_2D, nullTexture.textureID);
@@ -384,7 +384,7 @@ namespace HGE {
 		shader.bind();
 		glActiveTexture(GL_TEXTURE0);
 
-		if (!texture.image.data.empty())
+		if (texture.image.hasData())
 			glBindTexture(GL_TEXTURE_2D, texture.textureID);
 		else
 			glBindTexture(GL_TEXTURE_2D, nullTexture.textureID);

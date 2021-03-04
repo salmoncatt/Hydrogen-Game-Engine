@@ -16,7 +16,9 @@ namespace HGE {
 
 		Texture();
 		Texture(const Texture& texture);
+
 		Texture(const std::string& path);
+		Texture& operator=(const Texture& texture);
 		~Texture();
 
 		void create();

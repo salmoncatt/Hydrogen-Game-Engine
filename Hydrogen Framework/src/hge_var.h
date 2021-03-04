@@ -16,6 +16,10 @@ namespace HGE {
 	const std::string HGE_RES = "res/";
 #endif
 
+	//for byte buffer and other buffers
+	const int HGE_UNSIGNED = 0;
+	const int HGE_SIGNED = 1;
+
 	//for GUI
 	const int HGE_PIXEL_SIZE = 0;
 	const int HGE_SCREEN_SPACE_SIZE = 1;

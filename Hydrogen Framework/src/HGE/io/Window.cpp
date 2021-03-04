@@ -84,20 +84,11 @@ namespace HGE {
 	void Window::setIcon(Image& image) {
 		GLFWimage images[1];
 
-		image.generatePixelData();
-
-		std::vector<unsigned char> data = Util::convertPixelsToRawData(image.pixeldata);
-
-		unsigned char* pixelbuffer = new unsigned char[data.size()];
-		std::copy(data.begin(), data.end(), pixelbuffer);
-
 		images[0].width = image.width;
 		images[0].height = image.width;
-		images[0].pixels = pixelbuffer;
+		images[0].pixels = image.data;
 
 		glfwSetWindowIcon(window, 1, images);
-
-		delete[] pixelbuffer;
 	}
 
 	bool Window::isFocused() {

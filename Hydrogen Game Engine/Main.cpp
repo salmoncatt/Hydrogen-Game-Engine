@@ -37,6 +37,9 @@ class Main : public HGE::Program {
 			}
 			else if (Input::getKeyDown(HGE_KEY_N)) {
 				frame.visible = true;
+				for (int i = 0; i < 100; i++) {
+					Image image = Image(HGE_RES + "textures/icon.png");
+				}
 				//Engine::registerGuiFrame(&frame);
 			}
 		}
@@ -69,7 +72,7 @@ public:
 
 	void create() override {
 
-		Image icon = Image(HGE_RES + "textures/icon.bmp");
+		Image icon = Image(HGE_RES + "textures/icon.png");
 
 		window->setIcon(icon);
 

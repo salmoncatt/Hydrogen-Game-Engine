@@ -30,6 +30,7 @@ namespace HGE {
 
 		lerpedCpuUsage = 0;
 		lerpedRamUsage = 0;
+		radialBarTexture = Texture();
 	}
 
 	Scene::~Scene() {
@@ -37,7 +38,7 @@ namespace HGE {
 	}
 
 	void Scene::initialize() {
-		radialBarTexture = Texture(HGE_RES + "textures/radial bar half.bmp");
+		radialBarTexture = Texture(HGE_RES + "textures/radial bar half.png");
 		radialBarTexture.create();
 	}
 

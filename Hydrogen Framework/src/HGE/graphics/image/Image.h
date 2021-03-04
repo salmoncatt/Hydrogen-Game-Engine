@@ -10,20 +10,23 @@ namespace HGE {
 
 	class DLL_API Image {
 	public:
+		std::string filepath;
+
 		int width;
 		int height;
-		int rowLength;
+		int channels;
 
 		std::vector<std::vector<Pixel>> pixeldata;
-		std::vector<unsigned char> data;
+		unsigned char* data;
 		
 		Image();
 		Image(const std::string& filepath);
+		Image& operator=(const Image& image);
+		Image(const Image& image);
 		~Image();
 
 		void generatePixelData();
-		void flipHorizontally();
-		void flipVertically();
+		bool hasData() const;
 	};
 
 }

@@ -56,9 +56,6 @@
 //its nowhere near finished for now
 #include "HFL/HFL.h"
 
-#define STB_IMAGE_IMPLEMENTATION
-#include "HGE/graphics/image/stb_image.h"
-
 //for profiling of any class
 #include "HGE/util/time/Profiler.h"
 #define ProfileMethod(name) HGE::Profiler HGE_AUTO_PROFILER(name, false, true)

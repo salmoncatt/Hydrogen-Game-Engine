@@ -9,11 +9,19 @@ namespace HGE {
 	}
 
 	Texture::Texture(const Texture& texture) : image(texture.image){
+		image = Image(texture.image);
 		textureID = 0;
 	}
 
 	Texture::Texture(const std::string& path) : image(path) {
 		textureID = 0;
+	}
+
+	Texture& Texture::operator=(const Texture& texture) {
+		textureID = texture.textureID;
+		image = texture.image;
+
+		return *this;
 	}
 
 	Texture::~Texture() {
@@ -25,23 +33,22 @@ namespace HGE {
 	}
 
 	void Texture::create() {
-		if (!isCreated && !image.data.empty()) {
+		if (!isCreated && image.hasData()) {
 
 			glGenTextures(1, &textureID);
 			glBindTexture(GL_TEXTURE_2D, textureID);
+
+			//glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_LINEAR);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
-			unsigned char* pixelbuffer = new unsigned char[image.data.size()];
-			std::copy(image.data.begin(), image.data.end(), pixelbuffer);
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, image.width, image.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image.data);
 
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, image.width, image.height, 0, GL_RGB, GL_UNSIGNED_BYTE, pixelbuffer);
 			glGenerateMipmap(GL_TEXTURE_2D);
 
-			delete[] pixelbuffer;
 			isCreated = true;
 		}
 	}
