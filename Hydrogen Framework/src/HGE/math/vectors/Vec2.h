@@ -47,6 +47,8 @@ namespace HGE {
 
 		Vec2f operator+(const Vec2f& other) const;
 
+		Vec2f operator+=(const Vec2f& other);
+
 		Vec2f operator-();
 
 		Vec2f operator*(const Vec2f& other) const;

@@ -27,14 +27,16 @@ namespace HGE {
 		int sizeType;
 
 		bool visible = true;
+		bool draggable = false;
+		bool active = false;
+		bool selectable = false;
 
 		GuiFrame();
 		~GuiFrame();
 
+		bool isHovered();
 
-
-
-
+		//bool isSelected();
 	};
 
 

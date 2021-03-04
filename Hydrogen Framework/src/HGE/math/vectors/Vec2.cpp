@@ -98,6 +98,12 @@ namespace HGE {
 		return out;
 	}
 
+	Vec2f Vec2f::operator+=(const Vec2f& other) {
+		x = x + other.x;
+		y = y + other.y;
+		return *this;
+	}
+
 	Vec2f Vec2f::operator-() {
 		Vec2f out = Vec2f();
 		out.x = -x;

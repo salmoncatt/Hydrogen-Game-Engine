@@ -10,11 +10,13 @@
 #include "HGE/math/vectors/Vec4.h"
 #include "HGE/gui/GuiFrame.h"
 #include "HGE/core/Engine.h"
+#include "HGE/io/Input.h"
 
 namespace HGE {
 
 	Mat4f Renderer::perspectiveMatrix = Mat4f();
 	Mat4f Renderer::orthoMatrix = Mat4f::createOrthoMatrix(-1, 1, -1, 1, -1, 1);
+	Mat4f Renderer::pixelOrthoMatrix = Mat4f::createOrthoMatrix(-1, 1, -1, 1, -1, 1);
 	Mat4f Renderer::viewMatrix = Mat4f();
 	
 	Shader Renderer::mainShader = HGE::Shader(HGE_RES + "shaders/", "MainVertex.glsl", "MainFragment.glsl");
@@ -74,12 +76,14 @@ namespace HGE {
 		
 		glViewport(0, 0, (GLsizei)screenWidth, (GLsizei)screenHeight);
 
+		//for use with pixel sized gui (top left coordinate system btw)
+		pixelOrthoMatrix = Mat4f::createOrthoMatrix(0, 2 * screenWidth, -2 * screenHeight, 0, -1, 1);
 
 		//its weird for top left based coords
 		if(screenWidth < screenHeight)
-			orthoMatrix = Mat4f::createOrthoMatrix(0, 2, -2 / getAspectRatio(), 0, -1, 1);
+			orthoMatrix = Mat4f::createOrthoMatrix(0, 1, -1 / getAspectRatio(), 0, -1, 1);
 		else
-			orthoMatrix = Mat4f::createOrthoMatrix(0, 2 * getAspectRatio(), -2, 0, -1, 1);
+			orthoMatrix = Mat4f::createOrthoMatrix(0, 1 * getAspectRatio(), -1, 0, -1, 1);
 	}
 
 	void Renderer::close() {
@@ -425,12 +429,10 @@ namespace HGE {
 
 		//matrix stuff
 		if (frame.sizeType == HGE_SCREEN_SPACE_SIZE) {
-			//uiPosition = Vec2f(-1 * Renderer::getAspectRatio() + (frame.size.x / 2) + (frame.size.x * frame.anchorPoint.x), 1 - frame.position.y + (frame.size.x * frame.anchorPoint.y));
 
 			uiPosition = Vec2f(frame.position.x, -frame.position.y) + Vec2f(frame.size.x - frame.size.x * frame.anchorPoint.x * 2, -frame.size.y + frame.size.y * frame.anchorPoint.y * 2);
 
 			transform = orthoMatrix * Mat4f::createTransformationMatrix(uiPosition, Vec3f(0, 0, frame.rotation), frame.size);
-			outlineTransform = orthoMatrix * Mat4f::createTransformationMatrix(uiPosition, Vec3f(0, 0, frame.rotation), Vec2f(1));
 
 			//because dank aspect ratio madness fuck me
 			if (currentWindowSize.x < currentWindowSize.y)
@@ -440,14 +442,13 @@ namespace HGE {
 
 		}
 		else if (frame.sizeType == HGE_PIXEL_SIZE) {
-			uiPosition = Vec2f(frame.position.x - (frame.size.x / 2) + frame.anchorPoint.x, -frame.position.y + frame.anchorPoint.y);
 
-			transform = Mat4f::createTransformationMatrix_ScaleBeforeRotation(Vec2f((((frame.position.x + (frame.size.x / 2)) / currentWindowSize.x) * 2) - 1, (((currentWindowSize.y - frame.position.y - (frame.size.y / 2)) / currentWindowSize.y) * 2) - 1), Vec3f(0, 0, frame.rotation), frame.size / currentWindowSize);
+			transform = pixelOrthoMatrix * Mat4f::createTransformationMatrix(Vec2f(frame.position.x * 2, -frame.position.y * 2) + Vec2f(frame.size.x - frame.size.x * frame.anchorPoint.x * 2, -frame.size.y + frame.size.y * frame.anchorPoint.y * 2), Vec3f(0, 0, frame.rotation), frame.size);
+			
 			guiFrameShader.setUniform("uiSize", frame.size);
 		}
 
 		guiFrameShader.setUniform("transform", transform);
-		guiFrameShader.setUniform("outlineTransform", outlineTransform);
 		guiFrameShader.setUniform("color", frame.backgroundColor);
 		guiFrameShader.setUniform("borderColor", frame.borderColor);
 		guiFrameShader.setUniform("borderSize", (float)frame.borderSize);
@@ -466,8 +467,13 @@ namespace HGE {
 
 	void Renderer::renderGuis() {
 		for (size_t i = 0; i < Engine::guiFrames.size(); ++i) {
-			if (Engine::guiFrames[i]->visible) {
-				render(*Engine::guiFrames[i]);
+			auto& frame = Engine::guiFrames[i];
+			if (frame->active && frame->draggable) {
+				frame->position += Vec2f(Input::getMouseMovement().x / 2, Input::getMouseMovement().y / 2);
+			}
+
+			if (frame->visible) {
+				render(*frame);
 			}
 		}
 	}

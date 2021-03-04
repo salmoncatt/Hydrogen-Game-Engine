@@ -34,6 +34,7 @@ namespace HGE {
 		static Texture nullTexture;
 		static Mat4f perspectiveMatrix;
 		static Mat4f orthoMatrix;
+		static Mat4f pixelOrthoMatrix;
 		static Mat4f viewMatrix;
 
 		static void init(const float& screenWidth, const float& screenHeight);

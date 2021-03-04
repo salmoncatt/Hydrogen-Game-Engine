@@ -1,6 +1,7 @@
 #include "hpch.h"
 #include "GuiFrame.h"
 #include "HGE/core/Engine.h"
+#include "HGE/io/Input.h"
 
 namespace HGE {
 
@@ -21,6 +22,12 @@ namespace HGE {
 
 	GuiFrame::~GuiFrame() {
 		//Engine::removeGuiFrame(this);
+	}
+
+	bool GuiFrame::isHovered() {
+		return (
+		(Input::getMousePosition().x > position.x && Input::getMousePosition().x < position.x + size.x) &&
+		(Input::getMousePosition().y > position.y && Input::getMousePosition().y < position.y + size.y));
 	}
 
 }
