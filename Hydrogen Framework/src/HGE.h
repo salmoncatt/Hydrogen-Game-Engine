@@ -20,6 +20,7 @@
 #include "HGE/ECS/components/Material.h"
 #include "HGE/ECS/components/MeshComponent.h"
 #include "HGE/ECS/components/NativeScript.h"
+#include "HGE/ECS/ScriptManager.h"
 
 #include "HGE/gui/GuiElement.h"
 #include "HGE/gui/GuiFrame.h"

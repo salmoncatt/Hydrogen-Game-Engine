@@ -16,11 +16,9 @@ namespace HGE {
 		virtual void updateAfterRender() {}
 		virtual void stop() {}
 
-		GameObject* createGameObjectPointer() { return new GameObject(); };
-		GameObject createGameObject() { return GameObject(); };
-
 		friend class Scene;
 		friend class Util;
+		friend class ScriptManager;
 	public:
 		Entity entity;
 		Scene* scene = nullptr;

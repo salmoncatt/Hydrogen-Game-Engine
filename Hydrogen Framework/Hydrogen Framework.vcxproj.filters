@@ -46,6 +46,8 @@
     <ClInclude Include="src\HGE\gui\GuiFrame.h" />
     <ClInclude Include="src\HGE\util\time\Profile.h" />
     <ClInclude Include="src\HGE\graphics\image\stb_image.h" />
+    <ClInclude Include="src\HGE\ECS\ScriptManager.h" />
+    <ClInclude Include="src\HGE\io\dirent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\hpch.cpp" />
@@ -81,6 +83,7 @@
     <ClCompile Include="src\HGE\gui\GuiFrame.cpp" />
     <ClCompile Include="src\HGE\util\time\Profile.cpp" />
     <ClCompile Include="src\HGE\graphics\image\stb_image.cpp" />
+    <ClCompile Include="src\HGE\ECS\ScriptManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\guiFrameFragment.glsl" />

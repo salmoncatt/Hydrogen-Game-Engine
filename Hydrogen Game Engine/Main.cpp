@@ -26,20 +26,13 @@ class Main : public HGE::Program {
 			frame.active = true;
 
 			Engine::registerGuiFrame(&frame);
+
 		}
 
 		void update() {
 			frame.rotation += Input::getScrollMovement().y;
 
-			if (Input::getKeyDown(HGE_KEY_B)) {
-				Engine::window->setFullscreen(true);
-				//frame.visible = false;
-				//Engine::removeGuiFrame(&frame);
-			}
-			else if (Input::getKeyDown(HGE_KEY_N)) {
-				Engine::window->setFullscreen(false);
-				//frame.visible = true;
-				//Engine::registerGuiFrame(&frame);
+			if (Input::getKey(HGE_KEY_B)) {
 			}
 		}
 
@@ -116,6 +109,7 @@ public:
 		}
 
 		peter.addComponent<NativeScript>().addScript<TestScript>();
+		peter.getComponent<NativeScript>().addScript("Scripts");
 		//peter.addComponent<NativeScript>().addScript<TestScript>();
 
 		float angle = 0;

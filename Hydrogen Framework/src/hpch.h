@@ -20,6 +20,8 @@
 #include <functional>
 #include <cstring>
 #include <numeric>
+#include "HGE/io/dirent.h"
+//#include <filesystem>
 
 //for windows notification toasts n stuff
 //#include "DesktopNotificationManagerCompat.h"

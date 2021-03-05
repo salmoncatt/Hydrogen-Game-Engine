@@ -7,6 +7,7 @@
 #include "HGE/util/time/Time.h"
 #include "HGE/util/time/Profiler.h"
 #include "HGE/math/Random.h"
+#include "HGE/ECS/ScriptManager.h"
 
 namespace HGE {
 
@@ -67,6 +68,11 @@ namespace HGE {
 		Debug::systemSuccess("Utilities was initialized");
 		Debug::newLine();
 
+		Debug::systemLog("Loading Scripts");
+		ScriptManager::init();
+		Debug::systemSuccess("Scripts were loaded");
+		Debug::newLine();
+
 		Debug::systemLog("Attempting to start Hydrogen Game Engine (TM)");
 		Debug::resetTextColor();
 		Debug::newLine();
@@ -76,6 +82,7 @@ namespace HGE {
 		Time::update();
 		Input::update();
 		Debug::update();
+		ScriptManager::update();
 	}
 
 	void Engine::stopEngine() {
@@ -96,6 +103,11 @@ namespace HGE {
 		Debug::systemLog("Closing Utilities");
 		Util::deleteVBOs();
 		Debug::systemSuccess("Closed Utilities");
+		Debug::newLine();
+
+		Debug::systemLog("Deleting Scripts");
+		ScriptManager::close();
+		Debug::systemSuccess("Scripts were deleted");
 		Debug::newLine();
 	}
 

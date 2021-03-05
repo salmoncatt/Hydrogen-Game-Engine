@@ -608,26 +608,4 @@ namespace HGE {
 		return (double)virtualMemUsedByMe / 1048576;
 	}
 
-	GameObject* Util::loadScriptFromDLL(const std::string& path) {
-		//credits to https://www.gamasutra.com/blogs/ZacHills/20170406/295378/Scripting_with_C.php bc idk how tf to do this
-
-		HINSTANCE dllHandle = LoadLibraryA(path.c_str());
-
-		if (!dllHandle) {
-			Debug::systemErr("Couldn't load dll file containing scripts at: " + path);
-		}
-
-		typedef GameObject* (__stdcall *scriptPointer)();
-
-		scriptPointer createScript = (scriptPointer)GetProcAddress(dllHandle, "createGameObject");
-
-		if (!createScript) {
-			Debug::systemErr("Couldn't find the create function of a script in the dll file containing scripts at: " + path + "(Maybe didn't inherit script?)");
-		}
-
-		GameObject* out = createScript();
-
-		return out;
-	}
-
 }
