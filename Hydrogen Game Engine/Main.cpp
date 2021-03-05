@@ -48,7 +48,9 @@ class Main : public HGE::Program {
 		}
 
 		void stop() {
+		}
 
+		~TestScript() {
 		}
 
 	};

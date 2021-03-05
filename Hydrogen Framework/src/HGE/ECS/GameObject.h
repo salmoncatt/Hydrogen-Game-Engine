@@ -9,12 +9,25 @@
 namespace HGE {
 
 	struct DLL_API GameObject {
+	protected:
+		virtual void start() {}
+		virtual void update() {}
+		virtual void fixedUpdate() {}
+		virtual void updateAfterRender() {}
+		virtual void stop() {}
+
+		GameObject* createGameObjectPointer() { return new GameObject(); };
+		GameObject createGameObject() { return GameObject(); };
+
+		friend class Scene;
+		friend class Util;
+	public:
 		Entity entity;
 		Scene* scene = nullptr;
 
 		GameObject(const Entity& entity, Scene* scene);
 		GameObject();
-		~GameObject();
+		virtual ~GameObject() {};
 
 		template <typename T>
 		T& addComponent() {
@@ -36,7 +49,6 @@ namespace HGE {
 		void removeComponent() {
 			scene->getSystem()->getComponentManager()->removeComponent<T>(entity);
 		}
-
 	};
 
 }

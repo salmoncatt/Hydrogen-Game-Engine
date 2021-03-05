@@ -19,10 +19,6 @@ namespace HGE {
 		scene = nullptr;
 	}
 
-	GameObject::~GameObject() {
-		
-	}
-
 	//templates for transform component
 	template Transform& GameObject::addComponent<Transform>();
 	template Transform& GameObject::addComponent<Transform>(Transform&);

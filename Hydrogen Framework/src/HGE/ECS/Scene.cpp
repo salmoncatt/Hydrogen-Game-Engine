@@ -34,7 +34,30 @@ namespace HGE {
 	}
 
 	Scene::~Scene() {
+		for (unsigned int i = 0; i < system.getEntityAmount(); i++) {
+			Entity entity = (*system.getEntities())[i];
 
+			//update scripts (NEED TO PUSH TO UPDATE GAME NOT EDITOR)
+			if (system.getComponentManager()->hasComponent<NativeScript>(entity)) {
+				auto& script = system.getComponentManager()->getComponent<NativeScript>(entity);
+
+				if (!script.gameObject) {
+					//create the script
+					script.gameObject = script.instantiateFunction();
+
+					//add the entity reference to the script (to call things like getComponent<>())
+					script.gameObject->entity = entity;
+					script.gameObject->scene = this;
+
+					//startup the script
+					script.gameObject->start();
+				}
+
+				script.gameObject->stop();
+				script.destroyFunction(&script);
+			}
+
+		}
 	}
 
 	void Scene::initialize() {
@@ -68,19 +91,17 @@ namespace HGE {
 
 				if (!script.gameObject) {
 					//create the script
-					script.instantiateFunction();
+					script.gameObject = script.instantiateFunction();
 
 					//add the entity reference to the script (to call things like getComponent<>())
 					script.gameObject->entity = entity;
 					script.gameObject->scene = this;
 
 					//startup the script
-					if(script.startFunction)
-						script.startFunction(script.gameObject);
+					script.gameObject->start();
 				}
 
-				if(script.updateFunction)
-					script.updateFunction(script.gameObject);
+				script.gameObject->update();
 
 			}
 

@@ -12,6 +12,7 @@ namespace HGE{
 	class Mesh;
 	class Texture;
 	struct Material;
+	struct GameObject;
 
 	class DLL_API Util {
 	private:
@@ -57,6 +58,8 @@ namespace HGE{
 		static inline bool instanceOf(const T) {
 			return std::is_base_of<Base, T>::value;
 		}
+
+		static GameObject* loadScriptFromDLL(const std::string& path);
 
 		//static void sendWindowsNotification();
 
