@@ -32,11 +32,13 @@ class Main : public HGE::Program {
 			frame.rotation += Input::getScrollMovement().y;
 
 			if (Input::getKeyDown(HGE_KEY_B)) {
-				frame.visible = false;
+				Engine::window->setFullscreen(true);
+				//frame.visible = false;
 				//Engine::removeGuiFrame(&frame);
 			}
 			else if (Input::getKeyDown(HGE_KEY_N)) {
-				frame.visible = true;
+				Engine::window->setFullscreen(false);
+				//frame.visible = true;
 				//Engine::registerGuiFrame(&frame);
 			}
 		}
@@ -84,7 +86,7 @@ public:
 
 		Renderer::setCullingMode(true);
 		Renderer::setLightMode(HGE_PER_PIXEL_LIGHT);
-		Engine::window->setVSync(true);
+		//Engine::window->setVSync(true);
 
 		test->editorCamera.transform.position = Vec3f(0, 0, 10);
 
@@ -144,7 +146,7 @@ public:
 			//Vec2f(-1 * Renderer::getAspectRatio() + 0.5f, 1 - 0.5f)
 			//Renderer::renderRectangle(Vec2f(), scale, angle, Vec3f(0.4f, 0.2f, 0.8f));
 
-			//window->limitFps(200);
+			window->limitFps(200);
 		}
 
 		delete test;

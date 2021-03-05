@@ -39,6 +39,7 @@ namespace HGE {
 		static void cursorPositionCallBack(GLFWwindow* window, double x, double y);
 		static void scrollMovementCallBack(GLFWwindow* window, double x, double y);
 		static void windowSizeCallBack(GLFWwindow* window, int width, int height);
+		static void windowPositionCallBack(GLFWwindow* window, int x, int y);
 		static void windowFocusCallBack(GLFWwindow* window, int focused);
 		//need to add scroll call backs n stuff
 

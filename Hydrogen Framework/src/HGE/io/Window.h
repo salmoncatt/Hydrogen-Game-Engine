@@ -16,6 +16,10 @@ namespace HGE {
 	private:
 		bool focused = false;
 		bool vsync = false;
+		bool fullscreen = false;
+		Vec2i sizeBeforeFullScreen = Vec2i();
+		Vec2i positionBeforeFullScreen = Vec2i();
+		GLFWmonitor* monitor;
 		//int refreshRate = 60;
 
 	public:
@@ -38,6 +42,11 @@ namespace HGE {
 		void setPosition(const Vec2i& position);
 		void setIcon(Image& image);
 		bool isFocused();
+
+		void setFullscreen(const bool& fullscreen);
+		bool isFullscreen();
+
+		GLFWmonitor* getMonitor();
 
 		bool shouldClose();
 

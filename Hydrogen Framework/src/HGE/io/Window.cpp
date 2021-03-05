@@ -23,6 +23,7 @@ namespace HGE {
 
 		Debug::systemLog("Attempting to create window: " + name + ", With dimensions: " + std::to_string(size.x) + ", " + std::to_string(size.y));
 
+		monitor = glfwGetPrimaryMonitor();
 		window = glfwCreateWindow(size.x, size.y, name.c_str(), NULL, NULL);
 		
 		if (!window) {
@@ -81,6 +82,7 @@ namespace HGE {
 	}
 
 	void Window::setPosition(const Vec2i& _position) {
+		position = _position;
 		glfwSetWindowPos(window, _position.x, _position.y);
 	}
 
@@ -105,6 +107,32 @@ namespace HGE {
 
 	bool Window::isFocused() {
 		return focused;
+	}
+
+	void Window::setFullscreen(const bool& _fullscreen) {
+		if (fullscreen == _fullscreen)
+			return;
+		
+		if (_fullscreen) {
+			sizeBeforeFullScreen = size;
+			positionBeforeFullScreen = position;
+
+			const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+			glfwSetWindowMonitor(window, monitor, 0, 0, mode->width, mode->height, 0);
+		}
+		else {
+			glfwSetWindowMonitor(window, nullptr, positionBeforeFullScreen.x, positionBeforeFullScreen.y, sizeBeforeFullScreen.x, sizeBeforeFullScreen.y, 0);
+		}
+
+		fullscreen = _fullscreen;
+	}
+
+	bool Window::isFullscreen() {
+		return fullscreen;
+	}
+
+	GLFWmonitor* Window::getMonitor() {
+		return monitor;
 	}
 
 }

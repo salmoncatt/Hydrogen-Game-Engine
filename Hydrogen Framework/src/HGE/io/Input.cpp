@@ -41,6 +41,7 @@ namespace HGE {
 		glfwSetCursorPosCallback(window, cursorPositionCallBack);
 		glfwSetWindowSizeCallback(window, windowSizeCallBack);
 		glfwSetScrollCallback(window, scrollMovementCallBack);
+		glfwSetWindowPosCallback(window, windowPositionCallBack);
 	}
 
 	void Input::createKeyVectors() {
@@ -122,6 +123,10 @@ namespace HGE {
 
 	void Input::windowFocusCallBack(GLFWwindow* _window, int focused) {
 		window->focused = (focused == 1) ? true : false;
+	}
+
+	void Input::windowPositionCallBack(GLFWwindow* _window, int x, int y) {
+		window->position = Vec2i(x, y);
 	}
 
 	//keyboard input
