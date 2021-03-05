@@ -84,7 +84,7 @@ namespace HGE {
 	}
 
 	GameObject* ScriptManager::getScript(const std::string& name) {
-		return scriptNameToScript[scriptPathToName[name]];
+		return scriptNameToScript[name];
 	}
 
 }

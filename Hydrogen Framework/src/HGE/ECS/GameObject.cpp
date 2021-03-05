@@ -12,6 +12,7 @@ namespace HGE {
 	GameObject::GameObject(const Entity& _entity, Scene* _scene) {
 		entity = _entity;
 		scene = _scene;
+		created = true;
 	}
 
 	GameObject::GameObject() {
@@ -54,5 +55,9 @@ namespace HGE {
 	template NativeScript& GameObject::addComponent<NativeScript>(NativeScript&);
 	template NativeScript& GameObject::getComponent<NativeScript>();
 	template void GameObject::removeComponent<NativeScript>();
+
+	bool GameObject::isCreated() {
+		return created;
+	}
 
 }

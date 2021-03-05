@@ -37,25 +37,25 @@ namespace HGE {
 		for (unsigned int i = 0; i < system.getEntityAmount(); i++) {
 			Entity entity = (*system.getEntities())[i];
 
-			//update scripts (NEED TO PUSH TO UPDATE GAME NOT EDITOR)
-			if (system.getComponentManager()->hasComponent<NativeScript>(entity)) {
-				auto& script = system.getComponentManager()->getComponent<NativeScript>(entity);
+			////update scripts (NEED TO PUSH TO UPDATE GAME NOT EDITOR)
+			//if (system.getComponentManager()->hasComponent<NativeScript>(entity)) {
+			//	auto& script = system.getComponentManager()->getComponent<NativeScript>(entity);
 
-				if (!script.gameObject) {
-					//create the script
-					script.gameObject = script.instantiateFunction();
+			//	if (!script.gameObject) {
+			//		//create the script
+			//		script.gameObject = script.instantiateFunction();
 
-					//add the entity reference to the script (to call things like getComponent<>())
-					script.gameObject->entity = entity;
-					script.gameObject->scene = this;
+			//		//add the entity reference to the script (to call things like getComponent<>())
+			//		script.gameObject->entity = entity;
+			//		script.gameObject->scene = this;
 
-					//startup the script
-					script.gameObject->start();
-				}
+			//		//startup the script
+			//		script.gameObject->start();
+			//	}
 
-				script.gameObject->stop();
-				script.destroyFunction(&script);
-			}
+			//	script.gameObject->stop();
+			//	script.destroyFunction(&script);
+			//}
 
 		}
 	}
@@ -89,19 +89,33 @@ namespace HGE {
 			if (system.getComponentManager()->hasComponent<NativeScript>(entity)) {
 				auto& script = system.getComponentManager()->getComponent<NativeScript>(entity);
 
-				if (!script.gameObject) {
-					//create the script
-					script.gameObject = script.instantiateFunction();
+				if (!script.scripts[0]) {
+					script.instantiateScript(&script, 0);
 
 					//add the entity reference to the script (to call things like getComponent<>())
-					script.gameObject->entity = entity;
-					script.gameObject->scene = this;
+					script.scripts[0]->entity = entity;
+					script.scripts[0]->scene = this;
+					script.scripts[0]->created = true;
 
 					//startup the script
-					script.gameObject->start();
+					script.scripts[0]->start();
 				}
 
-				script.gameObject->update();
+				//script.scripts[0]->update();
+
+				//if (!script.gameObject) {
+				//	//create the script
+				//	script.gameObject = script.instantiateFunction();
+
+				//	//add the entity reference to the script (to call things like getComponent<>())
+				//	script.gameObject->entity = entity;
+				//	script.gameObject->scene = this;
+
+				//	//startup the script
+				//	script.gameObject->start();
+				//}
+
+				//script.gameObject->update();
 
 			}
 

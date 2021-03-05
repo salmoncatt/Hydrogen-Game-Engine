@@ -14,28 +14,39 @@ using Script = HGE::GameObject;
 namespace HGE {
 
 	struct DLL_API NativeScript {
-		std::unordered_map<std::string, unsigned int> nameToScriptIndex{};
-		size_t scriptIndex = 0;
+		std::unordered_map<unsigned int, std::string> nameToScriptIndex{};
+		unsigned int scriptIndex = 0;
 		std::array<GameObject*, HGE_MAX_SCRIPTS> scripts{nullptr};
 
 		GameObject* gameObject = nullptr;
 
+		void (*instantiateScript)(NativeScript*, const unsigned int&) = {};
 
 		GameObject* (*instantiateFunction)() = {};
 		void(*destroyFunction)(NativeScript*) = {};
 
 		template<typename T>
 		void addScript() {
-
 			instantiateFunction = []() {return static_cast<GameObject*>(new T()); };
 			destroyFunction = [](NativeScript* nativeScript) {delete nativeScript->gameObject; nativeScript->gameObject = nullptr; };
 		}
 
 		//name is the name of the dll file in which the script is in
 		void addScript(const std::string& name) {
-			scripts[scriptIndex] = new GameObject();
-			scripts[scriptIndex] = static_cast<GameObject*>(ScriptManager::getScript(name));
+			nameToScriptIndex[scriptIndex] = name;
 			scriptIndex += 1;
+			
+			instantiateScript = [](NativeScript* nativeScript, const unsigned int& index) {
+
+				if (ScriptManager::getScript(nativeScript->nameToScriptIndex[index]) != nullptr) {
+					GameObject* script = ScriptManager::getScript(nativeScript->nameToScriptIndex[index]);
+
+					nativeScript->scripts[index] = reinterpret_cast<GameObject*>(malloc(sizeof(script)));
+					memcpy(nativeScript->scripts[index], script, (sizeof(script)));
+				}
+				else
+					Debug::systemErr("Couldn't find script: " + nativeScript->nameToScriptIndex[index]);
+			};
 		}
 
 		void destroyScripts() {

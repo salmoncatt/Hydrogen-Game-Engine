@@ -108,9 +108,8 @@ public:
 			//component.calculateNormals(1);
 		}
 
-		peter.addComponent<NativeScript>().addScript<TestScript>();
-		peter.getComponent<NativeScript>().addScript("Scripts");
 		//peter.addComponent<NativeScript>().addScript<TestScript>();
+		peter.addComponent<NativeScript>().addScript("Scripts");
 
 		float angle = 0;
 
