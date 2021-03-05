@@ -61,6 +61,18 @@ namespace HGE {
 	void Window::setVSync(const bool& sync) {
 		glfwSwapInterval(sync ? 1 : 0);
 	}
+
+	bool Window::isVSync() {
+		return vsync;
+	}
+
+	/*void Window::setRefreshRate(const int& rate) {
+		glfwWindowHint(GLFW_REFRESH_RATE, rate);
+	}
+
+	int Window::getRefreshRate() {
+		return refreshRate;
+	}*/
 	
 	void Window::resize(const Vec2i& _size) {
 		glfwSetWindowSize(window, _size.x, _size.y);

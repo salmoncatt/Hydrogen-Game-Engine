@@ -181,8 +181,16 @@ namespace HGE {
 		return mousePosition;
 	}
 
+	Vec2f Input::getMousePositionScreenSpace() {
+		return Vec2f(mousePosition.x / Renderer::getCurrentWindowSize().x, mousePosition.y / Renderer::getCurrentWindowSize().y);
+	}
+
 	Vec2f Input::getMouseMovement() {
 		return mouseMovement;
+	}
+
+	Vec2f Input::getMouseMovementScreenSpace() {
+		return Vec2f(mouseMovement.x / Renderer::getCurrentWindowSize().x, mouseMovement.y / Renderer::getCurrentWindowSize().y);
 	}
 
 	void Input::setMousePosition(const Vec2f& position) {

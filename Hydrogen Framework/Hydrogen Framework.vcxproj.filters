@@ -83,8 +83,8 @@
     <ClCompile Include="src\HGE\graphics\image\stb_image.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\shaders\guiFrameVertex.glsl" />
     <None Include="res\shaders\guiFrameFragment.glsl" />
+    <None Include="res\shaders\guiFrameVertex.glsl" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="res\profiled methods.txt" />

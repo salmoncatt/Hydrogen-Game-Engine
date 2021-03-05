@@ -15,12 +15,13 @@ namespace HGE {
 	class DLL_API Window{
 	private:
 		bool focused = false;
+		bool vsync = false;
+		//int refreshRate = 60;
+
 	public:
 		GLFWwindow* window;
 		Vec2i size, position;
 		std::string name;
-
-		bool isVSync = false;
 
 		Window(const Vec2i& _size, const std::string& _Name);
 		~Window();
@@ -30,6 +31,9 @@ namespace HGE {
 		void setBackGroundColor(const Vec4f& color);
 		void limitFps(const int& fps);
 		void setVSync(const bool& sync);
+		bool isVSync();
+		//void setRefreshRate(const int& rate);
+		//int getRefreshRate();
 		void resize(const Vec2i& size);
 		void setPosition(const Vec2i& position);
 		void setIcon(Image& image);

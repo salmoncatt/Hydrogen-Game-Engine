@@ -61,7 +61,9 @@ namespace HGE {
 
 		//mouse numbers n stuff
 		static Vec2f getMousePosition();
+		static Vec2f getMousePositionScreenSpace();
 		static Vec2f getMouseMovement();
+		static Vec2f getMouseMovementScreenSpace();
 		static void setMousePosition(const Vec2f& position);
 
 		//scroll n stuff

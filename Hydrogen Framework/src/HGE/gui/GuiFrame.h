@@ -27,6 +27,8 @@ namespace HGE {
 		unsigned int borderSize;
 
 		int sizeType;
+		int roundedCornerRadius = 0;
+		float cornerSmoothing = 0.7f;
 
 		bool visible = true;
 		bool draggable = false;

@@ -59,11 +59,17 @@ namespace HGE {
 		quad.type = HGE_2D;
 		quad.create();
 
+		Debug::systemLog("Creating system shaders");
+		Debug::newLine();
+
 		mainShader.create();
 		guiShader.create();
 		guiFrameShader.create();
 		nullTexture.create();
 		createProjectionMatrix(screenWidth, screenHeight);
+
+		Debug::newLine();
+		Debug::systemSuccess("Created system shaders");
 
 		Debug::newLine();
 	}
@@ -430,7 +436,7 @@ namespace HGE {
 		//matrix stuff
 		if (frame.sizeType == HGE_SCREEN_SPACE_SIZE) {
 
-			uiPosition = Vec2f(frame.position.x * 2, -frame.position.y * 2) + Vec2f(frame.size.x - frame.size.x * frame.anchorPoint.x * 2, -frame.size.y + frame.size.y * frame.anchorPoint.y * 2);
+			uiPosition = Vec2f(frame.position.x * 2 * Renderer::getAspectRatio(), -frame.position.y * 2) + Vec2f(frame.size.x - frame.size.x * frame.anchorPoint.x * 2, -frame.size.y + frame.size.y * frame.anchorPoint.y * 2);
 
 			transform = orthoMatrix * Mat4f::createTransformationMatrix(uiPosition, Vec3f(0, 0, frame.rotation), frame.size);
 
@@ -452,6 +458,7 @@ namespace HGE {
 		guiFrameShader.setUniform("color", frame.backgroundColor);
 		guiFrameShader.setUniform("borderColor", frame.borderColor);
 		guiFrameShader.setUniform("borderSize", (float)frame.borderSize);
+		guiFrameShader.setUniform("cornerRadius", (float)frame.roundedCornerRadius);
 		guiFrameShader.setUniform("aspectRatio", getAspectRatio());
 
 
@@ -468,13 +475,11 @@ namespace HGE {
 	void Renderer::renderGuis() {
 		for (size_t i = 0; i < Engine::guiFrames.size(); ++i) {
 			auto& frame = Engine::guiFrames[i];
-			if (frame->active && frame->draggable && frame->isSelected()) {
-				frame->position += Vec2f(Input::getMouseMovement().x / 2, Input::getMouseMovement().y / 2);
-			}
+			if (frame->active && frame->draggable && frame->isSelected())
+				frame->position += frame->sizeType == HGE_PIXEL_SIZE ? Vec2f(Input::getMouseMovement().x / 2, Input::getMouseMovement().y / 2) : Vec2f(Input::getMouseMovementScreenSpace().x / 2, Input::getMouseMovementScreenSpace().y / 2);
 
-			if (frame->visible) {
+			if (frame->visible)
 				render(*frame);
-			}
 		}
 	}
 

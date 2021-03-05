@@ -14,10 +14,10 @@ class Main : public HGE::Program {
 		void start() {
 			frame = GuiFrame();
 			frame.sizeType = HGE_PIXEL_SIZE;
-			frame.size = Vec2f(100, 100);
-			frame.position = Vec2f(0, 0);
+			frame.size = Vec2f(400, 400);
+			frame.position = Vec2f();
 			frame.name = "test";
-			frame.anchorPoint = Vec2f(0, 0);
+			frame.anchorPoint = Vec2f();
 			frame.backgroundColor = Vec4f(0.9f, 0.6f, 0, 0.5f);
 			frame.borderColor = Vec4f(0, 0, 0, 0.6f);
 			
@@ -37,9 +37,6 @@ class Main : public HGE::Program {
 			}
 			else if (Input::getKeyDown(HGE_KEY_N)) {
 				frame.visible = true;
-				for (int i = 0; i < 100; i++) {
-					Image image = Image(HGE_RES + "textures/icon.png");
-				}
 				//Engine::registerGuiFrame(&frame);
 			}
 		}
@@ -87,6 +84,7 @@ public:
 
 		Renderer::setCullingMode(true);
 		Renderer::setLightMode(HGE_PER_PIXEL_LIGHT);
+		Engine::window->setVSync(true);
 
 		test->editorCamera.transform.position = Vec3f(0, 0, 10);
 
@@ -146,7 +144,7 @@ public:
 			//Vec2f(-1 * Renderer::getAspectRatio() + 0.5f, 1 - 0.5f)
 			//Renderer::renderRectangle(Vec2f(), scale, angle, Vec3f(0.4f, 0.2f, 0.8f));
 
-			window->limitFps(200);
+			//window->limitFps(200);
 		}
 
 		delete test;
