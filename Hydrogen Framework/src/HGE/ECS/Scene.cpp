@@ -101,6 +101,8 @@ namespace HGE {
 					script.scripts[0]->start();
 				}
 
+				script.scripts[0]->update();
+
 				//script.scripts[0]->update();
 
 				//if (!script.gameObject) {
@@ -114,8 +116,6 @@ namespace HGE {
 				//	//startup the script
 				//	script.gameObject->start();
 				//}
-
-				//script.gameObject->update();
 
 			}
 

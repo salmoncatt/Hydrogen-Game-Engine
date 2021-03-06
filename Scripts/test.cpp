@@ -33,6 +33,7 @@ using namespace HGE;
 			frame.rotation += Input::getScrollMovement().y;
 
 			if (Input::getKey(HGE_KEY_B)) {
+				Debug::log("test");
 			}
 		}
 

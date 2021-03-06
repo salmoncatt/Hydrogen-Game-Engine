@@ -55,6 +55,7 @@ namespace HGE {
 	}
 
 	void ScriptManager::update() {
+		ProfileMethod("ScriptManager update");
 		checkForScripts(true);
 	}
 
