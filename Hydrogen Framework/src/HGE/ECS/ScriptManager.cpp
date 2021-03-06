@@ -2,15 +2,17 @@
 #include "ScriptManager.h"
 #include "HGE/ECS/components/NativeScript.h"
 #include "HGE/util/Debug.h"
-
+#include "HGE/util/time/Time.h"
 
 namespace HGE {
 
 	std::unordered_map<std::string, std::string> ScriptManager::scriptPathToName{};
-	std::unordered_map<std::string, GameObject*> ScriptManager::scriptNameToScript {};
-	std::unordered_map<std::string, GameObject* (__stdcall*)()> ScriptManager::scriptNameToScriptCreate{};
+	std::unordered_map<std::string, GameObject* (__stdcall*)()> ScriptManager::scriptNameToScript{};
 	std::unordered_map<size_t, std::string> ScriptManager::numberToPath{0};
+	std::unordered_map<std::string, HINSTANCE> ScriptManager::scriptNameToHandle{};
+
 	size_t ScriptManager::scriptAmount = 1;
+	double ScriptManager::timeElapsed = 0;
 
 
 	void ScriptManager::loadScriptFromDLL(const std::string& path, const std::string& _name, const bool& supressError) {
@@ -30,15 +32,13 @@ namespace HGE {
 			Debug::systemErr("Couldn't find the create function of a script in the dll file containing scripts at: " + path + "(Check if there is an export function for the script)");
 		}
 
-		GameObject* out = createScript();
-
 		std::string name = _name.substr(0, _name.length() - 4);
 
 		if (scriptPathToName.find(path) == scriptPathToName.end() && scriptNameToScript.find(name) == scriptNameToScript.end()) {
 			scriptPathToName[path] = name;
 			numberToPath[scriptAmount] = path;
-			scriptNameToScript[name] = out;
-			scriptNameToScriptCreate[name] = createScript;
+			scriptNameToScript[name] = createScript;
+			scriptNameToHandle[name] = dllHandle;
 
 			Debug::systemSuccess("Loaded script: " + name, DebugColor::Blue);
 			scriptAmount += 1;
@@ -47,7 +47,6 @@ namespace HGE {
 			if(!supressError)
 			Debug::systemErr("Already loaded script file: " + path + ", or already loaded script with name: " + name);
 		}
-
 	}
 
 	void ScriptManager::init() {
@@ -56,7 +55,12 @@ namespace HGE {
 
 	void ScriptManager::update() {
 		ProfileMethod("ScriptManager update");
-		checkForScripts(true);
+		timeElapsed += Time::getDeltaTime();
+
+		if (timeElapsed >= HGE_SCRIPT_MANAGER_UPDATE_DELAY) {
+			timeElapsed = 0;
+			checkForScripts(true);
+		}
 	}
 
 	void ScriptManager::checkForScripts(const bool& supressError) {
@@ -81,17 +85,19 @@ namespace HGE {
 
 	void ScriptManager::close() {
 		for (size_t i = 1; i < scriptAmount; i++) {
-			delete scriptNameToScript[scriptPathToName[numberToPath[i]]];
+			FreeLibrary(scriptNameToHandle[scriptPathToName[numberToPath[i]]]);
 			Debug::systemSuccess("Deleted script: " + scriptPathToName[numberToPath[i]], DebugColor::Blue);
 		}
 	}
 
-	GameObject* ScriptManager::getScript(const std::string& name) {
-		return scriptNameToScript[name];
-	}
-
 	GameObject* ScriptManager::createScript(const std::string& name) {
-		return scriptNameToScriptCreate[name]();
+		if (scriptNameToScript.find(name) != scriptNameToScript.end()) {
+			return scriptNameToScript[name]();
+		}
+		else {
+			Debug::systemErr("No script found of name: " + name);
+			return nullptr;
+		}
 	}
 
 }

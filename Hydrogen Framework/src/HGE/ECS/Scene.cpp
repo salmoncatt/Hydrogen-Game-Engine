@@ -78,6 +78,7 @@ namespace HGE {
 	}
 
 	void Scene::updateEditor() {
+		ProfileMethod("Scene Editor update");
 		editorCamera.update();
 
 		Renderer::setCamera(editorCamera.camera);

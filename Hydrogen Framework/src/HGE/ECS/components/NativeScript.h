@@ -18,18 +18,18 @@ namespace HGE {
 		unsigned int scriptIndex = 0;
 		std::array<GameObject*, HGE_MAX_SCRIPTS> scripts{nullptr};
 
-		GameObject* gameObject = nullptr;
+		//GameObject* gameObject = nullptr;
 
 		void (*instantiateScript)(NativeScript*, const unsigned int&) = {};
 
-		GameObject* (*instantiateFunction)() = {};
-		void(*destroyFunction)(NativeScript*) = {};
+		//GameObject* (*instantiateFunction)() = {};
+		//void(*destroyFunction)(NativeScript*) = {};
 
-		template<typename T>
-		void addScript() {
-			instantiateFunction = []() {return static_cast<GameObject*>(new T()); };
-			destroyFunction = [](NativeScript* nativeScript) {delete nativeScript->gameObject; nativeScript->gameObject = nullptr; };
-		}
+		//template<typename T>
+		//void addScript() {
+		//	//instantiateFunction = []() {return static_cast<GameObject*>(new T()); };
+		//	//destroyFunction = [](NativeScript* nativeScript) {delete nativeScript->gameObject; nativeScript->gameObject = nullptr; };
+		//}
 
 		//name is the name of the dll file in which the script is in
 		void addScript(const std::string& name) {
@@ -37,9 +37,9 @@ namespace HGE {
 			scriptIndex += 1;
 			
 			instantiateScript = [](NativeScript* nativeScript, const unsigned int& index) {
-
-				if (ScriptManager::getScript(nativeScript->nameToScriptIndex[index]) != nullptr)
-					nativeScript->scripts[index] = ScriptManager::createScript(nativeScript->nameToScriptIndex[index]);
+				GameObject* script = ScriptManager::createScript(nativeScript->nameToScriptIndex[index]);
+				if (script != nullptr)
+					nativeScript->scripts[index] = script;
 				else
 					Debug::systemErr("Couldn't find script: " + nativeScript->nameToScriptIndex[index]);
 			};

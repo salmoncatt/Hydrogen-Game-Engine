@@ -5,48 +5,6 @@ using namespace HGE;
 
 class Main : public HGE::Program {
 
-	//test script
-	class TestScript : public Script {
-	public:
-
-		GuiFrame frame;
-
-		void start() {
-			frame = GuiFrame();
-			frame.sizeType = HGE_PIXEL_SIZE;
-			frame.size = Vec2f(400, 400);
-			frame.position = Vec2f();
-			frame.name = "test";
-			frame.anchorPoint = Vec2f();
-			frame.backgroundColor = Vec4f(0.9f, 0.6f, 0, 0.5f);
-			frame.borderColor = Vec4f(0, 0, 0, 0.6f);
-			
-			frame.draggable = true;
-			frame.selectable = true;
-			frame.active = true;
-
-			Engine::registerGuiFrame(&frame);
-
-		}
-
-		void update() {
-			frame.rotation += Input::getScrollMovement().y;
-
-			if (Input::getKey(HGE_KEY_B)) {
-			}
-		}
-
-		void fixedUpdate() {
-
-		}
-
-		void stop() {
-		}
-
-		~TestScript() {
-		}
-
-	};
 
 
 
@@ -136,7 +94,7 @@ public:
 
 			//Vec2f scale = Vec2f(100 / Renderer::getCurrentWindowSize().x, 100 / Renderer::getCurrentWindowSize().y);
 
-			//Debug::logProfile(Debug::getProfile("Render mesh"));
+			//Debug::logProfile(Debug::getProfile("ScriptManager update"));
 
 			//Vec2f(-1 * Renderer::getAspectRatio() + 0.5f, 1 - 0.5f)
 			//Renderer::renderRectangle(Vec2f(), scale, angle, Vec3f(0.4f, 0.2f, 0.8f));

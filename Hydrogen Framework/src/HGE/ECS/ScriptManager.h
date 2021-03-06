@@ -3,6 +3,7 @@
 #define HGE_SCRIPT_MANAGER_HEADER_INCLUDE
 
 #include HGE_API
+#define HGE_SCRIPT_MANAGER_UPDATE_DELAY 2
 
 namespace HGE {
 
@@ -11,11 +12,12 @@ namespace HGE {
 	class DLL_API ScriptManager {
 	private:
 		static size_t scriptAmount;
+		static double timeElapsed;
 	public:
 		static std::unordered_map<size_t, std::string> numberToPath;
 		static std::unordered_map<std::string, std::string> scriptPathToName;
-		static std::unordered_map<std::string, GameObject*> scriptNameToScript;
-		static std::unordered_map<std::string, GameObject* (__stdcall*)()> scriptNameToScriptCreate;
+		static std::unordered_map<std::string, GameObject* (__stdcall*)()> scriptNameToScript;
+		static std::unordered_map<std::string, HINSTANCE> scriptNameToHandle;
 
 		static void loadScriptFromDLL(const std::string& path, const std::string& name, const bool& supressError);
 		static void init();
@@ -23,7 +25,6 @@ namespace HGE {
 		static void update();
 		static void checkForScripts(const bool& supressError);
 		static size_t getAmountOfScripts();
-		static GameObject* getScript(const std::string& name);
 		static GameObject* createScript(const std::string& name);
 
 	};
