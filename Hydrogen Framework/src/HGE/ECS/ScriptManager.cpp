@@ -8,6 +8,7 @@ namespace HGE {
 
 	std::unordered_map<std::string, std::string> ScriptManager::scriptPathToName{};
 	std::unordered_map<std::string, GameObject*> ScriptManager::scriptNameToScript {};
+	std::unordered_map<std::string, GameObject* (__stdcall*)()> ScriptManager::scriptNameToScriptCreate{};
 	std::unordered_map<size_t, std::string> ScriptManager::numberToPath{0};
 	size_t ScriptManager::scriptAmount = 1;
 
@@ -37,6 +38,7 @@ namespace HGE {
 			scriptPathToName[path] = name;
 			numberToPath[scriptAmount] = path;
 			scriptNameToScript[name] = out;
+			scriptNameToScriptCreate[name] = createScript;
 
 			Debug::systemSuccess("Loaded script: " + name, DebugColor::Blue);
 			scriptAmount += 1;
@@ -85,6 +87,10 @@ namespace HGE {
 
 	GameObject* ScriptManager::getScript(const std::string& name) {
 		return scriptNameToScript[name];
+	}
+
+	GameObject* ScriptManager::createScript(const std::string& name) {
+		return scriptNameToScriptCreate[name]();
 	}
 
 }

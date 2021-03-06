@@ -38,12 +38,8 @@ namespace HGE {
 			
 			instantiateScript = [](NativeScript* nativeScript, const unsigned int& index) {
 
-				if (ScriptManager::getScript(nativeScript->nameToScriptIndex[index]) != nullptr) {
-					GameObject* script = ScriptManager::getScript(nativeScript->nameToScriptIndex[index]);
-
-					nativeScript->scripts[index] = reinterpret_cast<GameObject*>(malloc(sizeof(script)));
-					memcpy(nativeScript->scripts[index], script, (sizeof(script)));
-				}
+				if (ScriptManager::getScript(nativeScript->nameToScriptIndex[index]) != nullptr)
+					nativeScript->scripts[index] = ScriptManager::createScript(nativeScript->nameToScriptIndex[index]);
 				else
 					Debug::systemErr("Couldn't find script: " + nativeScript->nameToScriptIndex[index]);
 			};

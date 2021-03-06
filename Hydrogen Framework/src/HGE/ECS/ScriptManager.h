@@ -15,6 +15,7 @@ namespace HGE {
 		static std::unordered_map<size_t, std::string> numberToPath;
 		static std::unordered_map<std::string, std::string> scriptPathToName;
 		static std::unordered_map<std::string, GameObject*> scriptNameToScript;
+		static std::unordered_map<std::string, GameObject* (__stdcall*)()> scriptNameToScriptCreate;
 
 		static void loadScriptFromDLL(const std::string& path, const std::string& name, const bool& supressError);
 		static void init();
@@ -23,6 +24,7 @@ namespace HGE {
 		static void checkForScripts(const bool& supressError);
 		static size_t getAmountOfScripts();
 		static GameObject* getScript(const std::string& name);
+		static GameObject* createScript(const std::string& name);
 
 	};
 
