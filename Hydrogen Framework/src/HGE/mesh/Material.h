@@ -3,8 +3,8 @@
 #define HGE_MATERIAL_HEADER_INCLUDE
 
 #include HGE_API
-#include "HGE/math/vectors/Vec3.h"
-#include "Texture.h"
+#include HGE_VEC3
+#include HGE_TEXTURE
 
 namespace HGE {
 

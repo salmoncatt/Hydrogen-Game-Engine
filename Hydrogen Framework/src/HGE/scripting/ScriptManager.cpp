@@ -1,8 +1,4 @@
 #include "hpch.h"
-#include "ScriptManager.h"
-#include "HGE/ECS/components/NativeScript.h"
-#include "HGE/util/Debug.h"
-#include "HGE/util/time/Time.h"
 
 namespace HGE {
 

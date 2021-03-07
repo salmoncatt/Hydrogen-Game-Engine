@@ -1,22 +1,4 @@
 #include "hpch.h"
-#include "Scene.h"
-#include "GameObject.h"
-
-#include "components/Transform.h"
-#include "components/Tag.h"
-#include "HGE/ECS/components/Mesh.h"
-#include "HGE/ECS/components/MeshComponent.h"
-#include "HGE/ECS/components/NativeScript.h"
-
-#include "HGE/graphics/rendering/Renderer.h"
-#include "HGE/util/Debug.h"
-#include "HGE/util/time/Time.h"
-#include "HGE/io/Input.h"
-#include "HGE/math/HMath.h"
-#include "HGE/util/time/Profiler.h"
-#include "HGE/util/Util.h"
-#include "HGE/core/Program.h"
-#include "HGE/core/Engine.h"
 
 namespace HGE {
 

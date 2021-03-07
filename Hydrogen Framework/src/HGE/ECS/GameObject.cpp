@@ -1,11 +1,4 @@
 #include "hpch.h"
-#include "GameObject.h"
-#include "components/Transform.h"
-#include "components/Tag.h"
-#include "components/Mesh.h"
-#include "components/MeshComponent.h"
-#include "components/Texture.h"
-#include "components/NativeScript.h"
 
 namespace HGE {
 

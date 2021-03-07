@@ -1,5 +1,4 @@
 #include "hpch.h"
-#include "Profile.h"
 
 
 namespace HGE {

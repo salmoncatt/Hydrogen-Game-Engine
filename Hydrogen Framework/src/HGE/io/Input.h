@@ -4,8 +4,8 @@
 #define HGE_INPUT_HEADER_INCLUDE
 
 #include HGE_API
-#include "HGE/io/Window.h"
-#include "HGE/math/vectors/Vec2.h"
+#include HGE_WINDOW
+#include HGE_VEC2
 
 namespace HGE {
 

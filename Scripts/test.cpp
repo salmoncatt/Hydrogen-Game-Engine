@@ -1,11 +1,8 @@
-#define HGE_SCRIPT
 #include "hpch.h"
 #include "HGE.h"
 
 using namespace HGE;
 
-
-//test script
 class TestScript : public Script {
 public:
 
@@ -50,10 +47,4 @@ public:
 	}
 
 };
-
-extern "C" {
-	__declspec(dllexport) Script* CreateScript()
-	{
-		return new TestScript();
-	}
-}
+RegisterScript(TestScript)

@@ -1,7 +1,4 @@
 #include "hpch.h"
-#include "HMath.h"
-#include "HGE/util/Util.h"
-#include "HGE/math/vectors/Vec3.h"
 
 namespace HGE {
 

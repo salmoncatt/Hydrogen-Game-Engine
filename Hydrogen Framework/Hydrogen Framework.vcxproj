@@ -11,17 +11,17 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\HGE\ECS\ScriptManager.h" />
+    <ClInclude Include="src\HGE\scripting\ScriptManager.h" />
     <ClInclude Include="src\HGE\graphics\image\stb_image.h" />
     <ClInclude Include="src\HGE\io\dirent.h" />
-    <ClInclude Include="src\HGE\util\time\Profile.h" />
+    <ClInclude Include="src\HGE\time\Profile.h" />
     <ClInclude Include="src\HGE\gui\GuiFrame.h" />
     <ClInclude Include="src\HGE\math\Random.h" />
     <ClInclude Include="src\HGE\core\Engine.h" />
-    <ClInclude Include="src\HGE\ECS\components\NativeScript.h" />
+    <ClInclude Include="src\HGE\scripting\NativeScript.h" />
     <ClInclude Include="src\HGE\util\memory\MemoryUtil.h" />
-    <ClInclude Include="src\HGE\ECS\components\Material.h" />
-    <ClInclude Include="src\HGE\ECS\components\MeshComponent.h" />
+    <ClInclude Include="src\HGE\mesh\Material.h" />
+    <ClInclude Include="src\HGE\mesh\MeshComponent.h" />
     <ClInclude Include="src\HGE\camera\EditorCamera.h" />
     <ClInclude Include="src\HGE.h" />
     <ClInclude Include="src\HGE\camera\Camera.h" />
@@ -30,15 +30,15 @@
     <ClInclude Include="src\HGE\core\Program.h" />
     <ClInclude Include="src\HGE\core\Start.h" />
     <ClInclude Include="src\HGE\gui\GuiElement.h" />
-    <ClInclude Include="src\HGE\ECS\components\Mesh.h" />
+    <ClInclude Include="src\HGE\mesh\Mesh.h" />
     <ClInclude Include="src\HGE\ECS\components\Tag.h" />
-    <ClInclude Include="src\HGE\ECS\components\Transform.h" />
+    <ClInclude Include="src\HGE\math\vectors\Transform.h" />
     <ClInclude Include="src\HGE\ECS\ECS.h" />
     <ClInclude Include="src\HGE\ECS\GameObject.h" />
     <ClInclude Include="src\HGE\ECS\Scene.h" />
     <ClInclude Include="src\HGE\graphics\image\Image.h" />
     <ClInclude Include="src\HGE\graphics\image\Pixel.h" />
-    <ClInclude Include="src\HGE\ECS\components\Texture.h" />
+    <ClInclude Include="src\HGE\mesh\Texture.h" />
     <ClInclude Include="src\HGE\graphics\rendering\Renderer.h" />
     <ClInclude Include="src\HGE\graphics\rendering\Shader.h" />
     <ClInclude Include="src\HGE\io\Cursor.h" />
@@ -50,34 +50,35 @@
     <ClInclude Include="src\HGE\math\vectors\Vec3.h" />
     <ClInclude Include="src\HGE\math\vectors\Vec4.h" />
     <ClInclude Include="src\HGE\util\Debug.h" />
-    <ClInclude Include="src\HGE\util\memory\FloatBuffer.h" />
-    <ClInclude Include="src\HGE\util\time\Profiler.h" />
-    <ClInclude Include="src\HGE\util\time\Time.h" />
+    <ClInclude Include="src\HGE\memory\FloatBuffer.h" />
+    <ClInclude Include="src\HGE\time\Profiler.h" />
+    <ClInclude Include="src\HGE\time\Time.h" />
     <ClInclude Include="src\HGE\util\Util.h" />
-    <ClInclude Include="src\hge_var.h" />
+    <ClInclude Include="src\hgedef.h" />
     <ClInclude Include="src\hpch.h" />
+    <ClInclude Include="src\IncludeStandard.h" />
     <ClInclude Include="src\test\HWindow.h" />
     <ClInclude Include="src\HGE\util\memory\string.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\HGE\ECS\ScriptManager.cpp" />
+    <ClCompile Include="src\HGE\scripting\ScriptManager.cpp" />
     <ClCompile Include="src\HGE\graphics\image\stb_image.cpp" />
-    <ClCompile Include="src\HGE\util\time\Profile.cpp" />
+    <ClCompile Include="src\HGE\time\Profile.cpp" />
     <ClCompile Include="src\HGE\gui\GuiFrame.cpp" />
     <ClCompile Include="src\HGE\gui\GuiElement.cpp" />
     <ClCompile Include="src\HGE\math\Random.cpp" />
     <ClCompile Include="src\HGE\core\Engine.cpp" />
-    <ClCompile Include="src\HGE\ECS\components\MeshComponent.cpp" />
+    <ClCompile Include="src\HGE\mesh\MeshComponent.cpp" />
     <ClCompile Include="src\HGE\camera\EditorCamera.cpp" />
     <ClCompile Include="src\HGE\camera\Camera.cpp" />
     <ClCompile Include="src\HGE\camera\CameraController.cpp" />
     <ClCompile Include="src\HGE\core\Program.cpp" />
-    <ClCompile Include="src\HGE\ECS\components\Mesh.cpp" />
+    <ClCompile Include="src\HGE\mesh\Mesh.cpp" />
     <ClCompile Include="src\HGE\ECS\ECS.cpp" />
     <ClCompile Include="src\HGE\ECS\GameObject.cpp" />
     <ClCompile Include="src\HGE\ECS\Scene.cpp" />
     <ClCompile Include="src\HGE\graphics\image\Image.cpp" />
-    <ClCompile Include="src\HGE\ECS\components\Texture.cpp" />
+    <ClCompile Include="src\HGE\mesh\Texture.cpp" />
     <ClCompile Include="src\HGE\graphics\rendering\Renderer.cpp" />
     <ClCompile Include="src\HGE\graphics\rendering\Shader.cpp" />
     <ClCompile Include="src\HGE\io\Cursor.cpp" />
@@ -88,9 +89,9 @@
     <ClCompile Include="src\HGE\math\vectors\Vec2.cpp" />
     <ClCompile Include="src\HGE\math\vectors\Vec3.cpp" />
     <ClCompile Include="src\HGE\util\Debug.cpp" />
-    <ClCompile Include="src\HGE\util\memory\FloatBuffer.cpp" />
-    <ClCompile Include="src\HGE\util\time\Profiler.cpp" />
-    <ClCompile Include="src\HGE\util\time\Time.cpp" />
+    <ClCompile Include="src\HGE\memory\FloatBuffer.cpp" />
+    <ClCompile Include="src\HGE\time\Profiler.cpp" />
+    <ClCompile Include="src\HGE\time\Time.cpp" />
     <ClCompile Include="src\HGE\util\Util.cpp" />
     <ClCompile Include="src\hpch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -153,7 +154,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>HGE_BUILD_DLL;GLEW_STATIC;HGE_SUPPRESS_DLL_ERROR</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HGE_BUILD_DLL;GLEW_STATIC;HGE_SUPPRESS_DLL_WARNING</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\GLFW\include;$(SolutionDir)Dependencies\GLEW\include;$(SolutionDir)Hydrogen Framework\src;$(SolutionDir)Dependencies\HFL\include</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -184,7 +185,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>HGE_BUILD_DLL;GLEW_STATIC;HGE_SUPPRESS_DLL_ERROR</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HGE_BUILD_DLL;GLEW_STATIC;HGE_SUPPRESS_DLL_WARNING</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\GLFW\include;$(SolutionDir)Dependencies\GLEW\include;$(SolutionDir)Hydrogen Framework\src;$(SolutionDir)Dependencies\HFL\include</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>

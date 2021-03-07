@@ -3,9 +3,9 @@
 #define HGE_NATIVE_SCRIPT_HEADER_INCLUDE
 
 #include HGE_API
-#include "HGE/ECS/ECS.h"
-#include "HGE/ECS/GameObject.h"
-#include "HGE/ECS/ScriptManager.h"
+#include HGE_ECS
+#include HGE_GAMEOBJECT
+#include HGE_SCRIPT_MANAGER
 
 #define HGE_MAX_SCRIPTS 100
 

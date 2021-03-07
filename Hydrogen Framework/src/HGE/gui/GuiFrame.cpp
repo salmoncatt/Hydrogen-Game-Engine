@@ -1,9 +1,5 @@
 #include "hpch.h"
 #include "GuiFrame.h"
-#include "HGE/core/Engine.h"
-#include "HGE/io/Input.h"
-#include "HGE/graphics/rendering/Renderer.h"
-#include "HGE/util/Debug.h"
 
 namespace HGE {
 

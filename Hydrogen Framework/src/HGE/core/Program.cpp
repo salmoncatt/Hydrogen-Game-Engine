@@ -1,14 +1,5 @@
 #include "hpch.h"
 
-#include "Program.h"
-#include "HGE/util/Debug.h"
-#include "HGE/util/Util.h"
-#include "HGE/graphics/rendering/Renderer.h"
-#include "HGE/io/Input.h"
-#include "HGE/util/time/Time.h"
-#include "HGE/util/time/Profiler.h"
-#include "Engine.h"
-
 namespace HGE {
 
 	Program::Program() {

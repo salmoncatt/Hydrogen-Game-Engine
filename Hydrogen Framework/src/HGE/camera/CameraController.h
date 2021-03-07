@@ -5,7 +5,7 @@
 #include HGE_API
 
 #include "Camera.h"
-#include "HGE/math/vectors/Vec3.h"
+#include HGE_VEC3
 
 namespace HGE {
 

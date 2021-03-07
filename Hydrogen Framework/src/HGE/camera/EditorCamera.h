@@ -3,9 +3,8 @@
 #define HGE_EDITOR_CAMERA_HEADER_INCLUDE
 
 #include HGE_API
-#include "HGE/math/vectors/Vec3.h"
 #include "Camera.h"
-#include "HGE/ECS/components/Transform.h"
+#include HGE_TRANSFORM
 
 namespace HGE {
 

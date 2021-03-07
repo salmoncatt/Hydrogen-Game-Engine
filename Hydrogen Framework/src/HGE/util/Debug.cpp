@@ -1,10 +1,4 @@
 #include "hpch.h"
-#include "Debug.h"
-#include "HGE/math/vectors/Vec2.h"
-#include "HGE/math/vectors/Vec3.h"
-#include "HGE/math/vectors/Vec4.h"
-#include "HGE/graphics/image/Pixel.h"
-#include "HGE/ECS/components/Transform.h"
 
 namespace HGE {
 

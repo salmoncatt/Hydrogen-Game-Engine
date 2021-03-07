@@ -1,5 +1,4 @@
 #include "hpch.h"
-#include "MeshComponent.h"
 
 namespace HGE {
 

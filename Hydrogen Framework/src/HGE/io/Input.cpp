@@ -1,10 +1,4 @@
 #include "hpch.h"
-#include "Input.h"
-#include "HGE/util/Debug.h"
-#include "HGE/graphics/rendering/Renderer.h"
-#include "Cursor.h"
-#include "HGE/util/time/Time.h"
-
 
 namespace HGE {
 

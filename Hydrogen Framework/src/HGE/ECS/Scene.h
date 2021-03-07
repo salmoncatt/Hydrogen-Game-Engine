@@ -5,8 +5,8 @@
 #include HGE_API
 
 #include "ECS.h"
-#include "HGE/camera/EditorCamera.h"
-#include "HGE/ECS/components/Texture.h"
+#include HGE_EDITOR_CAMERA
+#include HGE_TEXTURE
 
 namespace HGE {
 

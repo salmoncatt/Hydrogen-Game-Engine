@@ -1,10 +1,4 @@
 #include "hpch.h"
-#include "Window.h"
-#include "HGE/util/Debug.h"
-#include "HGE/util/time/Time.h"
-#include "HGE/graphics/rendering/Renderer.h"
-#include "HGE/util/Util.h"
-#include "HGE/math/vectors/Vec4.h"
 
 namespace HGE {
 

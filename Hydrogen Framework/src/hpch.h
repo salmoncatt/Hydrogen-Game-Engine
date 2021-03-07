@@ -52,15 +52,16 @@
 #include "GLFW/glfw3.h"
 
 //HGE vars n stuff
-#include "hge_var.h"
+#include "hgedef.h"
 
 //oh yea my own standard library leeeetsss goooooo
 //its nowhere near finished for now
 #include "HFL/HFL.h"
 
 //for profiling of any class
-#include "HGE/util/time/Profiler.h"
+#include HGE_PROFILER
 #define ProfileMethod(name) HGE::Profiler HGE_AUTO_PROFILER(name, false, true)
 
+#include HGE_STANDARD
 
 #endif

@@ -1,6 +1,4 @@
 #include "hpch.h"
-#include "Time.h"
-#include "HGE/math/HMath.h"
 
 namespace HGE {
 

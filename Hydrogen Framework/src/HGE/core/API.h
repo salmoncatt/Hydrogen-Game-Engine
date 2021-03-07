@@ -13,7 +13,7 @@
 	#error Hydrogen Game Engine is on Windows x64 only dude.
 #endif
 
-#ifdef HGE_SUPPRESS_DLL_ERROR
+#ifdef HGE_SUPPRESS_DLL_WARNING
 
 #pragma warning( disable : 4251 )
 

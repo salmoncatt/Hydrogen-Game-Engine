@@ -4,7 +4,7 @@
 
 
 #include HGE_API
-#include "HGE/io/Window.h"
+#include HGE_WINDOW
 
 namespace HGE {
 

@@ -1,5 +1,4 @@
 #include "hpch.h"
-#include "ECS.h"
 
 namespace HGE {
 

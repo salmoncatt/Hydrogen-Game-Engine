@@ -4,9 +4,9 @@
 
 #include HGE_API
 #include "GuiElement.h"
-#include "HGE/math/vectors/Vec2.h"
-#include "HGE/math/vectors/Vec3.h"
-#include "HGE/math/vectors/Vec4.h"
+#include HGE_VEC2
+#include HGE_VEC3
+#include HGE_VEC4
 
 namespace HGE {
 

@@ -1,5 +1,4 @@
 #include "hpch.h"
-#include "Camera.h"
 
 
 namespace HGE {

@@ -1,5 +1,4 @@
 #include "hpch.h"
-#include "Vec2.h"
 
 namespace HGE {
 

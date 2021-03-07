@@ -1,10 +1,4 @@
 #include "hpch.h"
-#include "Image.h"
-#include "Pixel.h"
-#include "HGE/util/Util.h"
-#include "HGE/util/Debug.h"
-#include "HGE/util/time/Profiler.h"
-#include "stb_image.h"
 
 namespace HGE {
 

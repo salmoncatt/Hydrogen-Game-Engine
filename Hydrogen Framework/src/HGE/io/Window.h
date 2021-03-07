@@ -5,7 +5,7 @@
 
 #include HGE_API
 
-#include "HGE/math/vectors/Vec2.h"
+#include HGE_VEC2
 
 namespace HGE {
 

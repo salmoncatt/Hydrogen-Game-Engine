@@ -1,7 +1,4 @@
 #include "hpch.h"
-#include "Profiler.h"
-#include "Time.h"
-#include "../Debug.h"
 
 namespace HGE {
 

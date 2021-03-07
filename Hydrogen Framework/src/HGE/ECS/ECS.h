@@ -7,7 +7,7 @@
 #define HGE_MAX_ENTITIES 5000
 #define HGE_MAX_COMPONENTS 50
 
-#include "HGE/util/Debug.h"
+#include HGE_DEBUG
 
 namespace HGE {
 

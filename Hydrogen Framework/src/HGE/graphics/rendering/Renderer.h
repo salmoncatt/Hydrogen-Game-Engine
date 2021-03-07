@@ -4,10 +4,10 @@
 #define HGE_RENDERER_HEADER_INCLUDE
 
 #include HGE_API
-#include "HGE/math/matrixes/Mat4.h"
-#include "HGE/ECS/components/Texture.h"
-#include "HGE/graphics/rendering/Shader.h"
-#include "HGE/math/vectors/Vec2.h"
+#include HGE_MAT4
+#include HGE_TEXTURE
+#include HGE_SHADER
+#include HGE_VEC2
 
 namespace HGE {
 

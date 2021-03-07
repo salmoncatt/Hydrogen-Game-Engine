@@ -1,5 +1,4 @@
 #include "hpch.h"
-#include "FloatBuffer.h"
 
 namespace HGE {
 

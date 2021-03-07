@@ -1,7 +1,4 @@
 #include "hpch.h"
-#include "Random.h"
-
-#include "vectors/Vec3.h"
 
 namespace HGE {
 

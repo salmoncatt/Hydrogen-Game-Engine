@@ -3,9 +3,9 @@
 #define HGE_TRANSFORM_HEADER_INCLUDE
 
 #include HGE_API
-#include "HGE/ECS/ECS.h"
-#include "HGE/math/vectors/Vec3.h"
-#include "HGE/math/vectors/Vec2.h"
+#include HGE_ECS
+#include HGE_VEC2
+#include HGE_VEC3
 
 namespace HGE {
 

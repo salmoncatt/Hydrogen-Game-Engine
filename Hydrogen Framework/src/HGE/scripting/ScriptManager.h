@@ -5,6 +5,8 @@
 #include HGE_API
 #define HGE_SCRIPT_MANAGER_UPDATE_DELAY 2
 
+#define RegisterScript(className) extern "C" {__declspec(dllexport) Script* CreateScript(){ return new className(); } }
+
 namespace HGE {
 
 	struct GameObject;

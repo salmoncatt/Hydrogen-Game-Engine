@@ -4,7 +4,7 @@
 #define HGE_MESH_HEADER_INCLUDE
 
 #include HGE_API
-#include "HGE/math/vectors/Vec3.h"
+#include HGE_VEC3
 #include "Material.h"
 
 namespace HGE {

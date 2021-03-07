@@ -4,8 +4,6 @@
 
 #include "hpch.h"
 
-#define HGE_API "HGE/core/API.h"
-
 namespace HGE {
 	//big stoof
 	const int HGE_NULL = 0;
@@ -215,5 +213,60 @@ namespace HGE {
 	};
 
 }
+
+//macros for include bc im lazy
+#define HGE_CAMERA "HGE/camera/Camera.h"
+#define HGE_CAMERA_CONTROLLER "HGE/camera/CameraController.h"
+#define HGE_EDITOR_CAMERA "HGE/camera/EditorCamera.h"
+
+#define HGE_ECS "HGE/ECS/ECS.h"
+#define HGE_GAMEOBJECT "HGE/ECS/GameObject.h"
+#define HGE_SCENE "HGE/ECS/Scene.h"
+#define HGE_TAG "HGE/ECS/components/Tag.h"
+
+#define HGE_MESH "HGE/mesh/Mesh.h"
+#define HGE_TEXTURE "HGE/mesh/Texture.h"
+#define HGE_MATERIAL "HGE/mesh/Material.h"
+#define HGE_MESH_COMPONENT "HGE/mesh/MeshComponent.h"
+
+#define HGE_NATIVE_SCRIPT "HGE/scripting/NativeScript.h"
+#define HGE_SCRIPT_MANAGER "HGE/scripting/ScriptManager.h"
+
+#define HGE_GUI_ELEMENT "HGE/gui/GuiElement.h"
+#define HGE_GUI_FRAME "HGE/gui/GuiFrame.h"
+
+#define HGE_API "HGE/core/API.h"
+#define HGE_PROGRAM "HGE/core/Program.h"
+#define HGE_ENGINE "HGE/core/Engine.h"
+#define HGE_START "HGE/core/Start.h"
+
+#define HGE_IMAGE "HGE/graphics/image/Image.h"
+#define HGE_PIXEL "HGE/graphics/image/Pixel.h"
+
+#define HGE_RENDERER "HGE/graphics/rendering/Renderer.h"
+#define HGE_SHADER "HGE/graphics/rendering/Shader.h"
+
+#define HGE_CURSOR "HGE/io/Cursor.h"
+#define HGE_INPUT "HGE/io/Input.h"
+#define HGE_WINDOW "HGE/io/Window.h"
+
+#define HGE_MAT4 "HGE/math/matrixes/Mat4.h"
+#define HGE_TRANSFORM "HGE/math/vectors/Transform.h"
+#define HGE_VEC2 "HGE/math/vectors/Vec2.h"
+#define HGE_VEC3 "HGE/math/vectors/Vec3.h"
+#define HGE_VEC4 "HGE/math/vectors/Vec4.h"
+#define HGE_MATH "HGE/math/HMath.h"
+#define HGE_RANDOM "HGE/math/Random.h"
+
+#define HGE_FLOAT_BUFFER "HGE/memory/FloatBuffer.h"
+
+#define HGE_PROFILE "HGE/time/Profile.h"
+#define HGE_PROFILER "HGE/time/Profiler.h"
+#define HGE_TIME "HGE/time/Time.h"
+
+#define HGE_DEBUG "HGE/util/Debug.h"
+#define HGE_UTIL "HGE/util/Util.h"
+#define HGE_STANDARD "IncludeStandard.h"
+#define STB_IMAGE "HGE/graphics/image/stb_image.h"
 
 #endif

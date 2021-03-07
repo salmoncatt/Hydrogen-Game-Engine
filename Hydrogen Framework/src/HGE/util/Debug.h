@@ -5,7 +5,7 @@
 #include HGE_API
 
 #define HGE_MAX_PROFILES 5000
-#include "time/Profile.h"
+#include HGE_PROFILE
 
 namespace HGE {
 

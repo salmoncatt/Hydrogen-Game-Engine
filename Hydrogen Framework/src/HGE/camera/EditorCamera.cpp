@@ -1,10 +1,4 @@
 #include "hpch.h"
-#include "EditorCamera.h"
-#include "HGE/util/time/Time.h"
-#include "HGE/util/time/Profiler.h"
-#include "HGE/io/Input.h"
-#include "HGE/io/Cursor.h"
-#include "HGE/math/HMath.h"
 
 namespace HGE {
 

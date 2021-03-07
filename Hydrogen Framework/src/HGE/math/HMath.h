@@ -3,6 +3,12 @@
 #define HGE_HMATH_HEADER_INCLUDE
 
 #include HGE_API
+#include HGE_VEC2
+#include HGE_VEC3
+#include HGE_VEC4
+#include HGE_MAT4
+#include HGE_TRANSFORM
+#include HGE_RANDOM
 
 namespace HGE{
 

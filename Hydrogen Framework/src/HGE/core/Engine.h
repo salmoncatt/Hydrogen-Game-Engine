@@ -3,8 +3,8 @@
 #define HGE_ENGINE_HEADER_INCLUDE
 
 #include HGE_API
-#include "HGE/io/Window.h"
-#include "HGE/gui/GuiFrame.h"
+#include HGE_WINDOW
+#include HGE_GUI_FRAME
 
 namespace HGE {
 

@@ -1,16 +1,4 @@
 #include "hpch.h"
-#include "Renderer.h"
-#include "HGE/util/Util.h"
-#include "HGE/camera/Camera.h"
-#include "HGE/ECS/components/Mesh.h"
-#include "HGE/ECS/ECS.h"
-#include "HGE/ECS/components/Transform.h"
-#include "HGE/math/HMath.h"
-#include "HGE/util/time/Profiler.h"
-#include "HGE/math/vectors/Vec4.h"
-#include "HGE/gui/GuiFrame.h"
-#include "HGE/core/Engine.h"
-#include "HGE/io/Input.h"
 
 namespace HGE {
 

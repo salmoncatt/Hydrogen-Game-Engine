@@ -1,11 +1,4 @@
 #include "hpch.h"
-#include "Shader.h"
-#include "HGE/util/Util.h"
-#include "HGE/util/memory/FloatBuffer.h"
-#include "HGE/math/matrixes/Mat4.h"
-#include "HGE/math/vectors/Vec4.h"
-#include "HGE/math/vectors/Vec3.h"
-#include "HGE/math/vectors/Vec2.h"
 
 namespace HGE {
 

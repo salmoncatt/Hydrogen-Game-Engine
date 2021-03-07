@@ -1,6 +1,4 @@
 #include "hpch.h"
-#include "Texture.h"
-#include "HGE/util/Debug.h"
 
 namespace HGE {
 

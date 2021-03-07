@@ -4,7 +4,7 @@
 #define HGE_TEXTURE_HEADER_INCLUDE
 
 #include HGE_API
-#include "HGE/graphics/image/Image.h"
+#include HGE_IMAGE
 
 namespace HGE {
 

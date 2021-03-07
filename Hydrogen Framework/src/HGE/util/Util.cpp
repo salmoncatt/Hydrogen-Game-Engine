@@ -1,13 +1,4 @@
 #include "hpch.h"
-#include "Util.h"
-#include "Debug.h"
-#include "HGE/math/vectors/Vec2.h"
-#include "HGE/math/vectors/Vec3.h"
-#include "HGE/graphics/image/Pixel.h"
-#include "HGE/ECS/components/Mesh.h"
-#include "HGE/ECS/components/Material.h"
-#include "time/Profiler.h"
-#include "HGE/ECS/components/NativeScript.h"
 
 namespace HGE {
 

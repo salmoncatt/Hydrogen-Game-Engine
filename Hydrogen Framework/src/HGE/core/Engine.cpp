@@ -1,13 +1,4 @@
 #include "hpch.h"
-#include "Engine.h"
-#include "HGE/util/Debug.h"
-#include "HGE/util/Util.h"
-#include "HGE/graphics/rendering/Renderer.h"
-#include "HGE/io/Input.h"
-#include "HGE/util/time/Time.h"
-#include "HGE/util/time/Profiler.h"
-#include "HGE/math/Random.h"
-#include "HGE/ECS/ScriptManager.h"
 
 namespace HGE {
 

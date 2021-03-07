@@ -1,7 +1,4 @@
 #include "hpch.h"
-#include "Mesh.h"
-#include "HGE/util/Util.h"
-#include "HGE/math/HMath.h"
 
 namespace HGE {
 
