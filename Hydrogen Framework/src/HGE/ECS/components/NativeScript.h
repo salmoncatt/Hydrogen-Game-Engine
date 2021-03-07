@@ -15,29 +15,23 @@ namespace HGE {
 
 	struct DLL_API NativeScript {
 		std::unordered_map<unsigned int, std::string> nameToScriptIndex{};
-		unsigned int scriptIndex = 0;
-		std::array<GameObject*, HGE_MAX_SCRIPTS> scripts{nullptr};
+		unsigned int scriptAmount = 0;
 
-		//GameObject* gameObject = nullptr;
+		std::array<GameObject*, HGE_MAX_SCRIPTS> scripts{nullptr};
 
 		void (*instantiateScript)(NativeScript*, const unsigned int&) = {};
 
-		//GameObject* (*instantiateFunction)() = {};
-		//void(*destroyFunction)(NativeScript*) = {};
-
-		//template<typename T>
-		//void addScript() {
-		//	//instantiateFunction = []() {return static_cast<GameObject*>(new T()); };
-		//	//destroyFunction = [](NativeScript* nativeScript) {delete nativeScript->gameObject; nativeScript->gameObject = nullptr; };
-		//}
-
 		//name is the name of the dll file in which the script is in
 		void addScript(const std::string& name) {
-			nameToScriptIndex[scriptIndex] = name;
-			scriptIndex += 1;
+			if (ScriptManager::checkScript(name)) {
+				nameToScriptIndex[scriptAmount] = name;
+				scriptAmount += 1;
+			}
+			else
+				Debug::systemErr("Couldn't add script with name: " + name + ", because it wasn't registered");
 			
 			instantiateScript = [](NativeScript* nativeScript, const unsigned int& index) {
-				GameObject* script = ScriptManager::createScript(nativeScript->nameToScriptIndex[index]);
+				GameObject* script = ScriptManager::instantiateScript(nativeScript->nameToScriptIndex[index]);
 				if (script != nullptr)
 					nativeScript->scripts[index] = script;
 				else

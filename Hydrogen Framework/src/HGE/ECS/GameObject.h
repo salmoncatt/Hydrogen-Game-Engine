@@ -13,13 +13,14 @@ namespace HGE {
 		virtual void start() {}
 		virtual void update() {}
 		virtual void fixedUpdate() {}
-		virtual void updateAfterRender() {}
+		virtual void lateUpdate() {}
 		virtual void stop() {}
 
 		friend class Scene;
 		friend class Util;
 		friend class ScriptManager;
 		friend struct NativeScript;
+
 		bool created = false;
 	public:
 		Entity entity;

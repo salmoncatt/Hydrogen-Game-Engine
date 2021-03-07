@@ -64,22 +64,8 @@ namespace HGE {
 	}
 
 	void ScriptManager::checkForScripts(const bool& supressError) {
-		DIR* dir;
-
-		struct dirent* ent;
-
-		if ((dir = opendir(HGE_SCRIPTS.c_str())) != NULL) {
-			
-			while ((ent = readdir(dir)) != NULL) {
-				std::string file = ent->d_name;
-
-				if (file.find(".dll") != std::string::npos)
-					loadScriptFromDLL(HGE_SCRIPTS + file, file, supressError);
-			}
-
-			closedir(dir);
-		}
-		else
+		
+		if(!loadDllFromFolder(HGE_SCRIPTS, supressError))
 			Debug::systemErr("Couldn't load scripts folder wtf");
 	}
 
@@ -90,7 +76,7 @@ namespace HGE {
 		}
 	}
 
-	GameObject* ScriptManager::createScript(const std::string& name) {
+	GameObject* ScriptManager::instantiateScript(const std::string& name) {
 		if (scriptNameToScript.find(name) != scriptNameToScript.end()) {
 			return scriptNameToScript[name]();
 		}
@@ -98,6 +84,38 @@ namespace HGE {
 			Debug::systemErr("No script found of name: " + name);
 			return nullptr;
 		}
+	}
+
+	bool ScriptManager::checkScript(const std::string& name) {
+		return (scriptNameToScript.find(name) != scriptNameToScript.end());
+	}
+
+	bool ScriptManager::loadDllFromFolder(const std::string& path, const bool& supressError) {
+		DIR* dir;
+
+		struct dirent* ent;
+
+		if ((dir = opendir(path.c_str())) != NULL) {
+
+			while ((ent = readdir(dir)) != NULL) {
+				std::string file = ent->d_name;
+
+				if (file.find(".") != std::string::npos) {
+					if (file.find(".dll") != std::string::npos)
+						loadScriptFromDLL(path + file, file, supressError);
+				}
+				else {
+					//we have found a folder or a blank file
+					loadDllFromFolder(path + file + "/", supressError);
+				}
+
+			}
+
+			closedir(dir);
+			return true;
+		}
+		else
+			return false;
 	}
 
 }

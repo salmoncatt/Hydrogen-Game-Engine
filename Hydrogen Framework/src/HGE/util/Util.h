@@ -59,6 +59,8 @@ namespace HGE{
 			return std::is_base_of<Base, T>::value;
 		}
 
+		static void listFilesInFolder(const std::string& path);
+
 		//static void sendWindowsNotification();
 
 		static std::vector<unsigned char> convertPixelsToRawData(const std::vector<std::vector<Pixel>>& pixeldata);/*

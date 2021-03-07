@@ -13,6 +13,9 @@ namespace HGE {
 	private:
 		static size_t scriptAmount;
 		static double timeElapsed;
+
+		static bool loadDllFromFolder(const std::string& path, const bool& supressError);
+
 	public:
 		static std::unordered_map<size_t, std::string> numberToPath;
 		static std::unordered_map<std::string, std::string> scriptPathToName;
@@ -25,7 +28,8 @@ namespace HGE {
 		static void update();
 		static void checkForScripts(const bool& supressError);
 		static size_t getAmountOfScripts();
-		static GameObject* createScript(const std::string& name);
+		static GameObject* instantiateScript(const std::string& name);
+		static bool checkScript(const std::string& name);
 
 	};
 

@@ -608,4 +608,27 @@ namespace HGE {
 		return (double)virtualMemUsedByMe / 1048576;
 	}
 
+	void Util::listFilesInFolder(const std::string& path) {
+		DIR* dir;
+
+		struct dirent* ent;
+
+		if ((dir = opendir(HGE_SCRIPTS.c_str())) != NULL) {
+
+			Debug::systemLog("Printing files at path: " + path);
+			Debug::newLine();
+
+			while ((ent = readdir(dir)) != NULL) {
+				std::string file = ent->d_name;
+
+				Debug::log(file);
+			}
+
+			closedir(dir);
+		}
+		else
+			Debug::systemErr("Couldn't load folder: " + path);
+
+	}
+
 }
