@@ -94,6 +94,62 @@ namespace HGE {
 
 	}
 
+	void Util::createDirectory(const std::string& path) {
+		int success = _mkdir(path.c_str());
+		if (success == 0)
+			Debug::systemSuccess("Created directory: " + path);
+		else if (success == -1)
+			Debug::systemErr("Couldn't create directory: " + path + ", because it may already exist");
+	}
+
+	void Util::writeAsString(const std::string& fileData, const std::string& filepath, const int& writemode) {
+		std::ofstream file;
+
+		if (writemode == HGE_NORMAL_WRITE)
+			file = std::ofstream(filepath, std::ios_base::out);
+		else if (writemode == HGE_BINARY_WRITE)
+			file = std::ofstream(filepath, std::ios_base::out | std::ios_base::binary);
+		else
+			Debug::systemErr("Unkown read mode in file: " + filepath + ", HGE_NORMAL_READ or HGE_BINARY_READ");
+
+		file << fileData;
+
+		file.close();
+
+		std::string mode = (writemode == HGE_NORMAL_WRITE) ? "HGE_NORMAL_WRITE" : "HGE_BINARY_WRITE";
+		Debug::systemSuccess("Wrote file to: " + filepath + ", with mode: " + mode);
+	}
+
+	std::string Util::removeNameFromFilePathAndName(const std::string& path) {
+		std::string out;
+
+		size_t index = 0;
+		index = path.find_last_of("/\\");
+
+		if (index != std::string::npos) {
+			return path.substr(0, index);
+		}
+		else
+			Debug::systemErr("Couldn't remove file name from path: " + path);
+
+		return out;
+	}
+
+	std::string Util::removePathFromFilePathAndName(const std::string& path) {
+		std::string out;
+
+		size_t index = 0;
+		index = path.find_last_of("/\\");
+
+		if (index != std::string::npos) {
+			return path.substr(index + 1);
+		}
+		else
+			Debug::systemErr("Couldn't remove file path from path: " + path);
+
+		return out;
+	}
+
 	std::vector<unsigned char> Util::readAsUnsignedChar(const std::string& filepath, const int& readmode) {
 		std::string data = readAsString(filepath, readmode);
 		std::vector<unsigned char> out(data.begin(), data.end());

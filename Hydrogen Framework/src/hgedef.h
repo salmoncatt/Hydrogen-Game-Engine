@@ -27,6 +27,8 @@ namespace HGE {
 	//for read as string and other things
 	const int HGE_NORMAL_READ = 1;
 	const int HGE_BINARY_READ = 2;
+	const int HGE_NORMAL_WRITE = 3;
+	const int HGE_BINARY_WRITE = 4;
 	
 	//dimension types
 	const int HGE_2D = 2;

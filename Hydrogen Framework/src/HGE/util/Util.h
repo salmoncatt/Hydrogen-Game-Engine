@@ -30,6 +30,7 @@ namespace HGE{
 		static void init();
 
 		//opengl stuff
+		
 		static std::vector<unsigned int> VBOs;
 		static unsigned int generateVAO();
 		static unsigned int generateVBO();
@@ -38,15 +39,25 @@ namespace HGE{
 		static void deleteVBOs();
 
 		//opengl shader stuff
+		
 		static void compileShader(const int& shaderID, const std::string& shaderCode, const std::string& shaderName);
 		static void linkAndValidateProgram(const int& programID);
 
 		//serialization stuff
+		
 		static long getFileSize(const std::string& filepath);
 		static std::string readAsString(const std::string& filepath, const int& readmode);
+		static void createDirectory(const std::string& path);
+		static void writeAsString(const std::string& fileData, const std::string& filepath, const int& writemode);
+		
+		//does not include \ at the end of the path
+		static std::string removeNameFromFilePathAndName(const std::string& path);
+
+		static std::string removePathFromFilePathAndName(const std::string& path);
 		static std::vector<unsigned char> readAsUnsignedChar(const std::string& filepath, const int& readmode);
 
 		//static void test(const std::string& filepath, const std::string& filename);
+		
 		static std::vector<Mesh> loadMesh(const std::string& filepath, const std::string& objname);
 		static std::vector<Material> loadMaterial(const std::string& filepath, const std::string& filename);
 

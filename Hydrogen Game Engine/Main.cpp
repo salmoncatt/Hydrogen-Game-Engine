@@ -61,7 +61,10 @@ public:
 
 		warehouse.getComponent<Transform>().scale = (2);
 
-		ProjectManager::createMSVCSolution("testSolution", "testProject", "");
+		ProjectManager::createMSVCSolution("testSolution", "testProject");
+
+		Util::createDirectory(R"(C:\Users\salmo\Desktop\testfolder)");
+		Util::writeAsString("poop\n", R"(C:\Users\salmo\Desktop\testfolder\test.txt)", HGE_NORMAL_WRITE);
 
 		for (int i = 0; i < warehouse.getComponent<MeshComponent>().meshes.size(); i++) {
 			auto& component = warehouse.getComponent<MeshComponent>().meshes[i];

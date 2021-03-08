@@ -13,14 +13,14 @@ Global
 		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{1}.Debug|x64.ActiveCfg = Debug|x64
-		{1}.Debug|x64.Build.0 = Debug|x64
-		{1}.HGE_Debug|x64.ActiveCfg = HGE_Debug|x64
-		{1}.HGE_Debug|x64.Build.0 = HGE_Debug|x64
-		{1}.HGE_RELEASE|x64.ActiveCfg = HGE_RELEASE|x64
-		{1}.HGE_RELEASE|x64.Build.0 = HGE_RELEASE|x64
-		{1}.Release|x64.ActiveCfg = Release|x64
-		{1}.Release|x64.Build.0 = Release|x64
+		{%s}.Debug|x64.ActiveCfg = Debug|x64
+		{%s}.Debug|x64.Build.0 = Debug|x64
+		{%s}.HGE_Debug|x64.ActiveCfg = HGE_Debug|x64
+		{%s}.HGE_Debug|x64.Build.0 = HGE_Debug|x64
+		{%s}.HGE_RELEASE|x64.ActiveCfg = HGE_RELEASE|x64
+		{%s}.HGE_RELEASE|x64.Build.0 = HGE_RELEASE|x64
+		{%s}.Release|x64.ActiveCfg = Release|x64
+		{%s}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
