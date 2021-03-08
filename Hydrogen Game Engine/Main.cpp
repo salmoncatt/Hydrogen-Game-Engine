@@ -46,8 +46,6 @@ public:
 		GameObject peter = test->createGameObject("peter");
 		GameObject warehouse = test->createGameObject("warehouse");
 
-		Debug::log(HGE_SOLUTION_DIRECTORY);
-
 		MeshComponent mesh = MeshComponent();
 		mesh.meshes = Util::loadMesh(HGE_RES + "models/zip gun/zip gun.obj");
 		peter.addComponent<MeshComponent>(mesh);
@@ -61,10 +59,10 @@ public:
 
 		warehouse.getComponent<Transform>().scale = (2);
 
-		ProjectManager::createMSVCSolution("testSolution", "testProject");
+		ProjectManager::createMSVCSolution("testProject", "testScript");
 
-		Util::createDirectory(R"(C:\Users\salmo\Desktop\testfolder)");
-		Util::writeAsString("poop\n", R"(C:\Users\salmo\Desktop\testfolder\test.txt)", HGE_NORMAL_WRITE);
+		//Util::createDirectory(R"(C:\Users\salmo\Desktop\testfolder\testfolder2\testfolder2\testfolder2\testfolder2\testfolder2\testfolder2\testfolder2\testfolder2\testfolder2\testfolder2\testfolder2\testfolder2\testfolder2\testfolder2\testfolder2)");
+		//Util::writeAsString("poop\n", R"(C:\Users\salmo\Desktop\testfolder\test.txt)", HGE_NORMAL_WRITE);
 
 		for (int i = 0; i < warehouse.getComponent<MeshComponent>().meshes.size(); i++) {
 			auto& component = warehouse.getComponent<MeshComponent>().meshes[i];

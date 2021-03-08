@@ -24,6 +24,8 @@
 #include <locale>
 #include <codecvt>
 #include <objbase.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 
 //for guid
 #include <Rpc.h>

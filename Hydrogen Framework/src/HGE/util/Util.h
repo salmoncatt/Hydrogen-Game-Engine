@@ -47,9 +47,10 @@ namespace HGE{
 		
 		static long getFileSize(const std::string& filepath);
 		static std::string readAsString(const std::string& filepath, const int& readmode);
-		static void createDirectory(const std::string& path);
+		static bool createDirectory(std::string path);
 		static void writeAsString(const std::string& fileData, const std::string& filepath, const int& writemode);
-		
+		static bool doesDirectoryExist(const std::string& directory);
+
 		//includes \ at the end of the path
 		static std::string removeNameFromFilePathAndName(const std::string& path);
 

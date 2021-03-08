@@ -94,16 +94,48 @@ namespace HGE {
 
 	}
 
-	void Util::createDirectory(const std::string& path) {
-		int success = _mkdir(path.c_str());
-		if (success == 0)
-			Debug::systemSuccess("Created directory: " + path);
-		else if (success == -1)
-			Debug::systemErr("Couldn't create directory: " + path + ", because it may already exist");
+	bool Util::doesDirectoryExist(const std::string& directory) {
+		struct stat result;
+
+		if (stat(directory.c_str(), &result) != 0)
+			return 0;
+		else if (result.st_mode & S_IFDIR)
+			return 1;
+		else
+			return 0;
+	}
+
+	bool Util::createDirectory(std::string path) {
+		if (!doesDirectoryExist(path)) {
+			//we need to do this folder by folder
+			int success = 0;
+
+			size_t index = path.find_first_of("/\\");
+			while ((index = path.find_first_of("/\\", index + 1)) != std::string::npos) {
+				//only doing this so no warnings
+				int tempSuccess = _mkdir(path.substr(0, index).c_str());
+			}
+
+			//theres an extra one left behind
+			Debug::log(path.substr(0, index));
+			//if(index != path.length())
+			//	success = _mkdir(path.substr(0, index).c_str());
+
+			if (success == 0) {
+				Debug::systemSuccess("Created directory: " + path);
+				return true;
+			} else if (success == -1){
+				Debug::systemErr("Couldn't create directory: " + path);
+				return false;
+			}
+		}
+		return false;
 	}
 
 	void Util::writeAsString(const std::string& fileData, const std::string& filepath, const int& writemode) {
 		std::ofstream file;
+
+		createDirectory(removeNameFromFilePathAndName(filepath));
 
 		if (writemode == HGE_NORMAL_WRITE)
 			file = std::ofstream(filepath, std::ios_base::out);
