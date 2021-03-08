@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\HGE\util\GUID.h" />
+    <ClInclude Include="src\HGE\util\HGUID.h" />
     <ClInclude Include="src\HGE\scripting\ProjectManager.h" />
     <ClInclude Include="src\HGE\scripting\ScriptManager.h" />
     <ClInclude Include="src\HGE\graphics\image\stb_image.h" />
@@ -63,7 +63,7 @@
     <ClInclude Include="src\HGE\util\memory\string.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\HGE\util\GUID.cpp" />
+    <ClCompile Include="src\HGE\util\HGUID.cpp" />
     <ClCompile Include="src\HGE\scripting\ProjectManager.cpp" />
     <ClCompile Include="src\HGE\scripting\ScriptManager.cpp" />
     <ClCompile Include="src\HGE\graphics\image\stb_image.cpp" />

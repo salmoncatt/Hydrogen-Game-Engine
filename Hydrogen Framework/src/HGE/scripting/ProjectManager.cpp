@@ -35,7 +35,7 @@ namespace HGE {
 
 		std::string test = solutionFileData;
 
-		Debug::log(test);
+		//Debug::log(test);
 
 
 		delete[] solutionFileData;

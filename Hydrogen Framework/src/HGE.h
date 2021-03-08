@@ -58,6 +58,6 @@
 
 #include "HGE/util/Debug.h"
 #include "HGE/util/Util.h"
-#include "HGE/util/GUID.h"
+#include "HGE/util/HGUID.h"
 
 #endif

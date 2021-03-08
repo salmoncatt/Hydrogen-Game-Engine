@@ -1,5 +1,4 @@
 #include "hpch.h"
-#include "GUID.h"
 
 namespace HGE {
 
@@ -8,9 +7,9 @@ namespace HGE {
 		std::string out;
 
 		UUID guid;
-		RPC_STATUS guidResult = UuidCreate(&guid);
+		HRESULT guidResult = CoCreateGuid(&guid);
 		
-		if (guidResult == RPC_S_OK) {
+		if (SUCCEEDED(guidResult)) {
 			WCHAR* charGUID = NULL;
 
 			RPC_STATUS convertResult = ::UuidToStringW(&guid, (RPC_WSTR*)&charGUID);
@@ -21,7 +20,9 @@ namespace HGE {
 				for (wchar_t c : wstring) {
 					out += (char)c;
 				}
-
+				
+				//free memory
+				::RpcStringFreeW((RPC_WSTR*)&charGUID);
 				return out;
 			}
 			else

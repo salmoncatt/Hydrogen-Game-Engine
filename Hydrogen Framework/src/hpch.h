@@ -23,7 +23,7 @@
 #include "HGE/io/dirent.h"
 #include <locale>
 #include <codecvt>
-
+#include <objbase.h>
 
 //for guid
 #include <Rpc.h>
