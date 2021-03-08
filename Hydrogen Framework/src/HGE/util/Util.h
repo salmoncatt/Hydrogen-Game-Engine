@@ -50,7 +50,7 @@ namespace HGE{
 		static void createDirectory(const std::string& path);
 		static void writeAsString(const std::string& fileData, const std::string& filepath, const int& writemode);
 		
-		//does not include \ at the end of the path
+		//includes \ at the end of the path
 		static std::string removeNameFromFilePathAndName(const std::string& path);
 
 		static std::string removePathFromFilePathAndName(const std::string& path);
@@ -58,8 +58,8 @@ namespace HGE{
 
 		//static void test(const std::string& filepath, const std::string& filename);
 		
-		static std::vector<Mesh> loadMesh(const std::string& filepath, const std::string& objname);
-		static std::vector<Material> loadMaterial(const std::string& filepath, const std::string& filename);
+		static std::vector<Mesh> loadMesh(const std::string& filepath);
+		static std::vector<Material> loadMaterial(const std::string& filepath);
 
 		static std::string getCPU();
 		static double getCPUusage();

@@ -127,7 +127,8 @@ namespace HGE {
 		index = path.find_last_of("/\\");
 
 		if (index != std::string::npos) {
-			return path.substr(0, index);
+			//+1 to add \ at the end
+			return path.substr(0, index + 1);
 		}
 		else
 			Debug::systemErr("Couldn't remove file name from path: " + path);
@@ -217,8 +218,9 @@ namespace HGE {
 		}
 	}
 
-	std::vector<Material> Util::loadMaterial(const std::string& filepath, const std::string& filename) {
-		std::ifstream file(filepath + filename, std::ios::in);
+	std::vector<Material> Util::loadMaterial(const std::string& filepath) {
+		std::string filename = removePathFromFilePathAndName(filepath);
+		std::ifstream file(filepath, std::ios::in);
 
 		std::vector<Material> out;
 
@@ -304,8 +306,9 @@ namespace HGE {
 
 	}
 
-	std::vector<Mesh> Util::loadMesh(const std::string& filepath, const std::string& filename) {
-		FILE* file = fopen((filepath + filename).c_str(), "r");
+	std::vector<Mesh> Util::loadMesh(const std::string& filepath) {
+		std::string filename = removePathFromFilePathAndName(filepath);
+		FILE* file = fopen(filepath.c_str(), "r");
 
 		std::vector<Mesh> out;
 		std::vector<Material> materials;
@@ -322,7 +325,7 @@ namespace HGE {
 
 		unsigned int meshIndex = 0;
 
-		long reserveSize = getFileSize(filepath + filename) / 100;
+		long reserveSize = getFileSize(filepath) / 100;
 
 		//0 = i/i/i, 1 = i/i 2 = i//i
 		unsigned short faceIndexType = 0;
@@ -541,7 +544,8 @@ namespace HGE {
 					}
 
 				}else if (line.substr(0, 7) == "mtllib ") {
-					std::vector<Material> loadedMaterials = loadMaterial(filepath, line.substr(7));
+					std::string materialPath = removeNameFromFilePathAndName(filepath) + line.substr(7);
+					std::vector<Material> loadedMaterials = loadMaterial(materialPath);
 
 					materials.insert(materials.end(), loadedMaterials.begin(), loadedMaterials.end());
 
@@ -553,7 +557,7 @@ namespace HGE {
 			fclose(file);
 		}
 		else
-			Debug::systemErr("Could not read file: " + filepath + filename);
+			Debug::systemErr("Could not read file: " + filepath);
 
 		if (!(materials.size() > 0))
 			Debug::systemErr("Warning object file: " + filename + ", has no materials. Meaning it will have null textures and stuff");

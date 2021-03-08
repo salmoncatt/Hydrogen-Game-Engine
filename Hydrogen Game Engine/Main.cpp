@@ -49,13 +49,13 @@ public:
 		Debug::log(HGE_SOLUTION_DIRECTORY);
 
 		MeshComponent mesh = MeshComponent();
-		mesh.meshes = Util::loadMesh(HGE_RES + "models/zip gun/", "zip gun.obj");
+		mesh.meshes = Util::loadMesh(HGE_RES + "models/zip gun/zip gun.obj");
 		peter.addComponent<MeshComponent>(mesh);
 		peter.getComponent<Transform>().scale = 2;
 
 		mesh = MeshComponent();
 
-		mesh.meshes = Util::loadMesh(HGE_RES + "models/warehouse/", "warehouse.obj");
+		mesh.meshes = Util::loadMesh(HGE_RES + "models/warehouse/warehouse.obj");
 
 		warehouse.addComponent<MeshComponent>(mesh);
 
