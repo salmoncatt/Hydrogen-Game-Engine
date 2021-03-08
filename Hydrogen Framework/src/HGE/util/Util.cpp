@@ -622,4 +622,12 @@ namespace HGE {
 
 	}
 
+	void Util::toUpper(std::string& string) {
+		int i = 0;
+		while (string[i]) {
+			string[i] = toupper(string[i]);
+			i += 1;
+		}
+	}
+
 }

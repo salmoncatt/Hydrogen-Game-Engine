@@ -135,7 +135,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>GLEW_STATIC;HGE_SUPPRESS_DLL_WARNING</PreprocessorDefinitions>
+      <PreprocessorDefinitions>GLEW_STATIC;HGE_SUPPRESS_DLL_WARNING;HGE_SOLUTION_DIRECTORY=R"($(SolutionDir))"</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\HFL\include;$(SolutionDir)Hydrogen Framework\src;$(SolutionDir)Dependencies\GLFW\include;$(SolutionDir)Dependencies\GLEW\include</AdditionalIncludeDirectories>
       <AdditionalUsingDirectories>
@@ -158,7 +158,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>GLEW_STATIC;HGE_SUPPRESS_DLL_WARNING</PreprocessorDefinitions>
+      <PreprocessorDefinitions>GLEW_STATIC;HGE_SUPPRESS_DLL_WARNING;HGE_SOLUTION_DIRECTORY=R"($(SolutionDir))"</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\HFL\include;$(SolutionDir)Hydrogen Framework\src;$(SolutionDir)Dependencies\GLFW\include;$(SolutionDir)Dependencies\GLEW\include</AdditionalIncludeDirectories>
       <AdditionalUsingDirectories>

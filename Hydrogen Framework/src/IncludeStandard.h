@@ -33,5 +33,6 @@
 #include HGE_GUI_ELEMENT
 #include HGE_SHADER
 #include HGE_WINDOW
+#include HGE_GUID
 
 #endif

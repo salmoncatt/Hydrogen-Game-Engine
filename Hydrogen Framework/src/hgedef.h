@@ -266,6 +266,8 @@ namespace HGE {
 
 #define HGE_DEBUG "HGE/util/Debug.h"
 #define HGE_UTIL "HGE/util/Util.h"
+#define HGE_GUID "HGE/util/GUID.h"
+
 #define HGE_STANDARD "IncludeStandard.h"
 #define STB_IMAGE "HGE/graphics/image/stb_image.h"
 

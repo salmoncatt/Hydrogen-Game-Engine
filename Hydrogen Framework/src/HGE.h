@@ -22,6 +22,7 @@
 
 #include "HGE/scripting/NativeScript.h"
 #include "HGE/scripting/ScriptManager.h"
+#include "HGE/scripting/ProjectManager.h"
 
 #include "HGE/gui/GuiElement.h"
 #include "HGE/gui/GuiFrame.h"
@@ -57,5 +58,6 @@
 
 #include "HGE/util/Debug.h"
 #include "HGE/util/Util.h"
+#include "HGE/util/GUID.h"
 
 #endif

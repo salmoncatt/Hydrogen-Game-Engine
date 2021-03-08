@@ -49,6 +49,8 @@
     <ClInclude Include="src\HGE\mesh\Texture.h" />
     <ClInclude Include="src\HGE\math\vectors\Transform.h" />
     <ClInclude Include="src\IncludeStandard.h" />
+    <ClInclude Include="src\HGE\scripting\ProjectManager.h" />
+    <ClInclude Include="src\HGE\util\GUID.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\hpch.cpp" />
@@ -85,6 +87,8 @@
     <ClCompile Include="src\HGE\mesh\Mesh.cpp" />
     <ClCompile Include="src\HGE\mesh\MeshComponent.cpp" />
     <ClCompile Include="src\HGE\mesh\Texture.cpp" />
+    <ClCompile Include="src\HGE\scripting\ProjectManager.cpp" />
+    <ClCompile Include="src\HGE\util\GUID.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\guiFrameFragment.glsl" />
