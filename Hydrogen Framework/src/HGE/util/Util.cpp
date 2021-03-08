@@ -117,9 +117,8 @@ namespace HGE {
 			}
 
 			//theres an extra one left behind
-			Debug::log(path.substr(0, index));
-			//if(index != path.length())
-			//	success = _mkdir(path.substr(0, index).c_str());
+			if(path.substr(0, index).find_first_of("/\\") == std::string::npos)
+				success = _mkdir(path.substr(0, index).c_str());
 
 			if (success == 0) {
 				Debug::systemSuccess("Created directory: " + path);
@@ -130,6 +129,20 @@ namespace HGE {
 			}
 		}
 		return false;
+	}
+
+	std::string Util::getDirectory(const int& mode) {
+		std::string out;
+
+		CHAR documentRawPath[MAX_PATH];
+		HRESULT result = SHGetFolderPath(NULL, mode, NULL, SHGFP_TYPE_CURRENT, documentRawPath);
+
+		if (result == S_OK)
+			out = documentRawPath;
+		else
+			Debug::systemErr("Couldn't find directory: " + std::to_string(mode));
+
+		return out;
 	}
 
 	void Util::writeAsString(const std::string& fileData, const std::string& filepath, const int& writemode) {

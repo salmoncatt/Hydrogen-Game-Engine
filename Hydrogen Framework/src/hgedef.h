@@ -216,6 +216,67 @@ namespace HGE {
 
 }
 
+//CSIDL codes
+namespace HGE {
+
+	/*
+	CSIDL_DESKTOP                   0x0000        // <desktop>
+	CSIDL_INTERNET                  0x0001        // Internet Explorer (icon on desktop)
+	CSIDL_PROGRAMS                  0x0002        // Start Menu\Programs
+	CSIDL_CONTROLS                  0x0003        // My Computer\Control Panel
+	CSIDL_PRINTERS                  0x0004        // My Computer\Printers
+	CSIDL_PERSONAL                  0x0005        // My Documents
+	CSIDL_FAVORITES                 0x0006        // <user name>\Favorites
+	CSIDL_STARTUP                   0x0007        // Start Menu\Programs\Startup
+	CSIDL_RECENT                    0x0008        // <user name>\Recent
+	CSIDL_SENDTO                    0x0009        // <user name>\SendTo
+	CSIDL_BITBUCKET                 0x000a        // <desktop>\Recycle Bin
+	CSIDL_STARTMENU                 0x000b        // <user name>\Start Menu
+	CSIDL_MYMUSIC                   0x000d        // "My Music" folder
+	CSIDL_MYVIDEO                   0x000e        // "My Videos" folder
+	CSIDL_DESKTOPDIRECTORY          0x0010        // <user name>\Desktop
+	CSIDL_DRIVES                    0x0011        // My Computer
+	CSIDL_NETWORK                   0x0012        // Network Neighborhood (My Network Places)
+	CSIDL_NETHOOD                   0x0013        // <user name>\nethood
+	CSIDL_FONTS                     0x0014        // windows\fonts
+	CSIDL_TEMPLATES                 0x0015
+	CSIDL_COMMON_STARTMENU          0x0016        // All Users\Start Menu
+	CSIDL_COMMON_PROGRAMS           0X0017        // All Users\Start Menu\Programs
+	CSIDL_COMMON_STARTUP            0x0018        // All Users\Startup
+	CSIDL_COMMON_DESKTOPDIRECTORY   0x0019        // All Users\Desktop
+	CSIDL_APPDATA                   0x001a        // <user name>\Application Data
+	CSIDL_PRINTHOOD                 0x001b        // <user name>\PrintHood
+	*/
+
+#define HGE_FOLDER_DESKTOP CSDIDL_DESKTOP
+#define HGE_FOLDER_INTERNET CSIDL_INTERNET
+#define HGE_FOLDER_PROGRAMS CSIDL_PROGRAMS
+#define HGE_FOLDER_CONTROL_PANEL CSIDL_CONTROLS
+#define HGE_FOLDER_PRINTERS CSIDL_PRINTERS
+#define HGE_FOLDER_DOCUMENTS CSIDL_PERSONAL
+#define HGE_FOLDER_FAVORITES CSIDL_FAVORITES
+#define HGE_FOLDER_STARTUP CSIDL_STARTUP
+#define HGE_FOLDER_RECENT CSIDL_RECENT
+#define HGE_FOLDER_SEND_TO CSIDL_SENDTO
+#define HGE_FOLDER_RECYCLE_BIN CSIDL_BITBUCKET
+#define HGE_FOLDER_START_MENU CSIDL_STARTMENU
+#define HGE_FOLDER_MUSIC CSIDL_MYMUSIC
+#define HGE_FOLDER_VIDEOS CSIDL_MYVIDEO
+#define HGE_FOLDER_DESKTOP_DIRECTORY CSIDL_DESKTOPDIRECTORY
+#define HGE_FOLDER_DRIVES CSIDL_DRIVES
+#define HGE_FOLDER_NETWORK CSIDL_NETWORK
+#define HGE_FOLDER_NET_HOOD CSIDL_NETHOOD
+#define HGE_FOLDER_FONTS CSIDL_FONTS
+#define HGE_FOLDER_TEMPLATES CSIDL_TEMPLATES
+#define HGE_FOLDER_COMMON_STARTMENU CSIDL_COMMON_STARTMENU
+#define HGE_FOLDER_COMMON_PROGRAMS CSIDL_COMMON_PROGRAMS
+#define HGE_FOLDER_COMMON_STARTUP CSIDL_COMMON_STARTUP
+#define HGE_FOLDER_COMMON_DESKTOP_DIRECTORY CSIDL_COMMON_DESKTOPDIRECTORY
+#define HGE_FOLDER_APP_DATA CSIDL_APPDATA
+#define HGE_FOLDER_PRINT_HOOD CSIDL_PRINTHOOD
+
+}
+
 //macros for include bc im lazy
 #define HGE_CAMERA "HGE/camera/Camera.h"
 #define HGE_CAMERA_CONTROLLER "HGE/camera/CameraController.h"

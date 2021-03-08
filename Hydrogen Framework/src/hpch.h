@@ -31,6 +31,11 @@
 #include <Rpc.h>
 #pragma comment(lib, "Rpcrt4.lib")
 
+//for getting documents and other folders
+#include <shlobj.h>
+
+#pragma comment(lib, "shell32.lib")
+
 //for windows notification toasts n stuff
 //#include "DesktopNotificationManagerCompat.h"
 //#include <NotificationActivationCallback.h>

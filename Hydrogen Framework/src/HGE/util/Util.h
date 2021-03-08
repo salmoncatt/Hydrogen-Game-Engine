@@ -50,6 +50,8 @@ namespace HGE{
 		static bool createDirectory(std::string path);
 		static void writeAsString(const std::string& fileData, const std::string& filepath, const int& writemode);
 		static bool doesDirectoryExist(const std::string& directory);
+		//see hgedef CSIDL codes sector for all options, like HGE_FOLDER_DOCUMENTS
+		static std::string getDirectory(const int& directoryMode);
 
 		//includes \ at the end of the path
 		static std::string removeNameFromFilePathAndName(const std::string& path);

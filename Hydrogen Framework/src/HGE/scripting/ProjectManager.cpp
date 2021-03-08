@@ -1,9 +1,5 @@
 #include "hpch.h"
 #include "ProjectManager.h"
-//for getting documents folder
-#include <shlobj.h>
-
-#pragma comment(lib, "shell32.lib")
 
 namespace HGE {
 
@@ -29,19 +25,9 @@ namespace HGE {
 
 		CHAR documentRawPath[MAX_PATH];
 		HRESULT result = SHGetFolderPath(NULL, CSIDL_PERSONAL, NULL, SHGFP_TYPE_CURRENT, documentRawPath);
-
-		std::string dependencies;
-		std::string documentpath;
-
-		if (result == S_OK) {
-			documentpath = documentRawPath;
-			dependencies = documentpath;
-			dependencies += R"(\Hydrogen Game Engine\Dependencies)";
-		}
-		else {
-			Debug::systemErr("Couldn't find docuemnts folder for some reason");
-			return;
-		}
+		
+		std::string documentpath = Util::getDirectory(HGE_FOLDER_DOCUMENTS);
+		std::string dependencies = documentpath + R"(\Hydrogen Game Engine\Dependencies)";
 
 		std::string projectGUID = HGUID::generateGUID();
 		std::string solutionGUID = HGUID::generateGUID();
