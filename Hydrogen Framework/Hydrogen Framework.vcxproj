@@ -11,8 +11,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\HGE\util\HGUID.h" />
     <ClInclude Include="src\HGE\scripting\ProjectManager.h" />
+    <ClInclude Include="src\HGE\util\HGUID.h" />
     <ClInclude Include="src\HGE\scripting\ScriptManager.h" />
     <ClInclude Include="src\HGE\graphics\image\stb_image.h" />
     <ClInclude Include="src\HGE\io\dirent.h" />
@@ -61,10 +61,11 @@
     <ClInclude Include="src\IncludeStandard.h" />
     <ClInclude Include="src\test\HWindow.h" />
     <ClInclude Include="src\HGE\util\memory\string.h" />
+    <ClInclude Include="src\HGE\scripting\VisualStudio.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\HGE\util\HGUID.cpp" />
     <ClCompile Include="src\HGE\scripting\ProjectManager.cpp" />
+    <ClCompile Include="src\HGE\util\HGUID.cpp" />
     <ClCompile Include="src\HGE\scripting\ScriptManager.cpp" />
     <ClCompile Include="src\HGE\graphics\image\stb_image.cpp" />
     <ClCompile Include="src\HGE\time\Profile.cpp" />
@@ -102,6 +103,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="src\test\HWindow.cpp" />
+    <ClCompile Include="src\HGE\scripting\VisualStudio.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\guiFrameFragment.glsl" />
@@ -166,7 +168,7 @@
       <PrecompiledHeaderOutputFile>$(IntDir)\$(TargetName).pch</PrecompiledHeaderOutputFile>
       <Optimization>MaxSpeed</Optimization>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>Default</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -197,7 +199,7 @@
       <PrecompiledHeaderOutputFile>$(IntDir)\$(TargetName).pch</PrecompiledHeaderOutputFile>
       <Optimization>MaxSpeed</Optimization>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>Default</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

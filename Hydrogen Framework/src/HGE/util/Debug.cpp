@@ -6,6 +6,8 @@ namespace HGE {
 	std::array<Profile, HGE_MAX_PROFILES> Debug::lastFrameProfiles{};
 	unsigned long Debug::profiledAmount = 0;
 	std::unordered_map<std::string, unsigned long> Debug::profilerNames{};
+	int Debug::succeedLogMode = HGE_LOG_ON_SUCCESS;
+	int Debug::failLogMode = HGE_LOG_ON_FAIL;
 
 	void Debug::log(const std::string& message) {
 		std::string out = message + "\n";
@@ -121,35 +123,53 @@ namespace HGE {
 	}
 
 	void Debug::systemErr(const std::string& SystemError) {
-		Debug::setTextColor(DebugColor::Red);
-		std::string out = "System Error: " + SystemError + "\n";
-		std::cout << out;
-		Debug::resetTextColor();
+		if (failLogMode != HGE_DONT_LOG_ON_FAIL) {
+			Debug::setTextColor(DebugColor::Red);
+			std::string out = "System Error: " + SystemError + "\n";
+			std::cout << out;
+			Debug::resetTextColor();
+		}
 	}
 	
 	void Debug::systemErr(const std::string& SystemError, const DebugColor& color) {
-		Debug::setTextColor(color);
-		std::string out = "System Error: " + SystemError + "\n";
-		std::cout << out;
-		Debug::resetTextColor();
+		if (failLogMode != HGE_DONT_LOG_ON_FAIL) {
+			Debug::setTextColor(color);
+			std::string out = "System Error: " + SystemError + "\n";
+			std::cout << out;
+			Debug::resetTextColor();
+		}
 	}
 
 	void Debug::systemSuccess(const std::string& SystemMessage) {
-		Debug::setTextColor(DebugColor::LightGreen);
-		std::string out = "System Success: " + SystemMessage + "\n";
-		std::cout << out;
-		Debug::resetTextColor();
+		if (succeedLogMode != HGE_DONT_LOG_ON_SUCCESS) {
+			Debug::setTextColor(DebugColor::LightGreen);
+			std::string out = "System Success: " + SystemMessage + "\n";
+			std::cout << out;
+			Debug::resetTextColor();
+		}
 	}
 	
 	void Debug::systemSuccess(const std::string& SystemMessage, const DebugColor& color) {
-		Debug::setTextColor(color);
-		std::string out = "System Success: " + SystemMessage + "\n";
-		std::cout << out;
-		Debug::resetTextColor();
+		if (succeedLogMode != HGE_DONT_LOG_ON_SUCCESS) {
+			Debug::setTextColor(color);
+			std::string out = "System Success: " + SystemMessage + "\n";
+			std::cout << out;
+			Debug::resetTextColor();
+		}
 	}
 
 	void Debug::newLine() {
 		std::cout << "\n";
+	}
+
+	void Debug::newLine(const int& lines) {
+		std::string linesAmount;
+
+		for (int i = 0; i < lines; ++i) {
+			linesAmount += "\n";
+		}
+
+		std::cout << linesAmount;
 	}
 
 	void Debug::waterMark() {
@@ -209,6 +229,11 @@ namespace HGE {
 
 	unsigned long Debug::getAmountOfProfiles() {
 		return profiledAmount;
+	}
+
+	void Debug::setSystemLogMode(const int& succeedMode, const int& failMode) {
+		succeedLogMode = succeedMode;
+		failLogMode = failMode;
 	}
 
 }

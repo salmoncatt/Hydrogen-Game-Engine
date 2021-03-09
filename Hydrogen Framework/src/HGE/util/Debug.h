@@ -42,6 +42,8 @@ namespace HGE {
 		static std::array<Profile, HGE_MAX_PROFILES> lastFrameProfiles;
 		static unsigned long profiledAmount;
 		static std::unordered_map<std::string, unsigned long> profilerNames;
+		static int succeedLogMode;
+		static int failLogMode;
 
 	public:
 		static void log(const std::string& message);
@@ -69,6 +71,7 @@ namespace HGE {
 		static void systemSuccess(const std::string& message, const DebugColor& color);
 
 		static void newLine();
+		static void newLine(const int& lines);
 		static void waterMark();
 		static void closingWaterMark();
 		static void setTextColor(const HGE::DebugColor& color);
@@ -84,7 +87,9 @@ namespace HGE {
 
 		static void update();
 
-	};
+		//if a function succeeds like writeAsString(); for instance and this is set to HGE_LOG_ON_SUCCESS, it will log that it succeeds. Possible values are HGE_LOG_ON_SUCCESS, HGE_DONT_LOG_ON_SUCCESS, HGE_DONT_LOG_ON_FAIL
+		static void setSystemLogMode(const int& succeedMode, const int& failMode);
+	};																																						
 
 }
 

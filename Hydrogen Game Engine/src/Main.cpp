@@ -4,14 +4,6 @@
 using namespace HGE;
 
 class Main : public HGE::Program {
-
-
-
-
-
-
-
-
 public:
 	Scene* test;
 
@@ -59,10 +51,7 @@ public:
 
 		warehouse.getComponent<Transform>().scale = (2);
 
-		ProjectManager::createMSVCSolution("testProject", "testScript");
-
-		//Util::createDirectory(R"(C:\Users\salmo\Desktop\testfolder\testfolder2\testfolder2\testfolder2\testfolder2\testfolder2\testfolder2\testfolder2\testfolder2\testfolder2\testfolder2\testfolder2\testfolder2\testfolder2\testfolder2\testfolder2)");
-		//Util::writeAsString("poop\n", R"(C:\Users\salmo\Desktop\testfolder\test.txt)", HGE_NORMAL_WRITE);
+		ProjectManager::createMSVCSolution("poop", "poopy");
 
 		for (int i = 0; i < warehouse.getComponent<MeshComponent>().meshes.size(); i++) {
 			auto& component = warehouse.getComponent<MeshComponent>().meshes[i];

@@ -51,6 +51,12 @@ namespace HGE {
 	//mouse types
 	const bool HGE_MOUSE_DISABLED = true;
 	const bool HGE_MOUSE_NORMAL = true;
+
+	//debug things
+	const int HGE_LOG_ON_SUCCESS = 0;
+	const int HGE_DONT_LOG_ON_SUCCESS = 1;
+	const int HGE_LOG_ON_FAIL = 2;
+	const int HGE_DONT_LOG_ON_FAIL = 3;
 }
 
 //keycodes

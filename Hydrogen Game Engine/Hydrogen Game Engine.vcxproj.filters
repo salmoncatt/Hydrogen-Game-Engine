@@ -4,9 +4,15 @@
     <Filter Include="src">
       <UniqueIdentifier>{e77cfd68-bf66-4f25-8ba3-c2e2e4ac2731}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\HGE">
+      <UniqueIdentifier>{51c98806-f5a1-4ebf-9bd5-6af14c3df984}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\HGE\scripting">
+      <UniqueIdentifier>{5fd3d8aa-3ab6-46d0-b61a-2a6193f75d68}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cpp">
+    <ClCompile Include="src\Main.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>

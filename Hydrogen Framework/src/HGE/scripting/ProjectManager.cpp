@@ -50,8 +50,10 @@ namespace HGE {
 		std::string solutionOutputData = solutionFileData;
 		std::string projectOutputData = projectFileData;
 
+		Debug::setSystemLogMode(HGE_DONT_LOG_ON_SUCCESS, HGE_LOG_ON_FAIL);
 		Util::writeAsString(solutionOutputData, documentpath + R"(\Hydrogen Game Engine\)" + projectName + R"(\Scripts\)" + projectName + ".sln", HGE_NORMAL_WRITE);
 		Util::writeAsString(projectOutputData, documentpath + R"(\Hydrogen Game Engine\)" + projectName + R"(\Scripts\)" + scriptName + R"(\)" + scriptName + ".vcxproj", HGE_NORMAL_WRITE);
+		Debug::setSystemLogMode(HGE_LOG_ON_SUCCESS, HGE_LOG_ON_FAIL);
 
 
 		delete[] solutionFileData;
