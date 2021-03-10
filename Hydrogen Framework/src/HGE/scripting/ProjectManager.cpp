@@ -1,9 +1,10 @@
 #include "hpch.h"
 #include "ProjectManager.h"
+#include "HGE/scripting/VisualStudio.h"
 
 namespace HGE {
 
-	void ProjectManager::createMSVCSolution(const std::string& projectName, const std::string& scriptName) {
+	void ProjectManager::createEngineProject(const std::string& projectName, const std::string& scriptName) {
 		std::string solutionFile = Util::readAsString(HGE_RES + "templates/MSVC/MSVCSolution.sln", HGE_NORMAL_READ);
 		std::string projectFile = Util::readAsString(HGE_RES + "templates/MSVC/MSVCProject.vcxproj", HGE_NORMAL_READ);
 
@@ -47,7 +48,7 @@ namespace HGE {
 		std::string HGE_Path = HGE_SOLUTION_DIRECTORY;
 
 		//project																												//i have to do this because its %(AdditionalDependencies) and that gets turned into (AdditionalDependencies), which breaks everything
-		sprintf(projectFileData, projectFile.c_str(), projectName.c_str(), projectGUID.c_str(), HGE_Path.c_str(), dependencies.c_str(), "%", "%", "%", "%");
+		sprintf(projectFileData, projectFile.c_str(), projectName.c_str(), projectGUID.c_str(), HGE_Path.c_str(), dependencies.c_str(), "%", scriptName.c_str(), "%", scriptName.c_str(), "%", scriptName.c_str(), "%", scriptName.c_str());
 
 		std::string solutionOutputData = solutionFileData;
 		std::string projectOutputData = projectFileData;
@@ -55,8 +56,15 @@ namespace HGE {
 		Debug::setSystemLogMode(HGE_DONT_LOG_ON_SUCCESS, HGE_LOG_ON_FAIL);
 		Util::writeAsString(solutionOutputData, documentpath + R"(\Hydrogen Game Engine\)" + projectName + R"(\Scripts\)" + projectName + ".sln", HGE_NORMAL_WRITE);
 		Util::writeAsString(projectOutputData, documentpath + R"(\Hydrogen Game Engine\)" + projectName + R"(\Scripts\)" + scriptName + R"(\)" + scriptName + ".vcxproj", HGE_NORMAL_WRITE);
+		//show all files on startup (so you dont have to)
+		Util::writeAsString(Util::readAsString(HGE_RES + "templates/MSVC/MSVCProject.vcxproj.user", HGE_NORMAL_READ), documentpath + R"(\Hydrogen Game Engine\)" + projectName + R"(\Scripts\)" + scriptName + R"(\)" + scriptName + ".vcxproj.user", HGE_NORMAL_WRITE);
 		Debug::setSystemLogMode(HGE_LOG_ON_SUCCESS, HGE_LOG_ON_FAIL);
 
+		//add a base script
+		VisualStudio::addScriptToProject(documentpath + R"(\Hydrogen Game Engine\)" + projectName + R"(\Scripts\)" + scriptName + R"(\)" + scriptName + ".vcxproj", "scriptNamespace_Change_to_whatever_you_want", scriptName);
+		
+		//open up visual studio
+		VisualStudio::openVisualStudio(documentpath + R"(\Hydrogen Game Engine\)" + projectName + R"(\Scripts\)" + projectName + ".sln");
 
 		delete[] solutionFileData;
 		delete[] projectFileData;

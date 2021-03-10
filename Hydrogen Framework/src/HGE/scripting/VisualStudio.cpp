@@ -34,6 +34,18 @@ namespace %s{
 
 	}
 
+	void %s::fixedUpdate() {
+
+	}
+
+	void %s::lateUpdate() {
+
+	}
+
+	void %s::stop() {
+
+	}
+
 })";
 
 
@@ -50,7 +62,7 @@ namespace %s{
 		char* hFileBuffer = new char[hFile.length() * 2];
 
 		sprintf(hFileBuffer, hFile.c_str(), namespaceName.c_str(), scriptName.c_str(), scriptName.c_str());
-		sprintf(cppFileBuffer, cppFile.c_str(), (scriptName + ".h").c_str(), namespaceName.c_str(), scriptName.c_str(), scriptName.c_str());
+		sprintf(cppFileBuffer, cppFile.c_str(), (scriptName + ".h").c_str(), namespaceName.c_str(), scriptName.c_str(), scriptName.c_str(), scriptName.c_str(), scriptName.c_str(), scriptName.c_str());
 
 		formatedHfile = hFileBuffer;
 		formatedCPPfile = cppFileBuffer;

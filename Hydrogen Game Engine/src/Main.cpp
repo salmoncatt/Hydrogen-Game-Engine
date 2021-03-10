@@ -51,9 +51,7 @@ public:
 
 		warehouse.getComponent<Transform>().scale = (2);
 
-		ProjectManager::createMSVCSolution("poop", "poopy");
-		VisualStudio::openVisualStudio(Util::getDirectory(HGE_FOLDER_DOCUMENTS) + R"(\Hydrogen Game Engine\poop\Scripts\poop.sln)");
-		VisualStudio::addScriptToProject(Util::getDirectory(HGE_FOLDER_DOCUMENTS) + R"(\Hydrogen Game Engine\poop\Scripts\poopy\poopy.vcxproj)", "namespaceYes", "scriptnameletsgo");
+		//ProjectManager::createEngineProject("testProject", "testScript");
 
 		for (int i = 0; i < warehouse.getComponent<MeshComponent>().meshes.size(); i++) {
 			auto& component = warehouse.getComponent<MeshComponent>().meshes[i];
@@ -62,7 +60,7 @@ public:
 			//component.calculateNormals(1);
 		}
 
-		peter.addComponent<NativeScript>().addScript("poopy");
+		peter.addComponent<NativeScript>().addScript("Scripts");
 
 		while (shouldUpdate() && !Input::getKey(HGE_KEY_ESCAPE)) {
 			ProfileMethod("Main loop");
@@ -73,15 +71,6 @@ public:
 
 			if (Input::getKeyDown(HGE_KEY_BACKSLASH))
 				Renderer::toggleWireFrameMode();
-
-			//Renderer::renderRectangle(frame.position, frame.size, 0, Vec3f(frame.backgroundColor.x, frame.backgroundColor.y, frame.backgroundColor.z));
-
-			//Vec2f scale = Vec2f(100 / Renderer::getCurrentWindowSize().x, 100 / Renderer::getCurrentWindowSize().y);
-
-			//Debug::logProfile(Debug::getProfile("ScriptManager update"));
-
-			//Vec2f(-1 * Renderer::getAspectRatio() + 0.5f, 1 - 0.5f)
-			//Renderer::renderRectangle(Vec2f(), scale, angle, Vec3f(0.4f, 0.2f, 0.8f));
 
 			window->limitFps(200);
 		}
