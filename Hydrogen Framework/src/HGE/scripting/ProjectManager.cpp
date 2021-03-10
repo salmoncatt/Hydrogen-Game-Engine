@@ -20,7 +20,10 @@ namespace HGE {
 		{1} = project guid
 		{2} = HGE_Path
 		{3} = HGE_Dependencies
-		
+		{3} = %(AdditionalDependencies)
+		{3} = %(AdditionalDependencies)
+		{3} = %(AdditionalDependencies)
+		{3} = %(AdditionalDependencies)
 		*/
 
 		CHAR documentRawPath[MAX_PATH];
@@ -42,10 +45,9 @@ namespace HGE {
 		sprintf(solutionFileData, solutionFile.c_str(), scriptName.c_str(), scriptName.c_str(), scriptName.c_str(), projectGUID.c_str(), projectGUID.c_str(), projectGUID.c_str(), projectGUID.c_str(), projectGUID.c_str(), projectGUID.c_str(), projectGUID.c_str(), projectGUID.c_str(), projectGUID.c_str(), solutionGUID.c_str());
 
 		std::string HGE_Path = HGE_SOLUTION_DIRECTORY;
-		HGE_Path += R"(Hydrogen FrameWork\src)";
 
-		//project
-		sprintf(projectFileData, projectFile.c_str(), projectName.c_str(), projectGUID.c_str(), HGE_Path.c_str(), dependencies.c_str());
+		//project																												//i have to do this because its %(AdditionalDependencies) and that gets turned into (AdditionalDependencies), which breaks everything
+		sprintf(projectFileData, projectFile.c_str(), projectName.c_str(), projectGUID.c_str(), HGE_Path.c_str(), dependencies.c_str(), "%", "%", "%", "%");
 
 		std::string solutionOutputData = solutionFileData;
 		std::string projectOutputData = projectFileData;

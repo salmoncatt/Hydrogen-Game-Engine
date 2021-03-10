@@ -52,8 +52,8 @@ public:
 		warehouse.getComponent<Transform>().scale = (2);
 
 		ProjectManager::createMSVCSolution("poop", "poopy");
-
-		VisualStudio::openVisualStudio(R"(C:\Users\salmo\Documents\Hydrogen Game Engine\poop\Scripts\poop.sln)");
+		VisualStudio::openVisualStudio(Util::getDirectory(HGE_FOLDER_DOCUMENTS) + R"(\Hydrogen Game Engine\poop\Scripts\poop.sln)");
+		VisualStudio::addScriptToProject(Util::getDirectory(HGE_FOLDER_DOCUMENTS) + R"(\Hydrogen Game Engine\poop\Scripts\poopy\poopy.vcxproj)", "namespaceYes", "scriptnameletsgo");
 
 		for (int i = 0; i < warehouse.getComponent<MeshComponent>().meshes.size(); i++) {
 			auto& component = warehouse.getComponent<MeshComponent>().meshes[i];
@@ -62,8 +62,7 @@ public:
 			//component.calculateNormals(1);
 		}
 
-		//peter.addComponent<NativeScript>().addScript<TestScript>();
-		peter.addComponent<NativeScript>().addScript("Scripts");
+		peter.addComponent<NativeScript>().addScript("poopy");
 
 		while (shouldUpdate() && !Input::getKey(HGE_KEY_ESCAPE)) {
 			ProfileMethod("Main loop");

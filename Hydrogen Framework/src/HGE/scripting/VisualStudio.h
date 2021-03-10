@@ -9,9 +9,14 @@
 namespace HGE {
 
 	class DLL_API VisualStudio {
-	public:
+	private:
 
-		static void openVisualStudio(const string& solutionPath);
+		static std::string hFile;
+		static std::string cppFile;
+
+	public:
+		static void openVisualStudio(const std::string& solutionPath);
+		static void addScriptToProject(const std::string& projectPath, const std::string& namespaceName, const std::string& scriptName);
 
 	};
 
