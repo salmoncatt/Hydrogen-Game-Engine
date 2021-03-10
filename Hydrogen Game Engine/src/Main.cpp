@@ -53,6 +53,8 @@ public:
 
 		ProjectManager::createMSVCSolution("poop", "poopy");
 
+		VisualStudio::openVisualStudio(R"(C:\Users\salmo\Documents\Hydrogen Game Engine\poop\Scripts\poop.sln)");
+
 		for (int i = 0; i < warehouse.getComponent<MeshComponent>().meshes.size(); i++) {
 			auto& component = warehouse.getComponent<MeshComponent>().meshes[i];
 
@@ -63,15 +65,6 @@ public:
 		//peter.addComponent<NativeScript>().addScript<TestScript>();
 		peter.addComponent<NativeScript>().addScript("Scripts");
 
-		float angle = 0;
-
-		GuiFrame frame;
-		frame = GuiFrame();
-		frame.sizeType = HGE_SCREEN_SPACE_SIZE;
-		frame.size = Vec2f(0.5f);
-		frame.position = Vec2f();
-		frame.name = "test";
-
 		while (shouldUpdate() && !Input::getKey(HGE_KEY_ESCAPE)) {
 			ProfileMethod("Main loop");
 			test->updateEditor();
@@ -81,8 +74,6 @@ public:
 
 			if (Input::getKeyDown(HGE_KEY_BACKSLASH))
 				Renderer::toggleWireFrameMode();
-
-			angle += Input::getScrollMovement().y * 2;
 
 			//Renderer::renderRectangle(frame.position, frame.size, 0, Vec3f(frame.backgroundColor.x, frame.backgroundColor.y, frame.backgroundColor.z));
 
