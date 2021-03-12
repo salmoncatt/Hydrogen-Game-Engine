@@ -72,19 +72,21 @@ namespace HGE {
 			if (system.getComponentManager()->hasComponent<NativeScript>(entity)) {
 				auto& script = system.getComponentManager()->getComponent<NativeScript>(entity);
 
-				if (!script.scripts[0]) {
-					script.instantiateScript(&script, 0);
+				for (unsigned int i = 0; i < script.scriptAmount; ++i) {
+					if (!script.scripts[i]) {
+						script.instantiateScript(&script, i);
 
-					//add the entity reference to the script (to call things like getComponent<>())
-					script.scripts[0]->entity = entity;
-					script.scripts[0]->scene = this;
-					script.scripts[0]->created = true;
+						//add the entity reference to the script (to call things like getComponent<>())
+						script.scripts[i]->entity = entity;
+						script.scripts[i]->scene = this;
+						script.scripts[i]->created = true;
 
-					//startup the script
-					script.scripts[0]->start();
+						//startup the script
+						script.scripts[i]->start();
+					}
+
+					script.scripts[i]->update();
 				}
-
-				script.scripts[0]->update();
 
 				//script.scripts[0]->update();
 
