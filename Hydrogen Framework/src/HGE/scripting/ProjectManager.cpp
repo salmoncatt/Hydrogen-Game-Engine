@@ -43,12 +43,12 @@ namespace HGE {
 		char* projectFileData = new char[projectFile.length() * 2];
 
 		//solution
-		sprintf(solutionFileData, solutionFile.c_str(), scriptName.c_str(), scriptName.c_str(), scriptName.c_str(), projectGUID.c_str(), projectGUID.c_str(), projectGUID.c_str(), projectGUID.c_str(), projectGUID.c_str(), projectGUID.c_str(), projectGUID.c_str(), projectGUID.c_str(), projectGUID.c_str(), solutionGUID.c_str());
+		sprintf_s(solutionFileData, solutionFile.length() * 2, solutionFile.c_str(), scriptName.c_str(), scriptName.c_str(), scriptName.c_str(), projectGUID.c_str(), projectGUID.c_str(), projectGUID.c_str(), projectGUID.c_str(), projectGUID.c_str(), projectGUID.c_str(), projectGUID.c_str(), projectGUID.c_str(), projectGUID.c_str(), solutionGUID.c_str());
 
 		std::string HGE_Path = HGE_SOLUTION_DIRECTORY;
 
 		//project																												//i have to do this because its %(AdditionalDependencies) and that gets turned into (AdditionalDependencies), which breaks everything
-		sprintf(projectFileData, projectFile.c_str(), projectName.c_str(), projectGUID.c_str(), HGE_Path.c_str(), dependencies.c_str(), "%", scriptName.c_str(), "%", scriptName.c_str(), "%", scriptName.c_str(), "%", scriptName.c_str());
+		sprintf_s(projectFileData, projectFile.length() * 2, projectFile.c_str(), projectName.c_str(), projectGUID.c_str(), HGE_Path.c_str(), dependencies.c_str(), "%", scriptName.c_str(), "%", scriptName.c_str(), "%", scriptName.c_str(), "%", scriptName.c_str());
 
 		std::string solutionOutputData = solutionFileData;
 		std::string projectOutputData = projectFileData;

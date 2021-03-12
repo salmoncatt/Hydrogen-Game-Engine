@@ -5,6 +5,7 @@
 #if _WIN64
 
 int main(int argc, char** argv) {
+	__security_init_cookie();
 #ifndef HGE_SCRIPT
 	auto program = HGE::createProgram();
 

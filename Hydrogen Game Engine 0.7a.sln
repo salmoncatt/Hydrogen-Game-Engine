@@ -46,7 +46,8 @@ Global
 		{E76C914B-3119-47A0-A5B7-BF8B801372DE}.HGE_Release|x64.Build.0 = Release|x64
 		{E76C914B-3119-47A0-A5B7-BF8B801372DE}.HGE_Release|x86.ActiveCfg = Release|x64
 		{E76C914B-3119-47A0-A5B7-BF8B801372DE}.HGE_Release|x86.Build.0 = Release|x64
-		{E76C914B-3119-47A0-A5B7-BF8B801372DE}.Release|x64.ActiveCfg = Debug|x64
+		{E76C914B-3119-47A0-A5B7-BF8B801372DE}.Release|x64.ActiveCfg = Release|x64
+		{E76C914B-3119-47A0-A5B7-BF8B801372DE}.Release|x64.Build.0 = Release|x64
 		{E76C914B-3119-47A0-A5B7-BF8B801372DE}.Release|x86.ActiveCfg = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution

@@ -747,7 +747,7 @@ namespace HGE {
 			data++;
 
 			while (*data >= '0' && *data <= '9') {
-				accumulator += (*data++ - '0') * decimalAccumulator;
+				accumulator += (*data++ - (double)'0') * decimalAccumulator;
 				decimalAccumulator *= 0.1;
 			}
 

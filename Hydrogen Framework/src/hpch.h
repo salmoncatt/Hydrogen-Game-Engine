@@ -2,7 +2,7 @@
 #ifndef HGE_PRECOMPILED_HEADER_INCLUDE
 #define HGE_PRECOMPILED_HEADER_INCLUDE
 
-#define _CRT_SECURE_NO_DEPRECATE
+//#define _CRT_SECURE_NO_DEPRECATE
 #include <iostream>
 #include <thread>
 #include <chrono> 
@@ -27,6 +27,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <shellapi.h>
+#include <process.h>
 
 //for guid
 #include <Rpc.h>
@@ -62,8 +63,8 @@
 #endif
 
 //need to include opengl things after windows because of macro redefinition
-#include "GL/glew.h"
-#include "GLFW/glfw3.h"
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
 
 //HGE vars n stuff
 #include "hgedef.h"

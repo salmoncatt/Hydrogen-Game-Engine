@@ -13,7 +13,7 @@ namespace HGE {
 	const std::string HGE_SCRIPTS = "../Hydrogen Framework/scripts/";
 #else
 	const std::string HGE_RES = "res/";
-	const std::string HGE_RES = "scripts/";
+	const std::string HGE_SCRIPTS = "scripts/";
 #endif
 
 	//for byte buffer and other buffers

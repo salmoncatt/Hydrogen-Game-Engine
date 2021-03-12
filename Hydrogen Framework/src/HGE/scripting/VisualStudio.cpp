@@ -61,8 +61,8 @@ namespace %s{
 		char* cppFileBuffer = new char[cppFile.length() * 2];
 		char* hFileBuffer = new char[hFile.length() * 2];
 
-		sprintf(hFileBuffer, hFile.c_str(), namespaceName.c_str(), scriptName.c_str(), scriptName.c_str());
-		sprintf(cppFileBuffer, cppFile.c_str(), (scriptName + ".h").c_str(), namespaceName.c_str(), scriptName.c_str(), scriptName.c_str(), scriptName.c_str(), scriptName.c_str(), scriptName.c_str());
+		sprintf_s(hFileBuffer, cppFile.length() * 2, hFile.c_str(), namespaceName.c_str(), scriptName.c_str(), scriptName.c_str());
+		sprintf_s(cppFileBuffer, cppFile.length() * 2, cppFile.c_str(), (scriptName + ".h").c_str(), namespaceName.c_str(), scriptName.c_str(), scriptName.c_str(), scriptName.c_str(), scriptName.c_str(), scriptName.c_str());
 
 		formatedHfile = hFileBuffer;
 		formatedCPPfile = cppFileBuffer;

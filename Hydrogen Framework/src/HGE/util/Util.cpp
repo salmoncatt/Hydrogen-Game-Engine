@@ -353,9 +353,15 @@ namespace HGE {
 
 	std::vector<Mesh> Util::loadMesh(const std::string& filepath) {
 		std::string filename = removePathFromFilePathAndName(filepath);
-		FILE* file = fopen(filepath.c_str(), "r");
+		FILE* file;
+		errno_t result = fopen_s(&file, filepath.c_str(), "r");
 
 		std::vector<Mesh> out;
+		if (!file || result != 0) {
+			Debug::systemErr("Could not read file: " + filepath);
+			return out;
+		}
+
 		std::vector<Material> materials;
 
 		std::vector<Vec2f> textureCoordBuffer;
@@ -380,229 +386,226 @@ namespace HGE {
 		textureCoordBuffer.reserve(reserveSize);
 		normalBuffer.reserve(reserveSize);
 
-		if (file) {
-			//file.read(buffer, length);
-			while (fgets(buffer, 512, file) != NULL) {
-				line = buffer;
-				line.erase(line.end() - 1, line.end());
-				std::string header = line.substr(0, 2);
+		//file.read(buffer, length);
+		while (fgets(buffer, 512, file) != NULL) {
+			line = buffer;
+			line.erase(line.end() - 1, line.end());
+			std::string header = line.substr(0, 2);
 
-				float data[3];
+			float data[3];
 
-				if (line[0] != '#' && line[0] != 'o' && header != "f ") {
-					char* currentPointer = strchr(_strdup(line.substr(line.find(' ')).data()), ' ');
+			if (line[0] != '#' && line[0] != 'o' && header != "f ") {
+				char* currentPointer = strchr(_strdup(line.substr(line.find(' ')).data()), ' ');
 
-					data[0] = strtof(++currentPointer, &currentPointer);
-					data[1] = strtof(++currentPointer, &currentPointer);
-					data[2] = strtof(++currentPointer, &currentPointer);
-				}
+				data[0] = strtof(++currentPointer, &currentPointer);
+				data[1] = strtof(++currentPointer, &currentPointer);
+				data[2] = strtof(++currentPointer, &currentPointer);
+			}
 
-				if (header == "v ") {
-					vertexBuffer.push_back(Vec3f(data[0], data[1], data[2]));
-				}
-				else if (header == "vt") {
-					textureCoordBuffer.push_back(Vec2f(data[0], data[1]));
-				}
-				else if (header == "vn") {
-					normalBuffer.push_back(Vec3f(data[0], data[1], data[2]));
-				}
-				else if (header == "f ") {
-					unsigned int vertexIndex[3], uvIndex[3], normalIndex[3];
+			if (header == "v ") {
+				vertexBuffer.push_back(Vec3f(data[0], data[1], data[2]));
+			}
+			else if (header == "vt") {
+				textureCoordBuffer.push_back(Vec2f(data[0], data[1]));
+			}
+			else if (header == "vn") {
+				normalBuffer.push_back(Vec3f(data[0], data[1], data[2]));
+			}
+			else if (header == "f ") {
+				unsigned int vertexIndex[3], uvIndex[3], normalIndex[3];
 
-					int matches = 0;
+				int matches = 0;
 
-					switch(faceIndexType) {
+				switch (faceIndexType) {
 
-					case(0):
+				case(0):
+					//vertices, uvs, normals
+					matches = sscanf_s(line.c_str(), "f %d/%d/%d %d/%d/%d %d/%d/%d", &vertexIndex[0], &uvIndex[0], &normalIndex[0], &vertexIndex[1], &uvIndex[1], &normalIndex[1], &vertexIndex[2], &uvIndex[2], &normalIndex[2]);
+
+					if (matches != 9) {
+						//vertices uvs
+						matches = sscanf_s(line.c_str(), "f %d/%d %d/%d %d/%d", &vertexIndex[0], &uvIndex[0], &vertexIndex[1], &uvIndex[1], &vertexIndex[2], &uvIndex[2]);
+
+						if (matches != 6) {
+							//vertices normals
+							matches = sscanf_s(line.c_str(), "f %d//%d %d//%d %d//%d", &vertexIndex[0], &normalIndex[0], &vertexIndex[1], &normalIndex[1], &vertexIndex[2], &normalIndex[2]);
+
+							if (matches != 6) {
+								Debug::systemErr("Model: " + filepath + " has incorrect formatting, try different exporting options");
+								return out;
+							}
+							else
+								faceIndexType = 2;
+						}
+						else
+							faceIndexType = 1;
+					}
+
+					break;
+
+				case(1):
+					//vertices uvs
+					matches = sscanf_s(line.c_str(), "f %d/%d %d/%d %d/%d", &vertexIndex[0], &uvIndex[0], &vertexIndex[1], &uvIndex[1], &vertexIndex[2], &uvIndex[2]);
+
+					if (matches != 6) {
 						//vertices, uvs, normals
-						matches = sscanf(line.c_str(), "f %d/%d/%d %d/%d/%d %d/%d/%d", &vertexIndex[0], &uvIndex[0], &normalIndex[0], &vertexIndex[1], &uvIndex[1], &normalIndex[1], &vertexIndex[2], &uvIndex[2], &normalIndex[2]);
+						matches = sscanf_s(line.c_str(), "f %d/%d/%d %d/%d/%d %d/%d/%d", &vertexIndex[0], &uvIndex[0], &normalIndex[0], &vertexIndex[1], &uvIndex[1], &normalIndex[1], &vertexIndex[2], &uvIndex[2], &normalIndex[2]);
+
+						if (matches != 9) {
+							//vertices normals
+							matches = sscanf_s(line.c_str(), "f %d//%d %d//%d %d//%d", &vertexIndex[0], &normalIndex[0], &vertexIndex[1], &normalIndex[1], &vertexIndex[2], &normalIndex[2]);
+
+							if (matches != 6) {
+								Debug::systemErr("Model: " + filepath + " has incorrect formatting, try different exporting options");
+								return out;
+							}
+							else
+								faceIndexType = 2;
+						}
+						else
+							faceIndexType = 0;
+					}
+
+					break;
+
+				case(2):
+					//vertices normals
+					matches = sscanf_s(line.c_str(), "f %d//%d %d//%d %d//%d", &vertexIndex[0], &normalIndex[0], &vertexIndex[1], &normalIndex[1], &vertexIndex[2], &normalIndex[2]);
+
+					if (matches != 6) {
+						//vertices, uvs, normals
+						matches = sscanf_s(line.c_str(), "f %d/%d/%d %d/%d/%d %d/%d/%d", &vertexIndex[0], &uvIndex[0], &normalIndex[0], &vertexIndex[1], &uvIndex[1], &normalIndex[1], &vertexIndex[2], &uvIndex[2], &normalIndex[2]);
 
 						if (matches != 9) {
 							//vertices uvs
-							matches = sscanf(line.c_str(), "f %d/%d %d/%d %d/%d", &vertexIndex[0], &uvIndex[0], &vertexIndex[1], &uvIndex[1], &vertexIndex[2], &uvIndex[2]);
+							matches = sscanf_s(line.c_str(), "f %d/%d %d/%d %d/%d", &vertexIndex[0], &uvIndex[0], &vertexIndex[1], &uvIndex[1], &vertexIndex[2], &uvIndex[2]);
 
 							if (matches != 6) {
-								//vertices normals
-								matches = sscanf(line.c_str(), "f %d//%d %d//%d %d//%d", &vertexIndex[0], &normalIndex[0], &vertexIndex[1], &normalIndex[1], &vertexIndex[2], &normalIndex[2]);
-
-								if (matches != 6) {
-									Debug::systemErr("Model: " + filepath + " has incorrect formatting, try different exporting options");
-									return out;
-								}
-								else
-									faceIndexType = 2;
+								Debug::systemErr("Model: " + filepath + " has incorrect formatting, try different exporting options");
+								return out;
 							}
 							else
 								faceIndexType = 1;
 						}
-								
+						else
+							faceIndexType = 0;
+					}
+
+					break;
+				}
+
+				//in case of no mtl, i have to make the meshes as i go
+				if (out.size() <= meshIndex)
+					out.push_back(Mesh());
+
+				switch (faceIndexType) {
+
+				case(0):
+					for (int i = 0; i < 3; i++) {
+						//add data to current mesh
+
+						//vertex data
+						Vec3f vertex = vertexBuffer[vertexIndex[i] - 1];
+						out[meshIndex].vertices.push_back(vertex.x);
+						out[meshIndex].vertices.push_back(vertex.y);
+						out[meshIndex].vertices.push_back(vertex.z);
+
+						//texture coords
+						Vec2f uv = textureCoordBuffer[uvIndex[i] - 1];
+
+						out[meshIndex].texturecoords.push_back(uv.x);
+						out[meshIndex].texturecoords.push_back(1 - uv.y);
+
+						//normals
+						Vec3f normal = normalBuffer[normalIndex[i] - 1];
+
+						out[meshIndex].normals.push_back(normal.x);
+						out[meshIndex].normals.push_back(normal.y);
+						out[meshIndex].normals.push_back(normal.z);
+					}
+
 					break;
 
-					case(1):
-						//vertices uvs
-						matches = sscanf(line.c_str(), "f %d/%d %d/%d %d/%d", &vertexIndex[0], &uvIndex[0], &vertexIndex[1], &uvIndex[1], &vertexIndex[2], &uvIndex[2]);
+				case(1):
 
-						if (matches != 6) {
-							//vertices, uvs, normals
-							matches = sscanf(line.c_str(), "f %d/%d/%d %d/%d/%d %d/%d/%d", &vertexIndex[0], &uvIndex[0], &normalIndex[0], &vertexIndex[1], &uvIndex[1], &normalIndex[1], &vertexIndex[2], &uvIndex[2], &normalIndex[2]);
+					for (int i = 0; i < 3; i++) {
+						//add data to current mesh
 
-							if (matches != 9) {
-								//vertices normals
-								matches = sscanf(line.c_str(), "f %d//%d %d//%d %d//%d", &vertexIndex[0], &normalIndex[0], &vertexIndex[1], &normalIndex[1], &vertexIndex[2], &normalIndex[2]);
+						//vertex data
+						Vec3f vertex = vertexBuffer[vertexIndex[i] - 1];
+						out[meshIndex].vertices.push_back(vertex.x);
+						out[meshIndex].vertices.push_back(vertex.y);
+						out[meshIndex].vertices.push_back(vertex.z);
 
-								if (matches != 6) {
-									Debug::systemErr("Model: " + filepath + " has incorrect formatting, try different exporting options");
-									return out;
-								}
-								else
-									faceIndexType = 2;
-							}
-							else
-								faceIndexType = 0;
-						}
+						//texture coords
+						Vec2f uv = textureCoordBuffer[uvIndex[i] - 1];
 
-						break;
-
-					case(2):
-						//vertices normals
-						matches = sscanf(line.c_str(), "f %d//%d %d//%d %d//%d", &vertexIndex[0], &normalIndex[0], &vertexIndex[1], &normalIndex[1], &vertexIndex[2], &normalIndex[2]);
-						
-						if (matches != 6) {
-							//vertices, uvs, normals
-							matches = sscanf(line.c_str(), "f %d/%d/%d %d/%d/%d %d/%d/%d", &vertexIndex[0], &uvIndex[0], &normalIndex[0], &vertexIndex[1], &uvIndex[1], &normalIndex[1], &vertexIndex[2], &uvIndex[2], &normalIndex[2]);
-
-							if (matches != 9) {
-								//vertices uvs
-								matches = sscanf(line.c_str(), "f %d/%d %d/%d %d/%d", &vertexIndex[0], &uvIndex[0], &vertexIndex[1], &uvIndex[1], &vertexIndex[2], &uvIndex[2]);
-
-								if (matches != 6) {
-									Debug::systemErr("Model: " + filepath + " has incorrect formatting, try different exporting options");
-									return out;
-								}
-								else
-									faceIndexType = 1;
-							}
-							else
-								faceIndexType = 0;
-						}
-
-						break;
+						out[meshIndex].texturecoords.push_back(uv.x);
+						out[meshIndex].texturecoords.push_back(1 - uv.y);
 					}
 
-					//in case of no mtl, i have to make the meshes as i go
-					if (out.size() <= meshIndex)
-						out.push_back(Mesh());
+					break;
 
-					switch (faceIndexType) {
+				case(2):
 
-					case(0):
-						for (int i = 0; i < 3; i++) {
-							//add data to current mesh
+					for (int i = 0; i < 3; i++) {
+						//add data to current mesh
 
-							//vertex data
-							Vec3f vertex = vertexBuffer[vertexIndex[i] - 1];
-							out[meshIndex].vertices.push_back(vertex.x);
-							out[meshIndex].vertices.push_back(vertex.y);
-							out[meshIndex].vertices.push_back(vertex.z);
+						//vertex data
+						Vec3f vertex = vertexBuffer[vertexIndex[i] - 1];
+						out[meshIndex].vertices.push_back(vertex.x);
+						out[meshIndex].vertices.push_back(vertex.y);
+						out[meshIndex].vertices.push_back(vertex.z);
 
-							//texture coords
-							Vec2f uv = textureCoordBuffer[uvIndex[i] - 1];
+						//normals
+						Vec3f normal = normalBuffer[normalIndex[i] - 1];
 
-							out[meshIndex].texturecoords.push_back(uv.x);
-							out[meshIndex].texturecoords.push_back(1 - uv.y);
-
-							//normals
-							Vec3f normal = normalBuffer[normalIndex[i] - 1];
-
-							out[meshIndex].normals.push_back(normal.x);
-							out[meshIndex].normals.push_back(normal.y);
-							out[meshIndex].normals.push_back(normal.z);
-						}
-					
-						break;
-
-					case(1):
-
-						for (int i = 0; i < 3; i++) {
-							//add data to current mesh
-
-							//vertex data
-							Vec3f vertex = vertexBuffer[vertexIndex[i] - 1];
-							out[meshIndex].vertices.push_back(vertex.x);
-							out[meshIndex].vertices.push_back(vertex.y);
-							out[meshIndex].vertices.push_back(vertex.z);
-
-							//texture coords
-							Vec2f uv = textureCoordBuffer[uvIndex[i] - 1];
-
-							out[meshIndex].texturecoords.push_back(uv.x);
-							out[meshIndex].texturecoords.push_back(1 - uv.y);
-						}
-
-						break;
-
-					case(2):
-
-						for (int i = 0; i < 3; i++) {
-							//add data to current mesh
-
-							//vertex data
-							Vec3f vertex = vertexBuffer[vertexIndex[i] - 1];
-							out[meshIndex].vertices.push_back(vertex.x);
-							out[meshIndex].vertices.push_back(vertex.y);
-							out[meshIndex].vertices.push_back(vertex.z);
-
-							//normals
-							Vec3f normal = normalBuffer[normalIndex[i] - 1];
-
-							out[meshIndex].normals.push_back(normal.x);
-							out[meshIndex].normals.push_back(normal.y);
-							out[meshIndex].normals.push_back(normal.z);
-						}
-
-						break;
-
-
+						out[meshIndex].normals.push_back(normal.x);
+						out[meshIndex].normals.push_back(normal.y);
+						out[meshIndex].normals.push_back(normal.z);
 					}
 
-				
+					break;
+
 
 				}
-				else if (header == "s ") {
-					//smooth shading or something here
-					bool smoothshading = true;
-				}
-				else if (line.substr(0, 7) == "usemtl ") {
-					bool found = false;
-					for (int i = 0; i < materials.size(); i++) {
-						if (line.substr(7) == materials[i].name.c_str()) {
-							meshIndex = i;
-							out[meshIndex].material = materials[i];
-							found = true;
-							break;
-						}
-					}
 
-					//just a little helper for materials
-					if (!found) {
-						Debug::systemErr("Couldn't find material: " + line.substr(7));
-					}
 
-				}else if (line.substr(0, 7) == "mtllib ") {
-					std::string materialPath = removeNameFromFilePathAndName(filepath) + line.substr(7);
-					std::vector<Material> loadedMaterials = loadMaterial(materialPath);
 
-					materials.insert(materials.end(), loadedMaterials.begin(), loadedMaterials.end());
-
-					out = std::vector<Mesh>(materials.size(), Mesh());
-					out.reserve(materials.size());
-				}
 			}
+			else if (header == "s ") {
+				//smooth shading or something here
+				bool smoothshading = true;
+			}
+			else if (line.substr(0, 7) == "usemtl ") {
+				bool found = false;
+				for (int i = 0; i < materials.size(); i++) {
+					if (line.substr(7) == materials[i].name.c_str()) {
+						meshIndex = i;
+						out[meshIndex].material = materials[i];
+						found = true;
+						break;
+					}
+				}
 
-			fclose(file);
+				//just a little helper for materials
+				if (!found) {
+					Debug::systemErr("Couldn't find material: " + line.substr(7));
+				}
+
+			}
+			else if (line.substr(0, 7) == "mtllib ") {
+				std::string materialPath = removeNameFromFilePathAndName(filepath) + line.substr(7);
+				std::vector<Material> loadedMaterials = loadMaterial(materialPath);
+
+				materials.insert(materials.end(), loadedMaterials.begin(), loadedMaterials.end());
+
+				out = std::vector<Mesh>(materials.size(), Mesh());
+				out.reserve(materials.size());
+			}
 		}
-		else
-			Debug::systemErr("Could not read file: " + filepath);
+
+		fclose(file);
 
 		if (!(materials.size() > 0))
 			Debug::systemErr("Warning object file: " + filename + ", has no materials. Meaning it will have null textures and stuff");
