@@ -6,9 +6,11 @@
 
 git config --global user.name "salmoncatt"
 git config --global user.email "salmoncattyt@gmail.com"
+git config --local core.autocrlf false
 
 @echo set username to: salmoncatt
 @echo set email to: salmoncattyt@gmail.com
+@echo set CRLF to false
 @echo.
 @echo.
 
