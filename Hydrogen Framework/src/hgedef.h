@@ -8,13 +8,8 @@ namespace HGE {
 	//big stoof
 	const int HGE_NULL = 0;
 
-#ifdef _DEBUG
 	const std::string HGE_RES = "../Hydrogen Framework/res/";
 	const std::string HGE_SCRIPTS = "../Hydrogen Framework/scripts/";
-#else
-	const std::string HGE_RES = "res/";
-	const std::string HGE_SCRIPTS = "scripts/";
-#endif
 
 	//for byte buffer and other buffers
 	const int HGE_UNSIGNED = 0;

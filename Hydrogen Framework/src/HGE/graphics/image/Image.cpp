@@ -17,13 +17,12 @@ namespace HGE {
 		int allocation = image.width * image.height * image.channels;
 		data = new unsigned char[allocation];
 		std::memcpy(data, image.data, allocation);
-
-		data = image.data;
 	}
 
 	Image& Image::operator=(const Image& image) {
 		if (this != &image && image.data != nullptr) {
-			delete[] data;
+			if(data != NULL)
+				delete[] data;
 			data = NULL;
 
 			int allocation = image.width * image.height * image.channels;
@@ -33,6 +32,7 @@ namespace HGE {
 			width = image.width;
 			height = image.height;
 			channels = image.channels;
+			filepath = image.filepath;
 		}
 
 		return *this;

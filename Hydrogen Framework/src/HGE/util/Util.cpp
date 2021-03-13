@@ -319,7 +319,7 @@ namespace HGE {
 					if (materialCount > 0) {
 						int index = materialCount - 1;
 
-						out[index].albedoTexture = Texture(filepath + line.substr(7));
+ 						out[index].albedoTexture = Texture(removeNameFromFilePathAndName(filepath) + line.substr(7));
 						out[index].albedoTexture.create();
 					}
 					else {
@@ -331,7 +331,7 @@ namespace HGE {
 					if (materialCount > 0) {
 						int index = materialCount - 1;
 
-						out[index].albedoTexture = Texture(filepath + line.substr(8));
+						out[index].albedoTexture = Texture(removeNameFromFilePathAndName(filepath) + line.substr(8));
 						out[index].albedoTexture.create();
 					}
 					else {

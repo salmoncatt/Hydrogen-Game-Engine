@@ -116,8 +116,10 @@
       <AdditionalDependencies>HGE.lib;glew32s.lib;glfw3.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%s(AdditionalDependencies)</AdditionalDependencies>
     </Link>
 	<PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)bin\$(Configuration)\%s.dll" "$(HGE_Path)Hydrogen Framework\scripts\" /y /r</Command>
-   	</PostBuildEvent>
+		<Command>xcopy "$(SolutionDir)bin\$(Configuration)\%s.dll" "$(HGE_Path)Hydrogen Framework\scripts\" /y /r
+			 xcopy "$(SolutionDir)bin\$(Configuration)\%s.dll" "$(HGE_Path)bin\x64\Debug\Hydrogen Framework\scripts\" /y /r
+			 xcopy "$(SolutionDir)bin\$(Configuration)\%s.dll" "$(HGE_Path)bin\x64\Release\Hydrogen Framework\scripts\" /y /r</Command>        
+	</PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='HGE_Debug|x64'">
     <ClCompile>
@@ -134,8 +136,10 @@
       <AdditionalDependencies>HGE.lib;glew32s.lib;glfw3.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%s(AdditionalDependencies)</AdditionalDependencies>
     </Link>
 	<PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)bin\$(Configuration)\%s.dll" "$(HGE_Path)Hydrogen Framework\scripts\" /y /r</Command>
-   	</PostBuildEvent>
+		<Command>xcopy "$(SolutionDir)bin\$(Configuration)\%s.dll" "$(HGE_Path)Hydrogen Framework\scripts\" /y /r
+			 xcopy "$(SolutionDir)bin\$(Configuration)\%s.dll" "$(HGE_Path)bin\x64\Debug\Hydrogen Framework\scripts\" /y /r
+			 xcopy "$(SolutionDir)bin\$(Configuration)\%s.dll" "$(HGE_Path)bin\x64\Release\Hydrogen Framework\scripts\" /y /r</Command>    
+        </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -156,8 +160,10 @@
       <AdditionalDependencies>Hydrogen Framework.lib;glew32s.lib;glfw3.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%s(AdditionalDependencies)</AdditionalDependencies>
     </Link>
 	<PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)bin\$(Configuration)\%s.dll" "$(HGE_Path)Hydrogen Framework\scripts\" /y /r</Command>
-   	</PostBuildEvent>
+		<Command>xcopy "$(SolutionDir)bin\$(Configuration)\%s.dll" "$(HGE_Path)Hydrogen Framework\scripts\" /y /r
+			 xcopy "$(SolutionDir)bin\$(Configuration)\%s.dll" "$(HGE_Path)bin\x64\Debug\Hydrogen Framework\scripts\" /y /r
+			 xcopy "$(SolutionDir)bin\$(Configuration)\%s.dll" "$(HGE_Path)bin\x64\Release\Hydrogen Framework\scripts\" /y /r</Command>    
+	</PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='HGE_RELEASE|x64'">
     <ClCompile>
@@ -178,8 +184,10 @@
       <AdditionalDependencies>HGE.lib;glew32s.lib;glfw3.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%s(AdditionalDependencies)</AdditionalDependencies>
     </Link>
 	<PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)bin\$(Configuration)\%s.dll" "$(HGE_Path)Hydrogen Framework\scripts\" /y /r</Command>
-   	</PostBuildEvent>
+		<Command>xcopy "$(SolutionDir)bin\$(Configuration)\%s.dll" "$(HGE_Path)Hydrogen Framework\scripts\" /y /r
+			 xcopy "$(SolutionDir)bin\$(Configuration)\%s.dll" "$(HGE_Path)bin\x64\Debug\Hydrogen Framework\scripts\" /y /r
+			 xcopy "$(SolutionDir)bin\$(Configuration)\%s.dll" "$(HGE_Path)bin\x64\Release\Hydrogen Framework\scripts\" /y /r</Command>    	
+	</PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -6,12 +6,13 @@ namespace HGE {
 		textureID = 0;
 	}
 
-	Texture::Texture(const Texture& texture) : image(texture.image){
+	Texture::Texture(const Texture& texture) {
 		image = Image(texture.image);
 		textureID = 0;
 	}
 
-	Texture::Texture(const std::string& path) : image(path) {
+	Texture::Texture(const std::string& path) {
+		image = Image(path);
 		textureID = 0;
 	}
 

@@ -39,7 +39,7 @@ public:
 		GameObject warehouse = test->createGameObject("warehouse");
 
 		MeshComponent mesh = MeshComponent();
-		mesh.meshes = Util::loadMesh(HGE_RES + "models/zip gun/zip gun.obj");
+		mesh.meshes = Util::loadMesh(HGE_RES + "models/peter/peter.obj");
 		peter.addComponent<MeshComponent>(mesh);
 		peter.getComponent<Transform>().scale = 2;
 
@@ -51,8 +51,6 @@ public:
 
 		warehouse.getComponent<Transform>().scale = (2);
 
-		//ProjectManager::createEngineProject("testProject", "testScript");
-
 		for (int i = 0; i < warehouse.getComponent<MeshComponent>().meshes.size(); i++) {
 			auto& component = warehouse.getComponent<MeshComponent>().meshes[i];
 
@@ -60,7 +58,7 @@ public:
 			//component.calculateNormals(1);
 		}
 
-		peter.addComponent<NativeScript>().addScript("Scripts");
+		peter.addComponent<NativeScript>().addScript("testScript");
 
 		while (shouldUpdate() && !Input::getKey(HGE_KEY_ESCAPE)) {
 			ProfileMethod("Main loop");
@@ -71,6 +69,9 @@ public:
 
 			if (Input::getKeyDown(HGE_KEY_BACKSLASH))
 				Renderer::toggleWireFrameMode();
+
+			if (Input::getKeyDown(HGE_KEY_F))
+				ProjectManager::createEngineProject("testProject", "testScript");
 
 			window->limitFps(200);
 		}

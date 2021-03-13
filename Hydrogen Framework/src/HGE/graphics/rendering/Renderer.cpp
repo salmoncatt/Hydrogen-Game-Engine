@@ -48,7 +48,6 @@ namespace HGE {
 		quad.create();
 
 		Debug::systemLog("Creating system shaders");
-		Debug::newLine();
 
 		mainShader.create();
 		guiShader.create();
@@ -56,7 +55,6 @@ namespace HGE {
 		nullTexture.create();
 		createProjectionMatrix(screenWidth, screenHeight);
 
-		Debug::newLine();
 		Debug::systemSuccess("Created system shaders");
 
 		Debug::newLine();
