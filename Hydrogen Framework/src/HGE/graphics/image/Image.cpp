@@ -46,6 +46,7 @@ namespace HGE {
 		filepath = _filepath;
 
 		data = stbi_load(filepath.c_str(), &width, &height, &channels, STBI_rgb_alpha);
+		channels = STBI_rgb_alpha;
 		
 		if (data == NULL) {
 			Debug::systemErr("Couldn't load image: " + filepath);
