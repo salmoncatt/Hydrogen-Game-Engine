@@ -113,7 +113,7 @@ namespace HGE {
 			size_t index = path.find_first_of("/\\");
 			while ((index = path.find_first_of("/\\", index + 1)) != std::string::npos) {
 				//only doing this so no warnings
-				int tempSuccess = _mkdir(path.substr(0, index).c_str());
+				success = _mkdir(path.substr(0, index).c_str());
 			}
 
 			//theres an extra one left behind
@@ -143,6 +143,15 @@ namespace HGE {
 			Debug::systemErr("Couldn't find directory: " + std::to_string(mode));
 
 		return out;
+	}
+
+	std::string Util::getWorkingDirectory() {
+		std::string out;
+		TCHAR buffer[MAX_PATH];
+
+		GetModuleFileName(NULL, buffer, MAX_PATH);
+
+		return std::string(buffer).substr(0, std::string(buffer).find_last_of("\\/"));
 	}
 
 	void Util::writeAsString(const std::string& fileData, const std::string& filepath, const int& writemode) {
@@ -698,7 +707,7 @@ namespace HGE {
 		MEMORYSTATUSEX memInfo;
 		memInfo.dwLength = sizeof(MEMORYSTATUSEX);
 		GlobalMemoryStatusEx(&memInfo);
-		DWORDLONG totalVirtualMem = memInfo.ullTotalPageFile;
+		//DWORDLONG totalVirtualMem = memInfo.ullTotalPageFile;
 
 		PROCESS_MEMORY_COUNTERS_EX pmc;
 		GetProcessMemoryInfo(GetCurrentProcess(), (PROCESS_MEMORY_COUNTERS*)&pmc, sizeof(pmc));
@@ -733,7 +742,7 @@ namespace HGE {
 	void Util::toUpper(std::string& string) {
 		int i = 0;
 		while (string[i]) {
-			string[i] = toupper(string[i]);
+			string[i] = (char)toupper(string[i]);
 			i += 1;
 		}
 	}

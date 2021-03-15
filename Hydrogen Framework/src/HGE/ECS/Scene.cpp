@@ -72,20 +72,20 @@ namespace HGE {
 			if (system.getComponentManager()->hasComponent<NativeScript>(entity)) {
 				auto& script = system.getComponentManager()->getComponent<NativeScript>(entity);
 
-				for (unsigned int i = 0; i < script.scriptAmount; ++i) {
-					if (!script.scripts[i]) {
-						script.instantiateScript(&script, i);
+				for (unsigned int j = 0; j < script.scriptAmount; ++j) {
+					if (!script.scripts[j]) {
+						script.instantiateScript(&script, j);
 
 						//add the entity reference to the script (to call things like getComponent<>())
-						script.scripts[i]->entity = entity;
-						script.scripts[i]->scene = this;
-						script.scripts[i]->created = true;
+						script.scripts[j]->entity = entity;
+						script.scripts[j]->scene = this;
+						script.scripts[j]->created = true;
 
 						//startup the script
-						script.scripts[i]->start();
+						script.scripts[j]->start();
 					}
 
-					script.scripts[i]->update();
+					script.scripts[j]->update();
 				}
 
 				//script.scripts[0]->update();
@@ -114,9 +114,9 @@ namespace HGE {
 			//transform.rotation += Time::getDeltaTime() * 20;
 
 			if (meshcomponent.meshes.size() > 0) {
-				for (int i = 0; i < meshcomponent.meshes.size(); i++) {
-					auto& mesh = meshcomponent.meshes[i];
-					auto& texture = meshcomponent.meshes[i].material.albedoTexture;
+				for (int j = 0; j < meshcomponent.meshes.size(); j++) {
+					auto& mesh = meshcomponent.meshes[j];
+					auto& texture = meshcomponent.meshes[j].material.albedoTexture;
 
 					if (!mesh.vertices.empty()) {
 						if (!mesh.created)
@@ -157,7 +157,7 @@ namespace HGE {
 		//background
 		Renderer::renderRoundedRectangle(Vec2f(0, (float)Engine::window->size.y - 256), Vec2f(600, 256), 10, Vec3f(0.2f));
 		//starting left first cpu usage
-		Renderer::radialRevealRectangle(Vec2f(10, (float)Engine::window->size.y - 70), Vec2f(122, 122), lerpedCpuUsage * 180, 10, false, radialBarTexture);
+		Renderer::radialRevealRectangle(Vec2f(10, (float)Engine::window->size.y - 70), Vec2f(122, 122), lerpedCpuUsage * 180, 0, false, radialBarTexture);
 		//second ram usage
 		Renderer::radialRevealRectangle(Vec2f(142, (float)Engine::window->size.y - 70), Vec2f(122, 122), (float)(lerpedRamUsage / 2000) * 180, 0, false, radialBarTexture);
 		//third is gpu usage (usage as in how much of the 60 fps frame budget are we using)

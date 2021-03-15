@@ -344,7 +344,7 @@ namespace HGE {
 		//matrix stuff
 		Mat4f transform = Mat4f::createTransformationMatrix(
 			Vec2f((((position.x + (size.x / 2)) / currentWindowSize.x) * 2) - 1, (((currentWindowSize.y - position.y - (size.y / 2)) / currentWindowSize.y) * 2) - 1),
-			Vec3f(0, 0, 0),
+			Vec3f(0, 0, offset),
 			Vec2f(size.x / currentWindowSize.x, size.y / currentWindowSize.y));
 		
 		guiShader.setUniform("transform", transform);

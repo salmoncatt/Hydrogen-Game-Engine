@@ -119,8 +119,8 @@ namespace HGE {
 
 	Vec2f Vec2f::operator*(const int& other) const {
 		Vec2f out = Vec2f();
-		float outx = (float)((int)x * other);
-		float outy = (float)((int)y * other);
+		out.x = (float)((int)x * other);
+		out.y = (float)((int)y * other);
 		return out;
 	}
 
@@ -140,8 +140,8 @@ namespace HGE {
 
 	Vec2f Vec2f::operator/(const int& other) const {
 		Vec2f out = Vec2f();
-		float outx = (float)((int)x / other);
-		float outy = (float)((int)y / other);
+		out.x = (float)((int)x / other);
+		out.y = (float)((int)y / other);
 		return out;
 	}
 

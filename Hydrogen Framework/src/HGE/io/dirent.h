@@ -1018,7 +1018,8 @@ extern "C" {
         /* Release allocated memory on error */
         if (result < 0) {
             for (i = 0; i < size; i++) {
-                free(files[i]);
+                if (files != NULL)
+                    free(files[i]);
             }
             free(files);
             files = NULL;

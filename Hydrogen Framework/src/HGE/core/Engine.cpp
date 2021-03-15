@@ -15,8 +15,8 @@ namespace HGE {
 		Debug::systemLog("Initializing GLFW");
 
 		if (!glfwInit()) {
-			exit(1);
 			Debug::systemErr("GLFW was not initialized");
+			exit(1);
 		}
 		else
 			Debug::systemSuccess("GLFW was initialized");

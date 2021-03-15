@@ -23,7 +23,7 @@ namespace HGE {
 
 	public:
 		
-		static const size_t npos = -1;
+		static const size_t npos = (size_t)-1;
 
 		/*
 		* Creates a new empty string
@@ -656,109 +656,108 @@ namespace HGE {
 			return out;
 		}
 
+		/*
+	* Returns a float made from a string
+	*
+	* (returns nan if invalid values are used)
+	*
+	* @param The string to convert
+	*
+	* @author Salmoncatt
+	*/
+		static float toFloat(const string& value) {
+			const char* data = value.c_str();
+
+			if (!*data || *data == '?')
+				return __builtin_nanf("");
+
+			int signed_digit = 1;
+
+			while (*data == ' ') data++;
+
+			if (*data == '-') {
+				signed_digit = -1;
+				data++;
+			}
+
+
+			float accumulator = 0;
+
+
+			while (*data >= '0' && *data <= '9')
+				accumulator = accumulator * 10 + *data++ - '0';
+
+			if (*data == '.') {
+				float decimalAccumulator = 0.1f;
+
+				data++;
+
+				while (*data >= '0' && *data <= '9') {
+					accumulator += (*data++ - '0') * decimalAccumulator;
+					decimalAccumulator *= 0.1f;
+				}
+
+			}
+
+			if (*data != '\0')
+				return __builtin_nanf("");
+
+			return signed_digit * accumulator;
+		}
+
+		/*
+		* Returns a double made from a string
+		*
+		* (returns nan if invalid values are used)
+		*
+		* @param The string to convert
+		*
+		* @author Salmoncatt
+		*/
+		static double toDouble(const string& value) {
+			const char* data = value.c_str();
+
+			if (!*data || *data == '?')
+				return __builtin_nans("");
+
+			int signed_digit = 1;
+
+			while (*data == ' ') data++;
+
+			if (*data == '-')
+				signed_digit = -1;
+
+
+			double accumulator = 0;
+
+
+			while (*data >= '0' && *data <= '9')
+				accumulator = accumulator * 10 + *data++ - '0';
+
+			if (*data == '.') {
+				double decimalAccumulator = 0.1;
+
+				data++;
+
+				while (*data >= '0' && *data <= '9') {
+					accumulator += (*data++ - (double)'0') * decimalAccumulator;
+					decimalAccumulator *= 0.1;
+				}
+
+			}
+
+			if (*data != '\0')
+				return __builtin_nans("");
+
+			return signed_digit * accumulator;
+		}
+
 		~string() {
 			__cleanup__();
 		}
 
 
 	};
-
-	/*
-	* Returns a float made from a string
-	* 
-	* (returns nan if invalid values are used)
-	* 
-	* @param The string to convert
-	*
-	* @author Salmoncatt
-	*/
-	static float toFloat(const string& value) {
-		const char* data = value.c_str();
-
-		if (!*data || *data == '?')
-			return __builtin_nanf("");
-
-		int signed_digit = 1;
-
-		while (*data == ' ') data++;
-
-		if (*data == '-') {
-			signed_digit = -1;
-			data++;
-		}
-
-
-		float accumulator = 0;
-
-
-		while (*data >= '0' && *data <= '9')
-			accumulator = accumulator * 10 + *data++ - '0';
-
-		if (*data == '.') {
-			float decimalAccumulator = 0.1f;
-
-			data++;
-
-			while (*data >= '0' && *data <= '9') {
-				accumulator += (*data++ - '0') * decimalAccumulator;
-				decimalAccumulator *= 0.1f;
-			}
-
-		}
-
-		if (*data != '\0')
-			return __builtin_nanf("");
-
-		return signed_digit * accumulator;
-	}
-
-	/*
-	* Returns a double made from a string
-	*
-	* (returns nan if invalid values are used)
-	*
-	* @param The string to convert
-	*
-	* @author Salmoncatt
-	*/
-	static double toDouble(const string& value) {
-		const char* data = value.c_str();
-
-		if (!*data || *data == '?')
-			return __builtin_nans("");
-
-		int signed_digit = 1;
-
-		while (*data == ' ') data++;
-
-		if (*data == '-')
-			signed_digit = -1;
-
-
-		double accumulator = 0;
-
-
-		while (*data >= '0' && *data <= '9')
-			accumulator = accumulator * 10 + *data++ - '0';
-
-		if (*data == '.') {
-			double decimalAccumulator = 0.1;
-
-			data++;
-
-			while (*data >= '0' && *data <= '9') {
-				accumulator += (*data++ - (double)'0') * decimalAccumulator;
-				decimalAccumulator *= 0.1;
-			}
-
-		}
-
-		if (*data != '\0')
-			return __builtin_nans("");
-
-		return signed_digit * accumulator;
-	}
-
 
 }
 

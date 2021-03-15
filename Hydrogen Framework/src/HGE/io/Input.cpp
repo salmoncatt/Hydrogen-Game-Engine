@@ -29,13 +29,13 @@ namespace HGE {
 		return window;
 	}
 
-	void Input::setCallbacks(GLFWwindow* window) {
-		glfwSetKeyCallback(window, keyCallBack);
-		glfwSetMouseButtonCallback(window, buttonCallBack);
-		glfwSetCursorPosCallback(window, cursorPositionCallBack);
-		glfwSetWindowSizeCallback(window, windowSizeCallBack);
-		glfwSetScrollCallback(window, scrollMovementCallBack);
-		glfwSetWindowPosCallback(window, windowPositionCallBack);
+	void Input::setCallbacks(GLFWwindow* _window) {
+		glfwSetKeyCallback(_window, keyCallBack);
+		glfwSetMouseButtonCallback(_window, buttonCallBack);
+		glfwSetCursorPosCallback(_window, cursorPositionCallBack);
+		glfwSetWindowSizeCallback(_window, windowSizeCallBack);
+		glfwSetScrollCallback(_window, scrollMovementCallBack);
+		glfwSetWindowPosCallback(_window, windowPositionCallBack);
 	}
 
 	void Input::createKeyVectors() {
@@ -87,39 +87,39 @@ namespace HGE {
 	}
 
 	//glfw callbacks
-	void Input::keyCallBack(GLFWwindow* window, int key, int scancode, int action, int mods) {
+	void Input::keyCallBack(GLFWwindow*, int key, int, int action, int) {
 		if (key >= 0) {
 			keys[key] = action;
 		}
 	}
 
-	void Input::buttonCallBack(GLFWwindow* window, int button, int action, int mods) {
+	void Input::buttonCallBack(GLFWwindow*, int button, int action, int) {
 		if (button >= 0) {
 			buttons[button] = action;
 		}
 	}
 
-	void Input::cursorPositionCallBack(GLFWwindow* window, double x, double y) {
+	void Input::cursorPositionCallBack(GLFWwindow*, double x, double y) {
 		mousePosition.x = (float)x;
 		mousePosition.y = (float)y;
 		mouseMoved = true;
 	}
 
-	void Input::scrollMovementCallBack(GLFWwindow* window, double x, double y) {
+	void Input::scrollMovementCallBack(GLFWwindow*, double x, double y) {
 		scrollMovement.x = (float)x;
 		scrollMovement.y = (float)y;
 	}
 
-	void Input::windowSizeCallBack(GLFWwindow* _window, int width, int height) {
+	void Input::windowSizeCallBack(GLFWwindow*, int width, int height) {
 		window->size = Vec2i(width, height);
 		Renderer::createProjectionMatrix((float)width, (float)height);
 	}
 
-	void Input::windowFocusCallBack(GLFWwindow* _window, int focused) {
+	void Input::windowFocusCallBack(GLFWwindow*, int focused) {
 		window->focused = (focused == 1) ? true : false;
 	}
 
-	void Input::windowPositionCallBack(GLFWwindow* _window, int x, int y) {
+	void Input::windowPositionCallBack(GLFWwindow*, int x, int y) {
 		window->position = Vec2i(x, y);
 	}
 
