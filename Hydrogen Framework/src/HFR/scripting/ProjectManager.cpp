@@ -43,7 +43,7 @@ namespace HFR {
 		char* projectFileData = new char[projectFile.length() * 2];
 
 		//solution
-		sprintf_s(solutionFileData, solutionFile.length() * 2, solutionFile.c_str(), scriptName.c_str(), scriptName.c_str(), scriptName.c_str(), projectGUID.c_str(), projectGUID.c_str(), projectGUID.c_str(), projectGUID.c_str(), projectGUID.c_str(), projectGUID.c_str(), projectGUID.c_str(), projectGUID.c_str(), projectGUID.c_str(), solutionGUID.c_str());
+		sprintf_s(solutionFileData, solutionFile.length() * 2, solutionFile.c_str(), scriptName.c_str(), scriptName.c_str(), scriptName.c_str(), projectGUID.c_str(), projectGUID.c_str(), projectGUID.c_str(), projectGUID.c_str(), projectGUID.c_str(), solutionGUID.c_str());
 
 		std::string HFR_Path = HFR_SOLUTION_DIRECTORY;
 
