@@ -8,6 +8,7 @@ namespace HGE {
 
 	class DLL_API ProjectManager {
 	public:
+		const static std::string HGE_PROJECTS_PATH;
 
 		//comes with builtin project
 		static void createEngineProject(const std::string& projectName, const std::string& scriptName);

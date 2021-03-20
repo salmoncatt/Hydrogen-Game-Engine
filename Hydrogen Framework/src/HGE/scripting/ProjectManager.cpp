@@ -4,6 +4,8 @@
 
 namespace HGE {
 
+	std::string HGE_PROJECTS_PATH = Util::getDirectory(HGE_FOLDER_DOCUMENTS) + R"(\Hydrogen Game Engine\)";
+
 	void ProjectManager::createEngineProject(const std::string& projectName, const std::string& scriptName) {
 		std::string solutionFile = Util::readAsString(HGE_RES + "templates/MSVC/MSVCSolution.sln", HGE_NORMAL_READ);
 		std::string projectFile = Util::readAsString(HGE_RES + "templates/MSVC/MSVCProject.vcxproj", HGE_NORMAL_READ);
