@@ -97,8 +97,20 @@ namespace HFR {
 				std::string file = ent->d_name;
 
 				if (file.find(".") != std::string::npos) {
-					if (file.find(".dll") != std::string::npos)
-						loadScriptFromDLL(path + file, file, supressError);
+					if (file.find(".dll") != std::string::npos) {
+
+#ifdef _DEBUG
+						if (file.substr(file.find(".dll") - 2, file.find(".dll")) == "_D")
+							loadScriptFromDLL(path + file, file, supressError);
+						else if (!supressError)
+							Debug::systemErr("Couldn't load script dll: " + file + ", because it doesn't have debug identification, it should be: scriptname_D.dll. At path: " + path);
+#else
+						if (file.substr(file.find(".dll") - 2, file.find(".dll")) == "_R")
+							loadScriptFromDLL(path + file, file, supressError);
+						else if (!supressError)
+							Debug::systemErr("Couldn't load script dll: " + file + ", because it doesn't have release identification, it should be: scriptname_R.dll. At path: " + path);
+#endif
+					}
 				}
 				else {
 					//we have found a folder or a blank file

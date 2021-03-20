@@ -4,8 +4,6 @@
 
 namespace HFR {
 
-	std::string HFR_PROJECTS_PATH = Util::getDirectory(HFR_FOLDER_DOCUMENTS) + R"(\Hydrogen Game Engine\)";
-
 	void ProjectManager::createEngineProject(const std::string& projectName, const std::string& scriptName) {
 		std::string solutionFile = Util::readAsString(HFR_RES + "templates/MSVC/MSVCSolution.sln", HFR_NORMAL_READ);
 		std::string projectFile = Util::readAsString(HFR_RES + "templates/MSVC/MSVCProject.vcxproj", HFR_NORMAL_READ);

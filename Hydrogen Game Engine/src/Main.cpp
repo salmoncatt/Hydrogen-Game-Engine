@@ -72,6 +72,8 @@ public:
 
 			if (Input::getKeyDown(HFR_KEY_F))
 				ProjectManager::createEngineProject("testProject", "testScript");
+			else if(Input::getKeyDown(HFR_KEY_G))
+				VisualStudio::openVisualStudio(HFR_PROJECTS_PATH + "testProject/Scripts/testProject.sln");
 
 			window->limitFps(200);
 		}

@@ -10,6 +10,7 @@ namespace HFR {
 
 	const std::string HFR_RES = "../Hydrogen Framework/res/";
 	const std::string HFR_SCRIPTS = "../Hydrogen Framework/scripts/";
+#define HFR_PROJECTS_PATH Util::getDirectory(HFR_FOLDER_DOCUMENTS) + R"(\Hydrogen Game Engine\)"
 
 	//for byte buffer and other buffers
 	const int HFR_UNSIGNED = 0;
