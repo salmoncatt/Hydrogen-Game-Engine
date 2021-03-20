@@ -1,9 +1,9 @@
-#include "hpch.h"
-#include "HGE.h"
+#include "hfpch.h"
+#include "HFR.h"
 
-using namespace HGE;
+using namespace HFR;
 
-class Main : public HGE::Program {
+class Main : public HFR::Program {
 public:
 	Scene* test;
 
@@ -16,7 +16,7 @@ public:
 
 	void create() override {
 
-		Image icon = Image(HGE_RES + "textures/icon.png");
+		Image icon = Image(HFR_RES + "textures/icon.png");
 
 		window->setIcon(icon);
 
@@ -30,7 +30,7 @@ public:
 		window->setPosition(Vec2i(300, 100));
 
 		Renderer::setCullingMode(true);
-		Renderer::setLightMode(HGE_PER_PIXEL_LIGHT);
+		Renderer::setLightMode(HFR_PER_PIXEL_LIGHT);
 		//Engine::window->setVSync(true);
 
 		test->editorCamera.transform.position = Vec3f(0, 0, 10);
@@ -39,13 +39,13 @@ public:
 		GameObject warehouse = test->createGameObject("warehouse");
 
 		MeshComponent mesh = MeshComponent();
-		mesh.meshes = Util::loadMesh(HGE_RES + "models/peter/peter.obj");
+		mesh.meshes = Util::loadMesh(HFR_RES + "models/peter/peter.obj");
 		peter.addComponent<MeshComponent>(mesh);
 		peter.getComponent<Transform>().scale = 2;
 
 		mesh = MeshComponent();
 
-		mesh.meshes = Util::loadMesh(HGE_RES + "models/warehouse/warehouse.obj");
+		mesh.meshes = Util::loadMesh(HFR_RES + "models/warehouse/warehouse.obj");
 
 		warehouse.addComponent<MeshComponent>(mesh);
 
@@ -60,17 +60,17 @@ public:
 
 		peter.addComponent<NativeScript>().addScript("testScript");
 
-		while (shouldUpdate() && !Input::getKey(HGE_KEY_ESCAPE)) {
+		while (shouldUpdate() && !Input::getKey(HFR_KEY_ESCAPE)) {
 			ProfileMethod("Main loop");
 			test->updateEditor();
 
-			if (Input::getMouseButtonDown(HGE_MOUSE_BUTTON_2))
+			if (Input::getMouseButtonDown(HFR_MOUSE_BUTTON_2))
 				Cursor::toggleMouseState();
 
-			if (Input::getKeyDown(HGE_KEY_BACKSLASH))
+			if (Input::getKeyDown(HFR_KEY_BACKSLASH))
 				Renderer::toggleWireFrameMode();
 
-			if (Input::getKeyDown(HGE_KEY_F))
+			if (Input::getKeyDown(HFR_KEY_F))
 				ProjectManager::createEngineProject("testProject", "testScript");
 
 			window->limitFps(200);
@@ -81,6 +81,6 @@ public:
 
 };
 
-HGE::Program* HGE::createProgram() {
+HFR::Program* HFR::createProgram() {
 	return new Main();
 }

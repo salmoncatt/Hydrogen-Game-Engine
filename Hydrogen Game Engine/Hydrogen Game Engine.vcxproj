@@ -135,7 +135,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>GLEW_STATIC;HGE_SUPPRESS_DLL_WARNING;HGE_SOLUTION_DIRECTORY=R"($(SolutionDir))"</PreprocessorDefinitions>
+      <PreprocessorDefinitions>GLEW_STATIC;HFR_SUPPRESS_DLL_WARNING;HFR_SOLUTION_DIRECTORY=R"($(SolutionDir))"</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\include;$(SolutionDir)Hydrogen Framework\src</AdditionalIncludeDirectories>
       <AdditionalUsingDirectories>
@@ -145,7 +145,7 @@
       <CallingConvention>Cdecl</CallingConvention>
       <LanguageStandard>Default</LanguageStandard>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <PrecompiledHeaderFile>hpch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile>hfpch.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

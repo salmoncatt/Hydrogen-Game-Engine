@@ -1,7 +1,7 @@
-#include "hpch.h"
+#include "hfpch.h"
 #include "HWindow.h"
 
-namespace HGE {
+namespace HFR {
 
 	HWindow::HWindow(const int x, const int y, const int width, const int height, const char* title) {
 		if (x != NULL) m_x = x;
@@ -24,7 +24,7 @@ namespace HGE {
 
 	}
 
-	LRESULT CALLBACK HGEWindowCallBack(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) {
+	LRESULT CALLBACK HFRWindowCallBack(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) {
 		return DefWindowProc(hwnd, message, wparam, lparam);
 	}
 
@@ -39,7 +39,7 @@ namespace HGE {
 		window.hCursor = LoadCursor(NULL, IDC_ARROW);
 		window.hIcon = LoadIcon(NULL, IDI_APPLICATION);
 		window.hIconSm = LoadIcon(NULL, IDI_APPLICATION);
-		window.lpfnWndProc = &HGEWindowCallBack;
+		window.lpfnWndProc = &HFRWindowCallBack;
 
 		window.cbClsExtra = NULL;
 		window.cbWndExtra = NULL;

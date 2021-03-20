@@ -1,8 +1,8 @@
 #pragma once
-#include "HGE/core/API.h"
+#include "HFR/core/API.h"
 #include <Windows.h>
 
-namespace HGE {
+namespace HFR {
 
 	class DLL_API HWindow {
 	protected:
