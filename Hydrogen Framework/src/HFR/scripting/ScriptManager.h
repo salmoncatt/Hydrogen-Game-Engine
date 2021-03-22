@@ -29,7 +29,7 @@ namespace HFR {
 		static void close();
 		static void update();
 		static void checkForScripts(const bool& supressError);
-		static size_t getAmountOfScripts();
+		//static size_t getAmountOfScripts();
 		static GameObject* instantiateScript(const std::string& name);
 		static bool checkScript(const std::string& name);
 

@@ -48,7 +48,7 @@ namespace HFR {
 		std::string HFR_Path = HFR_SOLUTION_DIRECTORY;
 
 		//project																												//i have to do this because its %(AdditionalDependencies) and that gets turned into (AdditionalDependencies), which breaks everything
-		sprintf_s(projectFileData, projectFile.length() * 2, projectFile.c_str(), projectName.c_str(), projectGUID.c_str(), HFR_Path.c_str(), dependencies.c_str(), "%", scriptName.c_str(), scriptName.c_str(), scriptName.c_str(), "%", scriptName.c_str(), scriptName.c_str(), scriptName.c_str(), "%", scriptName.c_str(), scriptName.c_str(), scriptName.c_str(), "%", scriptName.c_str(), scriptName.c_str(), scriptName.c_str());
+		sprintf_s(projectFileData, projectFile.length() * 2, projectFile.c_str(), projectName.c_str(), projectGUID.c_str(), HFR_Path.c_str(), dependencies.c_str(), "%", scriptName.c_str(), "%", scriptName.c_str());
 
 		std::string solutionOutputData = solutionFileData;
 		std::string projectOutputData = projectFileData;

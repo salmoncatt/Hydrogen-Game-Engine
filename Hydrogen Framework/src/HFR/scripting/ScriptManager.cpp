@@ -11,7 +11,7 @@ namespace HFR {
 	double ScriptManager::timeElapsed = 0;
 
 
-	void ScriptManager::loadScriptFromDLL(const std::string& path, const std::string& _name, const bool& supressError) {
+	void ScriptManager::loadScriptFromDLL(const std::string& path, const std::string& name, const bool& supressError) {
 		//credits to https://www.gamasutra.com/blogs/ZacHills/20170406/295378/Scripting_with_C.php bc idk how tf to do this
 
 		HINSTANCE dllHandle = LoadLibraryA(path.c_str());
@@ -27,8 +27,6 @@ namespace HFR {
 		if (!createScript) {
 			Debug::systemErr("Couldn't find the create function of a script in the dll file containing scripts at: " + path + "(Check if there is an export function for the script)");
 		}
-
-		std::string name = _name.substr(0, _name.length() - 4);
 
 		if (scriptPathToName.find(path) == scriptPathToName.end() && scriptNameToScript.find(name) == scriptNameToScript.end()) {
 			scriptPathToName[path] = name;
@@ -98,16 +96,20 @@ namespace HFR {
 
 				if (file.find(".") != std::string::npos) {
 					if (file.find(".dll") != std::string::npos) {
+						//shows whether in _D debug mode or _R release mode (they cant work in opposite modes)
+						std::string modeIdentification = file.substr(file.find(".dll") - 2, 2);
 
+						//get rid of .dll and _R or _D at end of name
+						std::string name = file.substr(0, file.find(".dll") - 2);
 #ifdef _DEBUG
-						if (file.substr(file.find(".dll") - 2, file.find(".dll")) == "_D")
-							loadScriptFromDLL(path + file, file, supressError);
-						else if (!supressError)
+						if (modeIdentification == "_D")
+							loadScriptFromDLL(path + file, name, supressError);
+						else if (!supressError && modeIdentification != "_R")
 							Debug::systemErr("Couldn't load script dll: " + file + ", because it doesn't have debug identification, it should be: scriptname_D.dll. At path: " + path);
 #else
-						if (file.substr(file.find(".dll") - 2, file.find(".dll")) == "_R")
-							loadScriptFromDLL(path + file, file, supressError);
-						else if (!supressError)
+						if (modeIdentification == "_R")
+							loadScriptFromDLL(path + file, name, supressError);
+						else if (!supressError && modeIdentification != "_D")
 							Debug::systemErr("Couldn't load script dll: " + file + ", because it doesn't have release identification, it should be: scriptname_R.dll. At path: " + path);
 #endif
 					}
