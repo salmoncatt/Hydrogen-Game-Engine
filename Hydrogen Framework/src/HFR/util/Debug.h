@@ -47,6 +47,7 @@ namespace HFR {
 
 	public:
 		static void log(const std::string& message);
+		static void log(const std::string& message, const DebugColor& color);
 		static void log(const char& in);
 		static void log(const double& in);
 		static void log(const int& in);

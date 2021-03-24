@@ -185,7 +185,7 @@ namespace HFR {
 			return path.substr(0, index + 1);
 		}
 		else
-			Debug::systemErr("Couldn't remove file name from path: " + path);
+			return path;
 
 		return out;
 	}
@@ -200,7 +200,7 @@ namespace HFR {
 			return path.substr(index + 1);
 		}
 		else
-			Debug::systemErr("Couldn't remove file path from path: " + path);
+			return path;
 
 		return out;
 	}

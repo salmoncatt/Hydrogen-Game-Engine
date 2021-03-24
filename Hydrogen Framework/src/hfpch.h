@@ -36,20 +36,19 @@
 #include <shlobj.h>
 
 #pragma comment(lib, "shell32.lib")
-
-//for windows notification toasts n stuff
-//#include "DesktopNotificationManagerCompat.h"
-//#include <NotificationActivationCallback.h>
-//#include <windows.ui.notifications.h>
 //
-//using namespace ABI::Windows::Data::Xml::Dom;
-//using namespace ABI::Windows::UI::Notifications;
-//using namespace Microsoft::WRL;
 
 #if _WIN64
 #include <Windows.h>
 #include <windows.h>
-#include "psapi.h"
+#include <psapi.h>
+//for windows notification toasts n stuff
+//#include "DesktopNotificationManagerCompat.h"
+//#include <NotificationActivationCallback.h>
+//#include <windows.ui.notifications.h>
+//using namespace ABI::Windows::Data::Xml::Dom;
+//using namespace ABI::Windows::UI::Notifications;
+//using namespace Microsoft::WRL;
 
 #include <direct.h>
 #define HFR_Get_Directory _getcwd
@@ -62,18 +61,24 @@
 #endif
 
 //need to include opengl things after windows because of macro redefinition
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
+#include "GL/glew.h"
+#include "GLFW/glfw3.h"
 
 //HFR vars n stuff
 #include "hfrdef.h"
 
+/*
+
+this is just a test block comment for my header merger project
+
+*/
+
 //oh yea my own standard library leeeetsss goooooo
 //its nowhere near finished for now
-#include "HFL/HFL.h"
+#include "HFL/HFL.h" //test comment
 
 //for profiling of any class
-#include HFR_PROFILER
+#include HFR_PROFILER //another test comment
 #define ProfileMethod(name) HFR::Profiler HFR_AUTO_PROFILER(name, false, true)
 
 #include HFR_STANDARD

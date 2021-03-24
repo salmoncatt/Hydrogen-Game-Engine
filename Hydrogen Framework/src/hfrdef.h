@@ -2,8 +2,6 @@
 #ifndef HFR_VARIABLE_HEADER_INCLUDE
 #define HFR_VARIABLE_HEADER_INCLUDE
 
-#include "hfpch.h"
-
 namespace HFR {
 	//big stoof
 	const int HFR_NULL = 0;

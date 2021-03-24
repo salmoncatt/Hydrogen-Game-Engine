@@ -14,6 +14,13 @@ namespace HFR {
 		std::cout << out;
 	}
 
+	void Debug::log(const std::string& message, const DebugColor& color) {
+		setTextColor(color);
+		std::string out = message + "\n";
+		std::cout << out;
+		resetTextColor();
+	}
+
 	void Debug::log(const char& in) {
 		std::cout << in << std::endl;
 	}
