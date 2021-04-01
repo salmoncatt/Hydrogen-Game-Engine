@@ -67,6 +67,9 @@
 //HFR vars n stuff
 #include "hfrdef.h"
 
+#include "ft2build.h"
+#include FT_FREETYPE_H
+
 /*
 
 this is just a test block comment for my header merger project

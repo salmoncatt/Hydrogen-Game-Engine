@@ -186,8 +186,6 @@ namespace HFR {
 		}
 		else
 			return path;
-
-		return out;
 	}
 
 	std::string Util::removePathFromFilePathAndName(const std::string& path) {
@@ -201,8 +199,6 @@ namespace HFR {
 		}
 		else
 			return path;
-
-		return out;
 	}
 
 	std::vector<unsigned char> Util::readAsUnsignedChar(const std::string& filepath, const int& readmode) {
@@ -584,7 +580,7 @@ namespace HFR {
 			}
 			else if (header == "s ") {
 				//smooth shading or something here
-				bool smoothshading = true;
+				//bool smoothshading = true;
 			}
 			else if (line.substr(0, 7) == "usemtl ") {
 				bool found = false;

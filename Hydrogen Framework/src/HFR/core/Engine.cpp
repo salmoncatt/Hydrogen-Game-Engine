@@ -4,6 +4,7 @@ namespace HFR {
 
 	Window* Engine::window = nullptr;
 	std::vector<GuiFrame*> Engine::guiFrames = std::vector<GuiFrame*>();
+	FT_Library Engine::freeTypeReference = nullptr;
 
 	void Engine::startEngine() {
 		Debug::waterMark();
@@ -57,6 +58,15 @@ namespace HFR {
 		Util::init();
 		Random::init();
 		Debug::systemSuccess("Utilities was initialized");
+		Debug::newLine();
+
+		Debug::systemLog("Initializing Freetype");
+
+		if (!FT_Init_FreeType(&freeTypeReference)) {
+			Debug::systemSuccess("Freetype was initialized");
+		}
+		else
+			Debug::systemErr("Couldn't Initialize Freetype");
 		Debug::newLine();
 
 		Debug::systemLog("Loading Scripts");

@@ -12,6 +12,7 @@ namespace HFR {
 	public:
 		static std::vector<GuiFrame*> guiFrames;
 		static Window* window;
+		static FT_Library freeTypeReference;
 
 		static void startEngine();
 		static void updateEngine();
