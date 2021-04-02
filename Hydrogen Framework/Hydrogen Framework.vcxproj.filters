@@ -52,6 +52,9 @@
     <ClInclude Include="src\hfrdef.h" />
     <ClInclude Include="src\HGE\util\memory\string.h" />
     <ClInclude Include="src\HFR\scripting\VisualStudio.h" />
+    <ClInclude Include="src\HFR\text\FreeType.h" />
+    <ClInclude Include="src\HFR\text\Character.h" />
+    <ClInclude Include="src\HFR\text\Font.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\hfpch.cpp" />
@@ -91,10 +94,12 @@
     <ClCompile Include="src\HFR\time\Time.cpp" />
     <ClCompile Include="src\HFR\util\Util.cpp" />
     <ClCompile Include="src\HFR\scripting\VisualStudio.cpp" />
+    <ClCompile Include="src\HFR\text\FreeType.cpp" />
+    <ClCompile Include="src\HFR\text\Font.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\guiFrameFragment.glsl" />
-    <None Include="res\shaders\guiFrameVertex.glsl" />
+    <None Include="res\shaders\guiTextFragment.glsl" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="res\profiled methods.txt" />

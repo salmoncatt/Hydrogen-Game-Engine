@@ -9,7 +9,7 @@ namespace HFR {
 	
 	Shader Renderer::mainShader = HFR::Shader(HFR_RES + "shaders/", "MainVertex.glsl", "MainFragment.glsl");
 	Shader Renderer::guiShader = HFR::Shader(HFR_RES + "shaders/", "guiVertex.glsl", "guiFragment.glsl");
-	Shader Renderer::guiFrameShader = HFR::Shader(HFR_RES + "shaders/", "guiFrameVertex.glsl", "guiFrameFragment.glsl");
+	Shader Renderer::guiFrameShader = HFR::Shader(HFR_RES + "shaders/", "guiVertex.glsl", "guiFrameFragment.glsl");
 
 	Texture Renderer::nullTexture = Texture(HFR_RES + "textures/null.png");
 

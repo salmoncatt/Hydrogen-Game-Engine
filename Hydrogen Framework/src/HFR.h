@@ -53,6 +53,10 @@
 
 #include "HFR/memory/FloatBuffer.h"
 
+#include "HFR/text/FreeType.h"
+#include "HFR/text/Character.h"
+#include "HFR/text/Font.h"
+
 #include "HFR/time/Profiler.h"
 #include "HFR/time/Profile.h"
 #include "HFR/time/Time.h"

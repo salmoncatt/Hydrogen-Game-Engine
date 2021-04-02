@@ -27,6 +27,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <shellapi.h>
+#include <map>
 
 //for guid
 #include <Rpc.h>

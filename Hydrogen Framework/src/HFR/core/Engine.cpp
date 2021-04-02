@@ -1,4 +1,5 @@
 #include "hfpch.h"
+#include "HFR/text/FreeType.h"
 
 namespace HFR {
 
@@ -61,13 +62,10 @@ namespace HFR {
 		Debug::newLine();
 
 		Debug::systemLog("Initializing Freetype");
-
-		if (!FT_Init_FreeType(&freeTypeReference)) {
-			Debug::systemSuccess("Freetype was initialized");
-		}
-		else
-			Debug::systemErr("Couldn't Initialize Freetype");
+		FreeType::init();
 		Debug::newLine();
+
+		//FT_Done_FreeType
 
 		Debug::systemLog("Loading Scripts");
 		ScriptManager::init();
@@ -99,6 +97,10 @@ namespace HFR {
 		Debug::systemLog("Closing Renderer");
 		Renderer::close();
 		Debug::systemSuccess("Closed Renderer");
+		Debug::newLine();
+
+		Debug::systemLog("Closing Freetype");
+		FreeType::close();
 		Debug::newLine();
 
 		Debug::systemLog("Closing Utilities");

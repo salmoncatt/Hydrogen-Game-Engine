@@ -6,8 +6,11 @@ namespace HFR {
 	//big stoof
 	const int HFR_NULL = 0;
 
-	const std::string HFR_RES = "../Hydrogen Framework/res/";
-	const std::string HFR_SCRIPTS = "../Hydrogen Framework/scripts/";
+	//need to not duct tape fix this
+#define HFR_RES std::string(Util::getWorkingDirectory() + "../../../../../Hydrogen Framework/res/")
+#define HFR_SCRIPTS std::string(Util::getWorkingDirectory() + "../../../../../Hydrogen Framework/scripts/")
+
+
 #define HFR_PROJECTS_PATH Util::getDirectory(HFR_FOLDER_DOCUMENTS) + R"(\Hydrogen Game Engine\)"
 
 	//for byte buffer and other buffers
@@ -322,6 +325,10 @@ namespace HFR {
 #define HFR_RANDOM "HFR/math/Random.h"
 
 #define HFR_FLOAT_BUFFER "HFR/memory/FloatBuffer.h"
+
+#define HFR_FREETYPE "HFR/text/FreeType.h"
+#define HFR_CHARACTER "HFR/text/Character.h"
+#define HFR_FONT "HFR/text/Font.h"
 
 #define HFR_PROFILE "HFR/time/Profile.h"
 #define HFR_PROFILER "HFR/time/Profiler.h"
