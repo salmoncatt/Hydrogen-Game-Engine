@@ -14,6 +14,8 @@ namespace HFR {
 		Vec2i size;
 		Vec2i atlasSize;
 
+		Texture texture;
+
 		std::map<char, Character> characters;
 		std::string path;
 

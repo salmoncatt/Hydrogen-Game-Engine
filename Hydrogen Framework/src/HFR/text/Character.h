@@ -8,7 +8,6 @@
 namespace HFR {
 
 	struct DLL_API Character {
-		//unsigned int textureID;
 		Vec2i size;
 		Vec2i Offset;
 

@@ -17,6 +17,7 @@ namespace HFR {
 	struct Transform;
 	struct GameObject;
 	class GuiFrame;
+	class Font;
 
 	class DLL_API Renderer {
 	private:
@@ -82,8 +83,7 @@ namespace HFR {
 
 		static void renderGuis();
 
-		//static void render(const GuiWindow& window);
-
+		static void render(const Font& font, const std::string& text);
 	};
 
 }

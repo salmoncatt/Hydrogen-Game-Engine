@@ -469,11 +469,8 @@ namespace HFR {
 		}
 	}
 
-	/*void Renderer::render(const GuiWindow& window) {
-
-		renderRoundedRectangle(window.transform.position, window.transform.scale, window.cornerSmoothingRadius, window.backgroundColor);
-		renderRoundedRectangle(window.transform.position, Vec2f(window.transform.scale.x, window.titleBarTransform.scale.y), window.cornerSmoothingRadius, window.foregroundColor);
-
-	}*/
+	void Renderer::render(const Font& font, const std::string& text) {
+		//glTexImage2D();
+	}
 
 }

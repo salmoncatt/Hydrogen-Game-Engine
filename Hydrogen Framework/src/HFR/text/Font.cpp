@@ -46,7 +46,8 @@ namespace HFR {
 		}
 
 		atlasSize = (width, height);
-		Debug::log(atlasSize);
+
+
 
 	}
 
