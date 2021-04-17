@@ -23,6 +23,7 @@ namespace HFR {
 		Image(const std::string& filepath);
 		Image& operator=(const Image& image);
 		Image(const Image& image);
+		Image(const int& width, const int& height, const int& channels, unsigned char* data);
 		~Image();
 
 		void generatePixelData();

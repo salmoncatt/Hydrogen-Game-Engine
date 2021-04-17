@@ -14,6 +14,15 @@ namespace HFR {
 		unsigned int textureID;
 		bool isCreated = false;
 
+		//mmmmmm many variables yes fun
+
+		//1 is none, default is 4
+		const int byteAlignment = 4;
+		
+		const int minMipmapFilter = GL_NEAREST_MIPMAP_LINEAR;
+		const int magMipmapFilter = GL_NEAREST_MIPMAP_LINEAR;
+
+
 		Texture();
 		Texture(const Texture& texture);
 

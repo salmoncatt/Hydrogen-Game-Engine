@@ -9,6 +9,16 @@ namespace HFR {
 		data = NULL;
 	}
 
+	Image::Image(const int& _width, const int& _height, const int& _channels, unsigned char* _data) {
+		width = _width;
+		height = _height;
+		channels = _channels;
+
+		int allocation = width * height * channels;
+		data = new unsigned char[allocation];
+		std::memcpy(data, _data, allocation);
+	}
+
 	Image::Image(const Image& image) {
 		width = image.width;
 		height = image.height;
