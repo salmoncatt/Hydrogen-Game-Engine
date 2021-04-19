@@ -22,12 +22,12 @@ namespace HGE {
 		}
 
 	public:
-		
+
 		static const size_t npos = (size_t)-1;
 
 		/*
 		* Creates a new empty string
-		* 
+		*
 		* @author Salmoncatt
 		*/
 		string() : size(0), data(nullptr) {
@@ -39,13 +39,13 @@ namespace HGE {
 		* Copies a string from another one
 		*
 		* @param The source string to copy from
-		* 
+		*
 		* @author Salmoncatt
 		*/
 		string(const string& source) : size(0) {
 			//set size
 			size = source.size;
-			
+
 			//allocate string data into memory
 			data = new char[size + 1];
 
@@ -64,10 +64,10 @@ namespace HGE {
 		string(char* source) : size(0) {
 			//get size
 			size = strlen(source);
-			
+
 			//allocate data size
 			data = new char[size + 1];
-			
+
 			//copy the source data over using my own library :)
 			memcpy(data, source, size + 1);
 
@@ -228,7 +228,7 @@ namespace HGE {
 		*
 		* @author Salmoncatt
 		*/
-		string operator+(const string& source) const{
+		string operator+(const string& source) const {
 			//create the output string
 			string out = string();
 
@@ -268,7 +268,7 @@ namespace HGE {
 		*
 		* @author Salmoncatt
 		*/
-		string operator+(const char* source) const{
+		string operator+(const char* source) const {
 			//create the output string
 			string out = string();
 
@@ -414,7 +414,7 @@ namespace HGE {
 			}
 			return false;
 		}
-		
+
 		/*
 		* Checks if a string and a character
 		*
@@ -434,7 +434,7 @@ namespace HGE {
 		*
 		* (If the length is longer than the string size it just erases as much as it can)
 		* (If the start index is bigger than the string size it returns)
-		* 
+		*
 		* @param The index to start erasing from
 		* @param The length of characters to erase
 		*
@@ -471,25 +471,25 @@ namespace HGE {
 		* @author Salmoncatt
 		*
 		*/
-		size_t length() const{
+		size_t length() const {
 			return size;
 		}
 
 		/*
 		* Returns whether or not the string is empty
-		* 
+		*
 		* @author Salmoncatt
-		* 
+		*
 		*/
-		bool empty() const{
+		bool empty() const {
 			return (data == NULL || data[0] == '\0');
 		}
 
 		/*
 		* Returns the character at a the index specified.
-		* 
+		*
 		* @param The index for the character
-		* 
+		*
 		* @author Salmoncatt
 		*/
 		char& at(size_t& index) {
@@ -559,7 +559,7 @@ namespace HGE {
 		* Returns a part of this string from index to size
 		*
 		* (Returns blank string if invalid values are used)
-		* 
+		*
 		* @param The starting index
 		* @param The length of the sub string
 		*
@@ -627,11 +627,11 @@ namespace HGE {
 
 		/*
 		* Returns a vector consisting of strings spilt between the delimiter
-		* 
+		*
 		* (returns a blank vector if invalid values are used)
 		*
 		* @param The delimiter string
-		* 
+		*
 		* @author Salmoncatt
 		*/
 		vector<string> split(const string& delimiter)  const {
@@ -639,7 +639,7 @@ namespace HGE {
 
 			string temp = *this;
 
-			out.reserve(10);
+			//out.reserve(10);
 
 			size_t index = 0;
 
@@ -650,8 +650,8 @@ namespace HGE {
 			}
 
 			//find doesnt count the last one so i add the rest of the data
-			if(temp.size > 0)
-			out.push_back(temp.substr(0, temp.size));
+			if (temp.size > 0)
+				out.push_back(temp.substr(0, temp.size));
 
 			return out;
 		}
