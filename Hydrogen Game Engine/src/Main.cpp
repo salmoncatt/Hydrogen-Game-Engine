@@ -29,14 +29,6 @@ public:
 		window->resize(Vec2i(1000, 600));
 		window->setPosition(Vec2i(300, 100));
 
-		HGE::string poop = R"(poopawegawegpoopyawegawegpoopiesawegaweg)";
-
-		HGE::vector<HGE::string> poopy = poop.split("awegaweg");
-
-		for (int i = 0; i < poopy.size(); i++) {
-			Debug::log(poopy[i].c_str());
-		}
-
 		Renderer::setCullingMode(true);
 		Renderer::setLightMode(HFR_PER_PIXEL_LIGHT);
 		//Engine::window->setVSync(true);

@@ -5,6 +5,7 @@
 
 #include HFR_API
 #include HFR_IMAGE
+#include HFR_MATH
 
 namespace HFR {
 
@@ -19,9 +20,16 @@ namespace HFR {
 		//1 is none, default is 4
 		const int byteAlignment = 4;
 		
-		const int minMipmapFilter = GL_NEAREST_MIPMAP_LINEAR;
-		const int magMipmapFilter = GL_NEAREST_MIPMAP_LINEAR;
+		const int MipmapFilter = GL_NEAREST_MIPMAP_LINEAR;
+		const int filter = GL_NEAREST;
+		const Vec2i wrapMode = (GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE);
 
+		const int textureType = GL_TEXTURE_2D;
+
+		const int internalFormat = GL_RGBA8;
+		const int format = GL_RGBA;
+
+		const int dataType = GL_UNSIGNED_BYTE;
 
 		Texture();
 		Texture(const Texture& texture);

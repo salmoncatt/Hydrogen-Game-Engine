@@ -67,24 +67,42 @@ namespace HGE {
 	* @author Salmoncatt
 	*/
 	inline size_t strlen(const char* data) {
-		const __m256i terminationCharacters = _mm256_setzero_si256();
-		const size_t shiftAmount = ((size_t)&data) & 31;
-		const __m256i* pointer = (const __m256i*) (data - shiftAmount);
+		size_t out = 0;
 
-		size_t length = 0;
+		const __m128i zeros = _mm_setzero_si128();
+		__m128i* pointer = (__m128i*)(data);
 
-		//const int compareMode = _SIDD_UBYTE_OPS | _SIDD_LEAST_SIGNIFICANT | _SIDD_CMP_EQUAL_EACH;
+		for (;; pointer++, out += 16) {
+			
+			const __m128i current = _mm_loadu_si128(pointer);
 
-		for (;; length += 32, ++pointer) {
-			const __m256i comparingData = _mm256_load_si256(pointer);
-			const __m256i comparison = _mm256_cmpeq_epi8(comparingData, terminationCharacters);
+			const int compareMode = _SIDD_UBYTE_OPS | _SIDD_LEAST_SIGNIFICANT | _SIDD_CMP_EQUAL_EACH;
 
-			if (!_mm256_testc_si256(terminationCharacters, comparison)) {
-				const auto mask = _mm256_movemask_epi8(comparison);
+			if (_mm_cmpistrc(current, zeros, compareMode)) {
+				const auto index = _mm_cmpistri(current, zeros, compareMode);
 
-				return length + _tzcnt_u32(mask >> shiftAmount);
+				return out + index;
 			}
 		}
+
+		//const __m256i terminationCharacters = _mm256_setzero_si256();
+		//const size_t shiftAmount = ((size_t)&data) & 31;
+		//const __m256i* pointer = (const __m256i*) (data - shiftAmount);
+
+		//size_t length = 0;
+
+		////const int compareMode = _SIDD_UBYTE_OPS | _SIDD_LEAST_SIGNIFICANT | _SIDD_CMP_EQUAL_EACH;
+
+		//for (;; length += 32, ++pointer) {
+		//	const __m256i comparingData = _mm256_load_si256(pointer);
+		//	const __m256i comparison = _mm256_cmpeq_epi8(comparingData, terminationCharacters);
+
+		//	if (!_mm256_testc_si256(terminationCharacters, comparison)) {
+		//		const auto mask = _mm256_movemask_epi8(comparison);
+
+		//		return length + _tzcnt_u32(mask >> shiftAmount);
+		//	}
+		//}
 	}
 
 	inline char* strcpy(char* destination, const char* source) {
