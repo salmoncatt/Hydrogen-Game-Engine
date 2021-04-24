@@ -26,8 +26,12 @@ namespace HFR {
 		FT_Set_Pixel_Sizes(face, size.x, size.y);
 
 		FT_GlyphSlot glyph = face->glyph;
+
 		int width = 0;
 		int height = 0;
+
+		int rowWidth = 0;
+		int rowHeight = 0;
 
 		for (int i = 32; i < 128; ++i) {
 			//super sophisticated error checking algorithm
@@ -41,12 +45,26 @@ namespace HFR {
 				continue;
 			}
 
-			width += glyph->bitmap.width;
-			height = max(height, glyph->bitmap.rows);
+			if (rowWidth + glyph->bitmap.width + 1 >= maxTextureWidth) {
+				width = max(width, rowWidth);
+				height += rowHeight;
+
+				rowWidth = 0;
+				rowHeight = 0;
+			}
+
+			rowWidth += glyph->bitmap.width + 1;
+			rowHeight = max(height, glyph->bitmap.rows);
 		}
+
+		width = max(width, rowWidth);
+		height += rowHeight;
 
 		atlasSize = (width, height);
 
+		texture = Texture(Image(width, height, 4, 0));
+		texture.byteAlignment = 1;
+		//texture.
 
 
 	}

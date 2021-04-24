@@ -16,6 +16,8 @@ namespace HFR {
 
 		Texture texture;
 
+		int maxTextureWidth = 1024;
+
 		std::map<char, Character> characters;
 		std::string path;
 

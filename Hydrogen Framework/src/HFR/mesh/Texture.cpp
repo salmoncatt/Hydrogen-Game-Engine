@@ -6,6 +6,11 @@ namespace HFR {
 		textureID = 0;
 	}
 
+	Texture::Texture(const Image& _image) {
+		image = _image;
+		textureID = 0;
+	}
+
 	Texture::Texture(const Texture& texture) {
 		image = Image(texture.image);
 		textureID = 0;
@@ -35,7 +40,7 @@ namespace HFR {
 		if (!isCreated && image.hasData()) {
 
 			glGenTextures(1, &textureID);
-			glBindTexture(GL_TEXTURE_2D, textureID);
+			glBindTexture(textureType, textureID);
 
 			glPixelStorei(GL_UNPACK_ALIGNMENT, byteAlignment);
 
@@ -46,7 +51,7 @@ namespace HFR {
 
 			glTexImage2D(textureType, 0, internalFormat, image.width, image.height, 0, format, dataType, image.data);
 
-			glGenerateMipmap(GL_TEXTURE_2D);
+			glGenerateMipmap(textureType);
 
 			isCreated = true;
 		}
