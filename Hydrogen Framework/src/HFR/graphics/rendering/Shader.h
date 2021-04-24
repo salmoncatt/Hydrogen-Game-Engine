@@ -24,14 +24,17 @@ namespace HFR {
 		void unbind();
 		void close();
 
-		unsigned int getLocation(const std::string& name);
-		void setUniform(const std::string& name, Mat4f& data);
-		void setUniform(const std::string& name, const Vec4f& data);
-		void setUniform(const std::string& name, const Vec3f& data);
-		void setUniform(const std::string& name, const Vec2f& data);
-		void setUniform(const std::string& name, const bool& data);
-		void setUniform(const std::string& name, const int& data);
-		void setUniform(const std::string& name, const float& data);
+		unsigned int getUniformLocation(const char* name);
+		unsigned int getAttributeLocation(const char* name);
+
+
+		void setUniform(const char* name, Mat4f& data);
+		void setUniform(const char* name, const Vec4f& data);
+		void setUniform(const char* name, const Vec3f& data);
+		void setUniform(const char* name, const Vec2f& data);
+		void setUniform(const char* name, const bool& data);
+		void setUniform(const char* name, const int& data);
+		void setUniform(const char* name, const float& data);
 	};
 
 }

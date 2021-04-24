@@ -79,7 +79,7 @@ public:
 			else if(Input::getKeyDown(HFR_KEY_G))
 				VisualStudio::openVisualStudio(HFR_PROJECTS_PATH + "testProject/Scripts/testProject.sln");
 
-			Renderer::render(oxygen, "poop", Vec2i(100), Vec2i(1));
+			Renderer::render(oxygen, "haha poop", Vec2i(100), Vec2i(1), Vec4f(0, 0, 0, 1));
 
 			window->limitFps(200);
 		}

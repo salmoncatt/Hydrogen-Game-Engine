@@ -1,6 +1,7 @@
 #include "hfpch.h"
 
 #include "HFR/text/Font.h"
+#include "HFR/gui/GuiText.h"
 
 namespace HFR {
 
@@ -55,6 +56,8 @@ namespace HFR {
 		mainShader.create();
 		guiShader.create();
 		guiFrameShader.create();
+		textShader.create();
+
 		nullTexture.create();
 		createProjectionMatrix(screenWidth, screenHeight);
 
@@ -85,6 +88,7 @@ namespace HFR {
 		mainShader.close();
 		guiShader.close();
 		guiFrameShader.close();
+		textShader.close();
 	}
 
 	float Renderer::getAspectRatio() {
@@ -472,11 +476,9 @@ namespace HFR {
 		}
 	}
 
-	void Renderer::render(const Font& font, const char* text, Vec2i position, Vec2i scale) {
-		disableDepthTest();
 
-		glBindVertexArray(quad.VAO);
-		glEnableVertexAttribArray(0);
+	void Renderer::render(const Font& font, const char* text, const Vec2i& position, const Vec2i& scale, const Vec4f& color) {
+		disableDepthTest();
 
 		if (font.texture.image.hasData())
 			glBindTexture(GL_TEXTURE_2D, font.texture.textureID);
@@ -484,8 +486,54 @@ namespace HFR {
 			glBindTexture(GL_TEXTURE_2D, nullTexture.textureID);
 
 
+		glEnableVertexAttribArray(GuiText::textureCoordAttribute);
+		glBindBuffer(GL_ARRAY_BUFFER, GuiText::staticVBO);
+		glVertexAttribPointer(GuiText::textureCoordAttribute, 4, GL_FLOAT, GL_FALSE, 0, 0);
+
+		size_t length = std::strlen(text);
+
+		if (length != 0) {
+			Vec4f* coordinates = new Vec4f[6 * length];
+			
+			int vertexCount = 0;
+			const unsigned char* character;
+
+			Vec2f cursorPosition = Vec2f(position.x, position.y);
+
+			for (character = (const unsigned char*)text; *character; character++) {
+				//calculate vertex position and texture coords
+				Vec2f characterPosition = (cursorPosition.x + font.characters[*character].bitmapLeftTop.x * font.size.x,
+										   -cursorPosition.y - font.characters[*character].bitmapLeftTop.y * font.size.y);
+
+				Vec2f size = Vec2f(font.characters[*character].size.x * scale.x,
+								   font.characters[*character].size.y * scale.y);
+
+				cursorPosition.x += font.characters[*character].advance.x * scale.x;
+				cursorPosition.y += font.characters[*character].advance.y * scale.y;
+
+				//skip if glyph has no data
+				if (!size.x || !size.y)
+					continue;
+
+				coordinates[vertexCount++] = Vec4f(characterPosition.x, -characterPosition.y, font.characters[*character].textureOffset.x, font.characters[*character].textureOffset.y);
+				coordinates[vertexCount++] = Vec4f(characterPosition.x + size.x, -characterPosition.y, font.characters[*character].textureOffset.x + font.characters[*character].size.x / font.atlasSize.x, font.characters[*character].textureOffset.y);
+				coordinates[vertexCount++] = Vec4f(characterPosition.x, -characterPosition.y - size.y, font.characters[*character].textureOffset.x, font.characters[*character].textureOffset.y + font.characters[*character].size.x / font.atlasSize.y);
+							
+				coordinates[vertexCount++] = Vec4f(characterPosition.x + size.x, -characterPosition.y, font.characters[*character].textureOffset.x + font.characters[*character].size.x / font.atlasSize.x, font.characters[*character].textureOffset.y);
+				coordinates[vertexCount++] = Vec4f(characterPosition.x, -characterPosition.y - size.y, font.characters[*character].textureOffset.x, font.characters[*character].textureOffset.y + font.characters[*character].size.x / font.atlasSize.y);
+				coordinates[vertexCount++] = Vec4f(characterPosition.x + size.x, -characterPosition.y - size.y, font.characters[*character].textureOffset.x + font.characters[*character].size.x / font.atlasSize.x, font.characters[*character].textureOffset.y + font.characters[*character].size.x / font.atlasSize.y);
+
+			}
+
+			//draw
+			glBufferData(GL_ARRAY_BUFFER, sizeof(coordinates), coordinates, GL_DYNAMIC_DRAW);
+			glDrawArrays(GL_TRIANGLES, 0, vertexCount);
+
+			glDisableVertexAttribArray(GuiText::textureCoordAttribute);
 
 
+			delete[] coordinates;
+		}
 
 
 

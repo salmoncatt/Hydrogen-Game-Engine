@@ -55,6 +55,7 @@
     <ClInclude Include="src\HFR\text\FreeType.h" />
     <ClInclude Include="src\HFR\text\Character.h" />
     <ClInclude Include="src\HFR\text\Font.h" />
+    <ClInclude Include="src\HFR\gui\GuiText.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\hfpch.cpp" />
@@ -96,6 +97,7 @@
     <ClCompile Include="src\HFR\scripting\VisualStudio.cpp" />
     <ClCompile Include="src\HFR\text\FreeType.cpp" />
     <ClCompile Include="src\HFR\text\Font.cpp" />
+    <ClCompile Include="src\HFR\gui\GuiText.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\guiFrameFragment.glsl" />

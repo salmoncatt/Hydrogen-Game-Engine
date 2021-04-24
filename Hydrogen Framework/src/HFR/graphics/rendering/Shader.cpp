@@ -39,39 +39,43 @@ namespace HFR {
 		glUseProgram(0);
 	}
 
-	unsigned int Shader::getLocation(const std::string& name) {
-		return glGetUniformLocation(programID, name.c_str());
+	unsigned int Shader::getUniformLocation(const char* name) {
+		return glGetUniformLocation(programID, name);
 	}
 
-	void Shader::setUniform(const std::string& name, Mat4f& data) {
+	unsigned int Shader::getAttributeLocation(const char* name) {
+		return glGetAttribLocation(programID, name);
+	}
+
+	void Shader::setUniform(const char* name, Mat4f& data) {
 		FloatBuffer* matbuffer = new FloatBuffer(16);
 		data.store(matbuffer);
-		glUniformMatrix4fv(getLocation(name), 1, false, matbuffer->data);
+		glUniformMatrix4fv(getUniformLocation(name), 1, false, matbuffer->data);
 		delete matbuffer;
 	}
 
-	void Shader::setUniform(const std::string& name, const Vec2f& data) {
-		glUniform2f(getLocation(name), data.x, data.y);
+	void Shader::setUniform(const char* name, const Vec2f& data) {
+		glUniform2f(getUniformLocation(name), data.x, data.y);
 	}
 
-	void Shader::setUniform(const std::string& name, const Vec3f& data) {
-		glUniform3f(getLocation(name), data.x, data.y, data.z);
+	void Shader::setUniform(const char* name, const Vec3f& data) {
+		glUniform3f(getUniformLocation(name), data.x, data.y, data.z);
 	}
 
-	void Shader::setUniform(const std::string& name, const Vec4f& data) {
-		glUniform4f(getLocation(name), data.x, data.y, data.z, data.w);
+	void Shader::setUniform(const char* name, const Vec4f& data) {
+		glUniform4f(getUniformLocation(name), data.x, data.y, data.z, data.w);
 	}
 
-	void Shader::setUniform(const std::string& name, const bool& data) {
-		glUniform1f(getLocation(name), data ? (GLfloat)1 : (GLfloat)0);
+	void Shader::setUniform(const char* name, const bool& data) {
+		glUniform1f(getUniformLocation(name), data ? (GLfloat)1 : (GLfloat)0);
 	}
 
-	void Shader::setUniform(const std::string& name, const float& data) {
-		glUniform1f(getLocation(name), data);
+	void Shader::setUniform(const char* name, const float& data) {
+		glUniform1f(getUniformLocation(name), data);
 	}
 
-	void Shader::setUniform(const std::string& name, const int& data) {
-		glUniform1i(getLocation(name), data);
+	void Shader::setUniform(const char* name, const int& data) {
+		glUniform1i(getUniformLocation(name), data);
 	}
 
 	void Shader::close() {

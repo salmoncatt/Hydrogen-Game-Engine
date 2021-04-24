@@ -1,5 +1,6 @@
 #include "hfpch.h"
 #include "HFR/text/FreeType.h"
+#include "HFR/gui/GuiText.h"
 
 namespace HFR {
 
@@ -54,6 +55,12 @@ namespace HFR {
 		Renderer::init((float)window->size.x, (float)window->size.y);
 		Debug::systemSuccess("Renderer was initialized");
 		Debug::newLine();
+
+		Debug::systemLog("Initialzing GuiText data");
+		GuiText::init();
+		Debug::systemSuccess("GuiText data was initialized");
+		Debug::newLine();
+
 
 		Debug::systemLog("Initializing Utilities");
 		Util::init();
