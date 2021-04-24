@@ -19,10 +19,9 @@ namespace HFR {
 
 		//1 is none, default is 4
 		int byteAlignment = 4;
-		
-		int MipmapFilter = GL_NEAREST_MIPMAP_LINEAR;
-		int filter = GL_NEAREST;
+
 		Vec2i wrapMode = (GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE);
+		Vec2i filterMode = (GL_NEAREST_MIPMAP_LINEAR, GL_NEAREST);
 
 		int textureType = GL_TEXTURE_2D;
 
@@ -30,6 +29,8 @@ namespace HFR {
 		int format = GL_RGBA;
 
 		int dataType = GL_UNSIGNED_BYTE;
+
+		bool generateMipmap = true;
 
 		Texture();
 		Texture(const Image& image);

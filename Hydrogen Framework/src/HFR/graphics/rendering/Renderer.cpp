@@ -1,5 +1,7 @@
 #include "hfpch.h"
 
+#include "HFR/text/Font.h"
+
 namespace HFR {
 
 	Mat4f Renderer::perspectiveMatrix = Mat4f();
@@ -10,6 +12,7 @@ namespace HFR {
 	Shader Renderer::mainShader = HFR::Shader(HFR_RES + "shaders/", "MainVertex.glsl", "MainFragment.glsl");
 	Shader Renderer::guiShader = HFR::Shader(HFR_RES + "shaders/", "guiVertex.glsl", "guiFragment.glsl");
 	Shader Renderer::guiFrameShader = HFR::Shader(HFR_RES + "shaders/", "guiVertex.glsl", "guiFrameFragment.glsl");
+	Shader Renderer::textShader = HFR::Shader(HFR_RES + "shaders/", "guiTextVertex.glsl", "guiTextFragment.glsl");
 
 	Texture Renderer::nullTexture = Texture(HFR_RES + "textures/null.png");
 
@@ -469,8 +472,27 @@ namespace HFR {
 		}
 	}
 
-	void Renderer::render(const Font& font, const std::string& text) {
-		//glTexImage2D();
+	void Renderer::render(const Font& font, const char* text, Vec2i position, Vec2i scale) {
+		disableDepthTest();
+
+		glBindVertexArray(quad.VAO);
+		glEnableVertexAttribArray(0);
+
+		if (font.texture.image.hasData())
+			glBindTexture(GL_TEXTURE_2D, font.texture.textureID);
+		else
+			glBindTexture(GL_TEXTURE_2D, nullTexture.textureID);
+
+
+
+
+
+
+
+		glDisableVertexAttribArray(0);
+		glBindVertexArray(0);
+
+		enableDepthTest();
 	}
 
 }

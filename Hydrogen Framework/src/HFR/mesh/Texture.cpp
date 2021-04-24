@@ -44,14 +44,15 @@ namespace HFR {
 
 			glPixelStorei(GL_UNPACK_ALIGNMENT, byteAlignment);
 
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, MipmapFilter);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, filter);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, filterMode.x);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, filterMode.y);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, wrapMode.x);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wrapMode.y);
 
 			glTexImage2D(textureType, 0, internalFormat, image.width, image.height, 0, format, dataType, image.data);
 
-			glGenerateMipmap(textureType);
+			if(generateMipmap)
+				glGenerateMipmap(textureType);
 
 			isCreated = true;
 		}

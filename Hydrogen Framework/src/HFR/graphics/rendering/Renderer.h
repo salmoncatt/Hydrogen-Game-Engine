@@ -32,7 +32,10 @@ namespace HFR {
 		static Shader mainShader;
 		static Shader guiShader;
 		static Shader guiFrameShader;
+		static Shader textShader;
+
 		static Texture nullTexture;
+		
 		static Mat4f perspectiveMatrix;
 		static Mat4f orthoMatrix;
 		static Mat4f pixelOrthoMatrix;
@@ -83,7 +86,8 @@ namespace HFR {
 
 		static void renderGuis();
 
-		static void render(const Font& font, const std::string& text);
+		//scale scales the pixel size used to create the font (48 pixels tall by default)
+		static void render(const Font& font, const char* text, Vec2i position, Vec2i scale);
 	};
 
 }

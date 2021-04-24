@@ -60,6 +60,10 @@ public:
 
 		peter.addComponent<NativeScript>().addScript("testScript");
 
+
+		Font oxygen = Font(HFR_RES + "fonts/oxygen/Oxygen-Regular.ttf");
+		oxygen.create();
+
 		while (shouldUpdate() && !Input::getKey(HFR_KEY_ESCAPE)) {
 			ProfileMethod("Main loop");
 			test->updateEditor();
@@ -74,6 +78,8 @@ public:
 				ProjectManager::createEngineProject("testProject", "testScript");
 			else if(Input::getKeyDown(HFR_KEY_G))
 				VisualStudio::openVisualStudio(HFR_PROJECTS_PATH + "testProject/Scripts/testProject.sln");
+
+			Renderer::render(oxygen, "poop", Vec2i(100), Vec2i(1));
 
 			window->limitFps(200);
 		}

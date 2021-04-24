@@ -62,11 +62,54 @@ namespace HFR {
 
 		atlasSize = (width, height);
 
-		texture = Texture(Image(width, height, 4, 0));
+		Image imageData = Image(width, height, 4, 0);
+		texture = Texture(imageData);
 		texture.byteAlignment = 1;
-		//texture.
+		texture.filterMode = Vec2i(GL_LINEAR);
+		texture.internalFormat = GL_ALPHA;
+		texture.format = GL_ALPHA;
+		texture.generateMipmap = false;
+
+		texture.create();
 
 
+		Vec2i offset = Vec2i();
+
+		//load glyphs into texture
+
+		for (int i = 32; i < 128; ++i) {
+			//super sophisticated error checking algorithm
+			if (FT_Load_Char(face, i, FT_LOAD_RENDER)) {
+				std::string character;
+				character = (char)(i);
+
+				std::string error = ("Loading character " + character + " has failed in font: " + Util::removePathFromFilePathAndName(path));
+				Debug::systemErr(error);
+
+				continue;
+			}
+
+			if (offset.x + glyph->bitmap.width + 1 >= maxTextureWidth) {
+				offset.y += rowHeight;
+				rowHeight = 0;
+				offset.x = 0;
+			}
+			
+			glTexSubImage2D(GL_TEXTURE_2D, 0, offset.x, offset.y, glyph->bitmap.width, glyph->bitmap.rows, GL_ALPHA, GL_UNSIGNED_BYTE, glyph->bitmap.buffer);
+
+			characters[i].advance = Vec2i(glyph->advance.x >> 6, glyph->advance.y >> 6);
+			characters[i].bitmapLeftTop = Vec2i(glyph->bitmap_left, glyph->bitmap_top);
+			characters[i].size = Vec2i(glyph->bitmap.width, glyph->bitmap.rows);
+			characters[i].textureOffset = Vec2i(offset.x / width, offset.y / height);
+
+		}
+
+
+
+
+
+		Debug::systemSuccess("Loaded font: " + Util::removePathFromFilePathAndName(path), DebugColor::Blue);
+		Debug::systemSuccess(Util::removePathFromFilePathAndName(path) + " atlas size is " + std::to_string(width) + " x " + std::to_string(height) + " pixels and is " + std::to_string(width * height / 1024) + " kb", DebugColor::Blue);
 	}
 
 	void Font::loadFont(const std::string& _path) {
