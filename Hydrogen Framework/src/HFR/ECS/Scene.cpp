@@ -154,14 +154,14 @@ namespace HFR {
 		lerpedCpuUsage = HMath::lerp(lerpedCpuUsage, (float)Util::getCPUusage(), 0.01f);
 		lerpedRamUsage = HMath::lerp(lerpedRamUsage, (float)Util::getRAMusage(), 0.01f);
 
-		//background
-		Renderer::renderRoundedRectangle(Vec2f(0, (float)Engine::window->size.y - 256), Vec2f(600, 256), 10, Vec3f(0.2f));
-		//starting left first cpu usage
-		Renderer::radialRevealRectangle(Vec2f(10, (float)Engine::window->size.y - 70), Vec2f(122, 122), lerpedCpuUsage * 180, 0, false, radialBarTexture);
-		//second ram usage
-		Renderer::radialRevealRectangle(Vec2f(142, (float)Engine::window->size.y - 70), Vec2f(122, 122), (float)(lerpedRamUsage / 2000) * 180, 0, false, radialBarTexture);
-		//third is gpu usage (usage as in how much of the 60 fps frame budget are we using)
-		Renderer::radialRevealRectangle(Vec2f(274, (float)Engine::window->size.y - 70), Vec2f(122, 122), (1 / (Time::getFPS() / 60)) * 180, 0, false, radialBarTexture);
+		////background
+		//Renderer::renderRoundedRectangle(Vec2f(0, (float)Engine::window->size.y - 256), Vec2f(600, 256), 10, Vec3f(0.2f));
+		////starting left first cpu usage
+		//Renderer::radialRevealRectangle(Vec2f(10, (float)Engine::window->size.y - 70), Vec2f(122, 122), lerpedCpuUsage * 180, 0, false, radialBarTexture);
+		////second ram usage
+		//Renderer::radialRevealRectangle(Vec2f(142, (float)Engine::window->size.y - 70), Vec2f(122, 122), (float)(lerpedRamUsage / 2000) * 180, 0, false, radialBarTexture);
+		////third is gpu usage (usage as in how much of the 60 fps frame budget are we using)
+		//Renderer::radialRevealRectangle(Vec2f(274, (float)Engine::window->size.y - 70), Vec2f(122, 122), (1 / (Time::getFPS() / 60)) * 180, 0, false, radialBarTexture);
 
 
 

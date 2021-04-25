@@ -87,7 +87,7 @@ namespace HFR {
 		static void renderGuis();
 
 		//scale scales the pixel size used to create the font (48 pixels tall by default), also creates mesh on the fly so isn't as efficient as static text just so you know
-		static void render(const Font& font, const char* text, const Vec2i& position, const Vec2i& scale, const Vec4f& color);
+		static void render(const Font& font, const char* text, const Vec2f& position, const Vec2f& scale, const Vec4f& color);
 	};
 
 }
