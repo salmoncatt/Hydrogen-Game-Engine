@@ -27,6 +27,7 @@
 
 #include "HFR/gui/GuiElement.h"
 #include "HFR/gui/GuiFrame.h"
+#include "HFR/gui/GuiText.h"
 
 #include "HFR/core/API.h"
 #include "HFR/core/Program.h"

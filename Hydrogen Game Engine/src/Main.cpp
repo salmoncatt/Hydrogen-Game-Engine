@@ -64,6 +64,8 @@ public:
 		Font oxygen = Font(HFR_RES + "fonts/oxygen/Oxygen-Regular.ttf");
 		oxygen.create();
 
+		GuiText text = GuiText("haha poop", oxygen, Transform2D(Vec2f(100, 100), Vec2f(0), Vec2f(1, 1)));
+
 		while (shouldUpdate() && !Input::getKey(HFR_KEY_ESCAPE)) {
 			ProfileMethod("Main loop");
 			test->updateEditor();
@@ -79,10 +81,9 @@ public:
 			else if(Input::getKeyDown(HFR_KEY_G))
 				VisualStudio::openVisualStudio(HFR_PROJECTS_PATH + "testProject/Scripts/testProject.sln");
 
-			float sx = Engine::window->size.x / (float)2;
-			float sy = Engine::window->size.y / (float)2;
+			
 
-			Renderer::render(oxygen, "haha poop", Vec2f(100, -100), Vec2f(1), Vec4f(0, 0, 0, 1));
+			Renderer::render(text);
 
 			window->limitFps(200);
 		}

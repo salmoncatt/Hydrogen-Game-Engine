@@ -1,9 +1,15 @@
 #version 400 core
+out vec4 fragColor;
 
-varying vec2 texcoord;
-uniform sampler2D tex;
+in vec2 passedTextureCoords;
+
+
+uniform sampler2D textureSampler;
 uniform vec4 color;
 
-void main(void) {
-  gl_FragColor = vec4(1, 1, 1, 1);
+void main() {
+	
+	fragColor = texture(textureSampler, passedTextureCoords);
+	fragColor *= color;
+
 }

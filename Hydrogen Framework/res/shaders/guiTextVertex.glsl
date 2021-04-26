@@ -1,11 +1,12 @@
 #version 400 core
+layout (location = 0) in vec3 position;
+layout (location = 1) in vec2 textureCoords;
 
-attribute vec4 coord;
-varying vec2 texcoord;
+out vec2 passedTextureCoords;
 
-void main(void) {
+void main() {
 
-  gl_Position = vec4(coord.xy, 0, 1);
-  texcoord = coord.zw;
+	gl_Position = vec4(position, 1.0);
+	passedTextureCoords = textureCoords;
 
 }

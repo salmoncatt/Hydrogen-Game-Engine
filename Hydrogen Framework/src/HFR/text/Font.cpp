@@ -11,6 +11,14 @@ namespace HFR {
 		atlasSize = Vec2i();
 	}
 
+	Font::Font(const Font& font) {
+		//face = FreeType::loadFace(font.face);
+		face = nullptr;
+		size = font.size;
+		atlasSize = font.atlasSize;
+		path = font.path;
+	}
+
 	Font::Font(const std::string& _path) {
 		face = FreeType::loadFace(_path);
 		path = _path;
@@ -107,9 +115,10 @@ namespace HFR {
 
 
 
-
-		Debug::systemSuccess("Loaded font: " + Util::removePathFromFilePathAndName(path), DebugColor::Blue);
-		Debug::systemSuccess(Util::removePathFromFilePathAndName(path) + " atlas size is " + std::to_string(width) + " x " + std::to_string(height) + " pixels and is " + std::to_string(width * height / 1024) + " kb", DebugColor::Blue);
+		if (logStatus) {
+			Debug::systemSuccess("Loaded font: " + Util::removePathFromFilePathAndName(path), DebugColor::Blue);
+			Debug::systemSuccess(Util::removePathFromFilePathAndName(path) + " atlas size is " + std::to_string(width) + " x " + std::to_string(height) + " pixels and is " + std::to_string(width * height / 1024) + " kb", DebugColor::Blue);
+		}
 	}
 
 	void Font::loadFont(const std::string& _path) {

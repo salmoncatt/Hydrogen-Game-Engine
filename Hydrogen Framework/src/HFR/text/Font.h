@@ -18,11 +18,14 @@ namespace HFR {
 
 		int maxTextureWidth = 1024;
 
+		bool logStatus = true;
+
 		Character characters[128];
 		//std::map<unsigned char, Character> characters;
 		std::string path;
 
 		Font();
+		Font(const Font& font);
 		Font(const std::string& path);
 		~Font();
 

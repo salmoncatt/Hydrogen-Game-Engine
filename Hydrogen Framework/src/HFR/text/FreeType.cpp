@@ -31,4 +31,14 @@ namespace HFR {
 		return out;
 	}
 
+	FT_Face FreeType::loadFace(FT_Face& face) {
+		FT_Face out = nullptr;
+
+		/*if (FT_New_Memory_Face(ftLibrary, &out, sizeof(face), 0, &face)) {
+			Debug::systemErr("Couldn't load font");
+		}*/
+
+		return out;
+	}
+
 }

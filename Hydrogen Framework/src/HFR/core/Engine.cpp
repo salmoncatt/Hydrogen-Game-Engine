@@ -56,12 +56,6 @@ namespace HFR {
 		Debug::systemSuccess("Renderer was initialized");
 		Debug::newLine();
 
-		Debug::systemLog("Initialzing GuiText data");
-		GuiText::init();
-		Debug::systemSuccess("GuiText data was initialized");
-		Debug::newLine();
-
-
 		Debug::systemLog("Initializing Utilities");
 		Util::init();
 		Random::init();

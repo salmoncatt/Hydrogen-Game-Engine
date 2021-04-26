@@ -23,6 +23,8 @@ namespace HFR {
 
 	void Mesh::create() {
 		VAO = Util::generateVAO();
+
+		if (!indices.empty())
 		IBO = Util::generateVBO();
 
 
