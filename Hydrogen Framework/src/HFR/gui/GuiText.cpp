@@ -70,12 +70,12 @@ namespace HFR {
 			//	texturecoords.push_back(font.characters[*character].textureOffset.x + font.characters[*character].size.x / font.atlasSize.x); vertices.push_back(font.characters[*character].textureOffset.y + font.characters[*character].size.x / font.atlasSize.y);
 			//}
 
-			vertices = { -0.5f, 0.5f, 0,
-	-0.5f, -0.5f, 0,
-	0.5f, -0.5f, 0,
-	0.5f, -0.5f, 0,
-	0.5f, 0.5f, 0,
-	-0.5f, 0.5f, 0 };
+			vertices = { -0.5f, 0.5f,
+	-0.5f, -0.5f,
+	0.5f, -0.5f,
+	0.5f, -0.5f,
+	0.5f, 0.5f, 
+	-0.5f, 0.5f,};
 
 
 			mesh = Mesh(vertices, std::vector<unsigned int>(), std::vector<float>(), texturecoords);
