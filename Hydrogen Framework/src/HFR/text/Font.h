@@ -5,6 +5,7 @@
 #include HFR_API
 #include HFR_VEC2
 #include HFR_CHARACTER
+#include HFR_TEXTURE
 
 namespace HFR {
 
@@ -25,7 +26,6 @@ namespace HFR {
 		std::string path;
 
 		Font();
-		Font(const Font& font);
 		Font(const std::string& path);
 		~Font();
 

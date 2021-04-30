@@ -5,14 +5,15 @@
 #include HFR_API
 #include HFR_WINDOW
 #include HFR_GUI_FRAME
+#include HFR_FONT
 
 namespace HFR {
 
 	class DLL_API Engine {
 	public:
 		static std::vector<GuiFrame*> guiFrames;
+		static std::vector<Font*> fonts;
 		static Window* window;
-		static FT_Library freeTypeReference;
 
 		static void startEngine();
 		static void updateEngine();
@@ -22,6 +23,9 @@ namespace HFR {
 		static void registerGuiFrame(GuiFrame* frame);
 		static void removeGuiFrame(GuiFrame* frame);
 		static void removeGuiFrame(const std::string& frame);
+
+		//font stuff
+		static void registerFont(Font* font);
 
 	};
 

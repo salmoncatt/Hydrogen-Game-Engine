@@ -64,8 +64,12 @@ public:
 		Font oxygen = Font(HFR_RES + "fonts/oxygen/Oxygen-Regular.ttf");
 		oxygen.create();
 
-		GuiText text = GuiText("haha poop", oxygen, Transform2D(Vec2f(100, 100), Vec2f(0), Vec2f(1, 1)));
-		text.create();
+		//GuiText text = GuiText("haha poop", oxygen, Transform2D(Vec2f(100, 100), Vec2f(0), Vec2f(1, 1)));
+		//text.create();
+
+		GuiFrame* gui = new GuiFrame();
+		//Engine::registerGuiFrame(gui);
+
 
 		while (shouldUpdate() && !Input::getKey(HFR_KEY_ESCAPE)) {
 			ProfileMethod("Main loop");
@@ -84,7 +88,7 @@ public:
 
 			
 
-			Renderer::render(text);
+			//Renderer::render(text);
 
 			window->limitFps(200);
 		}

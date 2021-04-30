@@ -11,14 +11,6 @@ namespace HFR {
 		atlasSize = Vec2i();
 	}
 
-	Font::Font(const Font& font) {
-		//face = FreeType::loadFace(font.face);
-		face = nullptr;
-		size = font.size;
-		atlasSize = font.atlasSize;
-		path = font.path;
-	}
-
 	Font::Font(const std::string& _path) {
 		face = FreeType::loadFace(_path);
 		path = _path;
@@ -35,11 +27,11 @@ namespace HFR {
 
 		FT_GlyphSlot glyph = face->glyph;
 
-		int width = 0;
-		int height = 0;
+		unsigned int width = 0;
+		unsigned int height = 0;
 
-		int rowWidth = 0;
-		int rowHeight = 0;
+		unsigned int rowWidth = 0;
+		unsigned int rowHeight = 0;
 
 		for (int i = 32; i < 128; ++i) {
 			//super sophisticated error checking algorithm
@@ -53,7 +45,7 @@ namespace HFR {
 				continue;
 			}
 
-			if (rowWidth + glyph->bitmap.width + 1 >= maxTextureWidth) {
+			if (rowWidth + glyph->bitmap.width + 1 >= (unsigned int)maxTextureWidth) {
 				width = max(width, rowWidth);
 				height += rowHeight;
 
@@ -97,7 +89,7 @@ namespace HFR {
 				continue;
 			}
 
-			if (offset.x + glyph->bitmap.width + 1 >= maxTextureWidth) {
+			if (offset.x + glyph->bitmap.width + 1 >= (unsigned int)maxTextureWidth) {
 				offset.y += rowHeight;
 				rowHeight = 0;
 				offset.x = 0;
@@ -111,9 +103,6 @@ namespace HFR {
 			characters[i].textureOffset = Vec2i(offset.x / width, offset.y / height);
 
 		}
-
-
-
 
 		if (logStatus) {
 			Debug::systemSuccess("Loaded font: " + Util::removePathFromFilePathAndName(path), DebugColor::Blue);

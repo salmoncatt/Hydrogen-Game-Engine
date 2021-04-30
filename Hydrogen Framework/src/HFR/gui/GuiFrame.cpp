@@ -5,7 +5,7 @@ namespace HFR {
 
 	GuiFrame::GuiFrame() {
 		position = Vec2f();
-		size = Vec2f();
+		size = Vec2f(100, 100);
 		anchorPoint = Vec2f();
 
 		backgroundColor = Vec4f(1);
@@ -19,7 +19,7 @@ namespace HFR {
 	}
 
 	GuiFrame::~GuiFrame() {
-		//Engine::removeGuiFrame(this);
+	
 	}
 
 	bool GuiFrame::isHovered() {

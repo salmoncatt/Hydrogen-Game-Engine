@@ -6,7 +6,7 @@ namespace HFR {
 
 	Window* Engine::window = nullptr;
 	std::vector<GuiFrame*> Engine::guiFrames = std::vector<GuiFrame*>();
-	FT_Library Engine::freeTypeReference = nullptr;
+	std::vector<Font*> Engine::fonts = std::vector<Font*>();
 
 	void Engine::startEngine() {
 		Debug::waterMark();
@@ -66,8 +66,6 @@ namespace HFR {
 		FreeType::init();
 		Debug::newLine();
 
-		//FT_Done_FreeType
-
 		Debug::systemLog("Loading Scripts");
 		ScriptManager::init();
 		Debug::systemSuccess("Scripts were loaded");
@@ -109,6 +107,20 @@ namespace HFR {
 		Debug::systemSuccess("Closed Utilities");
 		Debug::newLine();
 
+		Debug::systemLog("Deleting Gui Items");
+		int amount = 0;
+		for (int i = 0; i < guiFrames.size(); i++) {
+			delete guiFrames[i];
+			amount += 1;
+		}
+		Debug::systemSuccess("Deleted " + std::to_string(amount) + " Gui Items");
+		Debug::newLine();
+
+		/*Debug::systemLog("Closing Utilities");
+		Util::deleteVBOs();
+		Debug::systemSuccess("Closed Utilities");
+		Debug::newLine();*/
+
 		Debug::systemLog("Deleting Scripts");
 		ScriptManager::close();
 		Debug::systemSuccess("Scripts were deleted");
@@ -132,6 +144,12 @@ namespace HFR {
 		for (size_t i = 0; i < guiFrames.size(); ++i) {
 			if (frame == guiFrames[i]->name)
 				guiFrames.erase(guiFrames.begin() + i, guiFrames.begin() + i + 1);
+		}
+	}
+
+	void Engine::registerFont(Font* font) {
+		if (std::find(fonts.begin(), fonts.end(), font) == fonts.end()) {
+			fonts.push_back(font);
 		}
 	}
 

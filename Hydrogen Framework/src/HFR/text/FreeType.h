@@ -14,7 +14,6 @@ namespace HFR {
 		static void close();
 
 		static FT_Face loadFace(const std::string& path);
-		static FT_Face loadFace(FT_Face& face);
 
 	};
 

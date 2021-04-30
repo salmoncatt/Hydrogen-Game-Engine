@@ -16,11 +16,11 @@ namespace HFR {
 		transform = _transform;
 		mesh = Mesh();
 		
-		//font = Font(_font);
+		font = Font(_font);
 
 		//prevent logging about making the font again
 		font.logStatus = false;
-		//font.create();
+		font.create();
 		font.logStatus = true;
 	}
 
