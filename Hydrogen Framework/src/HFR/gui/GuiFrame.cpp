@@ -15,7 +15,7 @@ namespace HFR {
 		sizeType = HFR_PIXEL_SIZE;
 		borderSize = 5;
 		
-		//Engine::registerGuiFrame(&this);
+		Engine::registerGuiFrame(this);
 	}
 
 	GuiFrame::~GuiFrame() {
