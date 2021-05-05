@@ -116,10 +116,17 @@ namespace HFR {
 		Debug::systemSuccess("Deleted " + std::to_string(amount) + " Gui Items");
 		Debug::newLine();
 
-		/*Debug::systemLog("Closing Utilities");
-		Util::deleteVBOs();
-		Debug::systemSuccess("Closed Utilities");
-		Debug::newLine();*/
+		Debug::systemLog("Deleting Fonts");
+		amount = 0;
+		for (int i = 0; i < fonts.size(); i++) {
+			if (fonts[i] != nullptr) {
+				FT_Done_Face(fonts[i]->face);
+				delete fonts[i];
+			}
+			amount += 1;
+		}
+		Debug::systemSuccess("Deleted " + std::to_string(amount) + " Fonts");
+		Debug::newLine();
 
 		Debug::systemLog("Deleting Scripts");
 		ScriptManager::close();

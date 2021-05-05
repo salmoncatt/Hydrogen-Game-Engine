@@ -14,12 +14,15 @@ namespace HFR {
 	Font::Font(const std::string& _path) {
 		face = FreeType::loadFace(_path);
 		path = _path;
+		name = Util::removePathFromFilePathAndName(path);
 		size = Vec2i(0, 48);
 		atlasSize = Vec2i();
+
+		Engine::registerFont(this);
 	}
 
 	Font::~Font() {
-		FT_Done_Face(face);
+         
 	}
 
 	void Font::create() {
@@ -39,7 +42,7 @@ namespace HFR {
 				std::string character;
 				character = (char)(i);
 
-				std::string error = ("Loading character " + character + " has failed in font: " + Util::removePathFromFilePathAndName(path));
+				std::string error = ("Loading character " + character + " has failed in font: " + name);
 				Debug::systemErr(error);
 				
 				continue;

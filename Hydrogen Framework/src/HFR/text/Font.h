@@ -24,6 +24,7 @@ namespace HFR {
 		Character characters[128];
 		//std::map<unsigned char, Character> characters;
 		std::string path;
+		std::string name;
 
 		Font();
 		Font(const std::string& path);
