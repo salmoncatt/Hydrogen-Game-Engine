@@ -1,12 +1,15 @@
 #include "hfpch.h"
 #include "HFR/text/FreeType.h"
 #include "HFR/gui/GuiText.h"
+#include "HFR/text/Face.h"
+
 
 namespace HFR {
 
 	Window* Engine::window = nullptr;
 	std::vector<GuiFrame*> Engine::guiFrames = std::vector<GuiFrame*>();
-	std::vector<FT_Face> Engine::fonts = std::vector<FT_Face>();
+	std::vector<std::string> Engine::faceNames = std::vector<std::string>();
+	std::map<std::string, Face*> Engine::faces = {};
 
 	void Engine::startEngine() {
 		Debug::waterMark();
@@ -118,13 +121,12 @@ namespace HFR {
 
 		Debug::systemLog("Deleting Fonts");
 		amount = 0;
-		/*for (int i = 0; i < fonts.size(); i++) {
-			if (fonts[i] != nullptr) {
-				FT_Done_Face(fonts[i]->face);
-				delete fonts[i];
+		for (int i = 0; i < faceNames.size(); i++) {
+			if (faces[faceNames[i]] != nullptr) {
+				delete faces[faceNames[i]];
 			}
 			amount += 1;
-		}*/
+		}
 		Debug::systemSuccess("Deleted " + std::to_string(amount) + " Fonts");
 		Debug::newLine();
 
@@ -154,10 +156,27 @@ namespace HFR {
 		}
 	}
 
-	void Engine::loadFace(const std::string& path) {
-		/*if (std::find(fonts.begin(), fonts.end(), font) == fonts.end()) {
-			fonts.push_back(font);
-		}*/
+	Face* Engine::loadFace(const std::string& path) {
+		std::string name = Util::removePathFromFilePathAndName(path);
+
+		if (std::find(faceNames.begin(), faceNames.end(), name) == faceNames.end()) {
+			Face* face = new Face();
+			face->path = path;
+			face->name = name;
+			face->freeTypeFace = FreeType::loadFace(path);
+
+			if (face->freeTypeFace != nullptr) {
+				faceNames.push_back(name);
+				faces[name] = face;
+			}
+			else
+				return nullptr;
+
+			return face;
+		}
+
+		Debug::systemLog("Font: " + name + " has already been loaded.");
+		return faces[name];
 	}
 
 }

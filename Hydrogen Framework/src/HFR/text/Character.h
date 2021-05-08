@@ -8,10 +8,10 @@
 namespace HFR {
 
 	struct DLL_API Character {
-		Vec2i size; //size
-		Vec2i textureOffset; //offset in texture coordinates for a glyph
-		Vec2i advance; //amount to offset glyph in rendering
-		Vec2i bitmapLeftTop; //the top and left of the bitmap
+		Vec2f size; //size
+		Vec2f textureOffset; //offset in texture coordinates for a glyph
+		Vec2f advance; //amount to offset glyph in rendering
+		Vec2f bitmapLeftTop; //the top and left of the bitmap
 
 	};
 

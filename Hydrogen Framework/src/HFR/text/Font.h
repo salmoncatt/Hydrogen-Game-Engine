@@ -9,6 +9,8 @@
 
 namespace HFR {
 
+	class Face;
+
 	class DLL_API Font {
 	public:
 		Vec2i size;
@@ -26,11 +28,10 @@ namespace HFR {
 		std::string name;
 
 		Font();
-		Font(const std::string& path);
 		~Font();
 
-		void create();
-		void loadFont(const std::string& path);
+		//use a HGE face here not Freetype face, the freetype face is contained within the HGE face
+		void create(Face* face);
 
 	};
 

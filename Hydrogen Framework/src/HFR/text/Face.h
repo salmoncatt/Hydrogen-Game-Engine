@@ -7,11 +7,15 @@
 
 namespace HFR {
 
-	struct DLL_API Face {
+	class DLL_API Face {
 	public:
 		std::string name;
 		std::string path;
-		FT_Face freeTypeFace;
+		FT_Face freeTypeFace = nullptr;
+
+		Face();
+		~Face();
+
 	};
 
 

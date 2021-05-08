@@ -2,6 +2,7 @@
 #include "Font.h"
 #include HFR_FREETYPE
 #include HFR_UTIL
+#include "Face.h"
 
 namespace HFR {
 
@@ -14,10 +15,10 @@ namespace HFR {
          
 	}
 
-	void Font::create() {
-		FT_Set_Pixel_Sizes(face, size.x, size.y);
+	void Font::create(Face* face) {
+		FT_Set_Pixel_Sizes(face->freeTypeFace, size.x, size.y);
 
-		FT_GlyphSlot glyph = face->glyph;
+		FT_GlyphSlot glyph = face->freeTypeFace->glyph;
 
 		unsigned int width = 0;
 		unsigned int height = 0;
@@ -27,7 +28,7 @@ namespace HFR {
 
 		for (int i = 32; i < 128; ++i) {
 			//super sophisticated error checking algorithm
-			if (FT_Load_Char(face, i, FT_LOAD_RENDER)) {
+			if (FT_Load_Char(face->freeTypeFace, i, FT_LOAD_RENDER)) {
 				std::string character;
 				character = (char)(i);
 
@@ -71,7 +72,7 @@ namespace HFR {
 
 		for (int i = 32; i < 128; ++i) {
 			//super sophisticated error checking algorithm
-			if (FT_Load_Char(face, i, FT_LOAD_RENDER)) {
+			if (FT_Load_Char(face->freeTypeFace, i, FT_LOAD_RENDER)) {
 				std::string character;
 				character = (char)(i);
 
@@ -89,10 +90,10 @@ namespace HFR {
 			
 			glTexSubImage2D(GL_TEXTURE_2D, 0, offset.x, offset.y, glyph->bitmap.width, glyph->bitmap.rows, GL_RED, GL_UNSIGNED_BYTE, glyph->bitmap.buffer);
 
-			characters[i].advance = Vec2i(glyph->advance.x >> 6, glyph->advance.y >> 6);
-			characters[i].bitmapLeftTop = Vec2i(glyph->bitmap_left, glyph->bitmap_top);
-			characters[i].size = Vec2i(glyph->bitmap.width, glyph->bitmap.rows);
-			characters[i].textureOffset = Vec2i(offset.x / width, offset.y / height);
+			characters[i].advance = Vec2f((float)(glyph->advance.x >> 6), (float)(glyph->advance.y >> 6));
+			characters[i].bitmapLeftTop = Vec2f((float)glyph->bitmap_left, (float)glyph->bitmap_top);
+			characters[i].size = Vec2f((float)glyph->bitmap.width, (float)glyph->bitmap.rows);
+			characters[i].textureOffset = Vec2f((float)(offset.x / width), (float)(offset.y / height));
 
 		}
 
@@ -100,14 +101,6 @@ namespace HFR {
 			Debug::systemSuccess("Loaded font: " + Util::removePathFromFilePathAndName(path), DebugColor::Blue);
 			Debug::systemSuccess(Util::removePathFromFilePathAndName(path) + " atlas size is " + std::to_string(width) + " x " + std::to_string(height) + " pixels and is " + std::to_string(width * height / 1024) + " kb", DebugColor::Blue);
 		}
-	}
-
-	void Font::loadFont(const std::string& _path) {
-		if(face != nullptr)
-			FT_Done_Face(face);
-
-		face = FreeType::loadFace(_path);
-		path = _path;
 	}
 
 }
