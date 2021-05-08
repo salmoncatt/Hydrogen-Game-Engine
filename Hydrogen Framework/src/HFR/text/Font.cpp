@@ -6,19 +6,8 @@
 namespace HFR {
 
 	Font::Font() {
-		face = nullptr;
 		size = Vec2i(0, 48);
 		atlasSize = Vec2i();
-	}
-
-	Font::Font(const std::string& _path) {
-		face = FreeType::loadFace(_path);
-		path = _path;
-		name = Util::removePathFromFilePathAndName(path);
-		size = Vec2i(0, 48);
-		atlasSize = Vec2i();
-
-		Engine::registerFont(this);
 	}
 
 	Font::~Font() {

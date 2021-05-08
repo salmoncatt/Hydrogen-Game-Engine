@@ -6,7 +6,7 @@ namespace HFR {
 
 	Window* Engine::window = nullptr;
 	std::vector<GuiFrame*> Engine::guiFrames = std::vector<GuiFrame*>();
-	std::vector<Font*> Engine::fonts = std::vector<Font*>();
+	std::vector<FT_Face> Engine::fonts = std::vector<FT_Face>();
 
 	void Engine::startEngine() {
 		Debug::waterMark();
@@ -118,13 +118,13 @@ namespace HFR {
 
 		Debug::systemLog("Deleting Fonts");
 		amount = 0;
-		for (int i = 0; i < fonts.size(); i++) {
+		/*for (int i = 0; i < fonts.size(); i++) {
 			if (fonts[i] != nullptr) {
 				FT_Done_Face(fonts[i]->face);
 				delete fonts[i];
 			}
 			amount += 1;
-		}
+		}*/
 		Debug::systemSuccess("Deleted " + std::to_string(amount) + " Fonts");
 		Debug::newLine();
 
@@ -154,10 +154,10 @@ namespace HFR {
 		}
 	}
 
-	void Engine::registerFont(Font* font) {
-		if (std::find(fonts.begin(), fonts.end(), font) == fonts.end()) {
+	void Engine::loadFace(const std::string& path) {
+		/*if (std::find(fonts.begin(), fonts.end(), font) == fonts.end()) {
 			fonts.push_back(font);
-		}
+		}*/
 	}
 
 }

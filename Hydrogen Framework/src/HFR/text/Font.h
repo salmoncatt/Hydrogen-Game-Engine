@@ -11,7 +11,6 @@ namespace HFR {
 
 	class DLL_API Font {
 	public:
-		FT_Face face;
 		Vec2i size;
 		Vec2i atlasSize;
 

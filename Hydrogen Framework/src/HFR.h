@@ -56,6 +56,7 @@
 
 #include "HFR/text/FreeType.h"
 #include "HFR/text/Character.h"
+#include "HFR/text/Face.h"
 #include "HFR/text/Font.h"
 
 #include "HFR/time/Profiler.h"

@@ -12,7 +12,7 @@ namespace HFR {
 	class DLL_API Engine {
 	public:
 		static std::vector<GuiFrame*> guiFrames;
-		static std::vector<Font*> fonts;
+		static std::vector<FT_Face> fonts;
 		static Window* window;
 
 		static void startEngine();
@@ -25,7 +25,7 @@ namespace HFR {
 		static void removeGuiFrame(const std::string& frame);
 
 		//font stuff
-		static void registerFont(Font* font);
+		static void loadFace(const std::string& path);
 
 	};
 
