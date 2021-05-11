@@ -15,10 +15,10 @@ namespace HFR {
          
 	}
 
-	void Font::create(Face* face) {
-		FT_Set_Pixel_Sizes(face->freeTypeFace, size.x, size.y);
+	void Font::create(const Face& face) {
+		FT_Set_Pixel_Sizes(face.freeTypeFace, size.x, size.y);
 
-		FT_GlyphSlot glyph = face->freeTypeFace->glyph;
+		FT_GlyphSlot glyph = face.freeTypeFace->glyph;
 
 		unsigned int width = 0;
 		unsigned int height = 0;
@@ -26,9 +26,12 @@ namespace HFR {
 		unsigned int rowWidth = 0;
 		unsigned int rowHeight = 0;
 
+		path = face.path;
+		name = face.name;
+
 		for (int i = 32; i < 128; ++i) {
 			//super sophisticated error checking algorithm
-			if (FT_Load_Char(face->freeTypeFace, i, FT_LOAD_RENDER)) {
+			if (FT_Load_Char(face.freeTypeFace, i, FT_LOAD_RENDER)) {
 				std::string character;
 				character = (char)(i);
 
@@ -72,7 +75,7 @@ namespace HFR {
 
 		for (int i = 32; i < 128; ++i) {
 			//super sophisticated error checking algorithm
-			if (FT_Load_Char(face->freeTypeFace, i, FT_LOAD_RENDER)) {
+			if (FT_Load_Char(face.freeTypeFace, i, FT_LOAD_RENDER)) {
 				std::string character;
 				character = (char)(i);
 

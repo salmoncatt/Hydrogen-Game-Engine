@@ -31,7 +31,7 @@ namespace HFR {
 		~Font();
 
 		//use a HGE face here not Freetype face, the freetype face is contained within the HGE face
-		void create(Face* face);
+		void create(const Face& face);
 
 	};
 

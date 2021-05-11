@@ -8,7 +8,8 @@ namespace HFR {
 	}
 
 	Face::~Face() {
-		FT_Done_Face(freeTypeFace);
+		freeTypeFace = nullptr;
+		//FT_Done_Face(freeTypeFace);
 	}
 
 }

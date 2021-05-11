@@ -8,8 +8,8 @@ namespace HFR {
 
 	Window* Engine::window = nullptr;
 	std::vector<GuiFrame*> Engine::guiFrames = std::vector<GuiFrame*>();
+	std::vector<FT_Face> Engine::faces = std::vector<FT_Face>();
 	std::vector<std::string> Engine::faceNames = std::vector<std::string>();
-	std::map<std::string, Face*> Engine::faces = {};
 
 	void Engine::startEngine() {
 		Debug::waterMark();
@@ -121,9 +121,9 @@ namespace HFR {
 
 		Debug::systemLog("Deleting Fonts");
 		amount = 0;
-		for (int i = 0; i < faceNames.size(); i++) {
-			if (faces[faceNames[i]] != nullptr) {
-				delete faces[faceNames[i]];
+		for (int i = 0; i < faces.size(); i++) {
+			if (faces[i] != nullptr) {
+				FT_Done_Face(faces[i]);
 			}
 			amount += 1;
 		}
@@ -156,27 +156,28 @@ namespace HFR {
 		}
 	}
 
-	Face* Engine::loadFace(const std::string& path) {
+	Face Engine::loadFace(const std::string& path) {
 		std::string name = Util::removePathFromFilePathAndName(path);
 
 		if (std::find(faceNames.begin(), faceNames.end(), name) == faceNames.end()) {
-			Face* face = new Face();
-			face->path = path;
-			face->name = name;
-			face->freeTypeFace = FreeType::loadFace(path);
+			Face face = Face();
+			face.path = path;
+			face.name = name;
+			face.freeTypeFace = FreeType::loadFace(path);
 
-			if (face->freeTypeFace != nullptr) {
-				faceNames.push_back(name);
-				faces[name] = face;
+			if (face.freeTypeFace != nullptr) {
+				faceNames.push_back(name); 
+				faces.push_back(face.freeTypeFace);
+				return face;
 			}
-			else
-				return nullptr;
-
-			return face;
+			else {
+				Debug::systemErr("Font: " + name + " has failed to load.");
+				return Face();
+			}
 		}
 
-		Debug::systemLog("Font: " + name + " has already been loaded.");
-		return faces[name];
+		Debug::systemErr("Font: " + name + " has already been loaded, returning blank Face.");
+		return Face();
 	}
 
 }

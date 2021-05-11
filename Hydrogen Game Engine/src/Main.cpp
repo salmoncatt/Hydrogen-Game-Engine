@@ -61,9 +61,9 @@ public:
 		peter.addComponent<NativeScript>().addScript("testScript");
 
 
-		Face* oxygenFace = Engine::loadFace(HFR_RES + "fonts/oxygen/Oxygen-Regular.ttf");
+		Face oxygenFace = Engine::loadFace(HFR_RES + "fonts/oxygen/Oxygen-Regular.ttf");
 		Font* oxygen = new Font();
-		oxygen->create(oxygenFace);
+		//oxygen->create(oxygenFace);
 
 		//GuiText text = GuiText("haha poop", oxygen, Transform2D(Vec2f(100, 100), Vec2f(0), Vec2f(1, 1)));
 		//text.create();
