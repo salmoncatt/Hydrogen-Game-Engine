@@ -62,11 +62,11 @@ public:
 
 
 		Face oxygenFace = Engine::loadFace(HFR_RES + "fonts/oxygen/Oxygen-Regular.ttf");
-		Font* oxygen = new Font();
-		//oxygen->create(oxygenFace);
+		Font oxygen = Font();
+		oxygen.create(oxygenFace);
 
-		//GuiText text = GuiText("haha poop", oxygen, Transform2D(Vec2f(100, 100), Vec2f(0), Vec2f(1, 1)));
-		//text.create();
+		GuiText text = GuiText("haha poop", oxygen, Transform2D(Vec2f(100, 100), Vec2f(0), Vec2f(1, 1)));
+		text.create();
 
 		while (shouldUpdate() && !Input::getKey(HFR_KEY_ESCAPE)) {
 			ProfileMethod("Main loop");

@@ -8,7 +8,7 @@ namespace HFR {
 
 	Window* Engine::window = nullptr;
 	std::vector<GuiFrame*> Engine::guiFrames = std::vector<GuiFrame*>();
-	std::vector<FT_Face> Engine::faces = std::vector<FT_Face>();
+	std::vector<FT_Face*> Engine::faces = std::vector<FT_Face*>();
 	std::vector<std::string> Engine::faceNames = std::vector<std::string>();
 
 	void Engine::startEngine() {
@@ -123,7 +123,7 @@ namespace HFR {
 		amount = 0;
 		for (int i = 0; i < faces.size(); i++) {
 			if (faces[i] != nullptr) {
-				FT_Done_Face(faces[i]);
+				FT_Done_Face(*faces[i]);
 			}
 			amount += 1;
 		}
@@ -167,7 +167,7 @@ namespace HFR {
 
 			if (face.freeTypeFace != nullptr) {
 				faceNames.push_back(name); 
-				faces.push_back(face.freeTypeFace);
+				faces.push_back(&face.freeTypeFace);
 				return face;
 			}
 			else {

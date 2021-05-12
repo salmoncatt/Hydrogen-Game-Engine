@@ -16,7 +16,7 @@ namespace HFR {
 	class DLL_API Engine {
 	public:
 		static std::vector<GuiFrame*> guiFrames;
-		static std::vector<FT_Face> faces;
+		static std::vector<FT_Face*> faces;
 		static std::vector<std::string> faceNames;
 		//static std::map<std::string, Face*> faces;
 		static Window* window;
