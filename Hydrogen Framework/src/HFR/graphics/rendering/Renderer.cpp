@@ -476,62 +476,6 @@ namespace HFR {
 		}
 	}
 
-
-	//void Renderer::render(const Font& font, const char* text, const Vec2f& position, const Vec2f& scale, const Vec4f& color) {
-
-	//	size_t length = std::strlen(text);
-
-	//	if (length != 0) {
-	//		disableDepthTest();
-	//		enableAlphaBlending();
-
-	//		textShader.bind();
-
-	//		if (font.texture.image.hasData())
-	//			glBindTexture(GL_TEXTURE_2D, font.texture.textureID);
-	//		else
-	//			glBindTexture(GL_TEXTURE_2D, nullTexture.textureID);
-
-
-	//		Vec4f* coordinates = new Vec4f[6 * length];
-
-	//		Vec2f cursorPosition = Vec2f(position.x, position.y);
-
-	//		coordinates[0] = Vec4f(-0.5f, 0.5f, 0, 1);
-	//		coordinates[1] = Vec4f(-0.5f, -0.5f, 0, 0);
-	//		coordinates[2] = Vec4f(0.5f, -0.5f, 1, 0);
-	//		coordinates[3] = Vec4f(0.5f, -0.5f, 1, 0);
-	//		coordinates[4] = Vec4f(0.5f, 0.5f, 1, 1);
-	//		coordinates[5] = Vec4f(-0.5f, 0.5f, 0, 1);
-
-	//		glBindVertexArray(GuiText::staticVAO);
-	//		glBindBuffer(GL_ARRAY_BUFFER, GuiText::staticVBO); 
-	//		
-	//		glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(float), &coordinates[0], GL_STATIC_DRAW);
-	//		glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
-	//		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
-
-	//		glEnableVertexAttribArray(0);
-	//		glEnableVertexAttribArray(1);
-
-	//		//draw
-	//		textShader.setUniform("color", color);
-	//		glDrawArrays(GL_TRIANGLES, 0, vertexCount);
-
-
-	//		delete[] coordinates;
-
-	//		glDisableVertexAttribArray(0);
-	//		glDisableVertexAttribArray(1);
-	//		glBindVertexArray(0);
-
-	//		textShader.unbind();
-
-	//		disableAlphaBlending();
-	//		enableDepthTest();
-	//	}
-	//}
-
 	void Renderer::render(const GuiText& text) {
 		disableDepthTest();
 		enableAlphaBlending();
@@ -554,6 +498,8 @@ namespace HFR {
 
 		if (!text.mesh.vertices.empty())
 			glDrawArrays(GL_TRIANGLES, 0, (int)text.mesh.vertices.size() / text.mesh.type);
+	/*	else
+			Debug::log("aweg");*/
 
 		
 		glDisableVertexAttribArray(0);

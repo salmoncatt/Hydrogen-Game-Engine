@@ -24,9 +24,12 @@ namespace HFR {
 	FT_Face FreeType::loadFace(const std::string& path) {
 		FT_Face out = nullptr;
 
-		if (FT_New_Face(ftLibrary, path.c_str(), 0, &out)) {
+		FT_Error error = FT_New_Face(ftLibrary, path.c_str(), 0, &out);
+
+		if (error == FT_Err_Unknown_File_Format)
+			Debug::systemErr("Unkown font format at: " + path);
+		else if(error)
 			Debug::systemErr("Couldn't load font: " + path);
-		}
 
 		return out;
 	}

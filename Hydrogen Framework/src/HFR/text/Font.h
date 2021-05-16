@@ -28,10 +28,10 @@ namespace HFR {
 		std::string name;
 
 		Font();
+		Font(const std::string& path);
 		~Font();
 
-		//use a HGE face here not Freetype face, the freetype face is contained within the HGE face
-		void create(const Face& face);
+		void create();
 
 	};
 

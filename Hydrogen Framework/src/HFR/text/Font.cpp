@@ -2,7 +2,6 @@
 #include "Font.h"
 #include HFR_FREETYPE
 #include HFR_UTIL
-#include "Face.h"
 
 namespace HFR {
 
@@ -11,14 +10,23 @@ namespace HFR {
 		atlasSize = Vec2i();
 	}
 
+	Font::Font(const std::string& _path) {
+		size = Vec2i(0, 48);
+		atlasSize = Vec2i();
+		path = _path;
+		name = Util::removePathFromFilePathAndName(_path);
+	}
+
 	Font::~Font() {
          
 	}
 
-	void Font::create(const Face& face) {
-		FT_Set_Pixel_Sizes(face.freeTypeFace, size.x, size.y);
+	void Font::create() {
+		FT_Face face = FreeType::loadFace(path);
 
-		FT_GlyphSlot glyph = face.freeTypeFace->glyph;
+		FT_Set_Pixel_Sizes(face, size.x, size.y);
+
+		FT_GlyphSlot glyph = face->glyph;
 
 		unsigned int width = 0;
 		unsigned int height = 0;
@@ -26,12 +34,9 @@ namespace HFR {
 		unsigned int rowWidth = 0;
 		unsigned int rowHeight = 0;
 
-		path = face.path;
-		name = face.name;
-
 		for (int i = 32; i < 128; ++i) {
 			//super sophisticated error checking algorithm
-			if (FT_Load_Char(face.freeTypeFace, i, FT_LOAD_RENDER)) {
+			if (FT_Load_Char(face, i, FT_LOAD_RENDER)) {
 				std::string character;
 				character = (char)(i);
 
@@ -75,7 +80,7 @@ namespace HFR {
 
 		for (int i = 32; i < 128; ++i) {
 			//super sophisticated error checking algorithm
-			if (FT_Load_Char(face.freeTypeFace, i, FT_LOAD_RENDER)) {
+			if (FT_Load_Char(face, i, FT_LOAD_RENDER)) {
 				std::string character;
 				character = (char)(i);
 
@@ -104,6 +109,9 @@ namespace HFR {
 			Debug::systemSuccess("Loaded font: " + Util::removePathFromFilePathAndName(path), DebugColor::Blue);
 			Debug::systemSuccess(Util::removePathFromFilePathAndName(path) + " atlas size is " + std::to_string(width) + " x " + std::to_string(height) + " pixels and is " + std::to_string(width * height / 1024) + " kb", DebugColor::Blue);
 		}
+
+		FT_Done_Face(face);
+
 	}
 
 }
