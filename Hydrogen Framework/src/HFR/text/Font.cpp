@@ -22,9 +22,24 @@ namespace HFR {
 	}
 
 	void Font::create() {
-		FT_Face face = FreeType::loadFace(path);
 
-		FT_Set_Pixel_Sizes(face, size.x, size.y);
+		//FT_Face face = FreeType::loadFace(path);
+
+		FT_Library ft;
+		if (FT_Init_FreeType(&ft))
+		{
+			std::cout << "ERROR::FREETYPE: Could not init FreeType Library" << std::endl;
+			//return -1;
+		}
+
+		FT_Face face;
+		if (FT_New_Face(ft, (HFR_RES + "fonts/oxygen/Oxygen-Regular.ttf").c_str(), 0, &face))
+		{
+			std::cout << "ERROR::FREETYPE: Failed to load font" << std::endl;
+			//return -1;
+		}
+
+		FT_Set_Pixel_Sizes(face, 0, 48);
 
 		FT_GlyphSlot glyph = face->glyph;
 
@@ -111,6 +126,7 @@ namespace HFR {
 		//}
 
 		FT_Done_Face(face);
+		FT_Done_FreeType(ft);
 
 	}
 
