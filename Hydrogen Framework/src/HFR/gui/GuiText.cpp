@@ -16,7 +16,7 @@ namespace HFR {
 		transform = _transform;
 		mesh = Mesh();
 		
-		//font = Font(_font);
+		font = _font;
 
 		//prevent logging about making the font again
 		/*font.logStatus = false;
@@ -37,9 +37,12 @@ namespace HFR {
 			Vec2f cursorPosition = Vec2f(transform.position.x, transform.position.y);
 
 			for (character = (const unsigned char*)text.c_str(); *character; character++) {
+
 				//calculate vertex position and texture coords
 				Vec2f characterPosition = Vec2f(cursorPosition.x + font.characters[*character].bitmapLeftTop.x * transform.scale.x,
 					-cursorPosition.y - font.characters[*character].bitmapLeftTop.y * transform.scale.y);
+
+				Debug::log((float)*character);
 
 				Vec2f size = Vec2f(font.characters[*character].size.x * transform.scale.x,
 					font.characters[*character].size.y * transform.scale.y);
