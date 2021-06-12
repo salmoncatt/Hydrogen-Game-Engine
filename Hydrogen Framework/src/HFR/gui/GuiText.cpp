@@ -42,8 +42,6 @@ namespace HFR {
 				Vec2f characterPosition = Vec2f(cursorPosition.x + font.characters[*character].bitmapLeftTop.x * transform.scale.x,
 					-cursorPosition.y - font.characters[*character].bitmapLeftTop.y * transform.scale.y);
 
-				Debug::log((float)*character);
-
 				Vec2f size = Vec2f(font.characters[*character].size.x * transform.scale.x,
 					font.characters[*character].size.y * transform.scale.y);
 
@@ -54,9 +52,9 @@ namespace HFR {
 				if (!size.x || !size.y)
 					continue;
 
-				vertices.push_back(characterPosition.x); vertices.push_back(-characterPosition.y);
+				/*vertices.push_back(characterPosition.x); vertices.push_back(-characterPosition.y);
 				vertices.push_back(characterPosition.x + size.x); vertices.push_back(-characterPosition.y);
-				vertices.push_back(characterPosition.x); vertices.push_back(-characterPosition.y - size.y);
+				vertices.push_back(characterPosition.x); vertices.push_back(-characterPosition.y - size.y);*/
 
 				vertices.push_back(characterPosition.x + size.x); vertices.push_back(-characterPosition.y);
 				vertices.push_back(characterPosition.x); vertices.push_back(-characterPosition.y - size.y);
