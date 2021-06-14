@@ -477,8 +477,8 @@ namespace HFR {
 	}
 
 	void Renderer::render(const GuiText& text) {
-		disableDepthTest();
-		enableAlphaBlending();
+		//disableDepthTest();
+		//enableAlphaBlending();
 
 		glBindVertexArray(text.mesh.VAO);
 		glEnableVertexAttribArray(0);
@@ -508,8 +508,8 @@ namespace HFR {
 
 		textShader.unbind();
 
-		disableAlphaBlending();
-		enableDepthTest();
+		//disableAlphaBlending();
+		//enableDepthTest();
 	}
 
 }

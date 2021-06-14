@@ -28,14 +28,16 @@ namespace HFR {
 		size_t length = std::strlen(text.c_str());
 
 		if (length > 0) {
+
 			std::vector<float> vertices = std::vector<float>();
 			std::vector<float> texturecoords = std::vector<float>();
-
 
 			int vertexCount = 0;
 			const unsigned char* character;
 			Vec2f cursorPosition = Vec2f(transform.position.x, transform.position.y);
 
+			
+			
 			for (character = (const unsigned char*)text.c_str(); *character; character++) {
 
 				//calculate vertex position and texture coords
@@ -52,23 +54,22 @@ namespace HFR {
 				if (!size.x || !size.y)
 					continue;
 
-				/*vertices.push_back(characterPosition.x); vertices.push_back(-characterPosition.y);
-				vertices.push_back(characterPosition.x + size.x); vertices.push_back(-characterPosition.y);
-				vertices.push_back(characterPosition.x); vertices.push_back(-characterPosition.y - size.y);*/
-
+				vertices.push_back(characterPosition.x); vertices.push_back(-characterPosition.y);
 				vertices.push_back(characterPosition.x + size.x); vertices.push_back(-characterPosition.y);
 				vertices.push_back(characterPosition.x); vertices.push_back(-characterPosition.y - size.y);
+
+				vertices.push_back(characterPosition.x + size.x); vertices.push_back(-characterPosition.y);
 				vertices.push_back(characterPosition.x + size.x); vertices.push_back(-characterPosition.y - size.y);
+				vertices.push_back(characterPosition.x); vertices.push_back(-characterPosition.y - size.y);
 
 
-
-				texturecoords.push_back(font.characters[*character].textureOffset.x); vertices.push_back(font.characters[*character].textureOffset.y);
-				texturecoords.push_back(font.characters[*character].textureOffset.x + font.characters[*character].size.x / font.atlasSize.x); vertices.push_back(font.characters[*character].textureOffset.y);
-				texturecoords.push_back(font.characters[*character].textureOffset.x); vertices.push_back(font.characters[*character].textureOffset.y + font.characters[*character].size.x / font.atlasSize.y);
+				texturecoords.push_back(font.characters[*character].textureOffset.x); texturecoords.push_back(font.characters[*character].textureOffset.y);
+				texturecoords.push_back(font.characters[*character].textureOffset.x + font.characters[*character].size.x / font.atlasSize.x); texturecoords.push_back(font.characters[*character].textureOffset.y);
+				texturecoords.push_back(font.characters[*character].textureOffset.x); texturecoords.push_back(font.characters[*character].textureOffset.y + font.characters[*character].size.x / font.atlasSize.y);
 				
-				texturecoords.push_back(font.characters[*character].textureOffset.x + font.characters[*character].size.x / font.atlasSize.x); vertices.push_back(font.characters[*character].textureOffset.y);
-				texturecoords.push_back(font.characters[*character].textureOffset.x); vertices.push_back(font.characters[*character].textureOffset.y + font.characters[*character].size.x / font.atlasSize.y);
-				texturecoords.push_back(font.characters[*character].textureOffset.x + font.characters[*character].size.x / font.atlasSize.x); vertices.push_back(font.characters[*character].textureOffset.y + font.characters[*character].size.x / font.atlasSize.y);
+				texturecoords.push_back(font.characters[*character].textureOffset.x + font.characters[*character].size.x / font.atlasSize.x); texturecoords.push_back(font.characters[*character].textureOffset.y);
+				texturecoords.push_back(font.characters[*character].textureOffset.x); texturecoords.push_back(font.characters[*character].textureOffset.y + font.characters[*character].size.x / font.atlasSize.y);
+				texturecoords.push_back(font.characters[*character].textureOffset.x + font.characters[*character].size.x / font.atlasSize.x); texturecoords.push_back(font.characters[*character].textureOffset.y + font.characters[*character].size.x / font.atlasSize.y);
 			}
 
 		/*	vertices = { -0.5f, 0.5f,
@@ -80,6 +81,7 @@ namespace HFR {
 
 
 			mesh = Mesh(vertices, std::vector<unsigned int>(), std::vector<float>(), texturecoords);
+			mesh.material.albedoTexture = font.texture;
 			mesh.type = HFR_2D;
 			mesh.create();
 		}

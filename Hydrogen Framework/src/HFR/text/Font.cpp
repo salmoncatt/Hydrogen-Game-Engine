@@ -24,18 +24,16 @@ namespace HFR {
 	void Font::create() {
 
 		FT_Face face = FreeType::loadFace(path);
-
 		FT_Set_Pixel_Sizes(face, 0, 48);
-
 		FT_GlyphSlot glyph = face->glyph;
 
-		unsigned int width = 0;
-		unsigned int height = 0;
+		float width = 0;
+		float height = 0;
 
-		unsigned int rowWidth = 0;
-		unsigned int rowHeight = 0;
+		float rowWidth = 0;
+		float rowHeight = 0;
 
-		for (int i = 32; i < 128; ++i) {
+		for (int i = 0; i < 128; ++i) {
 			//super sophisticated error checking algorithm
 			if (FT_Load_Char(face, i, FT_LOAD_RENDER)) {
 				std::string character;
@@ -68,18 +66,19 @@ namespace HFR {
 		texture = Texture(imageData);
 		texture.byteAlignment = 1;
 		texture.filterMode = Vec2i(GL_LINEAR);
-		texture.internalFormat = GL_RED;
-		texture.format = GL_RED;
+		texture.internalFormat = GL_ALPHA;
+		texture.format = GL_ALPHA;
 		texture.generateMipmap = false;
 
 		texture.create();
 
+		rowHeight = 0;
 
 		Vec2i offset = Vec2i();
 
 		//load glyphs into texture
 
-		for (int i = 32; i < 128; ++i) {
+		for (int i = 0; i < 128; ++i) {
 			//super sophisticated error checking algorithm
 			if (FT_Load_Char(face, i, FT_LOAD_RENDER)) {
 				std::string character;
@@ -97,13 +96,15 @@ namespace HFR {
 				offset.x = 0;
 			}
 			
-			glTexSubImage2D(GL_TEXTURE_2D, 0, offset.x, offset.y, glyph->bitmap.width, glyph->bitmap.rows, GL_RED, GL_UNSIGNED_BYTE, glyph->bitmap.buffer);
+			glTexSubImage2D(GL_TEXTURE_2D, 0, offset.x, offset.y, glyph->bitmap.width, glyph->bitmap.rows, GL_ALPHA, GL_UNSIGNED_BYTE, glyph->bitmap.buffer);
 
 			characters[i].advance = Vec2f((float)(glyph->advance.x >> 6), (float)(glyph->advance.y >> 6));
 			characters[i].bitmapLeftTop = Vec2f((float)glyph->bitmap_left, (float)glyph->bitmap_top);
 			characters[i].size = Vec2f((float)glyph->bitmap.width, (float)glyph->bitmap.rows);
 			characters[i].textureOffset = Vec2f((float)(offset.x / width), (float)(offset.y / height));
 
+			rowHeight = max(rowHeight, glyph->bitmap.rows);
+			offset.x += glyph->bitmap.width + 2;
 		}
 
 		if (logStatus) {

@@ -11,5 +11,5 @@ void main() {
 	
 	fragColor = texture(textureSampler, passedTextureCoords);
 	fragColor *= color;
-
+	//fragColor = vec4(1,1,1,1);
 }
