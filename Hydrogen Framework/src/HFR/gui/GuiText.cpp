@@ -55,13 +55,14 @@ namespace HFR {
 					continue;
 
 				vertices.push_back(characterPosition.x); vertices.push_back(-characterPosition.y);
-				vertices.push_back(characterPosition.x + size.x); vertices.push_back(-characterPosition.y);
 				vertices.push_back(characterPosition.x); vertices.push_back(-characterPosition.y - size.y);
+				vertices.push_back(characterPosition.x + size.x); vertices.push_back(-characterPosition.y);
 
 				vertices.push_back(characterPosition.x + size.x); vertices.push_back(-characterPosition.y);
+				vertices.push_back(characterPosition.x); vertices.push_back(-characterPosition.y - size.y);
 				vertices.push_back(characterPosition.x + size.x); vertices.push_back(-characterPosition.y - size.y);
-				vertices.push_back(characterPosition.x); vertices.push_back(-characterPosition.y - size.y);
 
+				//point
 
 				texturecoords.push_back(font.characters[*character].textureOffset.x); texturecoords.push_back(font.characters[*character].textureOffset.y);
 				texturecoords.push_back(font.characters[*character].textureOffset.x + font.characters[*character].size.x / font.atlasSize.x); texturecoords.push_back(font.characters[*character].textureOffset.y);
