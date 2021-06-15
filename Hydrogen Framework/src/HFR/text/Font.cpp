@@ -62,15 +62,33 @@ namespace HFR {
 
 		atlasSize = (width, height);
 
-		Image imageData = Image(width, height, 4, 0);
-		texture = Texture(imageData);
+		//Image imageData = Image(width, height, 1, 0);
+		texture = Texture();
 		texture.byteAlignment = 1;
 		texture.filterMode = Vec2i(GL_LINEAR);
 		texture.internalFormat = GL_ALPHA;
 		texture.format = GL_ALPHA;
 		texture.generateMipmap = false;
 
-		texture.create();
+		//texture.create();
+
+		glActiveTexture(GL_TEXTURE0);
+		glGenTextures(1, &texture.textureID);
+		glBindTexture(GL_TEXTURE_2D, texture.textureID);
+
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, width, height, 0, GL_ALPHA, GL_UNSIGNED_BYTE, 0);
+
+		/* We require 1 byte alignment when uploading texture data */
+		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+
+		/* Clamping to edges is important to prevent artifacts when scaling */
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+		/* Linear filtering usually looks best for text */
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
 
 		rowHeight = 0;
 
@@ -96,7 +114,9 @@ namespace HFR {
 				offset.x = 0;
 			}
 			
+			//glBindTexture(texture.textureType, texture.textureID);
 			glTexSubImage2D(GL_TEXTURE_2D, 0, offset.x, offset.y, glyph->bitmap.width, glyph->bitmap.rows, GL_ALPHA, GL_UNSIGNED_BYTE, glyph->bitmap.buffer);
+			//glBindTexture(texture.textureType, 0);
 
 			characters[i].advance = Vec2f((float)(glyph->advance.x >> 6), (float)(glyph->advance.y >> 6));
 			characters[i].bitmapLeftTop = Vec2f((float)glyph->bitmap_left, (float)glyph->bitmap_top);

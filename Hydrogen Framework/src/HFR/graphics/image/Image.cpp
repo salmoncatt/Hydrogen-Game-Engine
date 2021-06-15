@@ -6,19 +6,19 @@ namespace HFR {
 		width = 0;
 		height = 0;
 		channels = 0;
-		data = NULL;
+		data = nullptr;
 	}
 
 	Image::Image(const int& _width, const int& _height, const int& _channels, unsigned char* _data) {
-		if (_data != NULL) {
-			width = _width;
-			height = _height;
-			channels = _channels;
+		width = _width;
+		height = _height;
+		channels = _channels;
 
-			int allocation = width * height * channels;
-			data = new unsigned char[allocation];
+		int allocation = width * height * channels;
+		data = new unsigned char[allocation];
+
+		if (_data != nullptr)
 			std::memcpy(data, _data, allocation);
-		}
 	}
 
 	Image::Image(const Image& image) {
@@ -32,19 +32,20 @@ namespace HFR {
 	}
 
 	Image& Image::operator=(const Image& image) {
-		if (this != &image && image.data != nullptr) {
-			if(data != NULL)
-				delete[] data;
-			data = NULL;
+		if (data != nullptr)
+			delete[] data;
+		data = nullptr;
 
+		if (image.data != nullptr) {
 			int allocation = image.width * image.height * image.channels;
 			data = new unsigned char[allocation];
-			std::memcpy(data, image.data, allocation);
-
 			width = image.width;
 			height = image.height;
 			channels = image.channels;
 			filepath = image.filepath;
+
+			if (this != &image && image.data != nullptr)
+				std::memcpy(data, image.data, allocation);
 		}
 
 		return *this;
@@ -54,23 +55,23 @@ namespace HFR {
 		width = 0;
 		height = 0;
 		channels = 0;
-		data = NULL;
+		data = nullptr;
 		filepath = _filepath;
 
 		data = stbi_load(filepath.c_str(), &width, &height, &channels, STBI_rgb_alpha);
 		channels = STBI_rgb_alpha;
 		
-		if (data == NULL) {
+		if (data == nullptr) {
 			Debug::systemErr("Couldn't load image: " + filepath);
 		}
 	}
 
 	Image::~Image() {
-		if (data != NULL) {
+		if (data != nullptr) {
 			delete[] data;
 		}
 
-		data = NULL;
+		data = nullptr;
 	}
 
 	void Image::generatePixelData() {
@@ -94,7 +95,7 @@ namespace HFR {
 	}
 
 	bool Image::hasData() const{
-		return (data != NULL);
+		return (data != nullptr);
 	}
 
 }

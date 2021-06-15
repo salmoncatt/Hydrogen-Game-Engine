@@ -4,6 +4,7 @@ namespace HFR {
 
 	Texture::Texture() {
 		textureID = 0;
+		image = Image();
 	}
 
 	Texture::Texture(const Image& _image) {
@@ -39,7 +40,7 @@ namespace HFR {
 	void Texture::create() {
 		if (!isCreated) {
 
-			glActiveTexture(GL_TEXTURE0);
+			//glActiveTexture(GL_TEXTURE0);
 			glGenTextures(1, &textureID);
 			glBindTexture(textureType, textureID);
 
@@ -50,12 +51,17 @@ namespace HFR {
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, wrapMode.x);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wrapMode.y);
 
-			glTexImage2D(textureType, 0, internalFormat, image.width, image.height, 0, format, dataType, image.data);
+			if (image.data != nullptr)
+				glTexImage2D(textureType, 0, internalFormat, image.width, image.height, 0, format, dataType, image.data);
+			else
+				glTexImage2D(textureType, 0, internalFormat, image.width, image.height, 0, format, dataType, 0);
 
 			if(generateMipmap)
 				glGenerateMipmap(textureType);
 
 			isCreated = true;
+
+			glBindTexture(textureType, 0);
 		}
 	}
 
