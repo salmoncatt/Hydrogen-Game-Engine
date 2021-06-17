@@ -488,10 +488,12 @@ namespace HFR {
 
 		glActiveTexture(GL_TEXTURE0);
 
-		if (text.mesh.material.albedoTexture.image.hasData())
+		/*if (text.mesh.material.albedoTexture.image.hasData())
 			glBindTexture(GL_TEXTURE_2D, text.mesh.material.albedoTexture.textureID);
 		else
-			glBindTexture(GL_TEXTURE_2D, nullTexture.textureID);
+			glBindTexture(GL_TEXTURE_2D, nullTexture.textureID);*/
+
+		glBindTexture(GL_TEXTURE_2D, text.mesh.material.albedoTexture.textureID);
 
 
 		textShader.setUniform("color", text.color);

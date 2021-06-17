@@ -62,32 +62,22 @@ namespace HFR {
 
 		atlasSize = (width, height);
 
-		//Image imageData = Image(width, height, 1, 0);
-		texture = Texture();
-		texture.byteAlignment = 1;
-		texture.filterMode = Vec2i(GL_LINEAR);
-		texture.internalFormat = GL_ALPHA;
-		texture.format = GL_ALPHA;
-		texture.generateMipmap = false;
+		//glActiveTexture(GL_TEXTURE0);
+		//glGenTextures(1, &texture.textureID);
+		//glBindTexture(GL_TEXTURE_2D, texture.textureID);
 
-		//texture.create();
+		//glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, width, height, 0, GL_RED, GL_UNSIGNED_BYTE, 0);
 
-		glActiveTexture(GL_TEXTURE0);
-		glGenTextures(1, &texture.textureID);
-		glBindTexture(GL_TEXTURE_2D, texture.textureID);
+		///* We require 1 byte alignment when uploading texture data */
+		//glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, width, height, 0, GL_ALPHA, GL_UNSIGNED_BYTE, 0);
+		///* Clamping to edges is important to prevent artifacts when scaling */
+		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
-		/* We require 1 byte alignment when uploading texture data */
-		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-
-		/* Clamping to edges is important to prevent artifacts when scaling */
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-
-		/* Linear filtering usually looks best for text */
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		///* Linear filtering usually looks best for text */
+		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 
 		rowHeight = 0;
@@ -95,6 +85,17 @@ namespace HFR {
 		Vec2i offset = Vec2i();
 
 		//load glyphs into texture
+
+		/*unsigned char* x = new unsigned char[width];
+		unsigned char* y = new unsigned char[height];*/
+
+		unsigned char* poopoo = new unsigned char[width * height];
+
+		for (int i = 0; i < width * height; i++) {
+			poopoo[i] = 0xEF;
+		}
+
+		Image imageData = Image(width, height, 1, poopoo);
 
 		for (int i = 0; i < 128; ++i) {
 			//super sophisticated error checking algorithm
@@ -113,9 +114,11 @@ namespace HFR {
 				rowHeight = 0;
 				offset.x = 0;
 			}
-			
+
+			imageData.replacePixels(offset.x, offset.y, glyph->bitmap.width, glyph->bitmap.rows, glyph->bitmap.buffer);
+
 			//glBindTexture(texture.textureType, texture.textureID);
-			glTexSubImage2D(GL_TEXTURE_2D, 0, offset.x, offset.y, glyph->bitmap.width, glyph->bitmap.rows, GL_ALPHA, GL_UNSIGNED_BYTE, glyph->bitmap.buffer);
+			//glTexSubImage2D(GL_TEXTURE_2D, 0, offset.x, offset.y, glyph->bitmap.width, glyph->bitmap.rows, GL_RED, GL_UNSIGNED_BYTE, glyph->bitmap.buffer);
 			//glBindTexture(texture.textureType, 0);
 
 			characters[i].advance = Vec2f((float)(glyph->advance.x >> 6), (float)(glyph->advance.y >> 6));
@@ -126,6 +129,19 @@ namespace HFR {
 			rowHeight = max(rowHeight, glyph->bitmap.rows);
 			offset.x += glyph->bitmap.width + 2;
 		}
+
+		texture = Texture(imageData);
+		texture.byteAlignment = 1;
+		texture.filterMode = Vec2i(GL_LINEAR);
+		texture.internalFormat = GL_RED;
+		texture.format = GL_RED;
+		texture.generateMipmap = false;
+
+		texture.create();
+
+		/*delete[] x;
+		delete[] y;*/
+		delete[] poopoo;
 
 		if (logStatus) {
 			Debug::systemSuccess("Loaded font: " + Util::removePathFromFilePathAndName(path), DebugColor::Blue);

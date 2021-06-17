@@ -16,7 +16,7 @@ namespace HFR {
 		int height;
 		int channels;
 
-		std::vector<std::vector<Pixel>> pixeldata;
+		//std::vector<std::vector<Pixel>> pixeldata;
 		unsigned char* data;
 		
 		Image();
@@ -26,7 +26,12 @@ namespace HFR {
 		Image(const int& width, const int& height, const int& channels, unsigned char* data);
 		~Image();
 
-		void generatePixelData();
+		unsigned char* getPixel(const size_t& x, const size_t& y);
+
+		//TODO
+		void replacePixels(const size_t& x, const size_t& y, const size_t& width, const size_t& height, const unsigned char* data);
+
+		//void generatePixelData();
 		bool hasData() const;
 	};
 
