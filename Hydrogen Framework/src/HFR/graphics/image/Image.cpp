@@ -79,18 +79,18 @@ namespace HFR {
 	}
 
 
-	void Image::replacePixels(const size_t& x, const size_t& y, const size_t& _width, const size_t& _height, const unsigned char* data) {
-		//size_t index = x + width * y;
-		//size_t endingIndex = index + ();
+	//void Image::replacePixels(const size_t& x, const size_t& y, const size_t& _width, const size_t& _height, const unsigned char* data) {
+	//	//size_t index = x + width * y;
+	//	//size_t endingIndex = index + ();
 
-		for (size_t i = x; i < _width; i++) {
-			for (size_t j = y; j < _height; j++) {
-				unsigned char* pixel = getPixel(i, j);
-				*pixel = data[i + _width * j];
-			}
-		}
+	//	for (size_t i = x; i < _width; i++) {
+	//		for (size_t j = y; j < _height; j++) {
+	//			unsigned char* pixel = getPixel(i, j);
+	//			*pixel = data[i + _width * j];
+	//		}
+	//	}
 
-	}
+	//}
 
 	//void Image::generatePixelData() {
 		//just in case you want to make pixel data

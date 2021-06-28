@@ -42,6 +42,7 @@ namespace HFR {
 
 		void create();
 		void destroy();
+		void setSubImage(const int& level, const Vec2i& offset, const Vec2i& size, const void* pixels);
 	};
 
 }

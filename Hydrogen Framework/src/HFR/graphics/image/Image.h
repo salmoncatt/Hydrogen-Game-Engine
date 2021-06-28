@@ -29,7 +29,7 @@ namespace HFR {
 		unsigned char* getPixel(const size_t& x, const size_t& y);
 
 		//TODO
-		void replacePixels(const size_t& x, const size_t& y, const size_t& width, const size_t& height, const unsigned char* data);
+		//void replacePixels(const size_t& x, const size_t& y, const size_t& width, const size_t& height, const unsigned char* data);
 
 		//void generatePixelData();
 		bool hasData() const;

@@ -11,7 +11,7 @@
 
 namespace HFR {
 
-	class DLL_API GuiText {
+	class DLL_API GuiText : GuiElement{
 	public:
 		Mesh mesh;
 		Transform2D transform;

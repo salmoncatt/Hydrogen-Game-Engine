@@ -477,8 +477,8 @@ namespace HFR {
 	}
 
 	void Renderer::render(const GuiText& text) {
-		//disableDepthTest();
-		//enableAlphaBlending();
+		disableDepthTest();
+		enableAlphaBlending();
 
 		glBindVertexArray(text.mesh.VAO);
 		glEnableVertexAttribArray(0);
@@ -493,7 +493,8 @@ namespace HFR {
 		else
 			glBindTexture(GL_TEXTURE_2D, nullTexture.textureID);*/
 
-		glBindTexture(GL_TEXTURE_2D, text.mesh.material.albedoTexture.textureID);
+		glEnable(GL_TEXTURE_2D);
+		glBindTexture(GL_TEXTURE_2D, text.font.texture.textureID);
 
 
 		textShader.setUniform("color", text.color);
@@ -510,8 +511,8 @@ namespace HFR {
 
 		textShader.unbind();
 
-		//disableAlphaBlending();
-		//enableDepthTest();
+		disableAlphaBlending();
+		enableDepthTest();
 	}
 
 }

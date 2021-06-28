@@ -65,4 +65,10 @@ namespace HFR {
 		}
 	}
 
+	void Texture::setSubImage(const int& level, const Vec2i& offset, const Vec2i& size, const void* pixels) {
+		glBindTexture(textureType, textureID);
+		glTexSubImage2D(GL_TEXTURE_2D, level, offset.x, offset.y, size.x, size.y, format, dataType, pixels);
+		glBindTexture(textureType, 0);
+	}
+
 }
