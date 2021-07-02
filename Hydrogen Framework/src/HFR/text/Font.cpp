@@ -6,13 +6,13 @@
 namespace HFR {
 
 	Font::Font() {
-		size = Vec2i(0, 48);
-		atlasSize = Vec2i();
+		size = Vec2f(0, 48);
+		atlasSize = Vec2f();
 	}
 
 	Font::Font(const std::string& _path) {
-		size = Vec2i(0, 48);
-		atlasSize = Vec2i();
+		size = Vec2f(0, 48);
+		atlasSize = Vec2f();
 		path = _path;
 		name = Util::removePathFromFilePathAndName(_path);
 	}
@@ -60,7 +60,7 @@ namespace HFR {
 		width = max(width, rowWidth);
 		height += rowHeight;
 
-		atlasSize = (width, height);
+		atlasSize = Vec2f(width, height);
 
 		rowHeight = 0;
 
@@ -74,7 +74,7 @@ namespace HFR {
 		texture.internalFormat = GL_RED;
 		texture.format = GL_RED;
 		texture.generateMipmap = false;
-		texture.wrapMode = Vec2i(GL_CLAMP_TO_BORDER, GL_CLAMP_TO_BORDER);
+		texture.wrapMode = Vec2i(GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE);
 
 		texture.create();
 
@@ -100,7 +100,7 @@ namespace HFR {
 
 			characters[i].advance = Vec2f((float)(glyph->advance.x >> 6), (float)(glyph->advance.y >> 6));
 			characters[i].bitmapLeftTop = Vec2f((float)glyph->bitmap_left, (float)glyph->bitmap_top);
-			characters[i].size = Vec2f((float)glyph->bitmap.width, (float)glyph->bitmap.rows);
+			characters[i].size = Vec2f((int)(glyph->bitmap.width), (int)(glyph->bitmap.rows));
 			characters[i].textureOffset = Vec2f((float)(offset.x / width), (float)(offset.y / height));
 
 			rowHeight = max(rowHeight, glyph->bitmap.rows);

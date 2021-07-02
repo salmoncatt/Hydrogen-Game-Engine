@@ -13,8 +13,8 @@ namespace HFR {
 
 	class DLL_API Font {
 	public:
-		Vec2i size;
-		Vec2i atlasSize;
+		Vec2f size;
+		Vec2f atlasSize;
 
 		Texture texture;
 

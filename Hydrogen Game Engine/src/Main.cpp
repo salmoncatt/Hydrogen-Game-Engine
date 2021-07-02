@@ -52,9 +52,10 @@ public:
 		warehouse.getComponent<Transform>().scale = (2);
 
 		Font oxygen = Font(HFR_RES + "fonts/oxygen/Oxygen-Regular.ttf");
+		oxygen.size = Vec2f(0, 128);
 		oxygen.create();
 
-		GuiText text = GuiText("haha poop", oxygen, Transform2D(Vec2f(-0.7f, -0.3f), Vec2f(0), Vec2f(0.005f)));
+		GuiText text = GuiText("haha poop", oxygen, Transform2D(Vec2f(-0.7f, -0.3f), Vec2f(0), Vec2f(0.001f)));
 		text.create();
 
 

@@ -62,16 +62,21 @@ namespace HFR {
 				vertices.push_back(characterPosition.x); vertices.push_back(-characterPosition.y - size.y);
 				vertices.push_back(characterPosition.x + size.x); vertices.push_back(-characterPosition.y - size.y);
 
+				float x = font.characters[*character].textureOffset.x;
+				float y = font.characters[*character].textureOffset.y;
+
+				float maxX = font.characters[*character].textureOffset.x + (font.characters[*character].size.x / font.atlasSize.x);
+				float maxY = font.characters[*character].textureOffset.y + (font.characters[*character].size.y / font.atlasSize.y);
 
 				//TODO: check tex coords because i flipped around vertices
-				texturecoords.push_back(font.characters[*character].textureOffset.x); texturecoords.push_back(font.characters[*character].textureOffset.y);
-				texturecoords.push_back(font.characters[*character].textureOffset.x); texturecoords.push_back(font.characters[*character].textureOffset.y + font.characters[*character].size.x / font.atlasSize.y);
-				texturecoords.push_back(font.characters[*character].textureOffset.x + font.characters[*character].size.x / font.atlasSize.x); texturecoords.push_back(font.characters[*character].textureOffset.y);
+				texturecoords.push_back(x); texturecoords.push_back(y);
+				texturecoords.push_back(x); texturecoords.push_back(maxY);
+				texturecoords.push_back(maxX); texturecoords.push_back(y);
 				//this one
 				
-				texturecoords.push_back(font.characters[*character].textureOffset.x + font.characters[*character].size.x / font.atlasSize.x); texturecoords.push_back(font.characters[*character].textureOffset.y);
-				texturecoords.push_back(font.characters[*character].textureOffset.x); texturecoords.push_back(font.characters[*character].textureOffset.y + font.characters[*character].size.x / font.atlasSize.y);
-				texturecoords.push_back(font.characters[*character].textureOffset.x + font.characters[*character].size.x / font.atlasSize.x); texturecoords.push_back(font.characters[*character].textureOffset.y + font.characters[*character].size.x / font.atlasSize.y);
+				texturecoords.push_back(maxX); texturecoords.push_back(y);
+				texturecoords.push_back(x); texturecoords.push_back(maxY);
+				texturecoords.push_back(maxX); texturecoords.push_back(maxY);
 			}
 
 		/*	vertices = { -0.5f, 0.5f,
