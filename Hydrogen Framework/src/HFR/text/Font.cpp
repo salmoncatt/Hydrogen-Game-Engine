@@ -100,7 +100,7 @@ namespace HFR {
 
 			characters[i].advance = Vec2f((float)(glyph->advance.x >> 6), (float)(glyph->advance.y >> 6));
 			characters[i].bitmapLeftTop = Vec2f((float)glyph->bitmap_left, (float)glyph->bitmap_top);
-			characters[i].size = Vec2f((int)(glyph->bitmap.width), (int)(glyph->bitmap.rows));
+			characters[i].size = Vec2f((float)(glyph->bitmap.width), (float)(glyph->bitmap.rows));
 			characters[i].textureOffset = Vec2f((float)(offset.x / width), (float)(offset.y / height));
 
 			rowHeight = max(rowHeight, glyph->bitmap.rows);

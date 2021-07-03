@@ -58,9 +58,6 @@ public:
 		GuiText text = GuiText("haha poop", oxygen, Transform2D(Vec2f(-0.7f, -0.3f), Vec2f(0), Vec2f(0.001f)));
 		text.create();
 
-
-
-
 		for (int i = 0; i < warehouse.getComponent<MeshComponent>().meshes.size(); i++) {
 			auto& component = warehouse.getComponent<MeshComponent>().meshes[i];
 
@@ -86,8 +83,6 @@ public:
 				ProjectManager::createEngineProject("testProject", "testScript");
 			else if(Input::getKeyDown(HFR_KEY_G))
 				VisualStudio::openVisualStudio(HFR_PROJECTS_PATH + "testProject/Scripts/testProject.sln");
-
-			
 
 			Renderer::render(text);
 
