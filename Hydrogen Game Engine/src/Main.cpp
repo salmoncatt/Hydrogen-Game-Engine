@@ -45,14 +45,14 @@ public:
 
 		mesh = MeshComponent();
 
-		mesh.meshes = Util::loadMesh(HFR_RES + "models/warehouse/warehouse.obj");
+		mesh.meshes = Util::loadMesh(HFR_RES + "models/de_mirage/de_mirage.obj");
 
 		warehouse.addComponent<MeshComponent>(mesh);
 
-		warehouse.getComponent<Transform>().scale = (2);
+		warehouse.getComponent<Transform>().scale = (0.01f);
 
 		Font oxygen = Font(HFR_RES + "fonts/oxygen/Oxygen-Regular.ttf");
-		oxygen.size = Vec2f(0, 128);
+		oxygen.size = Vec2f(0, 48);
 		oxygen.create();
 
 		GuiText text = GuiText("haha poop", oxygen, Transform2D(Vec2f(-0.7f, -0.3f), Vec2f(0), Vec2f(0.001f)));

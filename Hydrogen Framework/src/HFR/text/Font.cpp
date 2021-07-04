@@ -66,7 +66,14 @@ namespace HFR {
 
 		Vec2i offset = Vec2i();
 
-		Image imageData = Image(width, height, 1, 0);
+
+		unsigned char* blankColor = new unsigned char[width * height];
+
+		for (int i = 0; i < (width * height); ++i) {
+			blankColor[i] = 0x0;
+		}
+
+		Image imageData = Image(width, height, 1, blankColor);
 
 		texture = Texture(imageData);
 		texture.byteAlignment = 1;
@@ -74,7 +81,7 @@ namespace HFR {
 		texture.internalFormat = GL_RED;
 		texture.format = GL_RED;
 		texture.generateMipmap = false;
-		texture.wrapMode = Vec2i(GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE);
+		texture.wrapMode = Vec2i(GL_CLAMP_TO_EDGE);
 
 		texture.create();
 
@@ -107,9 +114,7 @@ namespace HFR {
 			offset.x += glyph->bitmap.width + 2;
 		}
 
-		/*delete[] x;
-		delete[] y;*/
-		//delete[] poopoo;
+		delete[] blankColor;
 
 		if (logStatus) {
 			Debug::systemSuccess("Loaded font: " + Util::removePathFromFilePathAndName(path), DebugColor::Blue);
