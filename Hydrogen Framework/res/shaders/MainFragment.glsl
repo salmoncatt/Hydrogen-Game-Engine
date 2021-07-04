@@ -11,6 +11,8 @@ uniform bool hasTextureCoords;
 uniform vec3 color;
 uniform int lightMode;
 
+uniform vec3 lightColor;
+
 void main() {
 	
 	float light = passedLight;

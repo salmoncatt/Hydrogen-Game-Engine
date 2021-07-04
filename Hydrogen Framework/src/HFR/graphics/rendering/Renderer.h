@@ -8,6 +8,7 @@
 #include HFR_TEXTURE
 #include HFR_SHADER
 #include HFR_VEC2
+#include "HFR/graphics/lighting/Light.h"
 
 namespace HFR {
 
@@ -41,6 +42,8 @@ namespace HFR {
 		static Mat4f pixelOrthoMatrix;
 		static Mat4f viewMatrix;
 
+		static Light light;
+
 		static void init(const float& screenWidth, const float& screenHeight);
 		static void createProjectionMatrix(const float& screenWidth, const float& screenHeight);
 		static void close();
@@ -65,6 +68,8 @@ namespace HFR {
 
 		static void setLightMode(const int& lightMode);
 		static int getLightMode();
+
+		static void loadLight(const Light& light);
 
 		static void render(Mesh& mesh, const Vec3f& position, const Vec3f& rotation, const Vec3f& scale, const Texture& texture);
 		static void render(Mesh& mesh, Shader& shader, const Vec3f& position, const Vec3f& rotation, const Vec3f& scale, const Texture& texture);

@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\HFR\graphics\lighting\Light.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="src\HFR\gui\GuiImage.h" />
     <ClInclude Include="src\HFR\gui\GuiText.h" />
@@ -70,6 +71,7 @@
     <ClInclude Include="src\HFR\scripting\VisualStudio.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\HFR\graphics\lighting\Light.cpp" />
     <ClCompile Include="src\HFR\gui\GuiImage.cpp" />
     <ClCompile Include="src\HFR\gui\GuiText.cpp" />
     <ClCompile Include="src\HFR\text\Font.cpp" />

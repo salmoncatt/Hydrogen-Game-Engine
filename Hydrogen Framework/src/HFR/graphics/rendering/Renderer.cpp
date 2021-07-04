@@ -174,6 +174,10 @@ namespace HFR {
 		render(mesh, mainShader, transform.position, transform.rotation, transform.scale, texture);
 	}
 
+	void Renderer::loadLight(const Light& light) {
+
+	}
+
 	//position and size in pixels
 	void Renderer::renderRectangle(const Vec2f& position, const Vec2f& size, const Texture& texture) {
 		disableDepthTest();

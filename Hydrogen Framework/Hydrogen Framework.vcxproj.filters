@@ -58,6 +58,7 @@
     <ClInclude Include="src\HFR\gui\GuiText.h" />
     <ClInclude Include="src\HFR\gui\GuiImage.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="src\HFR\graphics\lighting\Light.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\hfpch.cpp" />
@@ -101,6 +102,7 @@
     <ClCompile Include="src\HFR\text\Font.cpp" />
     <ClCompile Include="src\HFR\gui\GuiText.cpp" />
     <ClCompile Include="src\HFR\gui\GuiImage.cpp" />
+    <ClCompile Include="src\HFR\graphics\lighting\Light.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\guiFrameFragment.glsl" />

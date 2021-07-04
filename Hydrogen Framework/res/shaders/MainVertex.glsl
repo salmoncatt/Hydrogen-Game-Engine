@@ -9,6 +9,8 @@ out vec3 passNormal;
 uniform mat4 projectionViewTransform;
 uniform mat4 projectionTransform;
 
+uniform vec3 lightPosition;
+
 uniform int lightMode;
 out float passedLight;
 out int passLightMode;

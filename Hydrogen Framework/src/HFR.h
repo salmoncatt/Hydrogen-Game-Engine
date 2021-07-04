@@ -40,6 +40,8 @@
 #include "HFR/graphics/rendering/Renderer.h"
 #include "HFR/graphics/rendering/Shader.h"
 
+#include "HFR/graphics/lighting/Light.h"
+
 #include "HFR/io/Cursor.h"
 #include "HFR/io/Input.h"
 #include "HFR/io/Window.h"
