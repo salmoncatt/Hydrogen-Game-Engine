@@ -11,13 +11,13 @@ namespace HFR {
 	struct DLL_API Material {
 		std::string name;
 
-		//Vec3f ambientColor;
-		//Vec3f specularColor;
 		//float specularExponent;
 		//float dissolve;
 
 		Texture albedoTexture;
 		Vec3f albedoColor;
+		Vec3f specularColor;
+		Vec3f ambientColor;
 
 		Material() {
 			albedoTexture = Texture();

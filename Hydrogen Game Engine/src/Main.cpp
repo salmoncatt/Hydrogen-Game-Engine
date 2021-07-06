@@ -45,11 +45,11 @@ public:
 
 		mesh = MeshComponent();
 
-		mesh.meshes = Util::loadMesh(HFR_RES + "models/de_mirage/de_mirage.obj");
+		mesh.meshes = Util::loadMesh(HFR_RES + "models/warehouse/warehouse.obj");
 
 		warehouse.addComponent<MeshComponent>(mesh);
 
-		warehouse.getComponent<Transform>().scale = (0.01f);
+		warehouse.getComponent<Transform>().scale = (2);
 
 		Font oxygen = Font(HFR_RES + "fonts/oxygen/Oxygen-Regular.ttf");
 		oxygen.size = Vec2f(0, 48);
@@ -69,6 +69,8 @@ public:
 
 		peter.addComponent<NativeScript>().addScript("testScript");
 
+		Renderer::light.color = Vec3f(1);
+
 		while (shouldUpdate() && !Input::getKey(HFR_KEY_ESCAPE)) {
 			ProfileMethod("Main loop");
 			test->updateEditor();
@@ -78,6 +80,17 @@ public:
 
 			if (Input::getKeyDown(HFR_KEY_BACKSLASH))
 				Renderer::toggleWireFrameMode();
+
+			//move light
+			if (Input::getKey(HFR_KEY_UP))
+				Renderer::light.position.x += 3 * Time::getDeltaTime();
+			if (Input::getKey(HFR_KEY_DOWN))
+				Renderer::light.position.x -= 3 * Time::getDeltaTime();
+			if (Input::getKey(HFR_KEY_LEFT))
+				Renderer::light.position.z -= 3 * Time::getDeltaTime();
+			if (Input::getKey(HFR_KEY_RIGHT))
+				Renderer::light.position.z += 3 * Time::getDeltaTime();
+			Renderer::light.position.y += Input::getScrollMovement().y;
 
 			if (Input::getKeyDown(HFR_KEY_F))
 				ProjectManager::createEngineProject("testProject", "testScript");

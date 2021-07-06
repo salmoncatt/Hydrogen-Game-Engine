@@ -289,6 +289,36 @@ namespace HFR {
 
 					materialCount += 1;
 				}
+				else if (line.substr(0, 3) == "Ka ") {
+					if (materialCount > 0) {
+						int index = materialCount - 1;
+
+						std::istringstream data(line.substr(3));
+
+						Vec3f color;
+						data >> color.x >> color.y >> color.z;
+
+						out[index].ambientColor = color;
+					}
+					else {
+						Debug::systemErr("Loading material: " + filepath + ", has failed because trying to add material properties without having (newmtl) command found");
+					}
+				}
+				else if (line.substr(0, 4) == "	Ka ") {
+					if (materialCount > 0) {
+						int index = materialCount - 1;
+
+						std::istringstream data(line.substr(4));
+
+						Vec3f color;
+						data >> color.x >> color.y >> color.z;
+
+						out[index].ambientColor = color;
+					}
+					else {
+						Debug::systemErr("Loading material: " + filepath + ", has failed because trying to add material properties without having (newmtl) command found");
+					}
+				}
 				else if (line.substr(0, 3) == "Kd ") {
 					if (materialCount > 0) {
 						int index = materialCount - 1;
@@ -314,6 +344,36 @@ namespace HFR {
 						data >> color.x >> color.y >> color.z;
 
 						out[index].albedoColor = color;
+					}
+					else {
+						Debug::systemErr("Loading material: " + filepath + ", has failed because trying to add material properties without having (newmtl) command found");
+					}
+				}
+				else if (line.substr(0, 3) == "Ks ") {
+					if (materialCount > 0) {
+						int index = materialCount - 1;
+
+						std::istringstream data(line.substr(3));
+
+						Vec3f color;
+						data >> color.x >> color.y >> color.z;
+
+						out[index].specularColor = color;
+					}
+					else {
+						Debug::systemErr("Loading material: " + filepath + ", has failed because trying to add material properties without having (newmtl) command found");
+					}
+				}
+				else if (line.substr(0, 4) == "	Ks ") {
+					if (materialCount > 0) {
+						int index = materialCount - 1;
+
+						std::istringstream data(line.substr(4));
+
+						Vec3f color;
+						data >> color.x >> color.y >> color.z;
+
+						out[index].specularColor = color;
 					}
 					else {
 						Debug::systemErr("Loading material: " + filepath + ", has failed because trying to add material properties without having (newmtl) command found");

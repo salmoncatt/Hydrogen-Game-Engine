@@ -401,8 +401,15 @@ namespace HFR {
 
 		shader.setUniform("transformMatrix", transform);
 		shader.setUniform("projectionViewTransformMatrix", projectionViewTransform);
-		shader.setUniform("color", mesh.material.albedoColor);
 		shader.setUniform("hasTextureCoords", !mesh.texturecoords.empty());
+
+		//material things for lighting n stuff
+		shader.setUniform("ambientColor", mesh.material.ambientColor);
+		shader.setUniform("specularColor", mesh.material.specularColor);
+		shader.setUniform("diffuseColor", mesh.material.albedoColor);
+		shader.setUniform("ambientStrength", 0.1f);
+
+		//light things
 		shader.setUniform("lightMode", lightMode);
 		shader.setUniform("lightPosition", light.position);
 		shader.setUniform("lightColor", light.color);

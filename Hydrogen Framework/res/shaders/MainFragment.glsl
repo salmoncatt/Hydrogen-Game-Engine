@@ -5,7 +5,6 @@ out vec4 fragColor;
 in vec2 passedTextureCoords;
 uniform sampler2D textureSampler;
 uniform bool hasTextureCoords;
-uniform vec3 color;
 
 
 //light stuff
@@ -15,26 +14,59 @@ in vec3 surfaceNormal;
 in float passedLight;
 in vec3 lightVector;
 
+
+uniform vec3 diffuseColor;
+uniform vec3 ambientColor;
+uniform vec3 specularColor;
+uniform float ambientStrength;
+
+vec3 max(vec3 a, vec3 b) {
+  return vec3(max(a.x, a.x), max(a.y, b.y), max(a.z, b.z));
+}
+
+
+
+//lighting calcs done here
+vec4 getLight(){
+		float light = dot(surfaceNormal, lightVector);
+		light = max(light, 0);
+
+
+		vec3 ambient = ambientColor * ambientStrength;
+
+		//light = max(intensity, 0.2);
+		vec3 diffuse = lightColor * light;
+		vec3 finalLight = diffuse + ambient;
+		
+		
+		return vec4(finalLight, 1);
+}
+
+
+
+
+
+
+
+
+
 void main() {
 	
-	float light = passedLight;
+	//float light = passedLight;
+
+	//vec4 color = vec4(albedoColor, 1);
 
 	if(hasTextureCoords)
 		fragColor = texture(textureSampler, passedTextureCoords);
 	else
-		fragColor = vec4(color, 1.0);
+		fragColor = vec4(diffuseColor, 1);
 
 
 	//lightMode means 1 = per vertex, 2 = per pixel
-	if(lightMode == 0){
-		float intensity = dot(surfaceNormal, lightVector);
+	if(lightMode == 0)
+		fragColor *= getLight();
 
-		light = max(intensity, 0.2);
-	}
-
-	vec3 diffuse = lightColor * light;
-	
-	fragColor *= vec4(diffuse, 1);
+	//fragColor = color;
 
 	float gamma = 2.2;
 
