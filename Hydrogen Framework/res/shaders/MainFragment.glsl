@@ -1,17 +1,19 @@
 #version 400 core
 out vec4 fragColor;
 
+//texture things
 in vec2 passedTextureCoords;
-in vec3 passNormal;
-in float passedLight;
-
-
 uniform sampler2D textureSampler;
 uniform bool hasTextureCoords;
 uniform vec3 color;
-uniform int lightMode;
 
+
+//light stuff
 uniform vec3 lightColor;
+uniform int lightMode;
+in vec3 surfaceNormal;
+in float passedLight;
+in vec3 lightVector;
 
 void main() {
 	
@@ -23,13 +25,16 @@ void main() {
 		fragColor = vec4(color, 1.0);
 
 
+	//lightMode means 1 = per vertex, 2 = per pixel
 	if(lightMode == 0){
-	float intensity = dot(vec3(0, 1, 0), passNormal);
+		float intensity = dot(surfaceNormal, lightVector);
 
-	light = max(intensity, 0.2);
+		light = max(intensity, 0.2);
 	}
 
-	fragColor *= vec4(light, light, light, 1);
+	vec3 diffuse = lightColor * light;
+	
+	fragColor *= vec4(diffuse, 1);
 
 	float gamma = 2.2;
 

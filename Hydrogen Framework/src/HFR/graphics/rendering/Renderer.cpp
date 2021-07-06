@@ -10,6 +10,8 @@ namespace HFR {
 	Mat4f Renderer::pixelOrthoMatrix = Mat4f::createOrthoMatrix(-1, 1, -1, 1, -1, 1);
 	Mat4f Renderer::viewMatrix = Mat4f();
 	
+	Light Renderer::light = Light();
+
 	Shader Renderer::mainShader = HFR::Shader(HFR_RES + "shaders/", "MainVertex.glsl", "MainFragment.glsl");
 	Shader Renderer::guiShader = HFR::Shader(HFR_RES + "shaders/", "guiVertex.glsl", "guiFragment.glsl");
 	Shader Renderer::guiFrameShader = HFR::Shader(HFR_RES + "shaders/", "guiVertex.glsl", "guiFrameFragment.glsl");
@@ -174,8 +176,8 @@ namespace HFR {
 		render(mesh, mainShader, transform.position, transform.rotation, transform.scale, texture);
 	}
 
-	void Renderer::loadLight(const Light& light) {
-
+	void Renderer::loadLight(const Light& _light) {
+		light = _light;
 	}
 
 	//position and size in pixels
@@ -395,13 +397,15 @@ namespace HFR {
 		//matrix stuff
 		Mat4f transform = Mat4f::createTransformationMatrix(position, rotation, scale);
 		Mat4f projectionViewTransform = perspectiveMatrix * viewMatrix * transform;
-		Mat4f projectionTransform = perspectiveMatrix * transform;
+		//Mat4f projectionTransform = perspectiveMatrix * transform;
 
-		shader.setUniform("projectionViewTransform", projectionViewTransform);
-		shader.setUniform("projectionTransform", transform);
+		shader.setUniform("transformMatrix", transform);
+		shader.setUniform("projectionViewTransformMatrix", projectionViewTransform);
 		shader.setUniform("color", mesh.material.albedoColor);
 		shader.setUniform("hasTextureCoords", !mesh.texturecoords.empty());
 		shader.setUniform("lightMode", lightMode);
+		shader.setUniform("lightPosition", light.position);
+		shader.setUniform("lightColor", light.color);
 
 		//stupid cast size_t to GLsizei warning
 		if (!mesh.indices.empty())

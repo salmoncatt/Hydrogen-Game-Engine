@@ -12,11 +12,17 @@ namespace HFR {
 	private:
 	public:
 
-		Vec3f position;
-		Vec3f color;
+		//position of light, default is (0,0,0)
+		Vec3f position = Vec3f();
+
+		//color of light, default is (1,1,1)
+		Vec3f color = Vec3f(1);
 
 		Light();
+		Light(Vec3f position, Vec3f color);
 		~Light();
+
+
 
 	};
 
