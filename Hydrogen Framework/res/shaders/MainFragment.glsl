@@ -3,6 +3,7 @@ out vec4 fragColor;
 
 //texture things
 in vec2 passedTextureCoords;
+in vec3 worldPosition;
 uniform sampler2D textureSampler;
 uniform bool hasTextureCoords;
 
@@ -19,7 +20,7 @@ uniform vec3 diffuseColor;
 uniform vec3 ambientColor;
 uniform vec3 specularColor;
 uniform float specularExponent;
-uniform float ambientStrength;
+uniform float ambientIntensity;
 
 vec3 max(vec3 a, vec3 b) {
   return vec3(max(a.x, a.x), max(a.y, b.y), max(a.z, b.z));
@@ -32,12 +33,19 @@ vec4 getLight(){
 		float light = dot(surfaceNormal, lightVector);
 		light = max(light, 0);
 
+		//ambient calculations
+		vec3 ambient = ambientColor * ambientIntensity;
 
-		vec3 ambient = ambientColor * ambientStrength;
+		//specular calculations
+		vec3 viewDirection = normalize(cameraPosition - worldPosition);
+		vec3 reflectDirection = reflect(-lightVector, surfaceNormal);
 
-		//light = max(intensity, 0.2);
+		float spec = pow(max(dot(viewDirection, reflectDirection), 0.0), specularExponent);
+		vec3 specular = specularColor * spec * lightColor;
+
+		//diffuse calculations
 		vec3 diffuse = lightColor * light;
-		vec3 finalLight = diffuse + ambient;
+		vec3 finalLight = diffuse + ambient + specular;
 		
 		
 		return vec4(finalLight, 1);

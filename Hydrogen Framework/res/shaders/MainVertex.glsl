@@ -16,6 +16,7 @@ out vec3 surfaceNormal;
 out vec3 lightVector;
 
 out vec2 passedTextureCoords;
+out vec3 worldPosition;
 
 void main() {
 
@@ -25,6 +26,7 @@ void main() {
 	
 	
 	passLightMode = lightMode;
+	worldPosition = vec3(transformMatrix * vec4(position, 1.0));
 	surfaceNormal = normalize((transformMatrix * vec4(normal, 1)).xyz);
 	lightVector = normalize(lightPosition - (transformMatrix * vec4(position, 1.0)).xyz);
 

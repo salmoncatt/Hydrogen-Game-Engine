@@ -29,6 +29,8 @@ namespace HFR {
 
 	//set to per vertex for speed at first
 	int Renderer::lightMode = HFR_PER_VERTEX_LIGHT;
+	float Renderer::ambientIntensity = 0.1f;
+
 
 	Vec2f Renderer::currentWindowSize = Vec2f();
 
@@ -411,7 +413,7 @@ namespace HFR {
 		shader.setUniform("specularColor", mesh.material.specularColor);
 		shader.setUniform("specularExponent", mesh.material.specularExponent);
 		shader.setUniform("diffuseColor", mesh.material.albedoColor);
-		shader.setUniform("ambientStrength", 0.1f);
+		shader.setUniform("ambientIntensity", ambientIntensity);
 
 		//light things
 		shader.setUniform("lightMode", lightMode);
