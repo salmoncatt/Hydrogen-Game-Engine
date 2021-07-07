@@ -21,6 +21,7 @@ uniform vec3 ambientColor;
 uniform vec3 specularColor;
 uniform float specularExponent;
 uniform float ambientIntensity;
+uniform bool useLighting;
 
 vec3 max(vec3 a, vec3 b) {
   return vec3(max(a.x, a.x), max(a.y, b.y), max(a.z, b.z));
@@ -34,7 +35,7 @@ vec4 getLight(){
 		light = max(light, 0);
 
 		//ambient calculations
-		vec3 ambient = ambientColor * ambientIntensity;
+		vec3 ambient = ambientColor * ambientIntensity * lightColor;
 
 		//specular calculations
 		vec3 viewDirection = normalize(cameraPosition - worldPosition);
@@ -72,7 +73,7 @@ void main() {
 
 
 	//lightMode means 1 = per vertex, 2 = per pixel
-	if(lightMode == 0)
+	if(lightMode == 0 && useLighting)
 		fragColor *= getLight();
 
 	//fragColor = color;

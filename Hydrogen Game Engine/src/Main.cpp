@@ -52,6 +52,8 @@ public:
 
 		//.getComponent<Transform>().scale = (2);
 		warehouse.getComponent<Transform>().scale = (0.03f);
+		warehouse.getComponent<MeshComponent>().clearAllTextureCoordinates();
+
 
 		Font oxygen = Font(HFR_RES + "fonts/oxygen/Oxygen-Regular.ttf");
 		oxygen.size = Vec2f(0, 48);
@@ -60,14 +62,6 @@ public:
 		GuiText text = GuiText("haha poop", oxygen, Transform2D(Vec2f(-0.7f, -0.3f), Vec2f(0), Vec2f(0.001f)));
 		text.create();
 
-		for (int i = 0; i < warehouse.getComponent<MeshComponent>().meshes.size(); i++) {
-			auto& component = warehouse.getComponent<MeshComponent>().meshes[i];
-
-			//component.material.albedoTexture = text.mesh.material.albedoTexture;
-
-			component.texturecoords.clear();
-			//component.calculateNormals(1);
-		}
 
 		peter.addComponent<NativeScript>().addScript("testScript");
 
@@ -82,6 +76,9 @@ public:
 
 			if (Input::getKeyDown(HFR_KEY_BACKSLASH))
 				Renderer::toggleWireFrameMode();
+
+			//Renderer::light.position.x = 50 * sin(Time::getTime() / 400);
+			//Renderer::light.position.z = 50 * cos(Time::getTime() / 400);
 
 			//move light
 			if (Input::getKey(HFR_KEY_UP))
@@ -102,6 +99,7 @@ public:
 			// Renderer::render(text);
 
 			window->limitFps(200);
+			Renderer::update();
 		}
 
 		delete test;

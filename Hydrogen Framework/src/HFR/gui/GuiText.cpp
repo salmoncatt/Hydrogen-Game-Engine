@@ -88,7 +88,7 @@ namespace HFR {
 
 
 			mesh = Mesh(vertices, std::vector<unsigned int>(), std::vector<float>(), texturecoords);
-			mesh.material.albedoTexture = font.texture;
+			mesh.material.diffuseMap = font.texture;
 			mesh.type = HFR_2D;
 			mesh.create();
 		}

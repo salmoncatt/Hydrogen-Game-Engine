@@ -312,6 +312,8 @@ namespace HFR {
 #define HFR_RENDERER "HFR/graphics/rendering/Renderer.h"
 #define HFR_SHADER "HFR/graphics/rendering/Shader.h"
 
+#define HFR_LIGHT "HFR/graphics/lighting/Light.h"
+
 #define HFR_CURSOR "HFR/io/Cursor.h"
 #define HFR_INPUT "HFR/io/Input.h"
 #define HFR_WINDOW "HFR/io/Window.h"

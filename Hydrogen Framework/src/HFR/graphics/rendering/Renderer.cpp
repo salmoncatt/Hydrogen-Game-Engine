@@ -20,6 +20,7 @@ namespace HFR {
 	Shader Renderer::textShader = HFR::Shader(HFR_RES + "shaders/", "guiTextVertex.glsl", "guiTextFragment.glsl");
 
 	Texture Renderer::nullTexture = Texture(HFR_RES + "textures/null.png");
+	MeshComponent Renderer::lightObject = MeshComponent();
 
 	const std::vector<float> Renderer::quadVertices = {-1, 1,  -1, -1,  1, 1, 1, -1};
 	Mesh Renderer::quad = Mesh(quadVertices, std::vector<unsigned int>(), std::vector<float>(), std::vector<float>());
@@ -57,7 +58,7 @@ namespace HFR {
 		quad.type = HFR_2D;
 		quad.create();
 
-		Debug::systemLog("Creating system shaders");
+		Debug::systemLog("Creating engine shaders");
 
 		mainShader.create();
 		guiShader.create();
@@ -65,9 +66,18 @@ namespace HFR {
 		textShader.create();
 
 		nullTexture.create();
+		Debug::setSystemLogMode(HFR_LOG_ON_SUCCESS, HFR_DONT_LOG_ON_FAIL);
+		lightObject.meshes = Util::loadMesh(HFR_RES + "models/cube.obj");
+		lightObject.meshes[0].create();
+		lightObject.clearAllTextureCoordinates();
+		lightObject.meshes[0].useLighting = false;
+		lightObject.meshes[0].material.diffuseColor = Vec3f(1);
+
+		Debug::setSystemLogMode(HFR_LOG_ON_SUCCESS, HFR_LOG_ON_FAIL);
+
 		createProjectionMatrix(screenWidth, screenHeight);
 
-		Debug::systemSuccess("Created system shaders");
+		Debug::systemSuccess("Created engine shaders");
 
 		Debug::newLine();
 	}
@@ -394,7 +404,7 @@ namespace HFR {
 		shader.bind();
 		glActiveTexture(GL_TEXTURE0);
 
-		if (texture.image.hasData())
+		if (texture.image.width != 0 && texture.image.height != 0)
 			glBindTexture(GL_TEXTURE_2D, texture.textureID);
 		else
 			glBindTexture(GL_TEXTURE_2D, nullTexture.textureID);
@@ -412,7 +422,7 @@ namespace HFR {
 		shader.setUniform("ambientColor", mesh.material.ambientColor);
 		shader.setUniform("specularColor", mesh.material.specularColor);
 		shader.setUniform("specularExponent", mesh.material.specularExponent);
-		shader.setUniform("diffuseColor", mesh.material.albedoColor);
+		shader.setUniform("diffuseColor", mesh.material.diffuseColor);
 		shader.setUniform("ambientIntensity", ambientIntensity);
 
 		//light things
@@ -420,6 +430,7 @@ namespace HFR {
 		shader.setUniform("lightPosition", light.position);
 		shader.setUniform("lightColor", light.color);
 		shader.setUniform("cameraPosition", cameraPosition);
+		shader.setUniform("useLighting", mesh.useLighting);
 
 		//stupid cast size_t to GLsizei warning
 		if (!mesh.indices.empty())
@@ -535,6 +546,10 @@ namespace HFR {
 
 		disableAlphaBlending();
 		enableDepthTest();
+	}
+
+	void Renderer::update() {
+		render(lightObject.meshes[0], Transform(light.position, Vec3f(), Vec3f(1, 1, 1)), Texture());
 	}
 
 }

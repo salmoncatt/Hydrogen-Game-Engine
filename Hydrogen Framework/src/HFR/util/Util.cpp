@@ -328,7 +328,7 @@ namespace HFR {
 						Vec3f color;
 						data >> color.x >> color.y >> color.z;
 
-						out[index].albedoColor = color;
+						out[index].diffuseColor = color;
 					}
 					else {
 						Debug::systemErr("Loading material: " + filepath + ", has failed because trying to add material properties without having (newmtl) command found");
@@ -343,7 +343,7 @@ namespace HFR {
 						Vec3f color;
 						data >> color.x >> color.y >> color.z;
 
-						out[index].albedoColor = color;
+						out[index].diffuseColor = color;
 					}
 					else {
 						Debug::systemErr("Loading material: " + filepath + ", has failed because trying to add material properties without having (newmtl) command found");
@@ -414,8 +414,8 @@ namespace HFR {
 					if (materialCount > 0) {
 						int index = materialCount - 1;
 
- 						out[index].albedoTexture = Texture(removeNameFromFilePathAndName(filepath) + line.substr(7));
-						out[index].albedoTexture.create();
+ 						out[index].diffuseMap = Texture(removeNameFromFilePathAndName(filepath) + line.substr(7));
+						out[index].diffuseMap.create();
 					}
 					else {
 						Debug::systemErr("Loading material: " + filepath + ", has failed because trying to add material properties without having (newmtl) command found");
@@ -426,8 +426,8 @@ namespace HFR {
 					if (materialCount > 0) {
 						int index = materialCount - 1;
 
-						out[index].albedoTexture = Texture(removeNameFromFilePathAndName(filepath) + line.substr(8));
-						out[index].albedoTexture.create();
+						out[index].diffuseMap = Texture(removeNameFromFilePathAndName(filepath) + line.substr(8));
+						out[index].diffuseMap.create();
 					}
 					else {
 						Debug::systemErr("Loading material: " + filepath + ", has failed because trying to add material properties without having (newmtl) command found");

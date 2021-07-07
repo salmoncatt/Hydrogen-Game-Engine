@@ -8,7 +8,8 @@
 #include HFR_TEXTURE
 #include HFR_SHADER
 #include HFR_VEC2
-#include "HFR/graphics/lighting/Light.h"
+#include HFR_LIGHT
+#include HFR_MESH_COMPONENT
 
 namespace HFR {
 
@@ -43,6 +44,7 @@ namespace HFR {
 		static Mat4f viewMatrix;
 
 		static Light light;
+		static MeshComponent lightObject;
 
 		static Vec3f cameraPosition;
 		static float ambientIntensity;
@@ -97,6 +99,9 @@ namespace HFR {
 		//scale scales the pixel size used to create the font (48 pixels tall by default), also creates mesh on the fly so isn't as efficient as static text just so you know
 		//static void render(const Font& font, const char* text, const Vec2f& position, const Vec2f& scale, const Vec4f& color);
 		static void render(const GuiText& text);
+
+		//renders light objects n stuff
+		static void update();
 	};
 
 }

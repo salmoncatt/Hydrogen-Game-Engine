@@ -116,7 +116,7 @@ namespace HFR {
 			if (meshcomponent.meshes.size() > 0) {
 				for (int j = 0; j < meshcomponent.meshes.size(); j++) {
 					auto& mesh = meshcomponent.meshes[j];
-					auto& texture = meshcomponent.meshes[j].material.albedoTexture;
+					auto& texture = meshcomponent.meshes[j].material.diffuseMap;
 
 					if (!mesh.vertices.empty()) {
 						if (!mesh.created)

@@ -23,6 +23,8 @@ namespace HFR {
 		//set to 3d by default so you dont have to
 		int type = HFR_3D;
 
+		bool useLighting = true;
+
 		Mesh();
 
 		Mesh(const std::vector<float>& vertices, const std::vector<unsigned int>& indices, const std::vector<float>& normals, const std::vector<float>& texturecoords);

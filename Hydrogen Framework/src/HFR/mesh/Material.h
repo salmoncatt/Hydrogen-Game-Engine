@@ -13,8 +13,8 @@ namespace HFR {
 
 		//float dissolve;
 
-		Texture albedoTexture;
-		Vec3f albedoColor;
+		Texture diffuseMap;
+		Vec3f diffuseColor;
 		
 		Vec3f specularColor;
 		float specularExponent;
@@ -22,8 +22,11 @@ namespace HFR {
 		Vec3f ambientColor;
 
 		Material() {
-			albedoTexture = Texture();
-			albedoColor = Vec3f(0.8f, 0.8f, 0.8f);
+			diffuseMap = Texture();
+			diffuseColor = Vec3f(0.8f);
+			specularColor = Vec3f(0.5f);
+			ambientColor = Vec3f(0.8f);
+			specularExponent = 32;
 		}
 
 		~Material() {
