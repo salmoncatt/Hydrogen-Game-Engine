@@ -45,11 +45,13 @@ public:
 
 		mesh = MeshComponent();
 
-		mesh.meshes = Util::loadMesh(HFR_RES + "models/warehouse/warehouse.obj");
+		//mesh.meshes = Util::loadMesh(HFR_RES + "models/warehouse/warehouse.obj");
+		mesh.meshes = Util::loadMesh(HFR_RES + "models/de_mirage/de_mirage.obj");
 
 		warehouse.addComponent<MeshComponent>(mesh);
 
-		warehouse.getComponent<Transform>().scale = (2);
+		//.getComponent<Transform>().scale = (2);
+		warehouse.getComponent<Transform>().scale = (0.03f);
 
 		Font oxygen = Font(HFR_RES + "fonts/oxygen/Oxygen-Regular.ttf");
 		oxygen.size = Vec2f(0, 48);
@@ -97,7 +99,7 @@ public:
 			else if(Input::getKeyDown(HFR_KEY_G))
 				VisualStudio::openVisualStudio(HFR_PROJECTS_PATH + "testProject/Scripts/testProject.sln");
 
-			Renderer::render(text);
+			// Renderer::render(text);
 
 			window->limitFps(200);
 		}

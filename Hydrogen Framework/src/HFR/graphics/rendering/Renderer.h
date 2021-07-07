@@ -44,6 +44,8 @@ namespace HFR {
 
 		static Light light;
 
+		static Vec3f cameraPosition;
+
 		static void init(const float& screenWidth, const float& screenHeight);
 		static void createProjectionMatrix(const float& screenWidth, const float& screenHeight);
 		static void close();

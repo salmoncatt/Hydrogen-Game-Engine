@@ -9,6 +9,8 @@ namespace HFR {
 	Mat4f Renderer::orthoMatrix = Mat4f::createOrthoMatrix(-1, 1, -1, 1, -1, 1);
 	Mat4f Renderer::pixelOrthoMatrix = Mat4f::createOrthoMatrix(-1, 1, -1, 1, -1, 1);
 	Mat4f Renderer::viewMatrix = Mat4f();
+
+	Vec3f Renderer::cameraPosition = Vec3f();
 	
 	Light Renderer::light = Light();
 
@@ -103,6 +105,7 @@ namespace HFR {
 
 	void Renderer::setCamera(const Camera& camera) {
 		viewMatrix = Mat4f::createViewMatrix(camera.position, camera.rotation);
+		cameraPosition = camera.position;
 	}
 
 	void Renderer::setWireFrameMode(const bool& in) {
@@ -406,6 +409,7 @@ namespace HFR {
 		//material things for lighting n stuff
 		shader.setUniform("ambientColor", mesh.material.ambientColor);
 		shader.setUniform("specularColor", mesh.material.specularColor);
+		shader.setUniform("specularExponent", mesh.material.specularExponent);
 		shader.setUniform("diffuseColor", mesh.material.albedoColor);
 		shader.setUniform("ambientStrength", 0.1f);
 
@@ -413,6 +417,7 @@ namespace HFR {
 		shader.setUniform("lightMode", lightMode);
 		shader.setUniform("lightPosition", light.position);
 		shader.setUniform("lightColor", light.color);
+		shader.setUniform("cameraPosition", cameraPosition);
 
 		//stupid cast size_t to GLsizei warning
 		if (!mesh.indices.empty())

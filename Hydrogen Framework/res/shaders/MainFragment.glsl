@@ -13,11 +13,12 @@ uniform int lightMode;
 in vec3 surfaceNormal;
 in float passedLight;
 in vec3 lightVector;
-
+uniform vec3 cameraPosition;
 
 uniform vec3 diffuseColor;
 uniform vec3 ambientColor;
 uniform vec3 specularColor;
+uniform float specularExponent;
 uniform float ambientStrength;
 
 vec3 max(vec3 a, vec3 b) {

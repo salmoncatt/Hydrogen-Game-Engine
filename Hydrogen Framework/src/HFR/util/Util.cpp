@@ -379,6 +379,36 @@ namespace HFR {
 						Debug::systemErr("Loading material: " + filepath + ", has failed because trying to add material properties without having (newmtl) command found");
 					}
 				}
+				else if (line.substr(0, 3) == "Ns ") {
+					if (materialCount > 0) {
+						int index = materialCount - 1;
+
+						std::istringstream data(line.substr(3));
+
+						float amount;
+						data >> amount;
+
+						out[index].specularExponent = amount;
+					}
+					else {
+						Debug::systemErr("Loading material: " + filepath + ", has failed because trying to add material properties without having (newmtl) command found");
+					}
+				}
+				else if (line.substr(0, 4) == "	Ns ") {
+					if (materialCount > 0) {
+						int index = materialCount - 1;
+
+						std::istringstream data(line.substr(4));
+
+						float amount;
+						data >> amount;
+
+						out[index].specularExponent = amount;
+					}
+					else {
+						Debug::systemErr("Loading material: " + filepath + ", has failed because trying to add material properties without having (newmtl) command found");
+					}
+				}
 				else if (line.substr(0, 7) == "map_Kd ") {
 					//sometimes map_Kd has indented commands and sometimes they dont, wait a pain
 					if (materialCount > 0) {
