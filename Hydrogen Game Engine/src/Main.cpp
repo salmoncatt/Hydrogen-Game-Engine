@@ -65,7 +65,7 @@ public:
 
 		peter.addComponent<NativeScript>().addScript("testScript");
 
-		Renderer::light.color = Vec3f(1);
+		Renderer::light.diffuseColor = Vec3f(1);
 
 		while (shouldUpdate() && !Input::getKey(HFR_KEY_ESCAPE)) {
 			ProfileMethod("Main loop");

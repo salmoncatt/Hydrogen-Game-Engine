@@ -10,10 +10,10 @@
 #include HFR_VEC2
 #include HFR_LIGHT
 #include HFR_MESH_COMPONENT
+#include HFR_CAMERA
 
 namespace HFR {
 
-	struct Camera;
 	class Mesh;
 	struct Vec3f;
 	struct Transform;
@@ -46,7 +46,7 @@ namespace HFR {
 		static Light light;
 		static MeshComponent lightObject;
 
-		static Vec3f cameraPosition;
+		static Camera camera;
 		static float ambientIntensity;
 
 		static void init(const float& screenWidth, const float& screenHeight);

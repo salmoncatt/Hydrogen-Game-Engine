@@ -8,9 +8,11 @@ namespace HFR {
 
 	}
 
-	Light::Light(Vec3f _position, Vec3f _color) {
+	Light::Light(Vec3f _position, Vec3f color) {
 		position = _position;
-		color = _color;
+		diffuseColor = color * 0.5f;
+		specularColor = color;
+		ambientColor = color * 0.1f;
 	}
 
 	Light::~Light() {

@@ -10,7 +10,7 @@ namespace HFR {
 	Mat4f Renderer::pixelOrthoMatrix = Mat4f::createOrthoMatrix(-1, 1, -1, 1, -1, 1);
 	Mat4f Renderer::viewMatrix = Mat4f();
 
-	Vec3f Renderer::cameraPosition = Vec3f();
+	Camera Renderer::camera = Camera();
 	
 	Light Renderer::light = Light();
 
@@ -115,9 +115,9 @@ namespace HFR {
 		return currentWindowSize;
 	}
 
-	void Renderer::setCamera(const Camera& camera) {
-		viewMatrix = Mat4f::createViewMatrix(camera.position, camera.rotation);
-		cameraPosition = camera.position;
+	void Renderer::setCamera(const Camera& _camera) {
+		viewMatrix = Mat4f::createViewMatrix(_camera.position, _camera.rotation);
+		camera = _camera;
 	}
 
 	void Renderer::setWireFrameMode(const bool& in) {
@@ -428,9 +428,11 @@ namespace HFR {
 		//light things
 		shader.setUniform("lightMode", lightMode);
 		shader.setUniform("lightPosition", light.position);
-		shader.setUniform("lightColor", light.color);
-		shader.setUniform("cameraPosition", cameraPosition);
+		shader.setUniform("cameraPosition", camera.position);
 		shader.setUniform("useLighting", mesh.useLighting);
+		shader.setUniform("lightDiffuse", light.diffuseColor);
+		shader.setUniform("lightAmbient", light.ambientColor);
+		shader.setUniform("lightSpecular", light.specularColor);
 
 		//stupid cast size_t to GLsizei warning
 		if (!mesh.indices.empty())
@@ -549,6 +551,7 @@ namespace HFR {
 	}
 
 	void Renderer::update() {
+		lightObject.meshes[0].material.diffuseColor = light.diffuseColor;
 		render(lightObject.meshes[0], Transform(light.position, Vec3f(), Vec3f(1, 1, 1)), Texture());
 	}
 

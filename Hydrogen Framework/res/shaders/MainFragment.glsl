@@ -9,7 +9,9 @@ uniform bool hasTextureCoords;
 
 
 //light stuff
-uniform vec3 lightColor;
+uniform vec3 lightDiffuse;
+uniform vec3 lightAmbient;
+uniform vec3 lightSpecular;
 uniform int lightMode;
 in vec3 surfaceNormal;
 in float passedLight;
@@ -23,11 +25,37 @@ uniform float specularExponent;
 uniform float ambientIntensity;
 uniform bool useLighting;
 
+uniform vec3 test;
+
 vec3 max(vec3 a, vec3 b) {
   return vec3(max(a.x, a.x), max(a.y, b.y), max(a.z, b.z));
 }
 
+struct Material {
+	
+	sampler2D diffuseMap;
+	vec3 diffuseColor;
+	
+	sampler2D ambientMap;
+	vec3 ambientColor;
 
+	sampler2D specularMap;
+	vec3 specularColor;
+	float specularExponent;
+
+	sampler2D emission;
+	vec3 emissionColor;
+
+};
+
+struct Light {
+	
+	vec3 position;
+	vec3 ambientColor;
+	vec3 diffuseColor;
+	vec3 specularColor;
+
+};
 
 //lighting calcs done here
 vec4 getLight(){
@@ -35,17 +63,17 @@ vec4 getLight(){
 		light = max(light, 0);
 
 		//ambient calculations
-		vec3 ambient = ambientColor * ambientIntensity * lightColor;
+		vec3 ambient = ambientColor * lightAmbient;
 
 		//specular calculations
 		vec3 viewDirection = normalize(cameraPosition - worldPosition);
 		vec3 reflectDirection = reflect(-lightVector, surfaceNormal);
 
 		float spec = pow(max(dot(viewDirection, reflectDirection), 0.0), specularExponent);
-		vec3 specular = specularColor * spec * lightColor;
+		vec3 specular = specularColor * spec * lightSpecular;
 
 		//diffuse calculations
-		vec3 diffuse = lightColor * light;
+		vec3 diffuse = lightDiffuse * light;
 		vec3 finalLight = diffuse + ambient + specular;
 		
 		
