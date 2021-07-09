@@ -118,13 +118,13 @@ namespace HFR {
 					auto& mesh = meshcomponent.meshes[j];
 					auto& texture = meshcomponent.meshes[j].material.diffuseMap;
 
+					if (!mesh.created)
+						mesh.create();
+
+					if (!texture.isCreated)
+						texture.create();
+
 					if (!mesh.vertices.empty()) {
-						if (!mesh.created)
-							mesh.create();
-
-						if (!texture.isCreated)
-							texture.create();
-
 						Renderer::render(mesh, transform, texture);
 					}
 				}

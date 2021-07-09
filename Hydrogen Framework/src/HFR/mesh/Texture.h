@@ -32,6 +32,8 @@ namespace HFR {
 
 		bool generateMipmap = true;
 
+		int textureUnit = 0;
+
 		Texture();
 		Texture(const Image& image);
 		Texture(const Texture& texture);

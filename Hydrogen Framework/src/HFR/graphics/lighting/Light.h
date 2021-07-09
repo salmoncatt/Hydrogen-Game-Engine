@@ -15,11 +15,13 @@ namespace HFR {
 		//position of light, default is (0,0,0)
 		Vec3f position = Vec3f();
 
-		//color of light, default is (1,1,1)
-		//Vec3f color = Vec3f(1);
-
+		//ambient color and intensity of light
 		Vec3f ambientColor = Vec3f(0.1f);
+
+		//diffuse color and intensity of light
 		Vec3f diffuseColor = Vec3f(0.5f);
+
+		//specular color and intensity of light
 		Vec3f specularColor = Vec3f(1);
 
 		Light();

@@ -20,21 +20,21 @@ namespace HFR {
 		~Shader();
 
 		void create();
-		void bind();
-		void unbind();
+		void bind() const;
+		void unbind() const;
 		void close();
 
-		unsigned int getUniformLocation(const char* name);
-		unsigned int getAttributeLocation(const char* name);
+		unsigned int getUniformLocation(const char* name) const;
+		unsigned int getAttributeLocation(const char* name) const;
 
 
-		void setUniform(const char* name, Mat4f& data);
-		void setUniform(const char* name, const Vec4f& data);
-		void setUniform(const char* name, const Vec3f& data);
-		void setUniform(const char* name, const Vec2f& data);
-		void setUniform(const char* name, const bool& data);
-		void setUniform(const char* name, const int& data);
-		void setUniform(const char* name, const float& data);
+		void setUniform(const char* name, Mat4f& data) const;
+		void setUniform(const char* name, const Vec4f& data) const;
+		void setUniform(const char* name, const Vec3f& data) const;
+		void setUniform(const char* name, const Vec2f& data) const;
+		void setUniform(const char* name, const bool& data) const;
+		void setUniform(const char* name, const int& data) const;
+		void setUniform(const char* name, const float& data) const;
 	};
 
 }

@@ -77,10 +77,10 @@ namespace HFR {
 		static void loadLight(const Light& light);
 
 		static void render(Mesh& mesh, const Vec3f& position, const Vec3f& rotation, const Vec3f& scale, const Texture& texture);
-		static void render(Mesh& mesh, Shader& shader, const Vec3f& position, const Vec3f& rotation, const Vec3f& scale, const Texture& texture);
+		static void render(Mesh& mesh, const Shader& shader, const Vec3f& position, const Vec3f& rotation, const Vec3f& scale, const Texture& texture);
 
 		static void render(Mesh& mesh, const Transform& transform, const Texture& texture);
-		static void render(Mesh& mesh, Shader& shader, const Transform& transform, const Texture& texture);
+		static void render(Mesh& mesh, const Shader& shader, const Transform& transform, const Texture& texture);
 
 		static void renderRectangle(const Vec2f& position, const Vec2f& size, const Texture& texture);
 		static void renderRectangle(const Vec2f& position, const Vec2f& size, const Vec3f& color);

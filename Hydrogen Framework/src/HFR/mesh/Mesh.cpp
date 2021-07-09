@@ -45,6 +45,7 @@ namespace HFR {
 		if (!indices.empty())
 			Util::pushDataToIBO(indices, IBO);
 
+		material.create();
 		created = true;
 	}
 

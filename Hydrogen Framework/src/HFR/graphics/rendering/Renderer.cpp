@@ -183,7 +183,7 @@ namespace HFR {
 		render(mesh, mainShader, position, rotation, scale, texture);
 	}
 
-	void Renderer::render(Mesh& mesh, Shader& shader, const Transform& transform, const Texture& texture) {
+	void Renderer::render(Mesh& mesh, const Shader& shader, const Transform& transform, const Texture& texture) {
 		render(mesh, shader, transform.position, transform.rotation, transform.scale, texture);
 	}
 
@@ -393,7 +393,7 @@ namespace HFR {
 		enableDepthTest();
 	}
 
-	void Renderer::render(Mesh& mesh, Shader& shader, const Vec3f& position, const Vec3f& rotation, const Vec3f& scale, const Texture& texture) {
+	void Renderer::render(Mesh& mesh, const Shader& shader, const Vec3f& position, const Vec3f& rotation, const Vec3f& scale, const Texture& texture) {
 		glBindVertexArray(mesh.VAO);
 		glEnableVertexAttribArray(0);
 		glEnableVertexAttribArray(1);
@@ -402,12 +402,13 @@ namespace HFR {
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.IBO);
 
 		shader.bind();
-		glActiveTexture(GL_TEXTURE0);
+		mesh.material.bindLightMaps(shader);
+		/*glActiveTexture(GL_TEXTURE0);
 
-		if (texture.image.width != 0 && texture.image.height != 0)
+		if (texture.image.hasData())
 			glBindTexture(GL_TEXTURE_2D, texture.textureID);
 		else
-			glBindTexture(GL_TEXTURE_2D, nullTexture.textureID);
+			glBindTexture(GL_TEXTURE_2D, nullTexture.textureID);*/
 
 		//matrix stuff
 		Mat4f transform = Mat4f::createTransformationMatrix(position, rotation, scale);
@@ -418,21 +419,16 @@ namespace HFR {
 		shader.setUniform("projectionViewTransformMatrix", projectionViewTransform);
 		shader.setUniform("hasTextureCoords", !mesh.texturecoords.empty());
 
-		//material things for lighting n stuff
-		shader.setUniform("ambientColor", mesh.material.ambientColor);
-		shader.setUniform("specularColor", mesh.material.specularColor);
-		shader.setUniform("specularExponent", mesh.material.specularExponent);
-		shader.setUniform("diffuseColor", mesh.material.diffuseColor);
-		shader.setUniform("ambientIntensity", ambientIntensity);
-
 		//light things
 		shader.setUniform("lightMode", lightMode);
-		shader.setUniform("lightPosition", light.position);
-		shader.setUniform("cameraPosition", camera.position);
 		shader.setUniform("useLighting", mesh.useLighting);
-		shader.setUniform("lightDiffuse", light.diffuseColor);
-		shader.setUniform("lightAmbient", light.ambientColor);
-		shader.setUniform("lightSpecular", light.specularColor);
+		shader.setUniform("cameraPosition", camera.position);
+
+		//light parameters
+		shader.setUniform("light.position", light.position);
+		shader.setUniform("light.diffuseColor", light.diffuseColor);
+		shader.setUniform("light.ambientColor", light.ambientColor);
+		shader.setUniform("light.specularColor", light.specularColor);
 
 		//stupid cast size_t to GLsizei warning
 		if (!mesh.indices.empty())

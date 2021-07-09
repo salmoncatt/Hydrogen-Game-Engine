@@ -31,50 +31,50 @@ namespace HFR {
 		Util::linkAndValidateProgram(programID);
 	}
 
-	void Shader::bind() {
+	void Shader::bind() const{
 		glUseProgram(programID);
 	}
 
-	void Shader::unbind() {
+	void Shader::unbind() const{
 		glUseProgram(0);
 	}
 
-	unsigned int Shader::getUniformLocation(const char* name) {
+	unsigned int Shader::getUniformLocation(const char* name) const{
 		return glGetUniformLocation(programID, name);
 	}
 
-	unsigned int Shader::getAttributeLocation(const char* name) {
+	unsigned int Shader::getAttributeLocation(const char* name) const{
 		return glGetAttribLocation(programID, name);
 	}
 
-	void Shader::setUniform(const char* name, Mat4f& data) {
+	void Shader::setUniform(const char* name, Mat4f& data) const{
 		FloatBuffer* matbuffer = new FloatBuffer(16);
 		data.store(matbuffer);
 		glUniformMatrix4fv(getUniformLocation(name), 1, false, matbuffer->data);
 		delete matbuffer;
 	}
 
-	void Shader::setUniform(const char* name, const Vec2f& data) {
+	void Shader::setUniform(const char* name, const Vec2f& data) const{
 		glUniform2f(getUniformLocation(name), data.x, data.y);
 	}
 
-	void Shader::setUniform(const char* name, const Vec3f& data) {
+	void Shader::setUniform(const char* name, const Vec3f& data) const{
 		glUniform3f(getUniformLocation(name), data.x, data.y, data.z);
 	}
 
-	void Shader::setUniform(const char* name, const Vec4f& data) {
+	void Shader::setUniform(const char* name, const Vec4f& data) const{
 		glUniform4f(getUniformLocation(name), data.x, data.y, data.z, data.w);
 	}
 
-	void Shader::setUniform(const char* name, const bool& data) {
+	void Shader::setUniform(const char* name, const bool& data) const{
 		glUniform1f(getUniformLocation(name), data ? (GLfloat)1 : (GLfloat)0);
 	}
 
-	void Shader::setUniform(const char* name, const float& data) {
+	void Shader::setUniform(const char* name, const float& data) const{
 		glUniform1f(getUniformLocation(name), data);
 	}
 
-	void Shader::setUniform(const char* name, const int& data) {
+	void Shader::setUniform(const char* name, const int& data) const{
 		glUniform1i(getUniformLocation(name), data);
 	}
 

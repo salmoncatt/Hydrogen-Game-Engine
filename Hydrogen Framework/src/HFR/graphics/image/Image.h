@@ -18,7 +18,7 @@ namespace HFR {
 
 		//std::vector<std::vector<Pixel>> pixeldata;
 		unsigned char* data;
-		
+
 		Image();
 		Image(const std::string& filepath);
 		Image& operator=(const Image& image);

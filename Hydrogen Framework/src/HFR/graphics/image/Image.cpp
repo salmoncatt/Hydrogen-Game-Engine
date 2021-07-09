@@ -6,7 +6,7 @@ namespace HFR {
 		width = 0;
 		height = 0;
 		channels = 0;
-		data = nullptr;
+		data = NULL;
 	}
 
 	Image::Image(const int& _width, const int& _height, const int& _channels, unsigned char* _data) {
@@ -17,7 +17,7 @@ namespace HFR {
 		int allocation = width * height * channels;
 		data = new unsigned char[allocation];
 
-		if (_data != nullptr)
+		if (_data != NULL)
 			std::memcpy(data, _data, allocation);
 	}
 
@@ -32,11 +32,11 @@ namespace HFR {
 	}
 
 	Image& Image::operator=(const Image& image) {
-		if (data != nullptr)
+		if (data != NULL)
 			delete[] data;
-		data = nullptr;
+		data = NULL;
 
-		if (image.data != nullptr) {
+		if (image.data != NULL) {
 			int allocation = image.width * image.height * image.channels;
 			data = new unsigned char[allocation];
 			width = image.width;
@@ -44,7 +44,7 @@ namespace HFR {
 			channels = image.channels;
 			filepath = image.filepath;
 
-			if (this != &image && image.data != nullptr)
+			if (this != &image && image.data != NULL)
 				std::memcpy(data, image.data, allocation);
 		}
 
@@ -55,7 +55,7 @@ namespace HFR {
 		width = 0;
 		height = 0;
 		channels = 0;
-		data = nullptr;
+		data = NULL;
 		filepath = _filepath;
 
 		data = stbi_load(filepath.c_str(), &width, &height, &channels, STBI_rgb_alpha);
@@ -71,7 +71,7 @@ namespace HFR {
 			delete[] data;
 		}
 
-		data = nullptr;
+		data = NULL;
 	}
 
 	unsigned char* Image::getPixel(const size_t& x, const size_t& y) {
@@ -113,7 +113,7 @@ namespace HFR {
 	//}
 
 	bool Image::hasData() const{
-		return (data != nullptr);
+		return (data != nullptr) && (data != NULL);
 	}
 
 }

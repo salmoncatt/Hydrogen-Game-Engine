@@ -379,6 +379,36 @@ namespace HFR {
 						Debug::systemErr("Loading material: " + filepath + ", has failed because trying to add material properties without having (newmtl) command found");
 					}
 				}
+				else if (line.substr(0, 3) == "Ke ") {
+					if (materialCount > 0) {
+						int index = materialCount - 1;
+
+						std::istringstream data(line.substr(3));
+
+						Vec3f color;
+						data >> color.x >> color.y >> color.z;
+
+						out[index].emissionColor = color;
+					}
+					else {
+						Debug::systemErr("Loading material: " + filepath + ", has failed because trying to add material properties without having (newmtl) command found");
+					}
+				}
+				else if (line.substr(0, 4) == "	Ke ") {
+					if (materialCount > 0) {
+						int index = materialCount - 1;
+
+						std::istringstream data(line.substr(4));
+
+						Vec3f color;
+						data >> color.x >> color.y >> color.z;
+
+						out[index].emissionColor = color;
+					}
+					else {
+						Debug::systemErr("Loading material: " + filepath + ", has failed because trying to add material properties without having (newmtl) command found");
+					}
+				}
 				else if (line.substr(0, 3) == "Ns ") {
 					if (materialCount > 0) {
 						int index = materialCount - 1;

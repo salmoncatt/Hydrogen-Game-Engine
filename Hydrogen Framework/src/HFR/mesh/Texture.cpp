@@ -40,7 +40,8 @@ namespace HFR {
 	void Texture::create() {
 		if (!isCreated) {
 
-			//glActiveTexture(GL_TEXTURE0);
+			glActiveTexture(GL_TEXTURE0 + textureUnit);
+			
 			glGenTextures(1, &textureID);
 			glBindTexture(textureType, textureID);
 
