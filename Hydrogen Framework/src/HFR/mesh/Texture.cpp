@@ -15,6 +15,15 @@ namespace HFR {
 	Texture::Texture(const Texture& texture) {
 		image = Image(texture.image);
 		textureID = 0;
+		byteAlignment = texture.byteAlignment;
+		wrapMode = texture.wrapMode;
+		filterMode = texture.filterMode;
+		textureType = texture.textureType;
+		internalFormat = texture.internalFormat;
+		format = texture.format;
+		dataType = texture.dataType;
+		generateMipmap = texture.generateMipmap;
+		textureUnit = texture.textureUnit;
 	}
 
 	Texture::Texture(const std::string& path) {
@@ -25,6 +34,16 @@ namespace HFR {
 	Texture& Texture::operator=(const Texture& texture) {
 		textureID = texture.textureID;
 		image = texture.image;
+
+		byteAlignment = texture.byteAlignment;
+		wrapMode = texture.wrapMode;
+		filterMode = texture.filterMode;
+		textureType = texture.textureType;
+		internalFormat = texture.internalFormat;
+		format = texture.format;
+		dataType = texture.dataType;
+		generateMipmap = texture.generateMipmap;
+		textureUnit = texture.textureUnit;
 
 		return *this;
 	}
@@ -52,10 +71,12 @@ namespace HFR {
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, wrapMode.x);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wrapMode.y);
 
-			if (image.data != nullptr)
+			/*if (image.data != NULL)
 				glTexImage2D(textureType, 0, internalFormat, image.width, image.height, 0, format, dataType, image.data);
 			else
-				glTexImage2D(textureType, 0, internalFormat, image.width, image.height, 0, format, dataType, 0);
+				glTexImage2D(textureType, 0, internalFormat, image.width, image.height, 0, format, dataType, 0);*/
+
+			glTexImage2D(textureType, 0, internalFormat, image.width, image.height, 0, format, dataType, image.data);
 
 			if(generateMipmap)
 				glGenerateMipmap(textureType);

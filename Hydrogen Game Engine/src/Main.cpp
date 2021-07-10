@@ -45,14 +45,14 @@ public:
 
 		mesh = MeshComponent();
 
-		//mesh.meshes = Util::loadMesh(HFR_RES + "models/warehouse/warehouse.obj");
-		mesh.meshes = Util::loadMesh(HFR_RES + "models/de_mirage/de_mirage.obj");
+		mesh.meshes = Util::loadMesh(HFR_RES + "models/warehouse/warehouse.obj");
+		//mesh.meshes = Util::loadMesh(HFR_RES + "models/crate/crate.obj");
 
 		warehouse.addComponent<MeshComponent>(mesh);
 
-		//.getComponent<Transform>().scale = (2);
-		warehouse.getComponent<Transform>().scale = (0.03f);
-		warehouse.getComponent<MeshComponent>().clearAllTextureCoordinates();
+		warehouse.getComponent<Transform>().scale = (2);
+		//warehouse.getComponent<Transform>().scale = (0.03f);
+		//warehouse.getComponent<MeshComponent>().clearAllTextureCoordinates();
 
 
 		Font oxygen = Font(HFR_RES + "fonts/oxygen/Oxygen-Regular.ttf");
@@ -66,6 +66,8 @@ public:
 		peter.addComponent<NativeScript>().addScript("testScript");
 
 		Renderer::light.diffuseColor = Vec3f(1);
+
+		Texture testt = Texture();
 
 		while (shouldUpdate() && !Input::getKey(HFR_KEY_ESCAPE)) {
 			ProfileMethod("Main loop");
@@ -96,7 +98,7 @@ public:
 			else if(Input::getKeyDown(HFR_KEY_G))
 				VisualStudio::openVisualStudio(HFR_PROJECTS_PATH + "testProject/Scripts/testProject.sln");
 
-			// Renderer::render(text);
+			Renderer::render(text);
 
 			window->limitFps(200);
 			Renderer::update();

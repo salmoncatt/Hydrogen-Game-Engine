@@ -440,28 +440,52 @@ namespace HFR {
 					}
 				}
 				else if (line.substr(0, 7) == "map_Kd ") {
-					//sometimes map_Kd has indented commands and sometimes they dont, wait a pain
-					if (materialCount > 0) {
-						int index = materialCount - 1;
+				//sometimes map_Kd has indented commands and sometimes they dont, wait a pain
+				if (materialCount > 0) {
+					int index = materialCount - 1;
 
- 						out[index].diffuseMap = Texture(removeNameFromFilePathAndName(filepath) + line.substr(7));
-						out[index].diffuseMap.create();
-					}
-					else {
-						Debug::systemErr("Loading material: " + filepath + ", has failed because trying to add material properties without having (newmtl) command found");
-					}
+					out[index].diffuseMap = Texture(removeNameFromFilePathAndName(filepath) + line.substr(7));
+					out[index].diffuseMap.create();
+				}
+				else {
+					Debug::systemErr("Loading material: " + filepath + ", has failed because trying to add material properties without having (newmtl) command found");
+				}
 				}
 				else if (line.substr(0, 8) == "	map_Kd ") {
-					//sometimes map_Kd has indented commands and sometimes they dont, wait a pain
-					if (materialCount > 0) {
-						int index = materialCount - 1;
+				//sometimes map_Kd has indented commands and sometimes they dont, wait a pain
+				if (materialCount > 0) {
+					int index = materialCount - 1;
 
-						out[index].diffuseMap = Texture(removeNameFromFilePathAndName(filepath) + line.substr(8));
-						out[index].diffuseMap.create();
-					}
-					else {
-						Debug::systemErr("Loading material: " + filepath + ", has failed because trying to add material properties without having (newmtl) command found");
-					}
+					out[index].diffuseMap = Texture(removeNameFromFilePathAndName(filepath) + line.substr(8));
+					out[index].diffuseMap.create();
+				}
+				else {
+					Debug::systemErr("Loading material: " + filepath + ", has failed because trying to add material properties without having (newmtl) command found");
+				}
+				}
+				else if (line.substr(0, 7) == "map_Ks ") {
+				//sometimes map_Kd has indented commands and sometimes they dont, wait a pain
+				if (materialCount > 0) {
+					int index = materialCount - 1;
+
+					out[index].specularMap = Texture(removeNameFromFilePathAndName(filepath) + line.substr(7));
+					out[index].specularMap.create();
+				}
+				else {
+					Debug::systemErr("Loading material: " + filepath + ", has failed because trying to add material properties without having (newmtl) command found");
+				}
+				}
+				else if (line.substr(0, 8) == "	map_Ks ") {
+				//sometimes map_Kd has indented commands and sometimes they dont, wait a pain
+				if (materialCount > 0) {
+					int index = materialCount - 1;
+
+					out[index].specularMap = Texture(removeNameFromFilePathAndName(filepath) + line.substr(8));
+					out[index].specularMap.create();
+				}
+				else {
+					Debug::systemErr("Loading material: " + filepath + ", has failed because trying to add material properties without having (newmtl) command found");
+				}
 				}
 			}
 		}
@@ -519,7 +543,7 @@ namespace HFR {
 
 			float data[3];
 
-			if (line[0] != '#' && line[0] != 'o' && header != "f ") {
+			if (line[0] != '#' && line[0] != 'o' && header != "f " && line[0] != '\0') {
 				char* currentPointer = strchr(_strdup(line.substr(line.find(' ')).data()), ' ');
 
 				data[0] = strtof(++currentPointer, &currentPointer);

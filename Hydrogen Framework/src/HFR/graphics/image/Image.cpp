@@ -22,13 +22,22 @@ namespace HFR {
 	}
 
 	Image::Image(const Image& image) {
-		width = image.width;
-		height = image.height;
-		channels = image.channels;
+		
+		width = 0;
+		height = 0;
+		channels = 0;
+		data = NULL;
 
-		int allocation = image.width * image.height * image.channels;
-		data = new unsigned char[allocation];
-		std::memcpy(data, image.data, allocation);
+		if (image.hasData()) {
+			width = image.width;
+			height = image.height;
+			channels = image.channels;
+			filepath = image.filepath;
+
+			int allocation = image.width * image.height * image.channels;
+			data = new unsigned char[allocation];
+			std::memcpy(data, image.data, allocation);
+		}
 	}
 
 	Image& Image::operator=(const Image& image) {
@@ -36,16 +45,19 @@ namespace HFR {
 			delete[] data;
 		data = NULL;
 
-		if (image.data != NULL) {
-			int allocation = image.width * image.height * image.channels;
-			data = new unsigned char[allocation];
-			width = image.width;
-			height = image.height;
-			channels = image.channels;
-			filepath = image.filepath;
+		if (image.hasData()) {
+			if (image.data != NULL) {
+				int allocation = image.width * image.height * image.channels;
+				data = new unsigned char[allocation];
+				width = image.width;
+				height = image.height;
+				channels = image.channels;
+				filepath = image.filepath;
 
-			if (this != &image && image.data != NULL)
-				std::memcpy(data, image.data, allocation);
+				if (this != &image && image.data != NULL)
+					std::memcpy(data, image.data, allocation);
+			}
+
 		}
 
 		return *this;
@@ -113,7 +125,7 @@ namespace HFR {
 	//}
 
 	bool Image::hasData() const{
-		return (data != nullptr) && (data != NULL);
+		return (data != NULL);
 	}
 
 }

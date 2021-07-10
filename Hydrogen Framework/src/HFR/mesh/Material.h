@@ -73,18 +73,18 @@ namespace HFR {
 
 			if (diffuseMap.image.hasData()) {
 				glActiveTexture(GL_TEXTURE0);
+				glBindTexture(GL_TEXTURE_2D, diffuseMap.textureID);
 				shader.setUniform("material.diffuseMap", (int)0);
 				shader.setUniform("material.useDiffuseMap", true);
-				glBindTexture(GL_TEXTURE_2D, diffuseMap.textureID);
 			}
 
-			if (ambientMap.image.hasData()) {
+			/*if (ambientMap.image.hasData()) {
 				glActiveTexture(GL_TEXTURE1);
 				shader.setUniform("material.ambientMap", (int)1);
 				shader.setUniform("material.useAmbientMap", true);
 				glBindTexture(GL_TEXTURE_2D, ambientMap.textureID);
 			}
-			
+
 			if (specularMap.image.hasData()) {
 				glActiveTexture(GL_TEXTURE2);
 				shader.setUniform("material.specularMap", (int)2);
@@ -97,7 +97,7 @@ namespace HFR {
 				shader.setUniform("material.emissionMap", (int)3);
 				shader.setUniform("material.useEmissionMap", true);
 				glBindTexture(GL_TEXTURE_2D, emissionMap.textureID);
-			}
+			}*/
 
 
 			//material things for lighting n stuff
