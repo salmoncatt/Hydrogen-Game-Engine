@@ -83,6 +83,8 @@ namespace HFR {
 
 			isCreated = true;
 
+			glActiveTexture(GL_TEXTURE0);
+
 			glBindTexture(textureType, 0);
 		}
 	}

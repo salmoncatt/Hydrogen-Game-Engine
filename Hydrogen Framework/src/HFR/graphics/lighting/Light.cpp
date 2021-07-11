@@ -13,6 +13,7 @@ namespace HFR {
 		diffuseColor = color * 0.5f;
 		specularColor = color;
 		ambientColor = color * 0.1f;
+		usePerPixelLighting = true;
 	}
 
 	Light::~Light() {

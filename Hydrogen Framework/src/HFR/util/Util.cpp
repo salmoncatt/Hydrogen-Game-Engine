@@ -487,6 +487,54 @@ namespace HFR {
 					Debug::systemErr("Loading material: " + filepath + ", has failed because trying to add material properties without having (newmtl) command found");
 				}
 				}
+				else if (line.substr(0, 7) == "map_Ka ") {
+				//sometimes map_Kd has indented commands and sometimes they dont, wait a pain
+				if (materialCount > 0) {
+					int index = materialCount - 1;
+
+					out[index].ambientMap = Texture(removeNameFromFilePathAndName(filepath) + line.substr(7));
+					out[index].ambientMap.create();
+				}
+				else {
+					Debug::systemErr("Loading material: " + filepath + ", has failed because trying to add material properties without having (newmtl) command found");
+				}
+				}
+				else if (line.substr(0, 8) == "	map_Ka ") {
+				//sometimes map_Kd has indented commands and sometimes they dont, wait a pain
+				if (materialCount > 0) {
+					int index = materialCount - 1;
+
+					out[index].ambientMap = Texture(removeNameFromFilePathAndName(filepath) + line.substr(8));
+					out[index].ambientMap.create();
+				}
+				else {
+					Debug::systemErr("Loading material: " + filepath + ", has failed because trying to add material properties without having (newmtl) command found");
+				}
+				}
+				else if (line.substr(0, 7) == "map_Ke ") {
+				//sometimes map_Kd has indented commands and sometimes they dont, wait a pain
+				if (materialCount > 0) {
+					int index = materialCount - 1;
+
+					out[index].emissionMap = Texture(removeNameFromFilePathAndName(filepath) + line.substr(7));
+					out[index].emissionMap.create();
+				}
+				else {
+					Debug::systemErr("Loading material: " + filepath + ", has failed because trying to add material properties without having (newmtl) command found");
+				}
+				}
+				else if (line.substr(0, 8) == "	map_Ke ") {
+				//sometimes map_Kd has indented commands and sometimes they dont, wait a pain
+				if (materialCount > 0) {
+					int index = materialCount - 1;
+
+					out[index].emissionMap = Texture(removeNameFromFilePathAndName(filepath) + line.substr(8));
+					out[index].emissionMap.create();
+				}
+				else {
+					Debug::systemErr("Loading material: " + filepath + ", has failed because trying to add material properties without having (newmtl) command found");
+				}
+				}
 			}
 		}
 		else {

@@ -69,45 +69,45 @@ namespace HFR {
 		}
 
 		//shader NEEDS to be BINDED before calling this
-		void bindLightMaps(const Shader& shader) {
+		//void bindLightMaps(const Shader& shader) {
 
-			if (diffuseMap.image.hasData()) {
-				glActiveTexture(GL_TEXTURE0);
-				glBindTexture(GL_TEXTURE_2D, diffuseMap.textureID);
-				shader.setUniform("material.diffuseMap", (int)0);
-				shader.setUniform("material.useDiffuseMap", true);
-			}
+		//	if (diffuseMap.image.hasData()) {
+		//		glActiveTexture(GL_TEXTURE0);
+		//		glBindTexture(GL_TEXTURE_2D, diffuseMap.textureID);
+		//		shader.setUniform("material.diffuseMap", (int)0);
+		//		shader.setUniform("material.useDiffuseMap", true);
+		//	}
 
-			/*if (ambientMap.image.hasData()) {
-				glActiveTexture(GL_TEXTURE1);
-				shader.setUniform("material.ambientMap", (int)1);
-				shader.setUniform("material.useAmbientMap", true);
-				glBindTexture(GL_TEXTURE_2D, ambientMap.textureID);
-			}
+		//	if (ambientMap.image.hasData()) {
+		//		glActiveTexture(GL_TEXTURE1);
+		//		shader.setUniform("material.ambientMap", (int)1);
+		//		shader.setUniform("material.useAmbientMap", true);
+		//		glBindTexture(GL_TEXTURE_2D, ambientMap.textureID);
+		//	}
 
-			if (specularMap.image.hasData()) {
-				glActiveTexture(GL_TEXTURE2);
-				shader.setUniform("material.specularMap", (int)2);
-				shader.setUniform("material.useSpecularMap", true);
-				glBindTexture(GL_TEXTURE_2D, specularMap.textureID);
-			}
+		//	if (specularMap.image.hasData()) {
+		//		glActiveTexture(GL_TEXTURE2);
+		//		shader.setUniform("material.specularMap", (int)2);
+		//		shader.setUniform("material.useSpecularMap", true);
+		//		glBindTexture(GL_TEXTURE_2D, specularMap.textureID);
+		//	}
 
-			if (emissionMap.image.hasData()) {
-				glActiveTexture(GL_TEXTURE3);
-				shader.setUniform("material.emissionMap", (int)3);
-				shader.setUniform("material.useEmissionMap", true);
-				glBindTexture(GL_TEXTURE_2D, emissionMap.textureID);
-			}*/
+		//	if (emissionMap.image.hasData()) {
+		//		glActiveTexture(GL_TEXTURE3);
+		//		shader.setUniform("material.emissionMap", (int)3);
+		//		shader.setUniform("material.useEmissionMap", true);
+		//		glBindTexture(GL_TEXTURE_2D, emissionMap.textureID);
+		//	}
 
 
-			//material things for lighting n stuff
-			shader.setUniform("material.diffuseColor", diffuseColor);
-			shader.setUniform("material.ambientColor", ambientColor);
-			shader.setUniform("material.specularColor", specularColor);
-			shader.setUniform("material.specularExponent", specularExponent);
-			shader.setUniform("material.emissionColor", emissionColor);
-			//shader.setUniform("material.ambientIntensity", ambientIntensity);
-		}
+		//	//material things for lighting n stuff
+		//	shader.setUniform("material.diffuseColor", diffuseColor);
+		//	shader.setUniform("material.ambientColor", ambientColor);
+		//	shader.setUniform("material.specularColor", specularColor);
+		//	shader.setUniform("material.specularExponent", specularExponent);
+		//	shader.setUniform("material.emissionColor", emissionColor);
+		//	//shader.setUniform("material.ambientIntensity", ambientIntensity);
+		//}
 
 	};
 

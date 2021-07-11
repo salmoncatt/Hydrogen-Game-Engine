@@ -25,7 +25,6 @@ namespace HFR {
 	private:
 		static bool wireframe;
 		static bool cull;
-		static int lightMode;
 		static Mesh quad;
 		const static std::vector<float> quadVertices;
 		static Vec2f currentWindowSize;
@@ -47,7 +46,6 @@ namespace HFR {
 		static MeshComponent lightObject;
 
 		static Camera camera;
-		static float ambientIntensity;
 
 		static void init(const float& screenWidth, const float& screenHeight);
 		static void createProjectionMatrix(const float& screenWidth, const float& screenHeight);
@@ -70,9 +68,6 @@ namespace HFR {
 
 		static void enableDepthTest();
 		static void disableDepthTest();
-
-		static void setLightMode(const int& lightMode);
-		static int getLightMode();
 
 		static void loadLight(const Light& light);
 

@@ -28,11 +28,6 @@ namespace HFR {
 	bool Renderer::wireframe = false;
 	bool Renderer::cull = false;
 
-	//set to per vertex for speed at first
-	int Renderer::lightMode = HFR_PER_VERTEX_LIGHT;
-	float Renderer::ambientIntensity = 0.1f;
-
-
 	Vec2f Renderer::currentWindowSize = Vec2f();
 
 	void Renderer::init(const float& screenWidth, const float& screenHeight) {
@@ -169,14 +164,6 @@ namespace HFR {
 
 	void Renderer::disableDepthTest() {
 		glDisable(GL_DEPTH_TEST);
-	}
-
-	void Renderer::setLightMode(const int& _lightMode) {
-		lightMode = _lightMode;
-	}
-
-	int Renderer::getLightMode() {
-		return lightMode;
 	}
 
 	void Renderer::render(Mesh& mesh, const Vec3f& position, const Vec3f& rotation, const Vec3f& scale, const Texture& texture) {
@@ -402,11 +389,18 @@ namespace HFR {
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.IBO);
 
 		shader.bind();
-		mesh.material.bindLightMaps(shader);
-		/*glActiveTexture(GL_TEXTURE0);
+		//Debug::log("test");
+		//mesh.material.bindLightMaps(shader);
+		
+		shader.bindLightMaps(mesh.material);
 
-		if (texture.image.hasData())
-			glBindTexture(GL_TEXTURE_2D, texture.textureID);
+		//glActiveTexture(GL_TEXTURE0);
+
+		/*if (mesh.material.diffuseMap.image.hasData()) {
+			shader.setUniform("material.diffuseMap", (int)0);
+			shader.setUniform("material.useDiffuseMap", true);
+			glBindTexture(GL_TEXTURE_2D, mesh.material.diffuseMap.textureID);
+		}
 		else
 			glBindTexture(GL_TEXTURE_2D, nullTexture.textureID);*/
 
@@ -420,7 +414,7 @@ namespace HFR {
 		shader.setUniform("hasTextureCoords", !mesh.texturecoords.empty());
 
 		//light things
-		shader.setUniform("lightMode", lightMode);
+		//shader.setUniform("lightMode", light.usePerPixelLighting);
 		shader.setUniform("useLighting", mesh.useLighting);
 		shader.setUniform("cameraPosition", camera.position);
 

@@ -9,7 +9,7 @@ uniform mat4 projectionViewTransformMatrix;
 
 //light stuff
 //uniform vec3 lightPosition;
-uniform int lightMode;
+//uniform int lightMode;
 //out float passedLight;
 //out int passLightMode;
 out vec3 surfaceNormal;

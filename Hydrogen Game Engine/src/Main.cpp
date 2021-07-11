@@ -30,7 +30,6 @@ public:
 		window->setPosition(Vec2i(300, 100));
 
 		Renderer::setCullingMode(true);
-		Renderer::setLightMode(HFR_PER_PIXEL_LIGHT);
 		//Engine::window->setVSync(true);
 
 		test->editorCamera.transform.position = Vec3f(0, 0, 10);
@@ -45,8 +44,8 @@ public:
 
 		mesh = MeshComponent();
 
-		mesh.meshes = Util::loadMesh(HFR_RES + "models/warehouse/warehouse.obj");
-		//mesh.meshes = Util::loadMesh(HFR_RES + "models/crate/crate.obj");
+		//mesh.meshes = Util::loadMesh(HFR_RES + "models/warehouse/warehouse.obj");
+		mesh.meshes = Util::loadMesh(HFR_RES + "models/crate/crate.obj");
 
 		warehouse.addComponent<MeshComponent>(mesh);
 

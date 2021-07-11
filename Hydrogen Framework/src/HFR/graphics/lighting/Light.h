@@ -12,6 +12,9 @@ namespace HFR {
 	private:
 	public:
 
+		//whether to use per pixel lighting vs per vertex lighting (true = pixel, false = vertex)
+		bool usePerPixelLighting = true;
+
 		//position of light, default is (0,0,0)
 		Vec3f position = Vec3f();
 

@@ -78,6 +78,55 @@ namespace HFR {
 		glUniform1i(getUniformLocation(name), data);
 	}
 
+	void Shader::bindLightMaps(const Material& material) const{
+
+		//colors
+		setUniform("material.diffuseColor", material.diffuseColor);
+		setUniform("material.ambientColor", material.ambientColor);
+		setUniform("material.specularColor", material.specularColor);
+		setUniform("material.specularExponent", material.specularExponent);
+		setUniform("material.emissionColor", material.emissionColor);
+		//shader.setUniform("material.ambientIntensity", ambientIntensity);
+
+		//maps
+		if (material.diffuseMap.image.hasData()) {
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_2D, material.diffuseMap.textureID);
+			setUniform("material.diffuseMap", (int)0);
+			setUniform("material.useDiffuseMap", true);
+		}
+		else
+			setUniform("material.useDiffuseMap", false);
+
+		if (material.ambientMap.image.hasData()) {
+			glActiveTexture(GL_TEXTURE1);
+			setUniform("material.ambientMap", (int)1);
+			setUniform("material.useAmbientMap", true);
+			glBindTexture(GL_TEXTURE_2D, material.ambientMap.textureID);
+		}
+		else
+			setUniform("material.useAmbientMap", false);
+
+		if (material.specularMap.image.hasData()) {
+			glActiveTexture(GL_TEXTURE2);
+			setUniform("material.specularMap", (int)2);
+			setUniform("material.useSpecularMap", true);
+			glBindTexture(GL_TEXTURE_2D, material.specularMap.textureID);
+		}
+		else
+			setUniform("material.useSpecularMap", false);
+
+		if (material.emissionMap.image.hasData()) {
+			glActiveTexture(GL_TEXTURE3);
+			setUniform("material.emissionMap", (int)3);
+			setUniform("material.useEmissionMap", true);
+			glBindTexture(GL_TEXTURE_2D, material.emissionMap.textureID);
+		}
+		else
+			setUniform("material.useEmissionMap", false);
+
+	}
+
 	void Shader::close() {
 		glDetachShader(programID, vertexID);
 		glDetachShader(programID, fragmentID);

@@ -4,7 +4,7 @@ out vec4 fragColor;
 //texture things
 in vec2 passedTextureCoords;
 in vec3 worldPosition;
-uniform sampler2D textureSampler;
+//uniform sampler2D textureSampler;
 uniform bool hasTextureCoords;
 
 
@@ -12,7 +12,7 @@ uniform bool hasTextureCoords;
 //uniform vec3 lightDiffuse;
 //uniform vec3 lightAmbient;
 //uniform vec3 lightSpecular;
-uniform int lightMode;
+//uniform int lightMode;
 in vec3 surfaceNormal;
 //in float passedLight;
 //in vec3 lightVector;
@@ -51,7 +51,7 @@ struct Material {
 	
 	//1 = map, 2 = color
 	bool useEmissionMap;
-	sampler2D emission;
+	sampler2D emissionMap;
 	vec3 emissionColor;
 
 };
@@ -96,12 +96,22 @@ vec4 getLight(){
 
 
 		//diffuse calculations
-		vec3 diffuse = light.diffuseColor * lightDot;
+		vec3 diffuse;
+		if(material.useDiffuseMap)
+			diffuse = light.diffuseColor * lightDot * texture(material.diffuseMap, passedTextureCoords).rgb;
+		else
+			diffuse = light.diffuseColor * lightDot * material.diffuseColor;
+
+		//emission
+		vec3 emission;
+		if(material.useEmissionMap)
+			emission = texture(material.emissionMap, passedTextureCoords).rgb;
+		else
+			emission = material.emissionColor;
 
 
 
-
-		vec3 finalLight = diffuse + ambient + specular + material.emissionColor;
+		vec3 finalLight = diffuse + ambient + specular + emission;
 		
 		return vec4(finalLight, 1);
 }
@@ -116,19 +126,18 @@ vec4 getLight(){
 
 void main() {
 	
-	//float light = passedLight;
-
-	//vec4 color = vec4(albedoColor, 1);
-
-	if(hasTextureCoords)
-		fragColor = texture(textureSampler, passedTextureCoords);
-	else
-		fragColor = vec4(material.diffuseColor, 1);
 
 
-	//lightMode means 1 = per vertex, 2 = per pixel
-	if(lightMode == 0 && useLighting)
-		fragColor *= getLight();
+	//lightMode means 1 = per pixel, 0 = per vertex
+	if(useLighting)
+		fragColor = getLight();
+	else{
+
+		if(hasTextureCoords && material.useDiffuseMap)
+			fragColor = texture(material.diffuseMap, passedTextureCoords);
+		else
+			fragColor = vec4(material.diffuseColor, 1);
+	}
 
 	//fragColor = color;
 

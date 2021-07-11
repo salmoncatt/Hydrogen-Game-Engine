@@ -35,6 +35,8 @@ namespace HFR {
 		void setUniform(const char* name, const bool& data) const;
 		void setUniform(const char* name, const int& data) const;
 		void setUniform(const char* name, const float& data) const;
+
+		void bindLightMaps(const Material& material) const;
 	};
 
 }
