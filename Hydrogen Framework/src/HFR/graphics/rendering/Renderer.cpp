@@ -2,12 +2,11 @@
 
 #include "HFR/text/Font.h"
 #include "HFR/gui/GuiText.h"
+#include HFR_RENDERER2D
 
 namespace HFR {
 
 	Mat4f Renderer::perspectiveMatrix = Mat4f();
-	Mat4f Renderer::orthoMatrix = Mat4f::createOrthoMatrix(-1, 1, -1, 1, -1, 1);
-	Mat4f Renderer::pixelOrthoMatrix = Mat4f::createOrthoMatrix(-1, 1, -1, 1, -1, 1);
 	Mat4f Renderer::viewMatrix = Mat4f();
 
 	Camera Renderer::camera = Camera();
@@ -15,15 +14,10 @@ namespace HFR {
 	Light Renderer::light = Light();
 
 	Shader Renderer::mainShader = HFR::Shader(HFR_RES + "shaders/", "MainVertex.glsl", "MainFragment.glsl");
-	Shader Renderer::guiShader = HFR::Shader(HFR_RES + "shaders/", "guiVertex.glsl", "guiFragment.glsl");
-	Shader Renderer::guiFrameShader = HFR::Shader(HFR_RES + "shaders/", "guiVertex.glsl", "guiFrameFragment.glsl");
-	Shader Renderer::textShader = HFR::Shader(HFR_RES + "shaders/", "guiTextVertex.glsl", "guiTextFragment.glsl");
 
 	Texture Renderer::nullTexture = Texture(HFR_RES + "textures/null.png");
 	MeshComponent Renderer::lightObject = MeshComponent();
 
-	const std::vector<float> Renderer::quadVertices = {-1, 1,  -1, -1,  1, 1, 1, -1};
-	Mesh Renderer::quad = Mesh(quadVertices, std::vector<unsigned int>(), std::vector<float>(), std::vector<float>());
 
 	bool Renderer::wireframe = false;
 	bool Renderer::cull = false;
@@ -50,15 +44,9 @@ namespace HFR {
 
 		enableAlphaBlending();
 
-		quad.type = HFR_2D;
-		quad.create();
-
 		Debug::systemLog("Creating engine shaders");
 
 		mainShader.create();
-		guiShader.create();
-		guiFrameShader.create();
-		textShader.create();
 
 		nullTexture.create();
 		Debug::setSystemLogMode(HFR_LOG_ON_SUCCESS, HFR_DONT_LOG_ON_FAIL);
@@ -84,22 +72,11 @@ namespace HFR {
 		currentWindowSize.y = screenHeight;
 		
 		glViewport(0, 0, (GLsizei)screenWidth, (GLsizei)screenHeight);
-
-		//for use with pixel sized gui (top left coordinate system btw)
-		pixelOrthoMatrix = Mat4f::createOrthoMatrix(0, 2 * screenWidth, -2 * screenHeight, 0, -1, 1);
-
-		//its weird for top left based coords
-		if(screenWidth < screenHeight)
-			orthoMatrix = Mat4f::createOrthoMatrix(0, 2, -2 / getAspectRatio(), 0, -1, 1);
-		else
-			orthoMatrix = Mat4f::createOrthoMatrix(0, 2 * getAspectRatio(), -2, 0, -1, 1);
 	}
 
 	void Renderer::close() {
 		mainShader.close();
-		guiShader.close();
-		guiFrameShader.close();
-		textShader.close();
+		nullTexture.destroy();
 	}
 
 	float Renderer::getAspectRatio() {
@@ -155,7 +132,7 @@ namespace HFR {
 
 	void Renderer::disableAlphaBlending() {
 		glDisable(GL_BLEND);
-		enableDepthTest();
+		//enableDepthTest();
 	}
 
 	void Renderer::enableDepthTest() {
@@ -183,202 +160,202 @@ namespace HFR {
 	}
 
 	//position and size in pixels
-	void Renderer::renderRectangle(const Vec2f& position, const Vec2f& size, const Texture& texture) {
-		disableDepthTest();
+	//void Renderer::renderRectangle(const Vec2f& position, const Vec2f& size, const Texture& texture) {
+	//	disableDepthTest();
 
-		glBindVertexArray(quad.VAO);
-		glEnableVertexAttribArray(0);
+	//	glBindVertexArray(quad.VAO);
+	//	glEnableVertexAttribArray(0);
 
-		guiShader.bind();
-		glActiveTexture(GL_TEXTURE0);
+	//	guiShader.bind();
+	//	glActiveTexture(GL_TEXTURE0);
 
-		if (texture.image.hasData())
-			glBindTexture(GL_TEXTURE_2D, texture.textureID);
-		else
-			glBindTexture(GL_TEXTURE_2D, nullTexture.textureID);
+	//	if (texture.image.hasData())
+	//		glBindTexture(GL_TEXTURE_2D, texture.textureID);
+	//	else
+	//		glBindTexture(GL_TEXTURE_2D, nullTexture.textureID);
 
-		//matrix stuff
-		Mat4f transform = Mat4f::createTransformationMatrix(
-			Vec2f((((position.x + (size.x / 2)) / currentWindowSize.x) * 2) - 1, (((currentWindowSize.y - position.y - (size.y / 2)) / currentWindowSize.y) * 2) - 1),
-			Vec3f(),
-			Vec2f(size.x / currentWindowSize.x, size.y / currentWindowSize.y));
+	//	//matrix stuff
+	//	Mat4f transform = Mat4f::createTransformationMatrix(
+	//		Vec2f((((position.x + (size.x / 2)) / currentWindowSize.x) * 2) - 1, (((currentWindowSize.y - position.y - (size.y / 2)) / currentWindowSize.y) * 2) - 1),
+	//		Vec3f(),
+	//		Vec2f(size.x / currentWindowSize.x, size.y / currentWindowSize.y));
 
-		guiShader.setUniform("transform", transform);
-		guiShader.setUniform("ortho", orthoMatrix);
-		guiShader.setUniform("hasTexture", true);
-		guiShader.setUniform("uiPosition", position);
-		guiShader.setUniform("uiWidth", size.x / currentWindowSize.x);
-		guiShader.setUniform("uiHeight", size.y / currentWindowSize.y);
-		guiShader.setUniform("drawmode", HFR_RECTANGLE);
-
-
-		glDrawArrays(GL_TRIANGLE_STRIP, 0, (int)quad.vertices.size());
-
-		guiShader.unbind();
-
-		glDisableVertexAttribArray(0);
-		glBindVertexArray(0);
-
-		enableDepthTest();
-	}
-
-	//position and size in pixels
-	void Renderer::renderRectangle(const Vec2f& position, const Vec2f& size, const Vec3f& color) {
-		disableDepthTest();
-
-		glBindVertexArray(quad.VAO);
-		glEnableVertexAttribArray(0);
-
-		guiShader.bind();
-
-		//matrix stuff
-		Mat4f transform = Mat4f::createTransformationMatrix(
-			Vec2f((((position.x + (size.x / 2)) / currentWindowSize.x) * 2) - 1, (((currentWindowSize.y - position.y - (size.y / 2)) / currentWindowSize.y) * 2) - 1),
-			Vec3f(), 
-			Vec2f(size.x / currentWindowSize.x, size.y / currentWindowSize.y));
-
-		guiShader.setUniform("transform", transform);
-		guiShader.setUniform("ortho", orthoMatrix);
-		guiShader.setUniform("hasTexture", false);
-		guiShader.setUniform("color", color);
-		guiShader.setUniform("uiPosition", position);
-		guiShader.setUniform("uiWidth", size.x / currentWindowSize.x);
-		guiShader.setUniform("uiHeight", size.y / currentWindowSize.y);
-		guiShader.setUniform("drawmode", HFR_RECTANGLE);
+	//	guiShader.setUniform("transform", transform);
+	//	guiShader.setUniform("ortho", orthoMatrix);
+	//	guiShader.setUniform("hasTexture", true);
+	//	guiShader.setUniform("uiPosition", position);
+	//	guiShader.setUniform("uiWidth", size.x / currentWindowSize.x);
+	//	guiShader.setUniform("uiHeight", size.y / currentWindowSize.y);
+	//	guiShader.setUniform("drawmode", HFR_RECTANGLE);
 
 
-		glDrawArrays(GL_TRIANGLE_STRIP, 0, (int)quad.vertices.size());
+	//	glDrawArrays(GL_TRIANGLE_STRIP, 0, (int)quad.vertices.size());
 
-		guiShader.unbind();
+	//	guiShader.unbind();
 
-		glDisableVertexAttribArray(0);
-		glBindVertexArray(0);
+	//	glDisableVertexAttribArray(0);
+	//	glBindVertexArray(0);
 
-		enableDepthTest();
-	}
+	//	enableDepthTest();
+	//}
 
-	void Renderer::renderRoundedRectangle(const Vec2f& position, const Vec2f& size, const float& radius, const Texture& texture) {
+	////position and size in pixels
+	//void Renderer::renderRectangle(const Vec2f& position, const Vec2f& size, const Vec3f& color) {
+	//	disableDepthTest();
 
-	}
+	//	glBindVertexArray(quad.VAO);
+	//	glEnableVertexAttribArray(0);
 
-	void Renderer::renderRoundedRectangle(const Vec2f& position, const Vec2f& size, const float& radius, const Vec3f& color) {
-		disableDepthTest();
+	//	guiShader.bind();
 
-		glBindVertexArray(quad.VAO);
-		glEnableVertexAttribArray(0);
+	//	//matrix stuff
+	//	Mat4f transform = Mat4f::createTransformationMatrix(
+	//		Vec2f((((position.x + (size.x / 2)) / currentWindowSize.x) * 2) - 1, (((currentWindowSize.y - position.y - (size.y / 2)) / currentWindowSize.y) * 2) - 1),
+	//		Vec3f(), 
+	//		Vec2f(size.x / currentWindowSize.x, size.y / currentWindowSize.y));
 
-		guiShader.bind();
-
-		Vec2f uiposition = Vec2f((((position.x + (size.x / 2)) / currentWindowSize.x) * 2) - 1, (((currentWindowSize.y - position.y - (size.y / 2)) / currentWindowSize.y) * 2) - 1);
-		Vec2f uiSize = Vec2f(size.x / currentWindowSize.x, size.y / currentWindowSize.y);
-
-		Mat4f rotationMat = Mat4f::createTransformationMatrix(Vec2f(), Vec3f(0, 0, 0), Vec2f());
-
-		//matrix stuff
-		Mat4f transform = Mat4f::createTransformationMatrix(
-			uiposition,
-			Vec3f(0, 0, 0),
-			uiSize);
-
-		guiShader.setUniform("transform", transform);
-		guiShader.setUniform("rotationMat", rotationMat);
-		guiShader.setUniform("ortho", orthoMatrix);
-		guiShader.setUniform("uiSize", size);
-		guiShader.setUniform("hasTexture", false);
-		guiShader.setUniform("color", color);
-		guiShader.setUniform("radius", radius);
-		guiShader.setUniform("smoothness", 0.7f);
-		guiShader.setUniform("drawmode", HFR_RECTANGLE_ROUNDED);
+	//	guiShader.setUniform("transform", transform);
+	//	guiShader.setUniform("ortho", orthoMatrix);
+	//	guiShader.setUniform("hasTexture", false);
+	//	guiShader.setUniform("color", color);
+	//	guiShader.setUniform("uiPosition", position);
+	//	guiShader.setUniform("uiWidth", size.x / currentWindowSize.x);
+	//	guiShader.setUniform("uiHeight", size.y / currentWindowSize.y);
+	//	guiShader.setUniform("drawmode", HFR_RECTANGLE);
 
 
-		glDrawArrays(GL_TRIANGLE_STRIP, 0, (int)quad.vertices.size());
+	//	glDrawArrays(GL_TRIANGLE_STRIP, 0, (int)quad.vertices.size());
 
-		guiShader.unbind();
+	//	guiShader.unbind();
 
-		glDisableVertexAttribArray(0);
-		glBindVertexArray(0);
+	//	glDisableVertexAttribArray(0);
+	//	glBindVertexArray(0);
 
-		enableDepthTest();
-	}
+	//	enableDepthTest();
+	//}
 
-	void Renderer::renderRectangle(const Vec2f& position, const Vec2f& size, const float& rotation, const Vec3f& color) {
-		disableDepthTest();
+	//void Renderer::renderRoundedRectangle(const Vec2f& position, const Vec2f& size, const float& radius, const Texture& texture) {
 
-		glBindVertexArray(quad.VAO);
-		glEnableVertexAttribArray(0);
+	//}
 
-		guiShader.bind();
+	//void Renderer::renderRoundedRectangle(const Vec2f& position, const Vec2f& size, const float& radius, const Vec3f& color) {
+	//	disableDepthTest();
 
-		Vec2f uiPosition = Vec2f(position.x - (size.x / 2), -position.y);
+	//	glBindVertexArray(quad.VAO);
+	//	glEnableVertexAttribArray(0);
 
-		//Vec2f uiSize = Vec2f(size.x / x, size.y / y);
+	//	guiShader.bind();
 
-		//matrix stuff
-		Mat4f transform = orthoMatrix * Mat4f::createTransformationMatrix(
-			position,
-			Vec3f(0, 0, rotation),
-			size);
+	//	Vec2f uiposition = Vec2f((((position.x + (size.x / 2)) / currentWindowSize.x) * 2) - 1, (((currentWindowSize.y - position.y - (size.y / 2)) / currentWindowSize.y) * 2) - 1);
+	//	Vec2f uiSize = Vec2f(size.x / currentWindowSize.x, size.y / currentWindowSize.y);
 
-		guiShader.setUniform("transform", transform);
-		guiShader.setUniform("uiSize", Vec2f(size.x * currentWindowSize.x, size.y * currentWindowSize.y));
-		guiShader.setUniform("hasTexture", false);
-		guiShader.setUniform("color", color);
-		//guiShader.setUniform("radius", radius);
-		guiShader.setUniform("smoothness", 0.7f);
-		guiShader.setUniform("drawmode", HFR_RECTANGLE);
+	//	Mat4f rotationMat = Mat4f::createTransformationMatrix(Vec2f(), Vec3f(0, 0, 0), Vec2f());
+
+	//	//matrix stuff
+	//	Mat4f transform = Mat4f::createTransformationMatrix(
+	//		uiposition,
+	//		Vec3f(0, 0, 0),
+	//		uiSize);
+
+	//	guiShader.setUniform("transform", transform);
+	//	guiShader.setUniform("rotationMat", rotationMat);
+	//	guiShader.setUniform("ortho", orthoMatrix);
+	//	guiShader.setUniform("uiSize", size);
+	//	guiShader.setUniform("hasTexture", false);
+	//	guiShader.setUniform("color", color);
+	//	guiShader.setUniform("radius", radius);
+	//	guiShader.setUniform("smoothness", 0.7f);
+	//	guiShader.setUniform("drawmode", HFR_RECTANGLE_ROUNDED);
 
 
-		glDrawArrays(GL_TRIANGLE_STRIP, 0, (int)quad.vertices.size());
+	//	glDrawArrays(GL_TRIANGLE_STRIP, 0, (int)quad.vertices.size());
 
-		guiShader.unbind();
+	//	guiShader.unbind();
 
-		glDisableVertexAttribArray(0);
-		glBindVertexArray(0);
+	//	glDisableVertexAttribArray(0);
+	//	glBindVertexArray(0);
 
-		enableDepthTest();
-	}
+	//	enableDepthTest();
+	//}
 
-	//position and size in pixels, angle in degrees, also draws from middle
-	void Renderer::radialRevealRectangle(const Vec2f& position, const Vec2f& size, const float& angle, const float& offset, const bool& flipped, const Texture& texture) {
-		disableDepthTest();
+	//void Renderer::renderRectangle(const Vec2f& position, const Vec2f& size, const float& rotation, const Vec3f& color) {
+	//	disableDepthTest();
 
-		glBindVertexArray(quad.VAO);
-		glEnableVertexAttribArray(0);
+	//	glBindVertexArray(quad.VAO);
+	//	glEnableVertexAttribArray(0);
 
-		guiShader.bind();
+	//	guiShader.bind();
 
-		glActiveTexture(GL_TEXTURE0);
+	//	Vec2f uiPosition = Vec2f(position.x - (size.x / 2), -position.y);
 
-		if (texture.image.hasData())
-			glBindTexture(GL_TEXTURE_2D, texture.textureID);
-		else
-			glBindTexture(GL_TEXTURE_2D, nullTexture.textureID);
+	//	//Vec2f uiSize = Vec2f(size.x / x, size.y / y);
 
-		Mat4f rotationMat = Mat4f::createTransformationMatrix(Vec2f(), Vec3f(0, 0, 0), Vec2f());
+	//	//matrix stuff
+	//	Mat4f transform = orthoMatrix * Mat4f::createTransformationMatrix(
+	//		position,
+	//		Vec3f(0, 0, rotation),
+	//		size);
 
-		//matrix stuff
-		Mat4f transform = Mat4f::createTransformationMatrix(
-			Vec2f((((position.x + (size.x / 2)) / currentWindowSize.x) * 2) - 1, (((currentWindowSize.y - position.y - (size.y / 2)) / currentWindowSize.y) * 2) - 1),
-			Vec3f(0, 0, offset),
-			Vec2f(size.x / currentWindowSize.x, size.y / currentWindowSize.y));
-		
-		guiShader.setUniform("transform", transform);
-		guiShader.setUniform("rotationMat", rotationMat);
-		guiShader.setUniform("ortho", orthoMatrix);
-		guiShader.setUniform("hasTexture", true);
-		guiShader.setUniform("angle", (float)HMath::toRadians(angle));
-		guiShader.setUniform("flipped", flipped);
-		guiShader.setUniform("drawmode", HFR_RADIAL_REVEAL_RENDER);
+	//	guiShader.setUniform("transform", transform);
+	//	guiShader.setUniform("uiSize", Vec2f(size.x * currentWindowSize.x, size.y * currentWindowSize.y));
+	//	guiShader.setUniform("hasTexture", false);
+	//	guiShader.setUniform("color", color);
+	//	//guiShader.setUniform("radius", radius);
+	//	guiShader.setUniform("smoothness", 0.7f);
+	//	guiShader.setUniform("drawmode", HFR_RECTANGLE);
 
-		glDrawArrays(GL_TRIANGLE_STRIP, 0, (int)quad.vertices.size());
 
-		guiShader.unbind();
+	//	glDrawArrays(GL_TRIANGLE_STRIP, 0, (int)quad.vertices.size());
 
-		glDisableVertexAttribArray(0);
-		glBindVertexArray(0);
+	//	guiShader.unbind();
 
-		enableDepthTest();
-	}
+	//	glDisableVertexAttribArray(0);
+	//	glBindVertexArray(0);
+
+	//	enableDepthTest();
+	//}
+
+	////position and size in pixels, angle in degrees, also draws from middle
+	//void Renderer::radialRevealRectangle(const Vec2f& position, const Vec2f& size, const float& angle, const float& offset, const bool& flipped, const Texture& texture) {
+	//	disableDepthTest();
+
+	//	glBindVertexArray(quad.VAO);
+	//	glEnableVertexAttribArray(0);
+
+	//	guiShader.bind();
+
+	//	glActiveTexture(GL_TEXTURE0);
+
+	//	if (texture.image.hasData())
+	//		glBindTexture(GL_TEXTURE_2D, texture.textureID);
+	//	else
+	//		glBindTexture(GL_TEXTURE_2D, nullTexture.textureID);
+
+	//	Mat4f rotationMat = Mat4f::createTransformationMatrix(Vec2f(), Vec3f(0, 0, 0), Vec2f());
+
+	//	//matrix stuff
+	//	Mat4f transform = Mat4f::createTransformationMatrix(
+	//		Vec2f((((position.x + (size.x / 2)) / currentWindowSize.x) * 2) - 1, (((currentWindowSize.y - position.y - (size.y / 2)) / currentWindowSize.y) * 2) - 1),
+	//		Vec3f(0, 0, offset),
+	//		Vec2f(size.x / currentWindowSize.x, size.y / currentWindowSize.y));
+	//	
+	//	guiShader.setUniform("transform", transform);
+	//	guiShader.setUniform("rotationMat", rotationMat);
+	//	guiShader.setUniform("ortho", orthoMatrix);
+	//	guiShader.setUniform("hasTexture", true);
+	//	guiShader.setUniform("angle", (float)HMath::toRadians(angle));
+	//	guiShader.setUniform("flipped", flipped);
+	//	guiShader.setUniform("drawmode", HFR_RADIAL_REVEAL_RENDER);
+
+	//	glDrawArrays(GL_TRIANGLE_STRIP, 0, (int)quad.vertices.size());
+
+	//	guiShader.unbind();
+
+	//	glDisableVertexAttribArray(0);
+	//	glBindVertexArray(0);
+
+	//	enableDepthTest();
+	//}
 
 	void Renderer::render(Mesh& mesh, const Shader& shader, const Vec3f& position, const Vec3f& rotation, const Vec3f& scale, const Texture& texture) {
 		glBindVertexArray(mesh.VAO);
@@ -438,107 +415,107 @@ namespace HFR {
 		glBindVertexArray(0);
 	}
 
-	void Renderer::render(const GuiFrame& frame) {
-		disableDepthTest();
+	//void Renderer::render(const GuiFrame& frame) {
+	//	disableDepthTest();
 
-		glBindVertexArray(quad.VAO);
-		glEnableVertexAttribArray(0);
+	//	glBindVertexArray(quad.VAO);
+	//	glEnableVertexAttribArray(0);
 
-		guiFrameShader.bind();
+	//	guiFrameShader.bind();
 
-		Vec2f uiPosition;
+	//	Vec2f uiPosition;
 
-		Mat4f transform;
-		Mat4f outlineTransform;
+	//	Mat4f transform;
+	//	Mat4f outlineTransform;
 
-		//matrix stuff
-		if (frame.sizeType == HFR_SCREEN_SPACE_SIZE) {
+	//	//matrix stuff
+	//	if (frame.sizeType == HFR_SCREEN_SPACE_SIZE) {
 
-			uiPosition = Vec2f(frame.position.x * 2 * Renderer::getAspectRatio(), -frame.position.y * 2) + Vec2f(frame.size.x - frame.size.x * frame.anchorPoint.x * 2, -frame.size.y + frame.size.y * frame.anchorPoint.y * 2);
+	//		uiPosition = Vec2f(frame.position.x * 2 * Renderer::getAspectRatio(), -frame.position.y * 2) + Vec2f(frame.size.x - frame.size.x * frame.anchorPoint.x * 2, -frame.size.y + frame.size.y * frame.anchorPoint.y * 2);
 
-			transform = orthoMatrix * Mat4f::createTransformationMatrix(uiPosition, Vec3f(0, 0, frame.rotation), frame.size);
+	//		transform = orthoMatrix * Mat4f::createTransformationMatrix(uiPosition, Vec3f(0, 0, frame.rotation), frame.size);
 
-			//because dank aspect ratio madness fuck me
-			if (currentWindowSize.x < currentWindowSize.y)
-				guiFrameShader.setUniform("uiSize", Vec2f(frame.size.x * currentWindowSize.x, frame.size.y * currentWindowSize.x));
-			else
-				guiFrameShader.setUniform("uiSize", Vec2f(frame.size.x * currentWindowSize.y, frame.size.y * currentWindowSize.y));
+	//		//because dank aspect ratio madness fuck me
+	//		if (currentWindowSize.x < currentWindowSize.y)
+	//			guiFrameShader.setUniform("uiSize", Vec2f(frame.size.x * currentWindowSize.x, frame.size.y * currentWindowSize.x));
+	//		else
+	//			guiFrameShader.setUniform("uiSize", Vec2f(frame.size.x * currentWindowSize.y, frame.size.y * currentWindowSize.y));
 
-		}
-		else if (frame.sizeType == HFR_PIXEL_SIZE) {
+	//	}
+	//	else if (frame.sizeType == HFR_PIXEL_SIZE) {
 
-			transform = pixelOrthoMatrix * Mat4f::createTransformationMatrix(Vec2f(frame.position.x * 2, -frame.position.y * 2) + Vec2f(frame.size.x - frame.size.x * frame.anchorPoint.x * 2, -frame.size.y + frame.size.y * frame.anchorPoint.y * 2), Vec3f(0, 0, frame.rotation), frame.size);
-			
-			guiFrameShader.setUniform("uiSize", frame.size);
-		}
+	//		transform = pixelOrthoMatrix * Mat4f::createTransformationMatrix(Vec2f(frame.position.x * 2, -frame.position.y * 2) + Vec2f(frame.size.x - frame.size.x * frame.anchorPoint.x * 2, -frame.size.y + frame.size.y * frame.anchorPoint.y * 2), Vec3f(0, 0, frame.rotation), frame.size);
+	//		
+	//		guiFrameShader.setUniform("uiSize", frame.size);
+	//	}
 
-		guiFrameShader.setUniform("transform", transform);
-		guiFrameShader.setUniform("color", frame.backgroundColor);
-		guiFrameShader.setUniform("borderColor", frame.borderColor);
-		guiFrameShader.setUniform("borderSize", (float)frame.borderSize);
-		guiFrameShader.setUniform("cornerRadius", (float)frame.roundedCornerRadius);
-		guiFrameShader.setUniform("aspectRatio", getAspectRatio());
-
-
-		glDrawArrays(GL_TRIANGLE_STRIP, 0, (int)quad.vertices.size());
-
-		guiFrameShader.unbind();
-
-		glDisableVertexAttribArray(0);
-		glBindVertexArray(0);
-
-		enableDepthTest();
-	}
-
-	void Renderer::renderGuis() {
-		for (size_t i = 0; i < Engine::guiFrames.size(); ++i) {
-			auto& frame = Engine::guiFrames[i];
-			if (frame->active && frame->draggable && frame->isSelected())
-				frame->position += frame->sizeType == HFR_PIXEL_SIZE ? Vec2f(Input::getMouseMovement().x / 2, Input::getMouseMovement().y / 2) : Vec2f(Input::getMouseMovementScreenSpace().x / 2, Input::getMouseMovementScreenSpace().y / 2);
-
-			if (frame->visible)
-				render(*frame);
-		}
-	}
-
-	void Renderer::render(const GuiText& text) {
-		disableDepthTest();
-		enableAlphaBlending();
-
-		glBindVertexArray(text.mesh.VAO);
-		glEnableVertexAttribArray(0);
-		glEnableVertexAttribArray(1);
-
-		textShader.bind();
-
-		glActiveTexture(GL_TEXTURE0);
-
-		/*if (text.mesh.material.albedoTexture.image.hasData())
-			glBindTexture(GL_TEXTURE_2D, text.mesh.material.albedoTexture.textureID);
-		else
-			glBindTexture(GL_TEXTURE_2D, nullTexture.textureID);*/
-
-		glEnable(GL_TEXTURE_2D);
-		glBindTexture(GL_TEXTURE_2D, text.font.texture.textureID);
+	//	guiFrameShader.setUniform("transform", transform);
+	//	guiFrameShader.setUniform("color", frame.backgroundColor);
+	//	guiFrameShader.setUniform("borderColor", frame.borderColor);
+	//	guiFrameShader.setUniform("borderSize", (float)frame.borderSize);
+	//	guiFrameShader.setUniform("cornerRadius", (float)frame.roundedCornerRadius);
+	//	guiFrameShader.setUniform("aspectRatio", getAspectRatio());
 
 
-		textShader.setUniform("color", text.color);
+	//	glDrawArrays(GL_TRIANGLE_STRIP, 0, (int)quad.vertices.size());
 
-		if (!text.mesh.vertices.empty())
-			glDrawArrays(GL_TRIANGLES, 0, (int)text.mesh.vertices.size() / text.mesh.type);
-	/*	else
-			Debug::log("aweg");*/
+	//	guiFrameShader.unbind();
 
-		
-		glDisableVertexAttribArray(0);
-		glDisableVertexAttribArray(1);
-		glBindVertexArray(0);
+	//	glDisableVertexAttribArray(0);
+	//	glBindVertexArray(0);
 
-		textShader.unbind();
+	//	enableDepthTest();
+	//}
 
-		disableAlphaBlending();
-		enableDepthTest();
-	}
+	//void Renderer::renderGuis() {
+	//	for (size_t i = 0; i < Engine::guiFrames.size(); ++i) {
+	//		auto& frame = Engine::guiFrames[i];
+	//		if (frame->active && frame->draggable && frame->isSelected())
+	//			frame->position += frame->sizeType == HFR_PIXEL_SIZE ? Vec2f(Input::getMouseMovement().x / 2, Input::getMouseMovement().y / 2) : Vec2f(Input::getMouseMovementScreenSpace().x / 2, Input::getMouseMovementScreenSpace().y / 2);
+
+	//		if (frame->visible)
+	//			Renderer2D::render(*frame);
+	//	}
+	//}
+
+	//void Renderer::render(const GuiText& text) {
+	//	disableDepthTest();
+	//	enableAlphaBlending();
+
+	//	glBindVertexArray(text.mesh.VAO);
+	//	glEnableVertexAttribArray(0);
+	//	glEnableVertexAttribArray(1);
+
+	//	textShader.bind();
+
+	//	glActiveTexture(GL_TEXTURE0);
+
+	//	/*if (text.mesh.material.albedoTexture.image.hasData())
+	//		glBindTexture(GL_TEXTURE_2D, text.mesh.material.albedoTexture.textureID);
+	//	else
+	//		glBindTexture(GL_TEXTURE_2D, nullTexture.textureID);*/
+
+	//	glEnable(GL_TEXTURE_2D);
+	//	glBindTexture(GL_TEXTURE_2D, text.font.texture.textureID);
+
+
+	//	textShader.setUniform("color", text.color);
+
+	//	if (!text.mesh.vertices.empty())
+	//		glDrawArrays(GL_TRIANGLES, 0, (int)text.mesh.vertices.size() / text.mesh.type);
+	///*	else
+	//		Debug::log("aweg");*/
+
+	//	
+	//	glDisableVertexAttribArray(0);
+	//	glDisableVertexAttribArray(1);
+	//	glBindVertexArray(0);
+
+	//	textShader.unbind();
+
+	//	disableAlphaBlending();
+	//	enableDepthTest();
+	//}
 
 	void Renderer::update() {
 		lightObject.meshes[0].material.diffuseColor = light.diffuseColor;

@@ -1,4 +1,5 @@
 #include "hfpch.h"
+#include HFR_RENDERER2D
 
 namespace HFR {
 
@@ -113,6 +114,7 @@ namespace HFR {
 	void Input::windowSizeCallBack(GLFWwindow*, int width, int height) {
 		window->size = Vec2i(width, height);
 		Renderer::createProjectionMatrix((float)width, (float)height);
+		Renderer2D::createProjectionMatrix((float)width, (float)height);
 	}
 
 	void Input::windowFocusCallBack(GLFWwindow*, int focused) {

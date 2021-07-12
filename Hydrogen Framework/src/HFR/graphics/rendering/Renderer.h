@@ -25,21 +25,21 @@ namespace HFR {
 	private:
 		static bool wireframe;
 		static bool cull;
-		static Mesh quad;
-		const static std::vector<float> quadVertices;
+		//static Mesh quad;
+		//const static std::vector<float> quadVertices;
 		static Vec2f currentWindowSize;
 
 	public:
 		static Shader mainShader;
-		static Shader guiShader;
+		/*static Shader guiShader;
 		static Shader guiFrameShader;
-		static Shader textShader;
+		static Shader textShader;*/
 
 		static Texture nullTexture;
 		
 		static Mat4f perspectiveMatrix;
-		static Mat4f orthoMatrix;
-		static Mat4f pixelOrthoMatrix;
+		/*static Mat4f orthoMatrix;
+		static Mat4f pixelOrthoMatrix;*/
 		static Mat4f viewMatrix;
 
 		static Light light;
@@ -77,7 +77,7 @@ namespace HFR {
 		static void render(Mesh& mesh, const Transform& transform, const Texture& texture);
 		static void render(Mesh& mesh, const Shader& shader, const Transform& transform, const Texture& texture);
 
-		static void renderRectangle(const Vec2f& position, const Vec2f& size, const Texture& texture);
+		/*static void renderRectangle(const Vec2f& position, const Vec2f& size, const Texture& texture);
 		static void renderRectangle(const Vec2f& position, const Vec2f& size, const Vec3f& color);
 		static void renderRectangle(const Vec2f& position, const Vec2f& size, const float& rotation, const Vec3f& color);
 		
@@ -85,15 +85,15 @@ namespace HFR {
 		static void renderRoundedRectangle(const Vec2f& position, const Vec2f& size, const float& radius, const Vec3f& color);
 
 		static void radialRevealRectangle(const Vec2f& position, const Vec2f& size, const float& angle, const float& offset, const bool& flipped, const Texture& texture);
-		static void radialRevealRectangle(const Vec2f& position, const Vec2f& size, const float& angle, const float& offset, const bool& flipped, const Vec3f& color);
+		static void radialRevealRectangle(const Vec2f& position, const Vec2f& size, const float& angle, const float& offset, const bool& flipped, const Vec3f& color);*/
 
-		static void render(const GuiFrame& frame);
+		//static void render(const GuiFrame& frame);
 
-		static void renderGuis();
+		//static void renderGuis();
 
 		//scale scales the pixel size used to create the font (48 pixels tall by default), also creates mesh on the fly so isn't as efficient as static text just so you know
 		//static void render(const Font& font, const char* text, const Vec2f& position, const Vec2f& scale, const Vec4f& color);
-		static void render(const GuiText& text);
+		//static void render(const GuiText& text);
 
 		//renders light objects n stuff
 		static void update();

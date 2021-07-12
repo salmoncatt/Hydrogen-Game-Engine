@@ -101,8 +101,7 @@ public:
 				VisualStudio::openVisualStudio(HFR_PROJECTS_PATH + "testProject/Scripts/testProject.sln");
 
 			window->limitFps(200);
-			//Renderer::render(text);
-			Renderer::update();
+			Renderer2D::render(text);
 		}
 
 		delete test;

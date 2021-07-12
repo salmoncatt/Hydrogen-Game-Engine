@@ -112,6 +112,7 @@
     <None Include="res\shaders\guiFrameFragment.glsl" />
     <None Include="res\shaders\guiTextFragment.glsl" />
     <None Include="res\shaders\guiTextVertex.glsl" />
+    <None Include="res\shaders\guiImageFragment.glsl" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="res\profiled methods.txt" />

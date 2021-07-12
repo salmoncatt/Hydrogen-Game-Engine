@@ -302,6 +302,7 @@ namespace HFR {
 #define HFR_GUI_FRAME "HFR/gui/GuiFrame.h"
 #define HFR_GUI_IMAGE "HFR/gui/GuiImage.h"
 #define HFR_GUI_PANEL "HFR/gui/GuiPanel.h"
+#define HFR_GUI_TEXT "HFR/gui/GuiText.h"
 
 #define HFR_API "HFR/core/API.h"
 #define HFR_PROGRAM "HFR/core/Program.h"
@@ -312,6 +313,7 @@ namespace HFR {
 #define HFR_PIXEL "HFR/graphics/image/Pixel.h"
 
 #define HFR_RENDERER "HFR/graphics/rendering/Renderer.h"
+#define HFR_RENDERER2D "HFR/graphics/rendering/Renderer2D.h"
 #define HFR_SHADER "HFR/graphics/rendering/Shader.h"
 
 #define HFR_LIGHT "HFR/graphics/lighting/Light.h"

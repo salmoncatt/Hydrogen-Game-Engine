@@ -1,4 +1,5 @@
 #include "hfpch.h"
+#include HFR_RENDERER2D
 
 namespace HFR {
 
@@ -144,8 +145,8 @@ namespace HFR {
 				}
 			}*/
 
-			Renderer::renderGuis();
-
+			Renderer::update();
+			Renderer2D::renderGuis();
 		}
 
 

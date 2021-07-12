@@ -15,6 +15,9 @@ namespace HFR {
 		//this is your actual image (set to null texture by default)
 		Texture texture;
 
+		//this is the texture under the main texture (useful for making progress bars n stuff)
+		Texture backgroundTexture;
+
 		//this adds color onto your image, alpha is the alpha value of the image (not added)
 		Vec4f color = Vec4f(0, 0, 0, 1);
 

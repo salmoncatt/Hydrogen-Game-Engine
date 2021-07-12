@@ -38,6 +38,7 @@
 #include "HFR/graphics/image/Pixel.h"
 
 #include "HFR/graphics/rendering/Renderer.h"
+#include "HFR/graphics/rendering/Renderer2D.h"
 #include "HFR/graphics/rendering/Shader.h"
 
 #include "HFR/graphics/lighting/Light.h"

@@ -1,6 +1,7 @@
 #include "hfpch.h"
 #include "HFR/text/FreeType.h"
 #include "HFR/gui/GuiText.h"
+#include HFR_RENDERER2D
 
 namespace HFR {
 
@@ -53,6 +54,11 @@ namespace HFR {
 		Debug::systemLog("Initialzing Renderer");
 		Renderer::init((float)window->size.x, (float)window->size.y);
 		Debug::systemSuccess("Renderer was initialized");
+		Debug::newLine();
+
+		Debug::systemLog("Initialzing Renderer2D");
+		Renderer2D::init((float)window->size.x, (float)window->size.y);
+		Debug::systemSuccess("Renderer2D was initialized");
 		Debug::newLine();
 
 		Debug::systemLog("Initializing Utilities");
