@@ -4,9 +4,7 @@
 
 #include HFR_API
 #include "GuiElement.h"
-#include HFR_VEC2
-#include HFR_VEC3
-#include HFR_VEC4
+#include HFR_MATH
 
 namespace HFR {
 
@@ -16,7 +14,6 @@ namespace HFR {
 	public:
 		std::string name;
 		
-		Vec2f position;
 		Vec2f size;
 		float rotation;
 		Vec2f anchorPoint;

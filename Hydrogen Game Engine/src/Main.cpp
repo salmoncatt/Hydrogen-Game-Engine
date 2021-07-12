@@ -66,7 +66,10 @@ public:
 
 		Renderer::light.diffuseColor = Vec3f(1);
 
-		Texture testt = Texture();
+		//GuiFrame* frame = new GuiFrame();
+		//frame->draggable = true;
+		//frame->active = true;
+		//frame->selectable = true;
 
 		while (shouldUpdate() && !Input::getKey(HFR_KEY_ESCAPE)) {
 			ProfileMethod("Main loop");
@@ -92,14 +95,13 @@ public:
 				Renderer::light.position.z += 3 * Time::getDeltaTime();
 			Renderer::light.position.y += Input::getScrollMovement().y;
 
-			if (Input::getKeyDown(HFR_KEY_F))
-				ProjectManager::createEngineProject("testProject", "testScript");
-			else if(Input::getKeyDown(HFR_KEY_G))
+			//if (Input::getKeyDown(HFR_KEY_F))
+				//ProjectManager::createEngineProject("testProject", "testScript");
+			if(Input::getKeyDown(HFR_KEY_G))
 				VisualStudio::openVisualStudio(HFR_PROJECTS_PATH + "testProject/Scripts/testProject.sln");
 
-			Renderer::render(text);
-
 			window->limitFps(200);
+			//Renderer::render(text);
 			Renderer::update();
 		}
 

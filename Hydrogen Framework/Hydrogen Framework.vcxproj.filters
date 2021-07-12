@@ -59,6 +59,8 @@
     <ClInclude Include="src\HFR\gui\GuiImage.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="src\HFR\graphics\lighting\Light.h" />
+    <ClInclude Include="src\HFR\graphics\rendering\Renderer2D.h" />
+    <ClInclude Include="src\HFR\gui\GuiPanel.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\hfpch.cpp" />
@@ -103,6 +105,8 @@
     <ClCompile Include="src\HFR\gui\GuiText.cpp" />
     <ClCompile Include="src\HFR\gui\GuiImage.cpp" />
     <ClCompile Include="src\HFR\graphics\lighting\Light.cpp" />
+    <ClCompile Include="src\HFR\graphics\rendering\Renderer2D.cpp" />
+    <ClCompile Include="src\HFR\gui\GuiPanel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\guiFrameFragment.glsl" />

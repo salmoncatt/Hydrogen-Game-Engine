@@ -106,14 +106,14 @@ namespace HFR {
 		Debug::systemSuccess("Closed Utilities");
 		Debug::newLine();
 
-		Debug::systemLog("Deleting Gui Items");
+		/*Debug::systemLog("Deleting Gui Items");
 		int amount = 0;
 		for (int i = 0; i < guiFrames.size(); i++) {
 			delete guiFrames[i];
 			amount += 1;
 		}
 		Debug::systemSuccess("Deleted " + std::to_string(amount) + " Gui Items");
-		Debug::newLine();
+		Debug::newLine();*/
 
 		Debug::systemLog("Deleting Scripts");
 		ScriptManager::close();

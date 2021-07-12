@@ -300,6 +300,8 @@ namespace HFR {
 
 #define HFR_GUI_ELEMENT "HFR/gui/GuiElement.h"
 #define HFR_GUI_FRAME "HFR/gui/GuiFrame.h"
+#define HFR_GUI_IMAGE "HFR/gui/GuiImage.h"
+#define HFR_GUI_PANEL "HFR/gui/GuiPanel.h"
 
 #define HFR_API "HFR/core/API.h"
 #define HFR_PROGRAM "HFR/core/Program.h"
