@@ -14,7 +14,7 @@ namespace HFR {
 		rotation = 0;
 		sizeType = HFR_PIXEL_SIZE;
 		borderSize = 5;
-		
+
 		Engine::registerGuiFrame(this);
 	}
 

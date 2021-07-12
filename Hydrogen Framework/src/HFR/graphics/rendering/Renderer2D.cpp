@@ -81,7 +81,6 @@ namespace HFR {
 	}
 
 	void Renderer2D::render(const GuiFrame& frame) {
-		setDepthTest(false);
 
 		glBindVertexArray(quad.VAO);
 		glEnableVertexAttribArray(0);
@@ -128,12 +127,63 @@ namespace HFR {
 
 		glDisableVertexAttribArray(0);
 		glBindVertexArray(0);
-
-		setDepthTest(true);
 	}
 
 	void Renderer2D::render(const GuiImage& image) {
 
+		glBindVertexArray(quad.VAO);
+		glEnableVertexAttribArray(0);
+
+		guiImageShader.bind();
+
+		Vec2f uiPosition;
+
+		Mat4f transform;
+		Mat4f outlineTransform;
+
+		//matrix stuff
+		if (image.sizeType == HFR_SCREEN_SPACE_SIZE) {
+
+			uiPosition = Vec2f(image.position.x * 2 * Renderer::getAspectRatio(), -image.position.y * 2) + Vec2f(image.size.x - image.size.x * image.anchorPoint.x * 2, -image.size.y + image.size.y * image.anchorPoint.y * 2);
+
+			transform = orthoMatrix * Mat4f::createTransformationMatrix(uiPosition, Vec3f(0, 0, image.rotation), image.size);
+
+			//because dank aspect ratio madness fuck me
+			if (currentWindowSize.x < currentWindowSize.y)
+				guiImageShader.setUniform("uiSize", Vec2f(image.size.x * currentWindowSize.x, image.size.y * currentWindowSize.x));
+			else
+				guiImageShader.setUniform("uiSize", Vec2f(image.size.x * currentWindowSize.y, image.size.y * currentWindowSize.y));
+
+		}
+		else if (image.sizeType == HFR_PIXEL_SIZE) {
+
+			transform = pixelOrthoMatrix * Mat4f::createTransformationMatrix(Vec2f(image.position.x * 2, -image.position.y * 2) + Vec2f(image.size.x - image.size.x * image.anchorPoint.x * 2, -image.size.y + image.size.y * image.anchorPoint.y * 2), Vec3f(0, 0, image.rotation), image.size);
+
+			guiImageShader.setUniform("uiSize", image.size);
+		}
+
+		guiImageShader.setUniform("transform", transform);
+		guiImageShader.setUniform("color", image.color);
+
+		guiImageShader.setUniform("angle", (float)HMath::toRadians(image.radialFill));
+		guiImageShader.setUniform("offsetAngle", (float)HMath::toRadians(image.radialFillAngleOffset));
+		guiImageShader.setUniform("radialFillOffset", image.radialFillOffset);
+		guiImageShader.setUniform("radialFillFlipped", image.radialFillInverse);
+
+		if (image.texture.image.hasData()) {
+			guiImageShader.setUniform("hasTextureCoords", true);
+			
+			glActiveTexture(GL_TEXTURE0);
+			glEnable(GL_TEXTURE_2D);
+			glBindTexture(GL_TEXTURE_2D, image.texture.textureID);
+		}
+
+		glDrawArrays(GL_TRIANGLE_STRIP, 0, (int)quad.vertices.size());
+
+		guiImageShader.unbind();
+
+		glDisableVertexAttribArray(0);
+		glBindVertexArray(0);
 	}
 
 	void Renderer2D::render(const GuiText& text) {
@@ -148,11 +198,6 @@ namespace HFR {
 
 		glActiveTexture(GL_TEXTURE0);
 
-		/*if (text.mesh.material.albedoTexture.image.hasData())
-			glBindTexture(GL_TEXTURE_2D, text.mesh.material.albedoTexture.textureID);
-		else
-			glBindTexture(GL_TEXTURE_2D, nullTexture.textureID);*/
-
 		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, text.font.texture.textureID);
 
@@ -161,8 +206,6 @@ namespace HFR {
 
 		if (!text.mesh.vertices.empty())
 			glDrawArrays(GL_TRIANGLES, 0, (int)text.mesh.vertices.size() / text.mesh.type);
-		/*	else
-				Debug::log("aweg");*/
 
 
 		glDisableVertexAttribArray(0);
@@ -176,6 +219,10 @@ namespace HFR {
 	}
 
 	void Renderer2D::renderGuis() {
+		setDepthTest(false);
+		setAlphaBlending(true);
+
+
 		for (size_t i = 0; i < Engine::guiFrames.size(); ++i) {
 			auto& frame = Engine::guiFrames[i];
 			if (frame->active && frame->draggable && frame->isSelected())
@@ -184,6 +231,16 @@ namespace HFR {
 			if (frame->visible)
 				Renderer2D::render(*frame);
 		}
+
+
+		for (size_t i = 0; i < Engine::guiImages.size(); ++i) {
+			auto& image = Engine::guiImages[i];
+
+			if (image->visible)
+				Renderer2D::render(*image);
+		}
+		setDepthTest(true);
+		setAlphaBlending(false);
 	}
 
 }

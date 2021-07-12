@@ -1,61 +1,54 @@
 #version 400 core
 out vec4 fragColor;
 
+const float PI = 3.1415926;
+const float TWO_PI = 6.2831852;
+
 in vec2 passTextureCoords;
 
+uniform sampler2D textureSampler;
+uniform bool hasTextureCoords;
+
+
 uniform vec4 color;
-uniform float alpha;
-uniform float aspectRatio;
 uniform vec2 uiSize;
 
-uniform vec4 borderColor;
-uniform float borderSize;
+//for radial fill
+uniform float angle; //IN RADIANS
+uniform float offsetAngle; //IN RADIANS
+uniform vec2 radialFillOffset;
+uniform bool radialFillFlipped;
 
-uniform float cornerRadius;
-uniform float smoothness;
+float getAngle(vec2 v1, vec2 v2) {
 
-bool isOnEdge(vec2 position, float size){
-	
-	float maxX = uiSize.x - size;
-	float maxY = uiSize.y - size;
+	return atan(v1.y - v2.y, v1.x - v2.x) + PI;
 
-	if (position.x < size || position.x > maxX)
-		return true;
-	else if (position.y < size || position.y > maxY)
-		return true;
-
-	return false;
 }
 
-float getRoundedRectangle(vec2 position) {
+float getTargetAngle(float number) {
 
-	float maxX = uiSize.x - cornerRadius;
-	float maxY = uiSize.y - cornerRadius;
-	float alpha = 1;
+	return clamp(number, 0.0, TWO_PI);
 
-	if (position.x < cornerRadius && position.y < cornerRadius)
-		alpha = 1 - smoothstep(cornerRadius - smoothness, cornerRadius + smoothness, length(position - vec2(cornerRadius, cornerRadius)));
-	else if (position.x < cornerRadius && position.y > maxY)
-		alpha = 1 - smoothstep(cornerRadius - smoothness, cornerRadius + smoothness, length(position - vec2(cornerRadius, maxY)));
-	else if (position.x > maxX && position.y < cornerRadius)
-		alpha = 1 - smoothstep(cornerRadius - smoothness, cornerRadius + smoothness, length(position - vec2(maxX, cornerRadius)));
-	else if (position.x > maxX && position.y > maxY)
-		alpha = 1 - smoothstep(cornerRadius - smoothness, cornerRadius + smoothness, length(position - vec2(maxX, maxY)));
-
-	return alpha;
 }
 
 void main() {
 	vec2 pixelPosition = passTextureCoords * uiSize;	
-	vec4 tempColor = color;
+	
+	if(hasTextureCoords)
+		fragColor = texture(textureSampler, passTextureCoords);
 
-	if(isOnEdge(pixelPosition, borderSize))
-		tempColor = borderColor;
-	else
-		tempColor = color;
+	fragColor += color;
 
-	if(cornerRadius > 0)
-		tempColor.a *= getRoundedRectangle(pixelPosition); 
-
-	fragColor = tempColor;
+	float pixelAngle = getAngle(passTextureCoords, radialFillOffset);
+	if(radialFillFlipped){
+		if (pixelAngle > getTargetAngle(angle))
+			fragColor.a = 1;
+		else
+			fragColor.a = 0;
+	}else{
+		if (pixelAngle < getTargetAngle(angle))
+			fragColor.a = 1;
+		else
+			fragColor.a = 0;
+	}
 }

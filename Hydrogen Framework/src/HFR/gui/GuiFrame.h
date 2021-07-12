@@ -27,7 +27,6 @@ namespace HFR {
 		int roundedCornerRadius = 0;
 		float cornerSmoothing = 0.7f;
 
-		bool visible = true;
 		bool draggable = false;
 		bool active = false;
 		bool selectable = false;

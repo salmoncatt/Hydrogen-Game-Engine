@@ -66,10 +66,17 @@ public:
 
 		Renderer::light.diffuseColor = Vec3f(1);
 
-		//GuiFrame* frame = new GuiFrame();
-		//frame->draggable = true;
-		//frame->active = true;
-		//frame->selectable = true;
+		/*GuiFrame* frame = new GuiFrame();
+		frame->draggable = true;
+		frame->active = true;
+		frame->selectable = true;*/
+
+		GuiImage goob = GuiImage();
+		goob.texture = Texture(HFR_RES + "textures/radial bar full.png");
+		goob.texture.create();
+		goob.radialFill = 270;
+		//goob.radialFillInverse = true;
+		goob.radialFillAngleOffset = 90;
 
 		while (shouldUpdate() && !Input::getKey(HFR_KEY_ESCAPE)) {
 			ProfileMethod("Main loop");

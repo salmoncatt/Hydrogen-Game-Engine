@@ -7,6 +7,7 @@ namespace HFR {
 
 	Window* Engine::window = nullptr;
 	std::vector<GuiFrame*> Engine::guiFrames = std::vector<GuiFrame*>();
+	std::vector<GuiImage*> Engine::guiImages = std::vector<GuiImage*>();
 
 	void Engine::startEngine() {
 		Debug::waterMark();
@@ -130,6 +131,12 @@ namespace HFR {
 	void Engine::registerGuiFrame(GuiFrame* frame) {
 		if (std::find(guiFrames.begin(), guiFrames.end(), frame) == guiFrames.end()) {
 			guiFrames.push_back(frame);
+		}
+	}
+
+	void Engine::registerGuiImage(GuiImage* image) {
+		if (std::find(guiImages.begin(), guiImages.end(), image) == guiImages.end()) {
+			guiImages.push_back(image);
 		}
 	}
 
