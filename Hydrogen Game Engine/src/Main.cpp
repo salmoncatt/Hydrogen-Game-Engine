@@ -76,7 +76,7 @@ public:
 		goob.texture.create();
 		goob.radialFill = 270;
 		//goob.radialFillInverse = true;
-		goob.radialFillAngleOffset = 90;
+		//goob.radialFillAngleOffset = 90;
 
 		while (shouldUpdate() && !Input::getKey(HFR_KEY_ESCAPE)) {
 			ProfileMethod("Main loop");
@@ -90,6 +90,8 @@ public:
 
 			//Renderer::light.position.x = 50 * sin(Time::getTime() / 400);
 			//Renderer::light.position.z = 50 * cos(Time::getTime() / 400);
+
+			goob.radialFillAngleOffset += Input::getScrollMovement().y;
 
 			//move light
 			if (Input::getKey(HFR_KEY_UP))

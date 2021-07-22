@@ -107,6 +107,7 @@
     <ClCompile Include="src\HFR\graphics\lighting\Light.cpp" />
     <ClCompile Include="src\HFR\graphics\rendering\Renderer2D.cpp" />
     <ClCompile Include="src\HFR\gui\GuiPanel.cpp" />
+    <ClCompile Include="src\HFR\math\vectors\Vec4.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\guiFrameFragment.glsl" />
