@@ -170,6 +170,9 @@ namespace HFR {
 		guiImageShader.setUniform("radialFillOffset", image.radialFillOffset);
 		guiImageShader.setUniform("radialFillFlipped", image.radialFillInverse);
 
+		guiImageShader.setUniform("fill", image.fill);
+		guiImageShader.setUniform("fillOffset", image.fillOffset);
+
 		if (image.texture.image.hasData()) {
 			guiImageShader.setUniform("hasTextureCoords", true);
 			

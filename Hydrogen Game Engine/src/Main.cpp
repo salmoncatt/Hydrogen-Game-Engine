@@ -74,7 +74,10 @@ public:
 		GuiImage goob = GuiImage();
 		goob.texture = Texture(HFR_RES + "textures/radial bar full.png");
 		goob.texture.create();
-		goob.radialFill = 270;
+		
+		goob.fill = Vec2f(0.5f);
+
+		//goob.radialFill = 270;
 		//goob.radialFillInverse = true;
 		//goob.radialFillAngleOffset = 90;
 
@@ -91,7 +94,8 @@ public:
 			//Renderer::light.position.x = 50 * sin(Time::getTime() / 400);
 			//Renderer::light.position.z = 50 * cos(Time::getTime() / 400);
 
-			goob.radialFillAngleOffset += Input::getScrollMovement().y;
+			//goob.radialFillAngleOffset += Input::getScrollMovement().y;
+			goob.fillOffset.y += Input::getScrollMovement().y / 100;
 
 			//move light
 			if (Input::getKey(HFR_KEY_UP))
