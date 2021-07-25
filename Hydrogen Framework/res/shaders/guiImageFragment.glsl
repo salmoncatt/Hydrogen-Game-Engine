@@ -35,6 +35,29 @@ float getTargetAngle(float number) {
 
 }
 
+float keepAngleIn360(float angle) {
+	float angleMod = modf(angle, TWO_PI);
+	if(angleMod < 0)
+		return angleMod + TWO_PI;
+	else
+		return angleMod;
+}
+
+float isPixelInsideRadialFill(float pixelAngle){
+	
+	//float radialAngle = TWO_PI - (offsetAngle * floor(TWO_PI / offsetAngle));
+	//float radialAngle = keepAngleIn360(offsetAngle);
+	float radialAngle = modf(TWO_PI, offsetAngle);
+
+
+	// && pixelAngle > getTargetAngle(angle) + radialAngle            pixelAngle < radialAngle
+
+	if(pixelAngle < radialAngle && pixelAngle > angle - offsetAngle)
+		return radialFillFlipped ? 1 : 0;
+	else
+		return radialFillFlipped ? 0 : 1;
+}
+
 bool isPixelInsideFill(vec2 pixel){
 	
 	vec2 uiFillOffset = fillOffset * uiSize;
@@ -44,17 +67,6 @@ bool isPixelInsideFill(vec2 pixel){
 		return true;
 	else
 		return false;
-
-//	if(pixel.x > uiFillOffset.x && pixel.x < ((uiSize.x * fill.x) + uiFillOffset.x))
-//		return true;
-//	else
-//		return false;
-
-//		if((pixel.x + fillOffset.x) < (uiSize.x * fill.x) && (pixel.x + fillOffset.x) < (uiSize.x * fill.x) &&
-//		(pixel.y + fillOffset.x) < (uiSize.y * fill.y))
-//		return true;
-//	else
-//		return false;
 }
 
 void main() {
@@ -83,6 +95,8 @@ void main() {
 //	
 //	}else{
 	
+	//fragColor.a = isPixelInsideRadialFill(pixelAngle);
+
 //	if(radialFillFlipped){
 //		if (pixelAngle > getTargetAngle(angle))
 //			fragColor.a = 1;
@@ -100,6 +114,7 @@ void main() {
 	else
 		fragColor.a = 0;
 	
+	fragColor.a = isPixelInsideRadialFill(pixelAngle);
 	
 	//}
 

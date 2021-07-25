@@ -20,7 +20,7 @@ public:
 
 		window->setIcon(icon);
 
-		window->setBackGroundColor(Vec4f(1, 0.7f, 0, 1));
+		window->setBackGroundColor(Vec4f(0.5f, 0.5f, 0.5f, 1));
 
 		test->initialize();
 	}
@@ -71,15 +71,9 @@ public:
 		frame->active = true;
 		frame->selectable = true;*/
 
-		GuiImage goob = GuiImage();
+		/*GuiImage goob = GuiImage();
 		goob.texture = Texture(HFR_RES + "textures/radial bar full.png");
-		goob.texture.create();
-		
-		goob.fill = Vec2f(0.5f);
-
-		//goob.radialFill = 270;
-		//goob.radialFillInverse = true;
-		//goob.radialFillAngleOffset = 90;
+		goob.texture.create();*/
 
 		while (shouldUpdate() && !Input::getKey(HFR_KEY_ESCAPE)) {
 			ProfileMethod("Main loop");
@@ -91,11 +85,10 @@ public:
 			if (Input::getKeyDown(HFR_KEY_BACKSLASH))
 				Renderer::toggleWireFrameMode();
 
-			//Renderer::light.position.x = 50 * sin(Time::getTime() / 400);
-			//Renderer::light.position.z = 50 * cos(Time::getTime() / 400);
+			Renderer::light.position.x = 50 * sin(Time::getTime() / 400);
+			Renderer::light.position.z = 50 * cos(Time::getTime() / 400);
 
-			//goob.radialFillAngleOffset += Input::getScrollMovement().y;
-			goob.fillOffset.y += Input::getScrollMovement().y / 100;
+			
 
 			//move light
 			if (Input::getKey(HFR_KEY_UP))

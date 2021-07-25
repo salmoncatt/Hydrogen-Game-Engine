@@ -32,7 +32,7 @@ namespace HFR{
 		static float isqrt(const float& in);
 		static float lerp(const float& a, const float& b, const float& percentage);
 		static float coslerp(const float& a, const float& b, const float& percentage);
-
+		
 		static int gcd(const int& a, const int& b);
 
 		static void keepRotationInTermsOf360(Vec3f& rotation);

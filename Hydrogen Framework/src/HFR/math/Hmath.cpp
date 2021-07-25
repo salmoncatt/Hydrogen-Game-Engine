@@ -140,7 +140,7 @@ namespace HFR {
 
 	void HMath::keepRotationInTermsOf360(Vec3f& rotation) {
 
-		if (rotation.x > 360)
+		/*if (rotation.x > 360)
 			rotation.x -= 360;
 		if (rotation.x < -360)
 			rotation.x += 360;
@@ -153,7 +153,7 @@ namespace HFR {
 		if (rotation.z > 360)
 			rotation.z -= 360;
 		if (rotation.z < -360)
-			rotation.z += 360;
+			rotation.z += 360;*/
 	}
 
 	int HMath::gcd(const int& a, const int& b) {

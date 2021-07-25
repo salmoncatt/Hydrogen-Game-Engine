@@ -165,8 +165,8 @@ namespace HFR {
 		guiImageShader.setUniform("transform", transform);
 		guiImageShader.setUniform("color", image.color);
 
-		guiImageShader.setUniform("angle", (float)HMath::toRadians(image.radialFill));
-		guiImageShader.setUniform("offsetAngle", (float)HMath::toRadians(image.radialFillAngleOffset));
+		guiImageShader.setUniform("angle", (float)HMath::toRadians((int)image.radialFill));
+		guiImageShader.setUniform("offsetAngle", (float)HMath::toRadians((int)image.radialFillAngleOffset));
 		guiImageShader.setUniform("radialFillOffset", image.radialFillOffset);
 		guiImageShader.setUniform("radialFillFlipped", image.radialFillInverse);
 

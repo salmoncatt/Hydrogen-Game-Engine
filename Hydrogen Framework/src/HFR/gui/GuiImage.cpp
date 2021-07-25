@@ -17,7 +17,7 @@ namespace HFR {
 		radialFillInverse = false;
 		radialFillOffset = Vec2f(0.5f, 0.5f);
 
-		fill = Vec2f();
+		fill = Vec2f(1, 1);
 		fillOffset = Vec2f();
 
 		Engine::registerGuiImage(this);
